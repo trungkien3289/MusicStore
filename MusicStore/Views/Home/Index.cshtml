@@ -1,31 +1,766 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Music Online";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
-</div>
+@section css{
+    <!-- Bootstrap Core CSS -->
+@*<link href="css/bootstrap.css" rel='stylesheet' type='text/css' />*@
+<!-- Custom CSS -->
+@*<link href="~/Content/Common/style.css" rel="stylesheet" />*@
+<!-- Graph CSS -->
+@*<link href="~/Content/Common/font-awesome.css" rel="stylesheet">*@
+<!-- jQuery -->
+<!-- lined-icons -->
+@*<link rel="stylesheet" href="css/icon-font.css" type='text/css' />*@
+<link href="~/Content/Common/icon-font.css" rel="stylesheet" />
+<link href="~/Content/home-page.css" rel="stylesheet" />
+}
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+@section scripts{
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+@*<script src="js/jquery-2.1.4.js"></script>*@
+@*<script src="~/Scripts/Common/jquery.nicescroll.js"></script>*@
+<script src="~/Scripts/Common/scripts.js"></script>
+}
+
+<section>
+    <!-- /w3layouts-agile -->
+    <!-- app-->
+    <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog facebook" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="app-grids">
+                        <div class="app">
+                            <div class="col-md-5 app-left mpl">
+                                <h3>Mosaic mobile app on your smartphone!</h3>
+                                <p>Download and Avail Special Songs Videos and Audios.</p>
+                                <div class="app-devices">
+                                    <h5>Gets the app from</h5>
+                                    <a href="#"><img src="~/content/images/1.png" alt=""></a>
+                                    <a href="#"><img src="~/content/images/2.png" alt=""></a>
+                                    <div class="clearfix"> </div>
+                                </div>
+                            </div>
+                            <div class="col-md-7 app-image">
+                                <img src="~/content/images/apps.png" alt="">
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+    <!-- //app-->
+    <!-- /w3l-agile -->
+    <!-- signup -->
+    <div class="modal fade" id="myModal5" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content modal-info">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body modal-spa">
+                    <div class="sign-grids">
+                        <div class="sign">
+                            <div class="sign-left">
+                                <ul>
+                                    <li><a class="fb" href="#"><i></i>Sign in with Facebook</a></li>
+                                    <li><a class="goog" href="#"><i></i>Sign in with Google</a></li>
+                                    <li><a class="linkin" href="#"><i></i>Sign in with Linkedin</a></li>
+                                </ul>
+                            </div>
+                            <div class="sign-right">
+                                <form action="#" method="post">
+
+                                    <h3>Create your account </h3>
+                                    <input type="text" value="Name" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Name';}" required="">
+                                    <input type="text" value="Mobile number" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Mobile number';}" required="">
+                                    <input type="text" value="Email id" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email id';}" required="">
+                                    <input type="password" value="Password" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Password';}" required="">
+
+                                    <input type="submit" value="CREATE ACCOUNT">
+                                </form>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <p>By logging in you agree to our <span>Terms and Conditions</span> and <span>Privacy Policy</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    <!-- //signup -->
+    <!-- /w3l-agile -->
+    <!-- left side end-->
+    <!-- main content start-->
+    <div class="main-content">
+        <div id="page-wrapper">
+            <div class="inner-content">
+
+                <div class="music-left">
+                    <!--banner-section-->
+                    <div class="banner-section">
+                        <div class="banner">
+                            <div class="callbacks_container">
+                                <ul class="rslides callbacks callbacks1" id="slider4">
+                                    <li>
+                                        <div class="banner-img">
+                                            <img src="~/content/images/11.jpg" class="img-responsive" alt="">
+                                        </div>
+                                        <div class="banner-info">
+                                            <a class="trend" href="single.html">TRENDING</a>
+                                            <h3>Let Your Home</h3>
+                                            <p>Album by <span>Rock star</span></p>
+                                        </div>
+
+                                    </li>
+                                    <li>
+                                        <div class="banner-img">
+                                            <img src="~/content/images/22.jpg" class="img-responsive" alt="">
+                                        </div>
+                                        <div class="banner-info">
+                                            <a class="trend" href="single.html">TRENDING</a>
+                                            <h3>Charis Brown feet</h3>
+                                            <p>Album by <span>Rock star</span></p>
+                                        </div>
+
+
+                                    </li>
+                                    <li>
+                                        <div class="banner-img">
+                                            <img src="~/content/images/33.jpg" class="img-responsive" alt="">
+                                        </div>
+                                        <div class="banner-info">
+                                            <a class="trend" href="single.html">TRENDING</a>
+                                            <h3>Let Your Home</h3>
+                                            <p>Album by <span>Rock star</span></p>
+                                        </div>
+
+                                        <!-- /w3layouts-agileits -->
+                                    </li>
+                                </ul>
+                            </div>
+                            <!--banner-->
+                            <script src="~/Scripts/Common/responsiveslides.min.js"></script>
+                            <script>
+                                // You can also use "$(window).load(function() {"
+                                $(function () {
+                                    // Slideshow 4
+                                    $("#slider4").responsiveSlides({
+                                        auto: true,
+                                        pager: true,
+                                        nav: true,
+                                        speed: 500,
+                                        namespace: "callbacks",
+                                        before: function () {
+                                            $('.events').append("<li>before event fired.</li>");
+                                        },
+                                        after: function () {
+                                            $('.events').append("<li>after event fired.</li>");
+                                        }
+                                    });
+
+                                });
+                            </script>
+                            <div class="clearfix"> </div>
+                        </div>
+                    </div>
+                    <!--//End-banner-->
+                    <!--albums-->
+                    <!-- pop-up-box -->
+                    <link href="~/Content/Common/popuo-box.css" rel="stylesheet" />
+                    <script src="~/Scripts/Common/jquery.magnific-popup.js"></script>
+
+                    <script>
+                        $(document).ready(function () {
+                            $('.popup-with-zoom-anim').magnificPopup({
+                                type: 'inline',
+                                fixedContentPos: false,
+                                fixedBgPos: true,
+                                overflowY: 'auto',
+                                closeBtnInside: true,
+                                preloader: false,
+                                midClick: true,
+                                removalDelay: 300,
+                                mainClass: 'my-mfp-zoom-in'
+                            });
+                        });
+                    </script>
+                    <!--//pop-up-box -->
+                    <div class="albums">
+                        <div class="tittle-head">
+                            <h3 class="tittle">New Releases <span class="new">New</span></h3>
+                            <a href="index.html"><h4 class="tittle">See all</h4></a>
+                            <div class="clearfix"> </div>
+                        </div>
+                        <div class="col-md-3 content-grid">
+                            <a class="play-icon popup-with-zoom-anim" href="#small-dialog"><img src="~/content/images/v1.jpg" title="allbum-name"></a>
+                            <a class="button play-icon popup-with-zoom-anim" href="#small-dialog">Listen now</a>
+                        </div>
+                        <div id="small-dialog" class="mfp-hide">
+                            <iframe src="https://player.vimeo.com/video/12985622"></iframe>
+
+                        </div>
+                        <div class="col-md-3 content-grid">
+                            <a class="play-icon popup-with-zoom-anim" href="#small-dialog"><img src="~/content/images/v2.jpg" title="allbum-name"></a>
+
+                            <a class="button play-icon popup-with-zoom-anim" href="#small-dialog">Listen now</a>
+                        </div>
+                        <div class="col-md-3 content-grid">
+                            <a class="play-icon popup-with-zoom-anim" href="#small-dialog"><img src="~/content/images/v3.jpg" title="allbum-name"></a>
+
+                            <a class="button play-icon popup-with-zoom-anim" href="#small-dialog">Listen now</a>
+                        </div>
+                        <div class="col-md-3 content-grid last-grid">
+                            <a class="play-icon popup-with-zoom-anim" href="#small-dialog"><img src="~/content/images/v4.jpg" title="allbum-name"></a>
+
+                            <a class="button play-icon popup-with-zoom-anim" href="#small-dialog">Listen now</a>
+                        </div>
+                        <div class="col-md-3 content-grid">
+                            <a class="play-icon popup-with-zoom-anim" href="#small-dialog"><img src="~/content/images/v5.jpg" title="allbum-name"></a>
+
+                            <a class="button play-icon popup-with-zoom-anim" href="#small-dialog">Listen now</a>
+                        </div>
+                        <div id="small-dialog" class="mfp-hide">
+                            <iframe src="https://player.vimeo.com/video/12985622"></iframe>
+
+                        </div>
+                        <div class="col-md-3 content-grid">
+                            <a class="play-icon popup-with-zoom-anim" href="#small-dialog"><img src="~/content/images/v6.jpg" title="allbum-name"></a>
+
+                            <a class="button play-icon popup-with-zoom-anim" href="#small-dialog">Listen now</a>
+                        </div>
+                        <div class="col-md-3 content-grid">
+                            <a class="play-icon popup-with-zoom-anim" href="#small-dialog"><img src="~/content/images/v7.jpg" title="allbum-name"></a>
+
+                            <a class="button play-icon popup-with-zoom-anim" href="#small-dialog">Listen now</a>
+                        </div>
+                        <div class="col-md-3 content-grid last-grid">
+                            <a class="play-icon popup-with-zoom-anim" href="#small-dialog"><img src="~/content/images/v8.jpg" title="allbum-name"></a>
+                            <a class="button play-icon popup-with-zoom-anim" href="#small-dialog">Listen now</a>
+                        </div>
+                        <div class="clearfix"> </div>
+                    </div>
+                    <!--//End-albums-->
+                    <!--//discover-view-->
+
+                    <div class="albums second">
+                        <div class="tittle-head">
+                            <h3 class="tittle">Discover <span class="new">View</span></h3>
+                            <a href="index.html"><h4 class="tittle two">See all</h4></a>
+                            <div class="clearfix"> </div>
+                        </div>
+                        <div class="col-md-3 content-grid">
+                            <a href="single.html"><img src="~/content/images/v11.jpg" title="allbum-name"></a>
+                            <div class="inner-info"><a href="single.html"><h5>Pop</h5></a></div>
+                        </div>
+                        <div class="col-md-3 content-grid">
+                            <a href="single.html"><img src="~/content/images/v22.jpg" title="allbum-name"></a>
+                            <div class="inner-info"><a href="single.html"><h5>Pop</h5></a></div>
+                        </div>
+                        <div class="col-md-3 content-grid">
+                            <a href="single.html"><img src="~/content/images/v33.jpg" title="allbum-name"></a>
+                            <div class="inner-info"><a href="single.html"><h5>Pop</h5></a></div>
+                        </div>
+                        <div class="col-md-3 content-grid last-grid">
+                            <a href="single.html"><img src="~/content/images/v44.jpg" title="allbum-name"></a>
+                            <div class="inner-info"><a href="single.html"><h5>Pop</h5></a></div>
+                        </div>
+                        <div class="col-md-3 content-grid">
+                            <a href="single.html"><img src="~/content/images/v55.jpg" title="allbum-name"></a>
+                            <div class="inner-info"><a href="single.html"><h5>Pop</h5></a></div>
+                        </div>
+                        <div class="col-md-3 content-grid">
+                            <a href="single.html"><img src="~/content/images/v66.jpg" title="allbum-name"></a>
+                            <div class="inner-info"><a href="single.html"><h5>Pop</h5></a></div>
+                        </div>
+                        <div class="col-md-3 content-grid">
+                            <a href="single.html"><img src="~/content/images/v11.jpg" title="allbum-name"></a>
+                            <div class="inner-info"><a href="single.html"><h5>Pop</h5></a></div>
+                        </div>
+                        <div class="col-md-3 content-grid last-grid">
+                            <a href="single.html"><img src="~/content/images/v22.jpg" title="allbum-name"></a>
+                            <div class="inner-info"><a href="single.html"><h5>Pop</h5></a></div>
+                        </div>
+                        <div class="clearfix"> </div>
+                    </div>
+                    <!--//discover-view-->
+                </div>
+                <!--//music-left-->
+                <!--/music-right-->
+                <div class="music-right">
+
+                    <div id="mainwrap">
+                        <div id="nowPlay" class="scroll-left">
+                            <p class="right" id="npTitle"></p>
+                        </div>
+                        <div id="audiowrap">
+                            <div id="audio0">
+                                <audio preload id="audio1" controlslist="nodownload" controls="controls">Your browser does not support HTML5 Audio!</audio>
+                            </div>
+                            <div id="tracks">
+                                <a id="btnPrev">&laquo;</a>
+                                <a id="btnNext">&raquo;</a>
+                            </div>
+                        </div>
+                        <div id="plwrap">
+                            <ul id="plList">
+                                <li>
+                                    <div class="plItem">
+                                        <div class="plNum">01.</div>
+                                        <div class="plTitle">All This Is - Joe L.'s Studio</div>
+                                        <div class="plLength">2:46</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="plItem">
+                                        <div class="plNum">02.</div>
+                                        <div class="plTitle">The Forsaken - Broadwing Studio (Final Mix)</div>
+                                        <div class="plLength">8:31</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="plItem">
+                                        <div class="plNum">03.</div>
+                                        <div class="plTitle">All The King's Men - Broadwing Studio (Final Mix)</div>
+                                        <div class="plLength">5:02</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="plItem">
+                                        <div class="plNum">04.</div>
+                                        <div class="plTitle">The Forsaken - Broadwing Studio (First Mix)</div>
+                                        <div class="plLength">8:32</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="plItem">
+                                        <div class="plNum">05.</div>
+                                        <div class="plTitle">All The King's Men - Broadwing Studio (First Mix)</div>
+                                        <div class="plLength">5:05</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="plItem">
+                                        <div class="plNum">06.</div>
+                                        <div class="plTitle">All This Is - Alternate Cuts</div>
+                                        <div class="plLength">2:49</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="plItem">
+                                        <div class="plNum">07.</div>
+                                        <div class="plTitle">All The King's Men (Take 1) - Alternate Cuts</div>
+                                        <div class="plLength">5:45</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="plItem">
+                                        <div class="plNum">08.</div>
+                                        <div class="plTitle">All The King's Men (Take 2) - Alternate Cuts</div>
+                                        <div class="plLength">5:27</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="plItem">
+                                        <div class="plNum">09.</div>
+                                        <div class="plTitle">Magus - Alternate Cuts</div>
+                                        <div class="plLength">5:46</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="plItem">
+                                        <div class="plNum">10.</div>
+                                        <div class="plTitle">The State Of Wearing Address (fucked up) - Alternate Cuts</div>
+                                        <div class="plLength">5:25</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="plItem">
+                                        <div class="plNum">11.</div>
+                                        <div class="plTitle">Magus - Popeye's (New Years '04 - '05)</div>
+                                        <div class="plLength">5:54</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="plItem">
+                                        <div class="plNum">12.</div>
+                                        <div class="plTitle">On The Waterfront - Popeye's (New Years '04 - '05)</div>
+                                        <div class="plLength">4:41</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="plItem">
+                                        <div class="plNum">13.</div>
+                                        <div class="plTitle">Trance - Popeye's (New Years '04 - '05)</div>
+                                        <div class="plLength">13:17</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="plItem">
+                                        <div class="plNum">14.</div>
+                                        <div class="plTitle">The Forsaken - Popeye's (New Years '04 - '05)</div>
+                                        <div class="plLength">8:13</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="plItem">
+                                        <div class="plNum">15.</div>
+                                        <div class="plTitle">The State Of Wearing Address - Popeye's (New Years '04 - '05)</div>
+                                        <div class="plLength">7:03</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="plItem">
+                                        <div class="plNum">16.</div>
+                                        <div class="plTitle">Magus - Popeye's (Valentine's Day '05)</div>
+                                        <div class="plLength">5:44</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="plItem">
+                                        <div class="plNum">17.</div>
+                                        <div class="plTitle">Trance - Popeye's (Valentine's Day '05)</div>
+                                        <div class="plLength">10:47</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="plItem">
+                                        <div class="plNum">18.</div>
+                                        <div class="plTitle">The State Of Wearing Address - Popeye's (Valentine's Day '05)</div>
+                                        <div class="plLength">5:37</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="plItem">
+                                        <div class="plNum">19.</div>
+                                        <div class="plTitle">All This Is - Smith St. Basement (01/08/04)</div>
+                                        <div class="plLength">2:49</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="plItem">
+                                        <div class="plNum">20.</div>
+                                        <div class="plTitle">Magus - Smith St. Basement (01/08/04)</div>
+                                        <div class="plLength">5:46</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="plItem">
+                                        <div class="plNum">21.</div>
+                                        <div class="plTitle">Beneath The Painted Eye - Smith St. Basement (06/06/03)</div>
+                                        <div class="plLength">13:08</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="plItem">
+                                        <div class="plNum">22.</div>
+                                        <div class="plTitle">Innocence - Smith St. Basement (06/06/03)</div>
+                                        <div class="plLength">5:16</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="plItem">
+                                        <div class="plNum">23.</div>
+                                        <div class="plTitle">Magus - Smith St. Basement (06/06/03)</div>
+                                        <div class="plLength">5:47</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="plItem">
+                                        <div class="plNum">24.</div>
+                                        <div class="plTitle">Madness Explored - Smith St. Basement (06/06/03)</div>
+                                        <div class="plLength">4:52</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="plItem">
+                                        <div class="plNum">25.</div>
+                                        <div class="plTitle">The Forsaken - Smith St. Basement (06/06/03)</div>
+                                        <div class="plLength">8:44</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="plItem">
+                                        <div class="plNum">26.</div>
+                                        <div class="plTitle">All This Is - Smith St. Basement (12/28/03)</div>
+                                        <div class="plLength">3:01</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="plItem">
+                                        <div class="plNum">27.</div>
+                                        <div class="plTitle">Magus - Smith St. Basement (12/28/03)</div>
+                                        <div class="plLength">6:10</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="plItem">
+                                        <div class="plNum">28.</div>
+                                        <div class="plTitle">Madness Explored - Smith St. Basement (12/28/03)</div>
+                                        <div class="plLength">5:06</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="plItem">
+                                        <div class="plNum">29.</div>
+                                        <div class="plTitle">Trance - Smith St. Basement (12/28/03)</div>
+                                        <div class="plLength">12:33</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="plItem">
+                                        <div class="plNum">30.</div>
+                                        <div class="plTitle">The Forsaken - Smith St. Basement (12/28/03)</div>
+                                        <div class="plLength">8:57</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="plItem">
+                                        <div class="plNum">31.</div>
+                                        <div class="plTitle">All This Is (Take 1) - Smith St. Basement (Nov. '03)</div>
+                                        <div class="plLength">4:55</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="plItem">
+                                        <div class="plNum">32.</div>
+                                        <div class="plTitle">All This Is (Take 2) - Smith St. Basement (Nov. '03)</div>
+                                        <div class="plLength">5:46</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="plItem">
+                                        <div class="plNum">33.</div>
+                                        <div class="plTitle">Beneath The Painted Eye (Take 1) - Smith St. Basement (Nov. '03)</div>
+                                        <div class="plLength">14:06</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="plItem">
+                                        <div class="plNum">34.</div>
+                                        <div class="plTitle">Beneath The Painted Eye (Take 2) - Smith St. Basement (Nov. '03)</div>
+                                        <div class="plLength">13:26</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="plItem">
+                                        <div class="plNum">35.</div>
+                                        <div class="plTitle">The Forsaken (Take 1) - Smith St. Basement (Nov. '03)</div>
+                                        <div class="plLength">8:38</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="plItem">
+                                        <div class="plNum">36.</div>
+                                        <div class="plTitle">The Forsaken (Take 2) - Smith St. Basement (Nov. '03)</div>
+                                        <div class="plLength">8:37</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <link href="~/Content/Libraries/playlist-style.css" rel="stylesheet" />
+                    <script src="~/Scripts/Libraries/playlist.js"></script>
+
+                    <!-- //script for play-list -->
+                    <!--//video-main-->
+                    <!--/app_store-->
+                    <div class="apps">
+                        <h3 class="hd-tittle">Music Online now available in</h3>
+                        <div class="banner-button">
+                            <a href="#"><img src="~/content/images/1.png" alt=""></a>
+                        </div>
+                        <div class="banner-button green-button">
+                            <a href="#"><img src="~/content/images/2.png" alt=""></a>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <!--//app_store-->
+                    <!--/start-paricing-tables-->
+                </div>
+                <!--//music-right-->
+                <div class="clearfix"></div>
+                <!-- /w3l-agile-its -->
+            </div>
+            <!--body wrapper start-->
+
+            <div class="review-slider">
+                <div class="tittle-head">
+                    <h3 class="tittle">Featured Albums <span class="new"> New</span></h3>
+                    <div class="clearfix"> </div>
+                </div>
+                <ul id="flexiselDemo1">
+                    <li>
+                        <a href="single.html"><img src="~/content/images/v1.jpg" alt="" /></a>
+                        <div class="slide-title"><h4>Adele21 </div>
+                        <div class="date-city">
+                            <h5>Jan-02-16</h5>
+                            <div class="buy-tickets">
+                                <a href="single.html">READ MORE</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="single.html"><img src="~/content/images/v2.jpg" alt="" /></a>
+                        <div class="slide-title"><h4>Adele21</h4></div>
+                        <div class="date-city">
+                            <h5>Jan-02-16</h5>
+                            <div class="buy-tickets">
+                                <a href="single.html">READ MORE</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="single.html"><img src="~/content/images/v3.jpg" alt="" /></a>
+                        <div class="slide-title"><h4>Shomlock</h4></div>
+                        <div class="date-city">
+                            <h5>Jan-02-16</h5>
+                            <div class="buy-tickets">
+                                <a href="single.html">READ MORE</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="single.html"><img src="~/content/images/v4.jpg" alt="" /></a>
+                        <div class="slide-title"><h4>Stuck on a feeling</h4></div>
+                        <div class="date-city">
+                            <h5>Jan-02-16</h5>
+                            <div class="buy-tickets">
+                                <a href="single.html">READ MORE</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="single.html"><img src="~/content/images/v5.jpg" alt="" /></a>
+                        <div class="slide-title"><h4>Ricky Martine </h4></div>
+                        <div class="date-city">
+                            <h5>Jan-02-16</h5>
+                            <div class="buy-tickets">
+                                <a href="single.html">READ MORE</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="single.html"><img src="~/content/images/v6.jpg" alt="" /></a>
+                        <div class="slide-title"><h4>Ellie Goluding </h4></div>
+                        <div class="date-city">
+                            <h5>Jan-02-16</h5>
+                            <div class="buy-tickets">
+                                <a href="single.html">READ MORE</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="single.html"><img src="~/content/images/v6.jpeg" alt="" /></a>
+                        <div class="slide-title"><h4>Fifty Shades </h4></div>
+                        <div class="date-city">
+                            <h5>Jan-02-16</h5>
+                            <div class="buy-tickets">
+                                <a href="single.html">READ MORE</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <script type="text/javascript">
+                    $(window).load(function () {
+
+                        $("#flexiselDemo1").flexisel({
+                            visibleItems: 5,
+                            animationSpeed: 1000,
+                            autoPlay: true,
+                            autoPlaySpeed: 3000,
+                            pauseOnHover: false,
+                            enableResponsiveBreakpoints: true,
+                            responsiveBreakpoints: {
+                                portrait: {
+                                    changePoint: 480,
+                                    visibleItems: 2
+                                },
+                                landscape: {
+                                    changePoint: 640,
+                                    visibleItems: 3
+                                },
+                                tablet: {
+                                    changePoint: 800,
+                                    visibleItems: 4
+                                }
+                            }
+                        });
+                    });
+                </script>
+                <script src="~/Scripts/Common/jquery.flexisel.js"></script>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <!--body wrapper end-->
+        <!-- /w3l-agile -->
     </div>
-</div>
+    <!--body wrapper end-->
+    <div class="footer">
+        <div class="footer-grid">
+            <h3>Navigation</h3>
+            <ul class="list1">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="radio.html">All Songs</a></li>
+                <li><a href="browse.html">Albums</a></li>
+                <li><a href="radio.html">New Collections</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-grid">
+            <h3>Our Account</h3>
+            <ul class="list1">
+                <li><a href="#" data-toggle="modal" data-target="#myModal5">Your Account</a></li>
+                <li><a href="#">Personal information</a></li>
+                <li><a href="#">Addresses</a></li>
+                <li><a href="#">Discount</a></li>
+                <li><a href="#">Orders history</a></li>
+                <li><a href="#">Addresses</a></li>
+                <li><a href="#">Search Terms</a></li>
+            </ul>
+        </div>
+        <div class="footer-grid">
+            <h3>Our Support</h3>
+            <ul class="list1">
+                <li><a href="contact.html">Site Map</a></li>
+                <li><a href="#">Search Terms</a></li>
+                <li><a href="#">Advanced Search</a></li>
+                <li><a href="#">Mobile</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+                <li><a href="#">Mobile</a></li>
+                <li><a href="#">Addresses</a></li>
+            </ul>
+        </div>
+        <div class="footer-grid">
+            <h3>Newsletter</h3>
+            <p class="footer_desc">Nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat</p>
+            <div class="search_footer">
+                <form>
+                    <input type="text" placeholder="Email...." required="">
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
+        </div>
+        <div class="footer-grid footer-grid_last">
+            <h3>About Us</h3>
+            <p class="footer_desc">Diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat enim ad minim veniam,.</p>
+            <p class="f_text">Phone:  &nbsp;&nbsp;&nbsp;00-250-2131</p>
+            <p class="email">Email : &nbsp;<span><a href="mailto:mail@example.com">info(at)mailing.com</a></span></p>
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+    <!--footer section start-->
+    @*<footer>
+        <p>&copy 2016 Mosaic. All Rights Reserved | Design by <a href="https://w3layouts.com/" target="_blank">w3layouts.</a></p>
+    </footer>*@
+    <!--footer section end-->
+    <!-- /w3l-agile -->
+    <!-- main content end-->
+</section>
