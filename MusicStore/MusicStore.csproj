@@ -20,6 +20,8 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <Use64BitIISExpress />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -164,6 +166,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\SummarySongModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -273,6 +276,19 @@
     <Content Include="Content\Video\Taylor-Swift-Bad Blood.mp4" />
     <Content Include="Content\Video\Taylor-Swift-Bad_Blood.webm" />
     <Content Include="Content\Video\Taylor-Swift.mp4" />
+    <Content Include="Data\Audio\AC_ATKMTake_2.mp3" />
+    <Content Include="Data\Audio\AC_M.mp3" />
+    <Content Include="Data\Audio\AC_TSOWAfucked_up.mp3" />
+    <Content Include="Data\Audio\BSFM_ATKM.mp3" />
+    <Content Include="Data\Audio\BSFM_TF.mp3" />
+    <Content Include="Data\Audio\BS_ATKM.mp3" />
+    <Content Include="Data\Audio\BS_TF.mp3" />
+    <Content Include="Data\Audio\JLS_ATI.mp3" />
+    <Content Include="Data\Audio\PNY04-05_M.mp3" />
+    <Content Include="Data\Audio\PNY04-05_OTW.mp3" />
+    <Content Include="Data\Audio\PNY04-05_T.mp3" />
+    <Content Include="Data\Audio\PNY04-05_TSOWA.mp3" />
+    <Content Include="Data\Audio\SSB06_06_03_I.mp3" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\digital-7-webfont.svg" />
     <Content Include="fonts\digital-7_italic-webfont.svg" />
