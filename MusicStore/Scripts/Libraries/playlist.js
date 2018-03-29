@@ -278,11 +278,11 @@ jQuery(function ($) {
 });
 
 var MediaPlayList = {
-    index = 0,
-    playing = false,
-    mediaPath = '//archive.org/download/mythium/',
-    extension = '.mp3',
-    tracks =[],
+    index : 0,
+    playing : false,
+    mediaPath : '/Data/Audio/',
+    extension : '.mp3',
+    tracks :[],
     init: function (songs) {
         if (supportsAudio) {
             var that = this;
@@ -344,7 +344,7 @@ var MediaPlayList = {
             that.loadTrack(this.index);
         }
     },
-    loadTrack = function (id) {
+    loadTrack : function (id) {
         var that = this;
         $('.plSel').removeClass('plSel');
         $('#plList li:eq(' + id + ')').addClass('plSel');
@@ -352,7 +352,7 @@ var MediaPlayList = {
         that.index = id;
         that.audio.src = that.mediaPath + that.tracks[id].file + that.extension;
     },
-    playTrack = function (id) {
+    playTrack : function (id) {
         this.loadTrack(id);
         this.audio.play();
     }

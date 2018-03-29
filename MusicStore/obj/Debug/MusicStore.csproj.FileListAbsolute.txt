@@ -55,3 +55,9 @@ D:\FreelanceProject\Music Store\MusicStore\MusicStore\bin\Microsoft.Owin.Securit
 D:\FreelanceProject\Music Store\MusicStore\MusicStore\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 D:\FreelanceProject\Music Store\MusicStore\MusicStore\obj\Debug\MusicStore.dll
 D:\FreelanceProject\Music Store\MusicStore\MusicStore\obj\Debug\MusicStore.pdb
+D:\FreelanceProject\Music Store\MusicStore\MusicStore\bin\System.Net.Http.Formatting.dll
+D:\FreelanceProject\Music Store\MusicStore\MusicStore\bin\System.Web.Http.dll
+D:\FreelanceProject\Music Store\MusicStore\MusicStore\bin\System.Web.Http.WebHost.dll
+D:\FreelanceProject\Music Store\MusicStore\MusicStore\bin\System.Net.Http.Formatting.xml
+D:\FreelanceProject\Music Store\MusicStore\MusicStore\bin\System.Web.Http.xml
+D:\FreelanceProject\Music Store\MusicStore\MusicStore\bin\System.Web.Http.WebHost.xml
