@@ -13,7 +13,7 @@ b.setAttribute('data-platform', navigator.platform);
 // Inspiration: http://jonhall.info/how_to/create_a_playlist_for_html5_audio
 // Mythium Archive: https://archive.org/details/mythium/
 jQuery(function ($) {
-    var supportsAudio = !!document.createElement('audio').canPlayType;
+    //var supportsAudio = !!document.createElement('audio').canPlayType;
     //if (supportsAudio) {
     //    var index = 0,
     //        playing = false,
@@ -278,24 +278,24 @@ jQuery(function ($) {
 });
 
 var MediaPlayList = {
-    index = 0,
-    playing = false,
-    mediaPath = '//archive.org/download/mythium/',
-    extension = '.mp3',
-    tracks =[],
+    index : 0,
+    playing : false,
+    extension : '.mp3',
+    tracks :[],
     init: function (songs) {
+        var supportsAudio = !!document.createElement('audio').canPlayType;
         if (supportsAudio) {
             var that = this;
-            that.tracks = songs;
-            that.trackCount = tracks.length;
+            that.tracks = that.convertSong(songs);
+            that.trackCount = that.tracks.length;
             that.npAction = $('#npAction');
             that.npTitle = $('#npTitle');
             that.audio = $('#audio1').bind('play', function () {
                 that.playing = true;
-                that.npTitlenpAction.text('Now Playing...');
+                //that.npTitle.text('Now Playing...');
             }).bind('pause', function () {
                 that.playing = false;
-                that.npAction.text('Paused...');
+                //that.npAction.text('Paused...');
             }).bind('ended', function () {
                 that.npAction.text('Paused...');
                 if ((that.index + 1) < trackCount) {
@@ -318,20 +318,20 @@ var MediaPlayList = {
                 } else {
                     that.audio.pause();
                     that.index = 0;
-                    MediaPlayList.loadTrack(index);
+                    MediaPlayList.loadTrack(that.index);
                 }
             });
             that.btnNext = $('#btnNext').click(function () {
                 if ((that.index + 1) < that.trackCount) {
-                    index++;
-                    MediaPlayList.loadTrack(index);
+                    that.index++;
+                    MediaPlayList.loadTrack(that.index);
                     if (that.playing) {
                         that.audio.play();
                     }
                 } else {
                     that.audio.pause();
                     that.index = 0;
-                    MediaPlayList.loadTrack(index);
+                    MediaPlayList.loadTrack(that.index);
                 }
             });
             li = $('#plList li').click(function () {
@@ -344,16 +344,26 @@ var MediaPlayList = {
             that.loadTrack(this.index);
         }
     },
-    loadTrack = function (id) {
+    loadTrack : function (id) {
         var that = this;
         $('.plSel').removeClass('plSel');
         $('#plList li:eq(' + id + ')').addClass('plSel');
         that.npTitle.text(that.tracks[id].name);
         that.index = id;
-        that.audio.src = that.mediaPath + that.tracks[id].file + that.extension;
+        that.audio.src = that.tracks[id].file;
     },
-    playTrack = function (id) {
+    playTrack : function (id) {
         this.loadTrack(id);
         this.audio.play();
+    },
+    convertSong : function (songs) {
+        var result = [];
+        if (songs) {
+            for (var i = 0; i < songs.length; i++) {
+                result.push({ track: i, name: songs[i].Title, file: songs[i].MediaUrl });
+            }
+        }
+
+        return result;
     }
 }
