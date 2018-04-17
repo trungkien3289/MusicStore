@@ -1,12 +1,12 @@
 namespace MusicStore.Model.Migrations
 {
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
+    using MusicStore.Model.DataContext;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
-    using Microsoft.AspNet.Identity.EntityFramework;
-    using Microsoft.AspNet.Identity;
-    using MusicStore.Model.DataContext;
 
     internal sealed class Configuration : DbMigrationsConfiguration<MusicStore.Model.DataContext.MainDbContext>
     {
@@ -18,28 +18,28 @@ namespace MusicStore.Model.Migrations
         protected override void Seed(MusicStore.Model.DataContext.MainDbContext context)
         {
             //  This method will be called after migrating to the latest version.
-                if (!context.Roles.Any(r => r.Name == "Admin"))
-                {
-                    var store = new RoleStore<IdentityRole>(context);
-                    var manager = new RoleManager<IdentityRole>(store);
-                    var role = new IdentityRole { Name = "Admin" };
+            if (!context.Roles.Any(r => r.Name == "Admin"))
+            {
+                var store = new RoleStore<IdentityRole>(context);
+                var manager = new RoleManager<IdentityRole>(store);
+                var role = new IdentityRole { Name = "Admin" };
 
-                    manager.Create(role);
-                }
+                manager.Create(role);
+            }
 
-                context.SaveChanges();
+            context.SaveChanges();
 
-                if (!context.Users.Any(u => u.UserName == "Karl"))
-                {
-                    var store = new UserStore<ApplicationUser>(context);
-                    var manager = new UserManager<ApplicationUser>(store);
-                    var user = new ApplicationUser { UserName = "Karl" };
+            if (!context.Users.Any(u => u.UserName == "Karl"))
+            {
+                var store = new UserStore<ApplicationUser>(context);
+                var manager = new UserManager<ApplicationUser>(store);
+                var user = new ApplicationUser { UserName = "Karl" };
 
-                    manager.Create(user, "123123");
-                    manager.AddToRole(user.Id, "Admin");
-                }
+                manager.Create(user, "123123");
+                manager.AddToRole(user.Id, "Admin");
+            }
 
-                context.SaveChanges();
+            context.SaveChanges();
         }
     }
 }

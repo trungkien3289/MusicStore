@@ -431,9 +431,9 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MusicStore.Model\MusicStore.Model.csproj">
+    <ProjectReference Include="..\MusicStore.Model\Model.csproj">
       <Project>{462519b3-f99e-4972-bfbe-0fe72f8c6e10}</Project>
-      <Name>MusicStore.Model</Name>
+      <Name>Model</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
