@@ -1,8 +1,5 @@
 namespace MusicStore.Model.Migrations
 {
-    using Microsoft.AspNet.Identity;
-    using Microsoft.AspNet.Identity.EntityFramework;
-    using MusicStore.Model.DataContext;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
@@ -18,28 +15,17 @@ namespace MusicStore.Model.Migrations
         protected override void Seed(MusicStore.Model.DataContext.MainDbContext context)
         {
             //  This method will be called after migrating to the latest version.
-            if (!context.Roles.Any(r => r.Name == "Admin"))
-            {
-                var store = new RoleStore<IdentityRole>(context);
-                var manager = new RoleManager<IdentityRole>(store);
-                var role = new IdentityRole { Name = "Admin" };
 
-                manager.Create(role);
-            }
-
-            context.SaveChanges();
-
-            if (!context.Users.Any(u => u.UserName == "Karl"))
-            {
-                var store = new UserStore<ApplicationUser>(context);
-                var manager = new UserManager<ApplicationUser>(store);
-                var user = new ApplicationUser { UserName = "Karl" };
-
-                manager.Create(user, "123123");
-                manager.AddToRole(user.Id, "Admin");
-            }
-
-            context.SaveChanges();
+            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
+            //  to avoid creating duplicate seed data. E.g.
+            //
+            //    context.People.AddOrUpdate(
+            //      p => p.FullName,
+            //      new Person { FullName = "Andrew Peters" },
+            //      new Person { FullName = "Brice Lambson" },
+            //      new Person { FullName = "Rowan Miller" }
+            //    );
+            //
         }
     }
 }

@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MusicStore.Model</RootNamespace>
     <AssemblyName>MusicStore.Model</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -97,9 +98,9 @@
     <Compile Include="DataModels\Token.cs" />
     <Compile Include="DataModels\User.cs" />
     <Compile Include="GenericRepository\GenericRepository.cs" />
-    <Compile Include="Migrations\201804161633310_updateIdentityModels.cs" />
-    <Compile Include="Migrations\201804161633310_updateIdentityModels.Designer.cs">
-      <DependentUpon>201804161633310_updateIdentityModels.cs</DependentUpon>
+    <Compile Include="Migrations\201804200748222_initial_database.cs" />
+    <Compile Include="Migrations\201804200748222_initial_database.Designer.cs">
+      <DependentUpon>201804200748222_initial_database.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -110,8 +111,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201804161633310_updateIdentityModels.resx">
-      <DependentUpon>201804161633310_updateIdentityModels.cs</DependentUpon>
+    <ProjectReference Include="..\Resolver\Resolver.csproj">
+      <Project>{99bdece1-0816-4389-a1f9-d67d1176e44c}</Project>
+      <Name>Resolver</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201804200748222_initial_database.resx">
+      <DependentUpon>201804200748222_initial_database.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

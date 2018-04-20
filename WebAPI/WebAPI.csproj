@@ -298,6 +298,10 @@
       <Project>{65ea2467-8161-4ede-aa4a-0cf92017b0cc}</Project>
       <Name>Service</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Resolver\Resolver.csproj">
+      <Project>{99bdece1-0816-4389-a1f9-d67d1176e44c}</Project>
+      <Name>Resolver</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

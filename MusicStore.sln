@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BussinessEntity", "MusicSto
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI", "WebAPI\WebAPI.csproj", "{106CC50C-737F-4993-BFAC-46FDABD4FA1F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Resolver", "Resolver\Resolver.csproj", "{99BDECE1-0816-4389-A1F9-D67D1176E44C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{106CC50C-737F-4993-BFAC-46FDABD4FA1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{106CC50C-737F-4993-BFAC-46FDABD4FA1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{106CC50C-737F-4993-BFAC-46FDABD4FA1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99BDECE1-0816-4389-A1F9-D67D1176E44C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99BDECE1-0816-4389-A1F9-D67D1176E44C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99BDECE1-0816-4389-A1F9-D67D1176E44C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99BDECE1-0816-4389-A1F9-D67D1176E44C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
