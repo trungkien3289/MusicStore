@@ -3,9 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicStore.Model", "MusicStore.Model\MusicStore.Model.csproj", "{462519B3-F99E-4972-BFBE-0FE72F8C6E10}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "MusicStore.Model\Model.csproj", "{462519B3-F99E-4972-BFBE-0FE72F8C6E10}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicStore", "MusicStore\MusicStore.csproj", "{20718723-79EA-4C92-B1FE-BD027F75407C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "MusicStore.Service\Service.csproj", "{65EA2467-8161-4EDE-AA4A-0CF92017B0CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BussinessEntity", "MusicStore.BussinessEntity\BussinessEntity.csproj", "{959E2C95-65A6-403F-B595-ABC572A1F6A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI", "WebAPI\WebAPI.csproj", "{B5E80B92-FB9D-46B6-8D76-4A8A884352A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +27,18 @@ Global
 		{20718723-79EA-4C92-B1FE-BD027F75407C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{20718723-79EA-4C92-B1FE-BD027F75407C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{20718723-79EA-4C92-B1FE-BD027F75407C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65EA2467-8161-4EDE-AA4A-0CF92017B0CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65EA2467-8161-4EDE-AA4A-0CF92017B0CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65EA2467-8161-4EDE-AA4A-0CF92017B0CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65EA2467-8161-4EDE-AA4A-0CF92017B0CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{959E2C95-65A6-403F-B595-ABC572A1F6A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{959E2C95-65A6-403F-B595-ABC572A1F6A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{959E2C95-65A6-403F-B595-ABC572A1F6A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{959E2C95-65A6-403F-B595-ABC572A1F6A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5E80B92-FB9D-46B6-8D76-4A8A884352A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5E80B92-FB9D-46B6-8D76-4A8A884352A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5E80B92-FB9D-46B6-8D76-4A8A884352A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5E80B92-FB9D-46B6-8D76-4A8A884352A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
