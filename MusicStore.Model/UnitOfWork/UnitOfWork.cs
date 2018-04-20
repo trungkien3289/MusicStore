@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace MusicStore.Model.UnitOfWork
 {
-    public class UnitOfWork : IDisposable
+    public class UnitOfWork : IUnitOfWork, IDisposable
     {
         #region Private member variables...
 

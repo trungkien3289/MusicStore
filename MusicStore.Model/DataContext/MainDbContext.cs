@@ -21,6 +21,13 @@ namespace MusicStore.Model.DataContext
     {
         protected override void Seed(MainDbContext context)
         {
+
+            context.ms_Album.Add(new ms_Album()
+            {
+                Title = "Top Euro - American",
+                ReleaseDate = DateTime.Now
+            });
+
             base.Seed(context);
         }
 

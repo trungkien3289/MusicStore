@@ -20,6 +20,11 @@ namespace MusicStore.Service.Services
             this._unitOfWork = unitOfWork;
         }
 
+        //public AlbumServices()
+        //{
+        //    this._unitOfWork = new UnitOfWork();
+        //}
+
         public AlbumEntity GetAlbumById(int albumId)
         {
             var album = _unitOfWork.AlbumRepository.GetByID(albumId);

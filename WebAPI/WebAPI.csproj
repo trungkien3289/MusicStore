@@ -290,10 +290,6 @@
       <Project>{959e2c95-65a6-403f-b595-abc572a1f6a5}</Project>
       <Name>BussinessEntity</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MusicStore.Model\Model.csproj">
-      <Project>{462519b3-f99e-4972-bfbe-0fe72f8c6e10}</Project>
-      <Name>Model</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MusicStore.Service\Service.csproj">
       <Project>{65ea2467-8161-4ede-aa4a-0cf92017b0cc}</Project>
       <Name>Service</Name>
