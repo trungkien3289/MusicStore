@@ -15,9 +15,9 @@ namespace MusicStore.Service.Services
     public class AlbumServices : IAlbumServices
     {
         private readonly UnitOfWork _unitOfWork;
-        public AlbumServices()
+        public AlbumServices(UnitOfWork unitOfWork)
         {
-            this._unitOfWork = new UnitOfWork();
+            this._unitOfWork = unitOfWork;
         }
 
         public AlbumEntity GetAlbumById(int albumId)

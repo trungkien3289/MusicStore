@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="Scripts/jquery-1.10.2.min.js"></script>
+</head>
+<body>
+    <script>
+        $(function () {
+            $.ajax({
+                url: "http://musiconline.somee.com/api/song",
+                type: 'GET',
+                dataType: "json",
+                success: function (data) {
+                    alert("kaka");
+                    console.log(data);
+                },
+                error: function () {
+                    alert("error");
+                }
+            })
+        })
+       
+    </script>
+</body>
+</html>

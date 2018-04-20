@@ -1,6 +1,7 @@
 using System;
 using System.Web.Http;
 using System.Web.Mvc;
+using WebAPI.Areas.HelpPage.ModelDescriptions;
 using WebAPI.Areas.HelpPage.Models;
 
 namespace WebAPI.Areas.HelpPage.Controllers
@@ -10,17 +11,16 @@ namespace WebAPI.Areas.HelpPage.Controllers
     /// </summary>
     public class HelpController : Controller
     {
-        public HelpController()
-            : this(GlobalConfiguration.Configuration)
+        private const string ErrorViewName = "Error";
+
+        /// <summary>
+        /// Add new Configuration Property
+        /// </summary>
+        protected static HttpConfiguration Configuration
         {
+            get { return GlobalConfiguration.Configuration; }
         }
 
-        public HelpController(HttpConfiguration config)
-        {
-            Configuration = config;
-        }
-
-        public HttpConfiguration Configuration { get; private set; }
 
         public ActionResult Index()
         {
@@ -39,7 +39,22 @@ namespace WebAPI.Areas.HelpPage.Controllers
                 }
             }
 
-            return View("Error");
+            return View(ErrorViewName);
+        }
+
+        public ActionResult ResourceModel(string modelName)
+        {
+            if (!String.IsNullOrEmpty(modelName))
+            {
+                ModelDescriptionGenerator modelDescriptionGenerator = Configuration.GetModelDescriptionGenerator();
+                ModelDescription modelDescription;
+                if (modelDescriptionGenerator.GeneratedModels.TryGetValue(modelName, out modelDescription))
+                {
+                    return View(modelDescription);
+                }
+            }
+
+            return View(ErrorViewName);
         }
     }
 }

@@ -19,9 +19,9 @@ namespace WebAPI.Controllers
          /// <summary>
         /// Public constructor to initialize album service instance
         /// </summary>
-        public AlbumController()
+        public AlbumController(IAlbumServices albumService)
         {
-            _albumServices = new AlbumServices();
+            _albumServices = albumService;
         }
 
         #endregion
