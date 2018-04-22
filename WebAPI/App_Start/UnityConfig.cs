@@ -1,4 +1,4 @@
-using MusicStore.Service.IService;
+using MusicStore.Service.IServices;
 using MusicStore.Service.Services;
 using Resolver;
 using System.Web.Http;

@@ -22,6 +22,7 @@ namespace MusicStore.Model.UnitOfWork
         private GenericRepository<ms_Collection> _collectionRepository;
         private GenericRepository<ms_Genre> _genreRepository;
         private GenericRepository<ms_Song> _songRepository;
+        private GenericRepository<system_User> _userRepository;
 
         #endregion
 
@@ -112,6 +113,18 @@ namespace MusicStore.Model.UnitOfWork
             }
         }
 
+        public GenericRepository<system_User> UserRepository
+        {
+            get
+            {
+                if(this._userRepository == null)
+                {
+                    this._userRepository = new GenericRepository<system_User>(_context);
+                }
+
+                return _userRepository;
+            }
+        }
         #endregion
 
         #region Public member methods...

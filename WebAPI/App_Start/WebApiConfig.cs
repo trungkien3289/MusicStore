@@ -26,11 +26,11 @@ namespace WebAPI
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            config.Routes.MapHttpRoute(
-               name: "ActionBased",
-               routeTemplate: "api/{controller}/action/{action}/{id}",
-               defaults: new { id = RouteParameter.Optional }
-            );
+            //config.Routes.MapHttpRoute(
+            //   name: "ActionBased",
+            //   routeTemplate: "api/{controller}/action/{action}/{id}",
+            //   defaults: new { id = RouteParameter.Optional }
+            //);
         }
     }
 }

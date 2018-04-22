@@ -1,5 +1,5 @@
 ﻿using MusicStore.BussinessEntity;
-using MusicStore.Service.IService;
+using MusicStore.Service.IServices;
 using MusicStore.Service.Services;
 using System;
 using System.Collections.Generic;
@@ -7,9 +7,11 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using WebAPI.Filters;
 
 namespace WebAPI.Controllers
 {
+    //[ApiAuthenticationFilter]
     public class AlbumController : ApiController
     {
         private readonly IAlbumServices _albumServices;

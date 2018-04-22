@@ -5,7 +5,7 @@ namespace MusicStore.Models
     public class ExternalLoginConfirmationViewModel
     {
         [Required]
-        [Display(Name = "User name")]
+        [Display(Name = "system_User name")]
         public string UserName { get; set; }
     }
 
@@ -31,7 +31,7 @@ namespace MusicStore.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "User name")]
+        [Display(Name = "system_User name")]
         public string UserName { get; set; }
 
         [Required]
@@ -46,7 +46,7 @@ namespace MusicStore.Models
     public class RegisterViewModel
     {
         [Required]
-        [Display(Name = "User name")]
+        [Display(Name = "system_User name")]
         public string UserName { get; set; }
 
         [Required]

@@ -95,13 +95,13 @@
     <Compile Include="DataModels\ms_Collection.cs" />
     <Compile Include="DataModels\ms_Song.cs" />
     <Compile Include="DataModels\system_RouteData.cs" />
-    <Compile Include="DataModels\Token.cs" />
-    <Compile Include="DataModels\User.cs" />
+    <Compile Include="DataModels\system_Token.cs" />
+    <Compile Include="DataModels\system_User.cs" />
     <Compile Include="DependencyResolver.cs" />
     <Compile Include="GenericRepository\GenericRepository.cs" />
-    <Compile Include="Migrations\201804200748222_initial_database.cs" />
-    <Compile Include="Migrations\201804200748222_initial_database.Designer.cs">
-      <DependentUpon>201804200748222_initial_database.cs</DependentUpon>
+    <Compile Include="Migrations\201804221405219_initial_database.cs" />
+    <Compile Include="Migrations\201804221405219_initial_database.Designer.cs">
+      <DependentUpon>201804221405219_initial_database.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -119,8 +119,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201804200748222_initial_database.resx">
-      <DependentUpon>201804200748222_initial_database.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201804221405219_initial_database.resx">
+      <DependentUpon>201804221405219_initial_database.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
