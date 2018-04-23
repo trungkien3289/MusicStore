@@ -11,7 +11,7 @@ using WebAPI.Filters;
 
 namespace WebAPI.Controllers
 {
-    //[ApiAuthenticationFilter]
+    [ApiAuthenticationFilter]
     public class AlbumController : ApiController
     {
         private readonly IAlbumServices _albumServices;
