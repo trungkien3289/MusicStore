@@ -44,79 +44,92 @@ namespace MusicStore.APIController
             {
                 Title = "All This Is - Joe L.'s Studio",
                 MediaUrl = "/Data/Audio/AC_ATKMTake_2.mp3",
-                Thumbnail = ""
+                Thumbnail = "",
+                Duration = 326
             });
             songs.Add(new SummarySongModel()
             {
                 Title = "The Forsaken - Broadwing Studio (Final Mix)",
                 MediaUrl = "/Data/Audio/AC_M.mp3",
-                Thumbnail = ""
+                Thumbnail = "",
+                Duration = 346
             });
             songs.Add(new SummarySongModel()
             {
                 Title = "All The King's Men - Broadwing Studio (Final Mix)",
                 MediaUrl = "/Data/Audio/AC_TSOWAfucked_up.mp3",
-                Thumbnail = ""
+                Thumbnail = "",
+                Duration = 325
             });
             songs.Add(new SummarySongModel()
             {
                 Title = "The Forsaken - Broadwing Studio (First Mix)",
                 MediaUrl = "/Data/Audio/BS_ATKM.mp3",
-                Thumbnail = ""
+                Thumbnail = "",
+                Duration = 301
             });
             songs.Add(new SummarySongModel()
             {
                 Title = "All The King's Men - Broadwing Studio (First Mix)",
                 MediaUrl = "/Data/Audio/BS_TF.mp3",
-                Thumbnail = ""
+                Thumbnail = "",
+                Duration = 510
             });
             songs.Add(new SummarySongModel()
             {
                 Title = "All This Is - Alternate Cuts",
                 MediaUrl = "/Data/Audio/BSFM_ATKM.mp3",
-                Thumbnail = ""
+                Thumbnail = "",
+                Duration = 305
             });
             songs.Add(new SummarySongModel()
             {
                 Title = "All The King's Men (Take 1) - Alternate Cuts",
                 MediaUrl = "/Data/Audio/BSFM_TF.mp3",
-                Thumbnail = ""
+                Thumbnail = "",
+                Duration = 511
             });
             songs.Add(new SummarySongModel()
             {
                 Title = "All The King's Men (Take 2) - Alternate Cuts",
                 MediaUrl = "/Data/Audio/JLS_ATI.mp3",
-                Thumbnail = ""
+                Thumbnail = "",
+                Duration = 166
             });
             songs.Add(new SummarySongModel()
             {
                 Title = "Magus - Alternate Cuts",
                 MediaUrl = "/Data/Audio/PNY04-05_M.mp3",
-                Thumbnail = ""
+                Thumbnail = "",
+                Duration = 353
             });
             songs.Add(new SummarySongModel()
             {
                 Title = "The State Of Wearing Address (fucked up) - Alternate Cuts",
                 MediaUrl = "/Data/Audio/PNY04-05_M.mp3",
-                Thumbnail = ""
+                Thumbnail = "",
+                Duration = 353
             });
             songs.Add(new SummarySongModel()
             {
                 Title = ">Magus - Popeye's (New Years '04 - '05)",
                 MediaUrl = "/Data/Audio/PNY04-05_T.mp3",
-                Thumbnail = ""
+                Thumbnail = "",
+                Duration = 795
             });
             songs.Add(new SummarySongModel()
             {
                 Title = "On The Waterfront - Popeye's (New Years '04 - '05)",
                 MediaUrl = "/Data/Audio/PNY04-05_TSOWA.mp3",
-                Thumbnail = ""
+                Thumbnail = "",
+                Duration = 422
             });
             songs.Add(new SummarySongModel()
             {
                 Title = "Trance - Popeye's (New Years '04 - '05)",
                 MediaUrl = "/Data/Audio/SSB06_06_03_I.mp3",
-                Thumbnail = ""
+                Thumbnail = "",
+                Duration = 316
             });
 
             return songs;

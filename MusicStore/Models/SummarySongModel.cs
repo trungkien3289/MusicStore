@@ -14,5 +14,7 @@ namespace MusicStore.Models
         public string Thumbnail { get; set; }
         [JsonProperty(PropertyName = "file")]
         public string MediaUrl { get; set; }
+        [JsonProperty(PropertyName = "duration")]
+        public int Duration { get; set; }
     }
 }
