@@ -74,6 +74,7 @@
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -92,6 +93,7 @@
     <Compile Include="DataModels\ms_Genre.cs" />
     <Compile Include="DataModels\ms_Collection.cs" />
     <Compile Include="DataModels\ms_Song.cs" />
+    <Compile Include="DataModels\system_Logging.cs" />
     <Compile Include="DataModels\system_RouteData.cs" />
     <Compile Include="DataModels\system_Token.cs" />
     <Compile Include="DataModels\system_User.cs" />
@@ -100,6 +102,10 @@
     <Compile Include="Migrations\201804231550254_initial_database.cs" />
     <Compile Include="Migrations\201804231550254_initial_database.Designer.cs">
       <DependentUpon>201804231550254_initial_database.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805021516210_add NLog for log information into database.cs" />
+    <Compile Include="Migrations\201805021516210_add NLog for log information into database.Designer.cs">
+      <DependentUpon>201805021516210_add NLog for log information into database.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -119,6 +125,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201804231550254_initial_database.resx">
       <DependentUpon>201804231550254_initial_database.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805021516210_add NLog for log information into database.resx">
+      <DependentUpon>201805021516210_add NLog for log information into database.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

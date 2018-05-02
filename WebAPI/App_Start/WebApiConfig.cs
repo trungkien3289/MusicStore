@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using WebAPI.ActionFilters;
 
 namespace WebAPI
 {
@@ -20,12 +21,13 @@ namespace WebAPI
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            //config.Routes.MapHttpRoute(
-            //    name: "ActionBased",
-            //    routeTemplate: "api/{controller}/{action}/{id}",
-            //    defaults: new { id = RouteParameter.Optional }
-            //);
+            config.Routes.MapHttpRoute(
+                name: "ActionBased",
+                routeTemplate: "api/{controller}/{action}/{id}",
+                defaults: new { id = RouteParameter.Optional }
+            );
 
+            config.Filters.Add(new LoggingFilterAttribute());
             //config.Routes.MapHttpRoute(
             //   name: "ActionBased",
             //   routeTemplate: "api/{controller}/action/{action}/{id}",

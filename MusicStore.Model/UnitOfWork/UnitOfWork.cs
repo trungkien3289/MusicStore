@@ -23,6 +23,7 @@ namespace MusicStore.Model.UnitOfWork
         private GenericRepository<ms_Genre> _genreRepository;
         private GenericRepository<ms_Song> _songRepository;
         private GenericRepository<system_User> _userRepository;
+        private GenericRepository<system_Token> _tokenRepository;
 
         #endregion
 
@@ -123,6 +124,19 @@ namespace MusicStore.Model.UnitOfWork
                 }
 
                 return _userRepository;
+            }
+        }
+
+        public GenericRepository<system_Token> TokenRepository
+        {
+            get
+            {
+                if (this._tokenRepository == null)
+                {
+                    this._tokenRepository = new GenericRepository<system_Token>(_context);
+                }
+
+                return _tokenRepository;
             }
         }
         #endregion

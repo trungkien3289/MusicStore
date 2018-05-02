@@ -58,6 +58,7 @@ namespace MusicStore.Model.DataContext
         public DbSet<system_RouteData> system_RouteData { get; set; }
         public DbSet<system_User> User { get; set; }
         public DbSet<system_Token> Token { get; set; }
+        public DbSet<system_Logging> Logging { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

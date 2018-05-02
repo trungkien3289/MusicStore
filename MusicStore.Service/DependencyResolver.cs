@@ -1,4 +1,5 @@
-﻿using MusicStore.Service.IServices;
+﻿using MusicStore.Service.IService;
+using MusicStore.Service.IServices;
 using MusicStore.Service.Services;
 using Resolver;
 using System;
@@ -17,6 +18,8 @@ namespace MusicStore.Service
         {
             registerComponent.RegisterType<IAlbumServices, AlbumServices>();
             registerComponent.RegisterType<IUserServices, UserServices>();
+            registerComponent.RegisterType<ITokenServices, TokenServices>();
+
         }
     }
 }

@@ -7,11 +7,13 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using WebAPI.ActionFilters;
 using WebAPI.Filters;
 
 namespace WebAPI.Controllers
 {
-    [ApiAuthenticationFilter]
+    //[ApiAuthenticationFilter]
+    [AuthorizationRequired]
     public class AlbumController : ApiController
     {
         private readonly IAlbumServices _albumServices;
@@ -53,7 +55,9 @@ namespace WebAPI.Controllers
             var album = _albumServices.GetAlbumById(id);
             if (album != null)
                 return Request.CreateResponse(HttpStatusCode.OK, album);
-            return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No album found for this id");
+
+            throw new Exception("No album found for this id");
+            //return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No album found for this id");
         }
 
         // POST api/album
