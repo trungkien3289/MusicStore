@@ -14,6 +14,7 @@ namespace MusicStore.Model.DataModels
         public string Name { get; set; }
         public string Description { get; set; }
         public Nullable<int> Status { get; set; }
+        public string Url { get; set; }
 
         public virtual ICollection<ms_Album> Albums { get; set; }
         public virtual ICollection<ms_Song> Songs { get; set; }

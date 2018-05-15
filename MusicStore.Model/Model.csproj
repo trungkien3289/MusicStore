@@ -107,6 +107,10 @@
     <Compile Include="Migrations\201805021516210_add NLog for log information into database.Designer.cs">
       <DependentUpon>201805021516210_add NLog for log information into database.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805150045051_add_url_field_for_genre_table.cs" />
+    <Compile Include="Migrations\201805150045051_add_url_field_for_genre_table.Designer.cs">
+      <DependentUpon>201805150045051_add_url_field_for_genre_table.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitOfWork\IUnitOfWork.cs" />
@@ -128,6 +132,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805021516210_add NLog for log information into database.resx">
       <DependentUpon>201805021516210_add NLog for log information into database.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805150045051_add_url_field_for_genre_table.resx">
+      <DependentUpon>201805150045051_add_url_field_for_genre_table.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

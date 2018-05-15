@@ -10,7 +10,29 @@ namespace WebAPI.Filters
 {
     public class ApiAuthenticationFilter : GenericAuthenticationFilter
     {
+        /// <summary>
+        /// Default Authentication Constructor
+        /// </summary>
+        public ApiAuthenticationFilter()
+        {
+        }
 
+        /// <summary>
+        /// AuthenticationFilter constructor with isActive parameter
+        /// </summary>
+        /// <param name="isActive"></param>
+        public ApiAuthenticationFilter(bool isActive)
+            : base(isActive)
+        {
+        }
+
+        /// <summary>
+        /// Protected overriden method for authorizing user
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <param name="actionContext"></param>
+        /// <returns></returns>
         protected override bool OnAuthorizeUser(string username, string password, HttpActionContext actionContext)
         {
             var provider = actionContext.ControllerContext.Configuration

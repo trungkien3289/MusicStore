@@ -103,5 +103,30 @@ namespace MusicStore.Service.Services
 
             return success;
         }
+
+        public IEnumerable<AlbumEntity> GetTopAlbums(int top)
+        {
+            var albums = _unitOfWork.AlbumRepository.GetAll().Take(top).ToList();
+            if (albums.Any())
+            {
+                Mapper.CreateMap<ms_Album, AlbumEntity>();
+                var albumsModel = Mapper.Map<List<ms_Album>, List<AlbumEntity>>(albums);
+                return albumsModel;
+            }
+            return null;
+        }
+
+        public IEnumerable<AlbumEntity> GetAlbumsByCategory(string categoryUrl)
+        {
+            ms_Genre foundGenre = _unitOfWork.GenreRepository.GetWithInclude(g => g.Url == categoryUrl, "Albums").FirstOrDefault();
+            if (foundGenre == null) return null;
+            if (foundGenre.Albums.Any())
+            {
+                Mapper.CreateMap<ms_Album, AlbumEntity>();
+                var albumsModel = Mapper.Map<List<ms_Album>, List<AlbumEntity>>(foundGenre.Albums.ToList());
+                return albumsModel;
+            }
+            return null;
+        }
     }
 }

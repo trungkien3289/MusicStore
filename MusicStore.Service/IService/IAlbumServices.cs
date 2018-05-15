@@ -14,5 +14,7 @@ namespace MusicStore.Service.IServices
         int CreateAlbum(AlbumEntity albumSummary);
         bool UpdateAlbum(int albumId, AlbumEntity albumSummary);
         bool DeleteAlbum(int albumId);
+        IEnumerable<AlbumEntity> GetTopAlbums(int top);
+        IEnumerable<AlbumEntity> GetAlbumsByCategory(string categoryUrl);
     }
 }
