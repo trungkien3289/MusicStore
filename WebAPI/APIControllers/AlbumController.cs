@@ -48,6 +48,7 @@ namespace WebAPI.Controllers
             }
             return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Albums not found");
         }
+
         [System.Web.Http.AcceptVerbs("GET", "POST")]
         public HttpResponseMessage GetTopAlbums()
         {

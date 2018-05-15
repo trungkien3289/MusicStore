@@ -96,6 +96,12 @@ namespace MusicStore.Model.DataContext
                 .Map(t => t.MapLeftKey("AlbumId")
                     .MapRightKey("GenreId")
                     .ToTable("ms_Album_Genre"));
+
+            modelBuilder.Entity<ms_Artist>()
+                .HasMany(c => c.Genres).WithMany(i => i.Artists)
+                .Map(t => t.MapLeftKey("ArtistId")
+                    .MapRightKey("GenreId")
+                    .ToTable("ms_Artist_Genre"));
         }
     }
 }

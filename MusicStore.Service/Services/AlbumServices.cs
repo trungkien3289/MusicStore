@@ -14,17 +14,20 @@ namespace MusicStore.Service.Services
 {
     public class AlbumServices : IAlbumServices
     {
+        #region variables
         private readonly UnitOfWork _unitOfWork;
+
+        #endregion
+
+        #region constructors
         public AlbumServices(UnitOfWork unitOfWork)
         {
             this._unitOfWork = unitOfWork;
         }
 
-        //public AlbumServices()
-        //{
-        //    this._unitOfWork = new UnitOfWork();
-        //}
+        #endregion
 
+        #region public functions
         public AlbumEntity GetAlbumById(int albumId)
         {
             var album = _unitOfWork.AlbumRepository.GetByID(albumId);
@@ -45,6 +48,31 @@ namespace MusicStore.Service.Services
             {
                 Mapper.CreateMap<ms_Album, AlbumEntity>();
                 var albumsModel = Mapper.Map<List<ms_Album>, List<AlbumEntity>>(albums);
+                return albumsModel;
+            }
+            return null;
+        }
+
+        public IEnumerable<AlbumEntity> GetTopAlbums(int top)
+        {
+            var albums = _unitOfWork.AlbumRepository.GetAll().Take(top).ToList();
+            if (albums.Any())
+            {
+                Mapper.CreateMap<ms_Album, AlbumEntity>();
+                var albumsModel = Mapper.Map<List<ms_Album>, List<AlbumEntity>>(albums);
+                return albumsModel;
+            }
+            return null;
+        }
+
+        public IEnumerable<AlbumEntity> GetAlbumsByCategory(string categoryUrl)
+        {
+            ms_Genre foundGenre = _unitOfWork.GenreRepository.GetWithInclude(g => g.Url == categoryUrl, "Albums").FirstOrDefault();
+            if (foundGenre == null) return null;
+            if (foundGenre.Albums.Any())
+            {
+                Mapper.CreateMap<ms_Album, AlbumEntity>();
+                var albumsModel = Mapper.Map<List<ms_Album>, List<AlbumEntity>>(foundGenre.Albums.ToList());
                 return albumsModel;
             }
             return null;
@@ -104,29 +132,6 @@ namespace MusicStore.Service.Services
             return success;
         }
 
-        public IEnumerable<AlbumEntity> GetTopAlbums(int top)
-        {
-            var albums = _unitOfWork.AlbumRepository.GetAll().Take(top).ToList();
-            if (albums.Any())
-            {
-                Mapper.CreateMap<ms_Album, AlbumEntity>();
-                var albumsModel = Mapper.Map<List<ms_Album>, List<AlbumEntity>>(albums);
-                return albumsModel;
-            }
-            return null;
-        }
-
-        public IEnumerable<AlbumEntity> GetAlbumsByCategory(string categoryUrl)
-        {
-            ms_Genre foundGenre = _unitOfWork.GenreRepository.GetWithInclude(g => g.Url == categoryUrl, "Albums").FirstOrDefault();
-            if (foundGenre == null) return null;
-            if (foundGenre.Albums.Any())
-            {
-                Mapper.CreateMap<ms_Album, AlbumEntity>();
-                var albumsModel = Mapper.Map<List<ms_Album>, List<AlbumEntity>>(foundGenre.Albums.ToList());
-                return albumsModel;
-            }
-            return null;
-        }
+        #endregion
     }
 }

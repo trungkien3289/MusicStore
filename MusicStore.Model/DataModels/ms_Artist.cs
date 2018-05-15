@@ -17,5 +17,6 @@ namespace MusicStore.Model.DataModels
 
         public virtual ICollection<ms_Song> Songs { get; set; }
         public virtual ICollection<ms_Album> Albums { get; set; }
+        public virtual ICollection<ms_Genre> Genres { get; set; }
     }
 }

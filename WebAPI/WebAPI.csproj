@@ -192,6 +192,8 @@
     <Compile Include="ActionFilters\AuthorizationRequiredAttribute.cs" />
     <Compile Include="ActionFilters\GlobalExceptionAttribute.cs" />
     <Compile Include="ActionFilters\LoggingFilterAttribute.cs" />
+    <Compile Include="APIControllers\GenreController.cs" />
+    <Compile Include="APIControllers\SongController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -225,7 +227,8 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
-    <Compile Include="Controllers\AlbumController.cs" />
+    <Compile Include="APIControllers\AlbumController.cs" />
+    <Compile Include="APIControllers\ArtistController.cs" />
     <Compile Include="Controllers\AuthenticateController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />

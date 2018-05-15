@@ -111,6 +111,10 @@
     <Compile Include="Migrations\201805150045051_add_url_field_for_genre_table.Designer.cs">
       <DependentUpon>201805150045051_add_url_field_for_genre_table.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805151436190_add_relationship_between_artist_genre.cs" />
+    <Compile Include="Migrations\201805151436190_add_relationship_between_artist_genre.Designer.cs">
+      <DependentUpon>201805151436190_add_relationship_between_artist_genre.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitOfWork\IUnitOfWork.cs" />
@@ -135,6 +139,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805150045051_add_url_field_for_genre_table.resx">
       <DependentUpon>201805150045051_add_url_field_for_genre_table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805151436190_add_relationship_between_artist_genre.resx">
+      <DependentUpon>201805151436190_add_relationship_between_artist_genre.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
