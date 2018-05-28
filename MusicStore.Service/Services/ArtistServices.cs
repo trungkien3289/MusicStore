@@ -75,6 +75,58 @@ namespace MusicStore.Service.Services
             return null;
         }
 
+        public IEnumerable<ArtistEntity> GetFeaturedArtists()
+        {
+            var artists = _unitOfWork.ArtistRepository.GetMany(a => a.IsFeatured == true).ToList();
+            if (artists.Any())
+            {
+                Mapper.CreateMap<ms_Artist, ArtistEntity>();
+                var artistList = Mapper.Map<List<ms_Artist>, List<ArtistEntity>>(artists);
+                return artistList;
+            }
+            return null;
+        }
+
+        public IEnumerable<SongEntity> GetSongsOfArtist(int id)
+        {
+            var artist = _unitOfWork.ArtistRepository.GetWithInclude(a => a.Id == id, "Songs").FirstOrDefault();
+            if (artist != null)
+            {
+                IList<SongEntity> songs = new List<SongEntity>();
+
+                Mapper.CreateMap<ms_Song, SongEntity>();
+                var artistList = Mapper.Map<List<ms_Song>, List<SongEntity>>(artist.Songs.ToList());
+                return artistList;
+            }
+            return null;
+        }
+
+        public IEnumerable<AlbumEntity> GetAlbumsOfArtist(int id)
+        {
+            var artist = _unitOfWork.ArtistRepository.GetWithInclude(a => a.Id == id, "Albums").FirstOrDefault();
+            if (artist != null)
+            {
+                IList<AlbumEntity> albums = new List<AlbumEntity>();
+
+                Mapper.CreateMap<ms_Album, AlbumEntity>();
+                var albumEntitys = Mapper.Map<List<ms_Album>, List<AlbumEntity>>(artist.Albums.ToList());
+                return albumEntitys;
+            }
+            return null;
+        }
+
+        public IEnumerable<ArtistEntity> SearchByName(string query)
+        {
+            var artists = _unitOfWork.ArtistRepository.GetMany(a => a.Name.Contains(query)).ToList();
+            if (artists.Any())
+            {
+                Mapper.CreateMap<ms_Artist, ArtistEntity>();
+                var artistList = Mapper.Map<List<ms_Artist>, List<ArtistEntity>>(artists);
+                return artistList;
+            }
+            return null;
+        }
+
         #endregion
     }
 }

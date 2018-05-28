@@ -20,6 +20,7 @@ namespace WebAPI.Controllers
     {
         private const int NUMBER_OF_ALBUM_ON_HOMEPAGE = 20;
         private const string ALBUM_IMAGE_PATH = @"~/Data/AlbumImages/";
+        private const string SONG_BASE_PATH = @"~/Data/Album_Songs/";
         private readonly IAlbumServices _albumServices;
 
         #region Public Constructor
@@ -52,12 +53,11 @@ namespace WebAPI.Controllers
         [System.Web.Http.AcceptVerbs("GET", "POST")]
         public HttpResponseMessage GetTopAlbums()
         {
-            var baseUrl = Request.RequestUri.GetLeftPart(UriPartial.Authority);
             IList<AlbumEntity> albums = _albumServices.GetTopAlbums(NUMBER_OF_ALBUM_ON_HOMEPAGE).ToList();
             IList<AlbumSummary> listAlbumModels = new List<AlbumSummary>();
             if (albums != null)
             {
-                Mapper.CreateMap<AlbumEntity, AlbumSummary>().ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => baseUrl + Url.Content(ALBUM_IMAGE_PATH + albs.Thumbnail)));
+                Mapper.CreateMap<AlbumEntity, AlbumSummary>().ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => Url.Content(ALBUM_IMAGE_PATH + albs.Thumbnail)));
                 listAlbumModels = Mapper.Map<IList<AlbumEntity>, IList<AlbumSummary>>(albums);
             }
             return Request.CreateResponse(HttpStatusCode.OK, listAlbumModels);
@@ -65,7 +65,7 @@ namespace WebAPI.Controllers
 
         // GET api/album/5
         [System.Web.Http.AcceptVerbs("GET", "POST")]
-        public HttpResponseMessage Get(int id)
+        public HttpResponseMessage GetAlbum(int id)
         {
             var album = _albumServices.GetAlbumById(id);
             if (album != null)
@@ -73,6 +73,26 @@ namespace WebAPI.Controllers
 
             throw new Exception("No album found for this id");
             //return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No album found for this id");
+        }
+
+        public HttpResponseMessage GetSongsOfAlbum(int id)
+        {
+            var songs = _albumServices.GetSongsOfAlbum(id);
+            if (songs!= null)
+            {
+                var songEntities = songs as List<SongEntity> ?? songs.ToList();
+                if (songEntities.Any())
+                {
+                    Mapper.CreateMap<SongEntity, SummarySongModel>().ForMember(s => s.MediaUrl, map => map.MapFrom(ss => Url.Content(SONG_BASE_PATH + ss.MediaUrl)));
+                    var songModels = Mapper.Map<List<SongEntity>, List<SummarySongModel>>(songEntities);
+                    return Request.CreateResponse(HttpStatusCode.OK, songModels);
+                }
+                else
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "There is no any songs in album.");
+                }
+            }
+            return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Cannot found album.");
         }
 
         [Route("g/{categoryName}")]
@@ -85,6 +105,18 @@ namespace WebAPI.Controllers
             {
                 Mapper.CreateMap<AlbumEntity, AlbumSummary>().ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => baseUrl + Url.Content(ALBUM_IMAGE_PATH + albs.Thumbnail)));
                 listAlbumModels = Mapper.Map<IList<AlbumEntity>, IList<AlbumSummary>>(albums);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, listAlbumModels);
+        }
+
+        public HttpResponseMessage GetFeaturedAlbums()
+        {
+            var featuredAlbums = _albumServices.GetFeaturedAlbums().ToList();
+            IList<AlbumSummary> listAlbumModels = new List<AlbumSummary>();
+            if (featuredAlbums != null)
+            {
+                Mapper.CreateMap<AlbumEntity, AlbumSummary>().ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => Url.Content(ALBUM_IMAGE_PATH + albs.Thumbnail)));
+                listAlbumModels = Mapper.Map<IList<AlbumEntity>, IList<AlbumSummary>>(featuredAlbums);
             }
             return Request.CreateResponse(HttpStatusCode.OK, listAlbumModels);
         }

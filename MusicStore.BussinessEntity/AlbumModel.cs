@@ -13,5 +13,6 @@ namespace MusicStore.BussinessEntity
         public string Description { get; set; }
         public string Thumbnail { get; set; }
         public string Url { get; set; }
+        public bool IsFeatured { get; set; }
     }
 }

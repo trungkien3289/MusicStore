@@ -177,6 +177,13 @@ namespace MusicStore.Model.GenericRepository
             return DbSet.Single<TEntity>(predicate);
         }
 
+        public TEntity GetSingleWithInclude(Func<TEntity, bool> predicate, params string[] include)
+        {
+            IQueryable<TEntity> query = this.DbSet;
+            query = include.Aggregate(query, (current, inc) => current.Include(inc));
+            return query.Where(predicate).FirstOrDefault();
+        }
+
         /// <summary>
         /// The first record matching the specified criteria
         /// </summary>

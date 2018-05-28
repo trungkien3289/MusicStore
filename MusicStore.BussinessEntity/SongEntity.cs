@@ -17,5 +17,7 @@ namespace MusicStore.BussinessEntity
         public string Lyrics { get; set; }
         public Nullable<int> Status { get; set; }
         public string Url { get; set; }
+        public Nullable<double> Duration { get; set; }
+        public bool IsFeatured { get; set; }
     }
 }

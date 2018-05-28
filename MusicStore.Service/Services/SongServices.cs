@@ -26,6 +26,8 @@ namespace MusicStore.Service.Services
 
         #endregion
 
+        #region public functions
+
         public SongEntity GetSongById(int songId)
         {
             var song = _unitOfWork.SongRepository.GetByID(songId);
@@ -62,5 +64,31 @@ namespace MusicStore.Service.Services
             }
             return null;
         }
+
+        public IEnumerable<SongEntity> GetFeaturedSongs()
+        {
+            var songs = _unitOfWork.SongRepository.GetManyQueryable(s => s.IsFeatured == true).ToList();
+            if (songs.Any())
+            {
+                Mapper.CreateMap<ms_Song, SongEntity>();
+                var songsModels = Mapper.Map<List<ms_Song>, List<SongEntity>>(songs.ToList());
+                return songsModels;
+            }
+            return null;
+        }
+
+        public IEnumerable<SongEntity> SearchByName(string query)
+        {
+            var songs = _unitOfWork.SongRepository.GetMany(s => s.Title.Contains(query));
+            if (songs.Any())
+            {
+                Mapper.CreateMap<ms_Song, SongEntity>();
+                var songsModels = Mapper.Map<List<ms_Song>, List<SongEntity>>(songs.ToList());
+                return songsModels;
+            }
+            return null;
+        }
+
+        #endregion
     }
 }

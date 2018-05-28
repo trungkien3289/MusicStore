@@ -13,4 +13,5 @@ namespace WebAPI.Models
         }
         public IList<AlbumSummary> TopAlbums { get; set; }
     }
+
 }

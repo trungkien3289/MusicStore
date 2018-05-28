@@ -17,6 +17,9 @@ namespace MusicStore.Service
         public void SetUp(IRegisterComponent registerComponent)
         {
             registerComponent.RegisterType<IAlbumServices, AlbumServices>();
+            registerComponent.RegisterType<IArtistServices, ArtistServices>();
+            registerComponent.RegisterType<ISongServices, SongServices>();
+            registerComponent.RegisterType<IGenreServices, GenreServices>();
             registerComponent.RegisterType<IUserServices, UserServices>();
             registerComponent.RegisterType<ITokenServices, TokenServices>();
 

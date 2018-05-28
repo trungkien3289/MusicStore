@@ -1,4 +1,5 @@
-﻿using MusicStore.BussinessEntity;
+﻿using AutoMapper;
+using MusicStore.BussinessEntity;
 using MusicStore.Service.IService;
 using System;
 using System.Collections.Generic;
@@ -6,17 +7,19 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using WebAPI.Models;
 
 namespace WebAPI.Controllers
 {
-    #region variables
-    #endregion
-
     public class ArtistController : ApiController
     {
+        #region variables
         private const int NUMBER_OF_ALBUM_ON_HOMEPAGE = 20;
         private const string ALBUM_IMAGE_PATH = @"~/Data/AlbumImages/";
+        private const string SONG_BASE_PATH = @"~/Data/Album_Songs/";
         private readonly IArtistServices _artistServices;
+
+        #endregion
 
         #region Public Constructor
 
@@ -56,6 +59,56 @@ namespace WebAPI.Controllers
 
             throw new Exception("No artist found for this id");
             //return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No artist found for this id");
+        }
+
+        public HttpResponseMessage GetFeaturedArtists()
+        {
+            var artists = _artistServices.GetFeaturedArtists();
+            if (artists != null)
+            {
+                var artistEntities = artists as List<ArtistEntity> ?? artists.ToList();
+                if (artistEntities.Any())
+                    return Request.CreateResponse(HttpStatusCode.OK, artistEntities);
+            }
+            return Request.CreateErrorResponse(HttpStatusCode.NotFound, "There is no artist marked as featured.");
+        }
+
+        public HttpResponseMessage GetSongsOfArtist(int id)
+        {
+            var songs = _artistServices.GetSongsOfArtist(id).ToList();
+            if (songs != null)
+            {
+                if (songs.Any())
+                {
+                    Mapper.CreateMap<SongEntity, SummarySongModel>().ForMember(s => s.MediaUrl, map => map.MapFrom(ss => Url.Content(SONG_BASE_PATH + ss.MediaUrl)));
+                    var songModels = Mapper.Map<List<SongEntity>, List<SummarySongModel>>(songs);
+                    return Request.CreateResponse(HttpStatusCode.OK, songModels);
+                }
+                else
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "There is no song belong to artist.");
+                }
+            }
+            return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Cannot found artist.");
+        }
+
+        public HttpResponseMessage GetAlbumsOfArtist(int id)
+        {
+            var albums = _artistServices.GetAlbumsOfArtist(id).ToList();
+            if(albums != null)
+            {
+                if (albums.Any())
+                {
+                    Mapper.CreateMap<AlbumEntity, AlbumEntity>().ForMember(s => s.Thumbnail, map => map.MapFrom(ss => Url.Content(ALBUM_IMAGE_PATH + ss.Thumbnail)));
+                    var albumModels = Mapper.Map<List<AlbumEntity>, List<AlbumEntity>>(albums);
+                    return Request.CreateResponse(HttpStatusCode.OK, albumModels);
+                }
+                else
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "There is no album belong to artist.");
+                }
+            }
+            return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Cannot found artist.");
         }
 
         #endregion

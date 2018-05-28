@@ -40,6 +40,18 @@ namespace MusicStore.Service.Services
             return null;
         }
 
+        public IEnumerable<SongEntity> GetSongsOfAlbum(int albumId)
+        {
+            var album = _unitOfWork.AlbumRepository.GetWithInclude(a => a.Id == albumId, "Songs").FirstOrDefault();
+            if (album != null)
+            {
+                Mapper.CreateMap<ms_Song, SongEntity>();
+                var songs = Mapper.Map<List<ms_Song>, List<SongEntity>>(album.Songs.ToList());
+                return songs;
+            }
+            return null;
+        }
+
         public IEnumerable<AlbumEntity> GetAllAlbums()
         {
 
@@ -75,6 +87,32 @@ namespace MusicStore.Service.Services
                 var albumsModel = Mapper.Map<List<ms_Album>, List<AlbumEntity>>(foundGenre.Albums.ToList());
                 return albumsModel;
             }
+            return null;
+        }
+
+        public IEnumerable<AlbumEntity> GetFeaturedAlbums()
+        {
+            var featuredAlbums = _unitOfWork.AlbumRepository.GetMany(a => a.IsFeatured == true).ToList();
+            if(featuredAlbums.Any())
+            {
+                Mapper.CreateMap<ms_Album, AlbumEntity>();
+                var albums = Mapper.Map<List<ms_Album>, List<AlbumEntity>>(featuredAlbums);
+                return albums;
+            }
+
+            return null;
+        }
+
+        public IEnumerable<AlbumEntity> SearchByName(string query)
+        {
+            var albums = _unitOfWork.AlbumRepository.GetMany(a => a.Title.Contains(query)).ToList();
+            if (albums.Any())
+            {
+                Mapper.CreateMap<ms_Album, AlbumEntity>();
+                var albumEntities = Mapper.Map<List<ms_Album>, List<AlbumEntity>>(albums);
+                return albumEntities;
+            }
+
             return null;
         }
 
@@ -131,6 +169,7 @@ namespace MusicStore.Service.Services
 
             return success;
         }
+
 
         #endregion
     }

@@ -11,5 +11,8 @@ namespace MusicStore.Service.IService
     public interface IGenreServices
     {
         IEnumerable<GenreEntity> GetAllGenres();
+        IEnumerable<AlbumEntity> GetAlbumsOfGenre(int id);
+        IEnumerable<SongEntity> GetSongsOfGenre(int id);
+        IEnumerable<ArtistEntity> GetArtistsOfGenre(int id);
     }
 }
