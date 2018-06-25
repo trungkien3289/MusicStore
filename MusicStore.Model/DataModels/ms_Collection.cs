@@ -16,6 +16,7 @@ namespace MusicStore.Model.DataModels
         public string Thumbnail { get; set; }
         public Nullable<int> Status { get; set; }
         public string Url { get; set; }
+        public bool IsFeatured { get; set; }
 
         public virtual ICollection<ms_Song> Songs { get; set; }
     }

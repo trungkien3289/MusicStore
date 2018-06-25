@@ -13,6 +13,6 @@ namespace MusicStore.Service.IService
         IEnumerable<SongEntity> GetTopSongs(int top);
         IEnumerable<SongEntity> GetSongsByCategory(string categoryUrl);
         IEnumerable<SongEntity> GetFeaturedSongs();
-        IEnumerable<SongEntity> SearchByName(string query);
+        IEnumerable<SongEntity> SearchByName(string query, int page = 1, int numberItemsPerPage = 10);
     }
 }

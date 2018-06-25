@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Helper;
 using MusicStore.BussinessEntity;
 using MusicStore.BussinessEntity.Enums;
 using MusicStore.Service.IService;
@@ -18,53 +19,58 @@ namespace WebAPI.APIControllers
         private const int NUMBER_OF_ALBUM_ON_HOMEPAGE = 20;
         private const string ALBUM_IMAGE_PATH = @"~/Data/AlbumImages/";
         private const string SONG_BASE_PATH = @"~/Data/Album_Songs/";
+        private const string ARTIST_IMAGE_PATH = @"~/Data/Artist_Images/";
         private readonly ISongServices _songServices;
         private readonly IAlbumServices _albumServices;
         private readonly IArtistServices _artistServices;
+        private readonly IApplicationServices _applicationServices;
         #region Public Constructor
 
         /// <summary>
         /// Public constructor to initialize song service instance
         /// </summary>
-        public HomeAPIController(ISongServices songServices, IAlbumServices albumServices, IArtistServices artistServices)
+        public HomeAPIController(ISongServices songServices, IAlbumServices albumServices, IArtistServices artistServices, IApplicationServices applicationServices)
         {
             _songServices = songServices;
             _albumServices = albumServices;
             _artistServices = artistServices;
+            _applicationServices = applicationServices;
         }
 
         #endregion
 
         #region actions
         [System.Web.Http.AcceptVerbs("GET", "POST")]
-        public HttpResponseMessage Search(string query)
+        [Route("full-search.json")]
+        public HttpResponseMessage Search(string q, int page = 1, int numberItemsPerPage = Constants.NumberItemsPerPage)
         {
-            var songs = _songServices.SearchByName(query).ToList();
-            IList<SearchResultEntity> listSongModels = new List<SearchResultEntity>();
-            if (songs.Any())
+            var songs = _songServices.SearchByName(q, page, numberItemsPerPage);
+            IList<SongEntity> listSongModels = new List<SongEntity>();
+            if (songs!=null && songs.Any())
             {
-                Mapper.CreateMap<SongEntity, SearchResultEntity>()
-                    .ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => !string.IsNullOrEmpty(albs.Thumbnail) ? Url.Content( ALBUM_IMAGE_PATH + albs.Thumbnail) : ""))
-                    .ForMember(ae => ae.Type, map => map.MapFrom(albs => ItemType.Song));
-                listSongModels = Mapper.Map<IList<SongEntity>, IList<SearchResultEntity>>(songs);
+                Mapper.CreateMap<SongEntity, SongEntity>()
+                    .ForMember(s => s.MediaUrl, map => map.MapFrom(ss => !String.IsNullOrEmpty(ss.MediaUrl) ? Url.Content(SONG_BASE_PATH + ss.MediaUrl) : String.Empty))
+                    .ForMember(s => s.AlbumThumbnail, map => map.MapFrom(ss => !String.IsNullOrEmpty(ss.AlbumThumbnail) ? Url.Content(ALBUM_IMAGE_PATH + ss.AlbumThumbnail) : String.Empty))
+                    .ForMember(s => s.Thumbnail, map => map.MapFrom(ss => !String.IsNullOrEmpty(ss.Thumbnail) ? Url.Content(ARTIST_IMAGE_PATH + ss.Thumbnail) : String.Empty)); ;
+                listSongModels = Mapper.Map<IList<SongEntity>, IList<SongEntity>>(songs.ToList());
             }
 
-            var albums = _albumServices.SearchByName(query).ToList();
-            IList<SearchResultEntity> listAlbumModels = new List<SearchResultEntity>();
-            if (albums.Any())
+            var albums = _albumServices.SearchByName(q ,page, numberItemsPerPage);
+            IList<AlbumEntity> listAlbumModels = new List<AlbumEntity>();
+            if (albums !=null && albums.Any())
             {
-                Mapper.CreateMap<AlbumEntity, SearchResultEntity>()
+                Mapper.CreateMap<AlbumEntity, AlbumEntity>()
                     .ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => !string.IsNullOrEmpty(albs.Thumbnail) ? Url.Content(ALBUM_IMAGE_PATH + albs.Thumbnail) : ""));
-                listAlbumModels = Mapper.Map<IList<AlbumEntity>, IList<SearchResultEntity>>(albums);
+                listAlbumModels = Mapper.Map<IList<AlbumEntity>, IList<AlbumEntity>>(albums.ToList());
             }
 
-            var artists = _artistServices.SearchByName(query).ToList();
-            IList<SearchResultEntity> listArtistModels = new List<SearchResultEntity>();
-            if (artists.Any())
+            var artists = _artistServices.SearchByName(q, page, numberItemsPerPage);
+            IList<ArtistEntity> listArtistModels = new List<ArtistEntity>();
+            if (artists !=null && artists.Any())
             {
-                Mapper.CreateMap<ArtistEntity, SearchResultEntity>()
-                    .ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => !string.IsNullOrEmpty(albs.Thumbnail) ? Url.Content( ALBUM_IMAGE_PATH + albs.Thumbnail) : ""));
-                listArtistModels = Mapper.Map<IList<ArtistEntity>, IList<SearchResultEntity>>(artists);
+                Mapper.CreateMap<ArtistEntity, ArtistEntity>()
+                    .ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => !string.IsNullOrEmpty(albs.Thumbnail) ? Url.Content(ARTIST_IMAGE_PATH + albs.Thumbnail) : ""));
+                listArtistModels = Mapper.Map<IList<ArtistEntity>, IList<ArtistEntity>>(artists.ToList());
             }
 
             SearchResult result = new SearchResult()
@@ -74,6 +80,23 @@ namespace WebAPI.APIControllers
                 Artists = listArtistModels
             };
 
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [Route("wdg-ads-list.json")]
+        public HttpResponseMessage GetListApplications()
+        {
+            var applicationEntitys = _applicationServices.GetAllApplications();
+            IList<ApplicationEntity> applications = new List<ApplicationEntity>();
+            if (applicationEntitys != null && applicationEntitys.Any())
+            {
+                applications = applicationEntitys.ToList();
+            }
+
+            GetListApplicationsResponse result = new GetListApplicationsResponse()
+            {
+                Apllications = applications
+            };
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
         

@@ -16,6 +16,6 @@ namespace MusicStore.Service.IService
         IEnumerable<ArtistEntity> GetFeaturedArtists();
         IEnumerable<SongEntity> GetSongsOfArtist(int id);
         IEnumerable<AlbumEntity> GetAlbumsOfArtist(int id);
-        IEnumerable<ArtistEntity> SearchByName(string query);
+        IEnumerable<ArtistEntity> SearchByName(string query, int page = 1, int numberItemsPerPage = 10);
     }
 }

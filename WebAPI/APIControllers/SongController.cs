@@ -15,6 +15,7 @@ namespace WebAPI.APIControllers
     {
         private const int NUMBER_OF_ALBUM_ON_HOMEPAGE = 20;
         private const string ALBUM_IMAGE_PATH = @"~/Data/AlbumImages/";
+        private const string ARTIST_IMAGE_PATH = @"~/Data/Artist_Images/";
         private const string SONG_BASE_PATH = @"~/Data/Album_Songs/";
         private readonly ISongServices _songServices;
 
@@ -33,12 +34,21 @@ namespace WebAPI.APIControllers
         #region actions
         // GET api/song/5
         [System.Web.Http.AcceptVerbs("GET", "POST")]
+        [Route("song-detail.json")]
+        [Route("api/Song/Get")]
         public HttpResponseMessage Get(int id)
         {
             var song = _songServices.GetSongById(id);
-            song.MediaUrl = Url.Content(SONG_BASE_PATH + song.MediaUrl);
             if (song != null)
-                return Request.CreateResponse(HttpStatusCode.OK, song);
+            {
+                Mapper.CreateMap<SongEntity, ShortSummarySongModel>()
+                  .ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => !String.IsNullOrEmpty(albs.Thumbnail) ? Url.Content(ARTIST_IMAGE_PATH + albs.Thumbnail) : String.Empty))
+                  .ForMember(ae => ae.MediaUrl, map => map.MapFrom(s => !String.IsNullOrEmpty(s.MediaUrl) ? Url.Content(SONG_BASE_PATH + s.MediaUrl): String.Empty));
+                var foundSong = Mapper.Map<SongEntity, ShortSummarySongModel>(song);
+                GetSongDetailsResponse response = new GetSongDetailsResponse();
+                response.Songs.Add(foundSong);
+                return Request.CreateResponse(HttpStatusCode.OK, response);
+            }
 
             throw new Exception("No song found for this id");
             //return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No album found for this id");
@@ -51,23 +61,47 @@ namespace WebAPI.APIControllers
             if (songs != null)
             {
                 Mapper.CreateMap<SongEntity, SummarySongModel>()
-                    .ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => Url.Content(ALBUM_IMAGE_PATH + albs.Thumbnail)))
-                    .ForMember(ae => ae.MediaUrl, map => map.MapFrom(s => Url.Content(SONG_BASE_PATH + s.MediaUrl)));
+                    .ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => !String.IsNullOrEmpty(albs.Thumbnail) ? Url.Content(ALBUM_IMAGE_PATH + albs.Thumbnail):String.Empty))
+                    .ForMember(ae => ae.MediaUrl, map => map.MapFrom(s => !String.IsNullOrEmpty(s.MediaUrl) ? Url.Content(SONG_BASE_PATH + s.MediaUrl):String.Empty));
                 listSongModels = Mapper.Map<IList<SongEntity>, IList<SummarySongModel>>(songs);
             }
             return Request.CreateResponse(HttpStatusCode.OK, listSongModels);
         }
 
+        [Route("top.json")]
+        [Route("api/Song/GetFeaturedSongs")]
         public HttpResponseMessage GetFeaturedSongs()
         {
-            var songs = _songServices.GetFeaturedSongs().ToList();
+            var songs = _songServices.GetFeaturedSongs();
             IList<SummarySongModel> listSongModels = new List<SummarySongModel>();
-            if (songs.Any())
+            if (songs !=null && songs.Any())
             {
                 Mapper.CreateMap<SongEntity, SummarySongModel>()
-                    .ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => Url.Content(ALBUM_IMAGE_PATH + albs.Thumbnail)))
-                    .ForMember(ae => ae.MediaUrl, map => map.MapFrom(s => Url.Content(SONG_BASE_PATH + s.MediaUrl)));
-                listSongModels = Mapper.Map<IList<SongEntity>, IList<SummarySongModel>>(songs);
+                    .ForMember(ae => ae.AlbumThumbnail, map => map.MapFrom(albs => !String.IsNullOrEmpty(albs.AlbumThumbnail) ? Url.Content(ALBUM_IMAGE_PATH + albs.AlbumThumbnail):String.Empty))
+                    .ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => !String.IsNullOrEmpty(albs.Thumbnail)? Url.Content(ARTIST_IMAGE_PATH + albs.Thumbnail):String.Empty))
+                    .ForMember(ae => ae.MediaUrl, map => map.MapFrom(s => !String.IsNullOrEmpty(s.MediaUrl) ? Url.Content(SONG_BASE_PATH + s.MediaUrl):String.Empty));
+                listSongModels = Mapper.Map<IList<SongEntity>, IList<SummarySongModel>>(songs.ToList());
+            }
+
+            GetFeaturedSongs result = new GetFeaturedSongs()
+            {
+                Songs = listSongModels
+            };
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        public HttpResponseMessage GetTopSongs(int top)
+        {
+
+            var songs = _songServices.GetTopSongs(top);
+            IList<SummarySongModel> listSongModels = new List<SummarySongModel>();
+            if (songs !=null && songs.Any())
+            {
+                Mapper.CreateMap<SongEntity, SummarySongModel>()
+                    .ForMember(ae => ae.AlbumThumbnail, map => map.MapFrom(albs => !String.IsNullOrEmpty(albs.AlbumThumbnail) ? Url.Content(ALBUM_IMAGE_PATH + albs.AlbumThumbnail):String.Empty))
+                    .ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => !String.IsNullOrEmpty(albs.Thumbnail) ? Url.Content(ALBUM_IMAGE_PATH + albs.Thumbnail):String.Empty))
+                    .ForMember(ae => ae.MediaUrl, map => map.MapFrom(s => !String.IsNullOrEmpty(s.MediaUrl) ? Url.Content(SONG_BASE_PATH + s.MediaUrl):String.Empty));
+                listSongModels = Mapper.Map<IList<SongEntity>, IList<SummarySongModel>>(songs.ToList());
             }
             return Request.CreateResponse(HttpStatusCode.OK, listSongModels);
         }

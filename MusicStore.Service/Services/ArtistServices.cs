@@ -28,10 +28,11 @@ namespace MusicStore.Service.Services
         #region public functions
         public IEnumerable<ArtistEntity> GetAllArtists()
         {
-            var artists = _unitOfWork.ArtistRepository.GetAll().ToList();
+            var artists = _unitOfWork.ArtistRepository.GetWithInclude(null, "Songs").ToList();
             if (artists.Any())
             {
-                Mapper.CreateMap<ms_Artist, ArtistEntity>();
+                Mapper.CreateMap<ms_Artist, ArtistEntity>()
+                    .ForMember(ae => ae.NumberOfSongs, map => map.MapFrom(artist => artist.Songs.Count()));
                 var artistList = Mapper.Map<List<ms_Artist>,List<ArtistEntity>>(artists);
                 return artistList;
             }
@@ -65,10 +66,11 @@ namespace MusicStore.Service.Services
 
         public IEnumerable<ArtistEntity> GetTopArtists(int top)
         {
-            var artists = _unitOfWork.ArtistRepository.GetAll().Take(top).ToList();
+            var artists = _unitOfWork.ArtistRepository.GetWithInclude(null, "Songs").Take(top).ToList();
             if (artists.Any())
             {
-                Mapper.CreateMap<ms_Artist, ArtistEntity>();
+                Mapper.CreateMap<ms_Artist, ArtistEntity>()
+                    .ForMember(ae => ae.NumberOfSongs, map => map.MapFrom(artist => artist.Songs.Count()));
                 var artistList = Mapper.Map<List<ms_Artist>, List<ArtistEntity>>(artists);
                 return artistList;
             }
@@ -77,10 +79,11 @@ namespace MusicStore.Service.Services
 
         public IEnumerable<ArtistEntity> GetFeaturedArtists()
         {
-            var artists = _unitOfWork.ArtistRepository.GetMany(a => a.IsFeatured == true).ToList();
+            var artists = _unitOfWork.ArtistRepository.GetWithInclude(a => a.IsFeatured == true, "Songs").ToList();
             if (artists.Any())
             {
-                Mapper.CreateMap<ms_Artist, ArtistEntity>();
+                Mapper.CreateMap<ms_Artist, ArtistEntity>()
+                    .ForMember(ae => ae.NumberOfSongs, map => map.MapFrom(artist => artist.Songs.Count()));
                 var artistList = Mapper.Map<List<ms_Artist>, List<ArtistEntity>>(artists);
                 return artistList;
             }
@@ -89,12 +92,18 @@ namespace MusicStore.Service.Services
 
         public IEnumerable<SongEntity> GetSongsOfArtist(int id)
         {
-            var artist = _unitOfWork.ArtistRepository.GetWithInclude(a => a.Id == id, "Songs").FirstOrDefault();
+            var artist = _unitOfWork.ArtistRepository.GetWithInclude(a => a.Id == id, "Songs", "Songs.Albums").FirstOrDefault();
             if (artist != null)
             {
                 IList<SongEntity> songs = new List<SongEntity>();
 
-                Mapper.CreateMap<ms_Song, SongEntity>();
+                Mapper.CreateMap<ms_Song, SongEntity>()
+                    .ForMember(ae => ae.AlbumId, map => map.MapFrom(s => s.Albums.Count() > 0 ? s.Albums.First().Id : 0))
+                    .ForMember(ae => ae.AlbumName, map => map.MapFrom(s => s.Albums.Count() > 0 ? s.Albums.First().Title : String.Empty))
+                    .ForMember(ae => ae.AlbumThumbnail, map => map.MapFrom(s => s.Albums.Count() > 0 ? s.Albums.First().Thumbnail : String.Empty))
+                    .ForMember(ae => ae.ArtistId, map => map.MapFrom(albs => artist.Id))
+                    .ForMember(ae => ae.ArtistName, map => map.MapFrom(albs => artist.Name))
+                    .ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => artist.Thumbnail));
                 var artistList = Mapper.Map<List<ms_Song>, List<SongEntity>>(artist.Songs.ToList());
                 return artistList;
             }
@@ -115,12 +124,13 @@ namespace MusicStore.Service.Services
             return null;
         }
 
-        public IEnumerable<ArtistEntity> SearchByName(string query)
+        public IEnumerable<ArtistEntity> SearchByName(string query, int page = 1, int numberItemsPerPage = 10)
         {
-            var artists = _unitOfWork.ArtistRepository.GetMany(a => a.Name.Contains(query)).ToList();
+            var artists = _unitOfWork.ArtistRepository.GetWithInclude(a => a.Name.Contains(query), "Songs").OrderBy(a => a.Name).Skip(--page*numberItemsPerPage).Take(numberItemsPerPage).ToList();
             if (artists.Any())
             {
-                Mapper.CreateMap<ms_Artist, ArtistEntity>();
+                Mapper.CreateMap<ms_Artist, ArtistEntity>()
+                    .ForMember(ae => ae.NumberOfSongs, map => map.MapFrom(albs => albs.Songs.Count()));
                 var artistList = Mapper.Map<List<ms_Artist>, List<ArtistEntity>>(artists);
                 return artistList;
             }

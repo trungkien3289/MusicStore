@@ -16,6 +16,7 @@ namespace WebAPI.Controllers
         #region variables
         private const int NUMBER_OF_ALBUM_ON_HOMEPAGE = 20;
         private const string ALBUM_IMAGE_PATH = @"~/Data/AlbumImages/";
+        private const string ARTIST_IMAGE_PATH = @"~/Data/Artist_Images/";
         private const string SONG_BASE_PATH = @"~/Data/Album_Songs/";
         private readonly IArtistServices _artistServices;
 
@@ -44,7 +45,11 @@ namespace WebAPI.Controllers
             {
                 var artistEntities = artists as List<ArtistEntity> ?? artists.ToList();
                 if (artistEntities.Any())
-                    return Request.CreateResponse(HttpStatusCode.OK, artistEntities);
+                {
+                    Mapper.CreateMap<ArtistEntity, ArtistEntity>().ForMember(s => s.Thumbnail, map => map.MapFrom(ss => Url.Content(ARTIST_IMAGE_PATH + ss.Thumbnail)));
+                    var artistLists = Mapper.Map<List<ArtistEntity>, List<ArtistEntity>>(artistEntities);
+                    return Request.CreateResponse(HttpStatusCode.OK, artistLists);
+                }
             }
             return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Artists not found");
         }
@@ -61,16 +66,30 @@ namespace WebAPI.Controllers
             //return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No artist found for this id");
         }
 
+        [Route("artists.json")]
+        [Route("api/Artist/GetFeaturedArtists")]
         public HttpResponseMessage GetFeaturedArtists()
         {
             var artists = _artistServices.GetFeaturedArtists();
+            var artistLists = new List<ArtistEntity>();
+
             if (artists != null)
             {
-                var artistEntities = artists as List<ArtistEntity> ?? artists.ToList();
-                if (artistEntities.Any())
-                    return Request.CreateResponse(HttpStatusCode.OK, artistEntities);
+                if (artists != null &&artists.Any())
+                {
+                    Mapper.CreateMap<ArtistEntity, ArtistEntity>().ForMember(s => s.Thumbnail, map => map.MapFrom(ss => Url.Content(ARTIST_IMAGE_PATH + ss.Thumbnail)));
+                    artistLists = Mapper.Map<List<ArtistEntity>, List<ArtistEntity>>(artists.ToList());
+                }
             }
-            return Request.CreateErrorResponse(HttpStatusCode.NotFound, "There is no artist marked as featured.");
+
+            GetFeaturedArtists result = new GetFeaturedArtists()
+            {
+                Artists = artistLists
+            };
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+
+            //return Request.CreateErrorResponse(HttpStatusCode.NotFound, "There is no artist marked as featured.");
         }
 
         public HttpResponseMessage GetSongsOfArtist(int id)
@@ -90,6 +109,32 @@ namespace WebAPI.Controllers
                 }
             }
             return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Cannot found artist.");
+        }
+
+        // TODO: get top items from database instead load all items and get top from memory
+        [Route("artist-songs.json")]
+        public HttpResponseMessage GetTopSongsOfArtist(int artistid, int top = 0)
+        {
+            var songs = _artistServices.GetSongsOfArtist(artistid);
+            IList<SummarySongModel> listSongsOfArtist = new List<SummarySongModel>();
+            if (songs != null && songs.Any())
+            {
+                if(top != 0) {
+                    songs = songs.Take(top).ToList();
+                }
+                Mapper.CreateMap<SongEntity, SummarySongModel>()
+                    .ForMember(s => s.MediaUrl, map => map.MapFrom(ss =>!String.IsNullOrEmpty(ss.MediaUrl)? Url.Content(SONG_BASE_PATH + ss.MediaUrl):String.Empty))
+                .ForMember(s => s.AlbumThumbnail, map => map.MapFrom(ss => !String.IsNullOrEmpty(ss.AlbumThumbnail) ? Url.Content(ALBUM_IMAGE_PATH + ss.AlbumThumbnail) : String.Empty))
+                .ForMember(s => s.Thumbnail, map => map.MapFrom(ss => !String.IsNullOrEmpty(ss.Thumbnail) ? Url.Content(ARTIST_IMAGE_PATH + ss.Thumbnail) : String.Empty));
+                listSongsOfArtist = Mapper.Map<List<SongEntity>, List<SummarySongModel>>(songs.ToList());
+            }
+
+            GetTopSongsOfArtistResponse result = new GetTopSongsOfArtistResponse()
+            {
+                Songs = listSongsOfArtist
+            };
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         public HttpResponseMessage GetAlbumsOfArtist(int id)

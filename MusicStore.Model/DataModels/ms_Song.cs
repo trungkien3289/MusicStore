@@ -20,6 +20,7 @@ namespace MusicStore.Model.DataModels
         public Nullable<int> Status { get; set; }
         public string Url { get; set; }
         public Nullable<double> Duration { get; set; }
+        public Nullable<double> Quality { get; set; }
         public bool IsFeatured { get; set; }
 
         public virtual ICollection<ms_Genre> Genres { get; set; }

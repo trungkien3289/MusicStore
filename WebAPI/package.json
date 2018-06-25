@@ -57,7 +57,8 @@
     "rimraf": "^2.5.4",
 
     "@types/node": "^6.0.46",
-    "@types/jasmine": "2.5.36"
+    "@types/jasmine": "2.5.36",
+      "ng2-bs3-modal": "0.10.4"
   },
   "repository": {}
 }

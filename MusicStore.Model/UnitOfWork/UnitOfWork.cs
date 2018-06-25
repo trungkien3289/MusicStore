@@ -24,6 +24,7 @@ namespace MusicStore.Model.UnitOfWork
         private GenericRepository<ms_Song> _songRepository;
         private GenericRepository<system_User> _userRepository;
         private GenericRepository<system_Token> _tokenRepository;
+        private GenericRepository<ms_Application> _applicationRepository;
 
         #endregion
 
@@ -69,7 +70,7 @@ namespace MusicStore.Model.UnitOfWork
         /// <summary>
         /// Get/Set Property for collection repository.
         /// </summary>
-        public GenericRepository<ms_Collection> collectionRepository
+        public GenericRepository<ms_Collection> CollectionRepository
         {
             get
             {
@@ -127,6 +128,9 @@ namespace MusicStore.Model.UnitOfWork
             }
         }
 
+        /// <summary>
+        /// Get/Set Property for token repository.
+        /// </summary>
         public GenericRepository<system_Token> TokenRepository
         {
             get
@@ -137,6 +141,22 @@ namespace MusicStore.Model.UnitOfWork
                 }
 
                 return _tokenRepository;
+            }
+        }
+
+        /// <summary>
+        /// Get/Set Property for application repository.
+        /// </summary>
+        public GenericRepository<ms_Application> ApplicationRepository
+        {
+            get
+            {
+                if (this._applicationRepository == null)
+                {
+                    this._applicationRepository = new GenericRepository<ms_Application>(_context);
+                }
+
+                return _applicationRepository;
             }
         }
         #endregion

@@ -89,6 +89,7 @@
     </Compile>
     <Compile Include="DataModels\IdentityModels.cs" />
     <Compile Include="DataModels\ms_Album.cs" />
+    <Compile Include="DataModels\ms_Application.cs" />
     <Compile Include="DataModels\ms_Artist.cs" />
     <Compile Include="DataModels\ms_Genre.cs" />
     <Compile Include="DataModels\ms_Collection.cs" />
@@ -115,17 +116,25 @@
     <Compile Include="Migrations\201805151436190_add_relationship_between_artist_genre.Designer.cs">
       <DependentUpon>201805151436190_add_relationship_between_artist_genre.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201805171342404_add_duration_property_for_song_table.cs" />
-    <Compile Include="Migrations\201805171342404_add_duration_property_for_song_table.Designer.cs">
-      <DependentUpon>201805171342404_add_duration_property_for_song_table.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805171425252_add_thumnail_property_for_artist_table.cs" />
-    <Compile Include="Migrations\201805171425252_add_thumnail_property_for_artist_table.Designer.cs">
-      <DependentUpon>201805171425252_add_thumnail_property_for_artist_table.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\201805190826486_add_isfeatured_property_for_album_artist_song.cs" />
     <Compile Include="Migrations\201805190826486_add_isfeatured_property_for_album_artist_song.Designer.cs">
       <DependentUpon>201805190826486_add_isfeatured_property_for_album_artist_song.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806081423032_add_qualify_of_song.cs" />
+    <Compile Include="Migrations\201806081423032_add_qualify_of_song.Designer.cs">
+      <DependentUpon>201806081423032_add_qualify_of_song.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806081515431_add_thumnail_property_for_genre.cs" />
+    <Compile Include="Migrations\201806081515431_add_thumnail_property_for_genre.Designer.cs">
+      <DependentUpon>201806081515431_add_thumnail_property_for_genre.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806121640287_update_quality_data_type.cs" />
+    <Compile Include="Migrations\201806121640287_update_quality_data_type.Designer.cs">
+      <DependentUpon>201806121640287_update_quality_data_type.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806210115086_add_isfeatured_property_for_collection.cs" />
+    <Compile Include="Migrations\201806210115086_add_isfeatured_property_for_collection.Designer.cs">
+      <DependentUpon>201806210115086_add_isfeatured_property_for_collection.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -155,14 +164,20 @@
     <EmbeddedResource Include="Migrations\201805151436190_add_relationship_between_artist_genre.resx">
       <DependentUpon>201805151436190_add_relationship_between_artist_genre.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805171342404_add_duration_property_for_song_table.resx">
-      <DependentUpon>201805171342404_add_duration_property_for_song_table.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805171425252_add_thumnail_property_for_artist_table.resx">
-      <DependentUpon>201805171425252_add_thumnail_property_for_artist_table.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805190826486_add_isfeatured_property_for_album_artist_song.resx">
       <DependentUpon>201805190826486_add_isfeatured_property_for_album_artist_song.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806081423032_add_qualify_of_song.resx">
+      <DependentUpon>201806081423032_add_qualify_of_song.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806081515431_add_thumnail_property_for_genre.resx">
+      <DependentUpon>201806081515431_add_thumnail_property_for_genre.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806121640287_update_quality_data_type.resx">
+      <DependentUpon>201806121640287_update_quality_data_type.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806210115086_add_isfeatured_property_for_collection.resx">
+      <DependentUpon>201806210115086_add_isfeatured_property_for_collection.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

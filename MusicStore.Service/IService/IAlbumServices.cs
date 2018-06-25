@@ -18,6 +18,7 @@ namespace MusicStore.Service.IServices
         bool DeleteAlbum(int albumId);
         IEnumerable<AlbumEntity> GetTopAlbums(int top);
         IEnumerable<AlbumEntity> GetAlbumsByCategory(string categoryUrl);
-        IEnumerable<AlbumEntity> SearchByName(string query);
+        IEnumerable<AlbumEntity> SearchByName(string query, int page = 1, int numberItemsPerPage = 10);
+        IEnumerable<AlbumEntity> GetAlbumsOfArtist(int artistId, int top);
     }
 }
