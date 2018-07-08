@@ -20,5 +20,7 @@ namespace MusicStore.Service.IServices
         IEnumerable<AlbumEntity> GetAlbumsByCategory(string categoryUrl);
         IEnumerable<AlbumEntity> SearchByName(string query, int page = 1, int numberItemsPerPage = 10);
         IEnumerable<AlbumEntity> GetAlbumsOfArtist(int artistId, int top);
+        IEnumerable<AlbumEntity> GetAlbumsHasSameArtists(int albumId);
+        IEnumerable<AlbumEntity> GetAlbumsHasSameGenres(int albumId);
     }
 }

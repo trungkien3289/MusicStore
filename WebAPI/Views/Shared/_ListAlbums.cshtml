@@ -9,7 +9,7 @@
     @foreach (var item in Model)
     {
         <div class="col-md-3 content-grid album-item">
-            <a class="play-icon popup-with-zoom-anim" href="@item.Url"><img src="@item.Thumbnail" title="@item.Title"><em></em></a>
+            <a class="play-icon popup-with-zoom-anim" href="/WebAlbum/Index?id=@item.Id"><img src="@item.Thumbnail" title="@item.Title"><em></em></a>
             @*<a class="button play-icon popup-with-zoom-anim"  href="@item.Url">Listen now</a>*@
         </div>
     }

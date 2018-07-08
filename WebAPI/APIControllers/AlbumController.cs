@@ -110,10 +110,10 @@ namespace WebAPI.Controllers
         }
 
         // TODO : review this action, which has the same funtionality with  "GetAlbumById" action
-        //[Route("playlist-song.json")]
-        public HttpResponseMessage GetSongsOfAlbum2(int playlistid)
+        [Route("album-songs.json")]
+        public HttpResponseMessage GetSongsOfAlbum2(int albumid)
         {
-            var songs = _albumServices.GetSongsOfAlbum(playlistid);
+            var songs = _albumServices.GetSongsOfAlbum(albumid);
             IList<SummarySongModel> listSongs = new List<SummarySongModel>();
             if (songs != null && songs.Any())
             {

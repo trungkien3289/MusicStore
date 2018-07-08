@@ -2180,7 +2180,7 @@ p.email {
         color: #e8991f;
         font-size: 1em;
         font-weight: 400;
-        margin-bottom: 1.5em;
+        /*margin-bottom: 1.5em;*/
     }
 
 .buy-tickets {

@@ -233,6 +233,7 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="APIControllers\AlbumController.cs" />
     <Compile Include="APIControllers\ArtistController.cs" />
+    <Compile Include="Controllers\WebAlbumController.cs" />
     <Compile Include="Controllers\AuthenticateController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -243,6 +244,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\NLogger.cs" />
+    <Compile Include="Models\AlbumViewModel.cs" />
     <Compile Include="Models\AlbumViewModels.cs" />
     <Compile Include="Models\ArtistAPIModels.cs" />
     <Compile Include="Models\ArtistViewModels.cs" />
@@ -267,6 +269,7 @@
     <Content Include="Content\Common\icons.css" />
     <Content Include="Content\Common\jplayer.blue.monday.min.css" />
     <Content Include="Content\Common\popuo-box.css" />
+    <Content Include="Content\Common\slidebar.css" />
     <Content Include="Content\Common\style.css" />
     <Content Include="Content\fonts\digital-7-webfont.svg" />
     <Content Include="Content\fonts\digital-7_italic-webfont.svg" />
@@ -1066,67 +1069,6 @@
     <Content Include="Data\Artist_Images\yolanda-adams-2.jpg" />
     <Content Include="Data\Artist_Images\zach-williams-2.jpg" />
     <Content Include="Data\Artist_Images\zona-7-2.jpg" />
-    <Content Include="Data\Collection_Images\50-greatest-worship-songs-63603222884-2.jpg" />
-    <Content Include="Data\Collection_Images\alaba-a-dios-63598400651-2.jpg" />
-    <Content Include="Data\Collection_Images\alabanza-y-adoracion-63587838583-2.jpg" />
-    <Content Include="Data\Collection_Images\ano-nuevo-cristiano-63617000956-2.jpg" />
-    <Content Include="Data\Collection_Images\baladas-cristianas-63587838939-2.jpg" />
-    <Content Include="Data\Collection_Images\best-christian-rock-bands-63604017092-2.jpg" />
-    <Content Include="Data\Collection_Images\best-of-live-worship-63617482780-2.jpg" />
-    <Content Include="Data\Collection_Images\christian-country-music-63587839272-2.jpg" />
-    <Content Include="Data\Collection_Images\christian-dance-party-63630441473-2.jpg" />
-    <Content Include="Data\Collection_Images\christian-mix-63630441644-2.jpg" />
-    <Content Include="Data\Collection_Images\christian-music-for-youth-63604514723-2.jpg" />
-    <Content Include="Data\Collection_Images\christian-rock-63598400796-2.jpg" />
-    <Content Include="Data\Collection_Images\christian-song-highlights-63592585560-2.jpg" />
-    <Content Include="Data\Collection_Images\christmas-songs-63647490782-2.jpg" />
-    <Content Include="Data\Collection_Images\clasicos-de-navidad-63616998397-2.jpg" />
-    <Content Include="Data\Collection_Images\coffee-house-christian-music-63630442846-2.jpg" />
-    <Content Include="Data\Collection_Images\cristian-contemporanea-63576018222-2.jpg" />
-    <Content Include="Data\Collection_Images\dios-no-esta-muerto-63594146314-2.jpg" />
-    <Content Include="Data\Collection_Images\feliz-navidad-63616998352-2.jpg" />
-    <Content Include="Data\Collection_Images\full-alabanza-63575765702-2.jpg" />
-    <Content Include="Data\Collection_Images\girls-praising-63598401451-2.jpg" />
-    <Content Include="Data\Collection_Images\gospel-63587838248-2.jpg" />
-    <Content Include="Data\Collection_Images\hip-hop-63587838101-2.jpg" />
-    <Content Include="Data\Collection_Images\hot-christian-songs-2016-63598402072-2.jpg" />
-    <Content Include="Data\Collection_Images\hot-christian-songs-63608243464-2.jpg" />
-    <Content Include="Data\Collection_Images\itunes-top-christian-songs-63604016241-2.jpg" />
-    <Content Include="Data\Collection_Images\jesus-mi-fiel-amigo-63598402453-2.jpg" />
-    <Content Include="Data\Collection_Images\lo-mejor-de-jesus-adrian-romero-63516750742-2.jpg" />
-    <Content Include="Data\Collection_Images\lo-mejor-de-marcela-gandara-63598403219-2.jpg" />
-    <Content Include="Data\Collection_Images\lo-mejor-de-marco-barrientos-63575766316-2.jpg" />
-    <Content Include="Data\Collection_Images\lo-mejor-de-tercer-cielo-63575766958-2.jpg" />
-    <Content Include="Data\Collection_Images\logo-share.jpg" />
-    <Content Include="Data\Collection_Images\metal-cristiano-63587837469-2.jpg" />
-    <Content Include="Data\Collection_Images\most-played-63592585960-2.jpg" />
-    <Content Include="Data\Collection_Images\mujeres-que-alaban-a-dios-63630445421-2.jpg" />
-    <Content Include="Data\Collection_Images\musica-adoracion-oracion-63576020726-2.jpg" />
-    <Content Include="Data\Collection_Images\musica-cristiana-contemporanea-63587836682-2.jpg" />
-    <Content Include="Data\Collection_Images\musica-cristiana-electronica-63598746358-2.jpg" />
-    <Content Include="Data\Collection_Images\musica-cristiana-en-ingles-63575767284-2.jpg" />
-    <Content Include="Data\Collection_Images\musica-cristiana-en-ingles-63576019603-2.jpg" />
-    <Content Include="Data\Collection_Images\musica-cristiana-para-festejar-63619827978-2.jpg" />
-    <Content Include="Data\Collection_Images\musica-cristiana-para-ninos-63587764849-2.jpg" />
-    <Content Include="Data\Collection_Images\musica-cristiana-romantica-63598404178-2.jpg" />
-    <Content Include="Data\Collection_Images\musica-de-adoracion-y-oracion-63617994513-2.jpg" />
-    <Content Include="Data\Collection_Images\navidad-63596174093-2.jpg" />
-    <Content Include="Data\Collection_Images\pop-cristiano-63587837791-2.jpg" />
-    <Content Include="Data\Collection_Images\praise-and-worship-63587836382-2.jpg" />
-    <Content Include="Data\Collection_Images\rock-cristiano-63598744459-2.jpg" />
-    <Content Include="Data\Collection_Images\rock-cristiano-63598745168-2.jpg" />
-    <Content Include="Data\Collection_Images\semana-santa-63594146781-2.jpg" />
-    <Content Include="Data\Collection_Images\soft-christian-music-63630443325-2.jpg" />
-    <Content Include="Data\Collection_Images\solo-adoracion-63619635545-2.jpg" />
-    <Content Include="Data\Collection_Images\solo-alabanza-y-adoracion-63516751575-2.jpg" />
-    <Content Include="Data\Collection_Images\the-best-of-2013-63576021008-2.jpg" />
-    <Content Include="Data\Collection_Images\the-best-of-third-day-63592586489-2.jpg" />
-    <Content Include="Data\Collection_Images\the-christmas-playlist-63616998310-2.jpg" />
-    <Content Include="Data\Collection_Images\top-christian-music-2016-63616115082-2.jpg" />
-    <Content Include="Data\Collection_Images\top-christian-tracks-63565202959-2.jpg" />
-    <Content Include="Data\Collection_Images\top-cristiana-2016-63616122334-2.jpg" />
-    <Content Include="Data\Collection_Images\ultimate-christian-alternative-63630443965-2.jpg" />
-    <Content Include="Data\Collection_Images\wow-hits-2016-63592585262-2.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -1226,11 +1168,15 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_ListAlbums.cshtml" />
     <Content Include="tsconfig.json" />
+    <Content Include="Views\Home\Error.cshtml" />
+    <Content Include="Views\WebAlbum\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Data\Album_Songs\" />
+    <Folder Include="Data\Collection_Images\" />
     <Folder Include="Data\Genre_Images\" />
+    <Folder Include="Views\Album\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

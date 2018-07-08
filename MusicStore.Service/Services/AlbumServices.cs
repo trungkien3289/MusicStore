@@ -196,6 +196,44 @@ namespace MusicStore.Service.Services
             return success;
         }
 
+        public IEnumerable<AlbumEntity> GetAlbumsHasSameArtists(int albumId)
+        {
+            var foundAlbum = _unitOfWork.AlbumRepository.GetSingleWithInclude(a => a.Id == albumId, "Artists");
+            if (foundAlbum != null)
+            {
+                var artistIds = foundAlbum.Artists.Select(a => a.Id).ToArray();
+                var artists = this._unitOfWork.ArtistRepository.GetWithInclude(a => artistIds.Contains(a.Id), "Albums").ToList();
+                var returnAlbums = artists.SelectMany(a => a.Albums).Distinct<ms_Album>().ToList();
+                if (returnAlbums.Any())
+                {
+                    Mapper.CreateMap<ms_Album, AlbumEntity>();
+                    var albumEntities = Mapper.Map<List<ms_Album>, List<AlbumEntity>>(returnAlbums);
+                    return albumEntities;
+                }
+            }
+
+            return null;
+        }
+
+        public IEnumerable<AlbumEntity> GetAlbumsHasSameGenres(int albumId)
+        {
+            var foundAlbum = _unitOfWork.AlbumRepository.GetSingleWithInclude(a => a.Id == albumId, "Genres");
+            if (foundAlbum != null)
+            {
+                IList<int> genreIds = foundAlbum.Genres.Select(a => a.Id).ToList();
+                var genres = this._unitOfWork.GenreRepository.GetWithInclude(a => genreIds.Contains(a.Id), "Albums").ToList();
+                var returnAlbums = genres.SelectMany(a => a.Albums).Distinct<ms_Album>().ToList();
+                if (returnAlbums.Any())
+                {
+                    Mapper.CreateMap<ms_Album, AlbumEntity>();
+                    var albumEntities = Mapper.Map<List<ms_Album>, List<AlbumEntity>>(returnAlbums);
+                    return albumEntities;
+                }
+            }
+
+            return null;
+        }
+
 
         #endregion
     }
