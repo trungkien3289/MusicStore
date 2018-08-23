@@ -77,7 +77,8 @@ namespace WebAPI.APIControllers
             IList<CollectionSummary> listCollectionModels = new List<CollectionSummary>();
             if (featuredCollections != null)
             {
-                Mapper.CreateMap<CollectionEntity, CollectionSummary>().ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => !String.IsNullOrEmpty(albs.Thumbnail) ? Url.Content(COLLECTION_IMAGE_PATH + albs.Thumbnail) : String.Empty));
+                Mapper.CreateMap<CollectionEntity, CollectionSummary>()
+                    .ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => !String.IsNullOrEmpty(albs.Thumbnail) ? Url.Content(COLLECTION_IMAGE_PATH + albs.Thumbnail) : String.Empty));
                 listCollectionModels = Mapper.Map<IList<CollectionEntity>, IList<CollectionSummary>>(featuredCollections.ToList());
             }
 

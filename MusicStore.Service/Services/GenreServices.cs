@@ -137,7 +137,8 @@ namespace MusicStore.Service.Services
                 GenreDetails result = new GenreDetails()
                 {
                     Artists = artistEntities,
-                    Songs = songEntities
+                    Songs = songEntities,
+                    Name = genre.Name
                 };
 
                 return result;
@@ -146,5 +147,25 @@ namespace MusicStore.Service.Services
             return null;
         }
 
+        public IEnumerable<ArtistEntity> GetArtistsOfGenre(int id, int page, int pagesize)
+        {
+            var genre = _unitOfWork.GenreRepository.GetWithInclude(g => g.Id == id, "Artists").FirstOrDefault();
+
+            List<ArtistEntity> artistEntities = new List<ArtistEntity>();
+            if (genre != null)
+            {
+                if (genre.Artists.Any())
+                {
+                    Mapper.CreateMap<ms_Artist, ArtistEntity>();
+                    artistEntities = Mapper.Map<List<ms_Artist>, List<ArtistEntity>>(genre.Artists.OrderBy(g => g.Name).Skip((page - 1) * pagesize).Take(pagesize).ToList());
+                    return artistEntities;
+                }
+                else
+                {
+                    return artistEntities;
+                }
+            }
+            return null;
+        }
     }
 }

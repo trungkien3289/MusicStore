@@ -22,6 +22,7 @@ html, body {
     font-size: 100%;
     overflow-x: hidden;
     background: #f9f9f9;
+    background: url("/Content/Images/background.png");
 }
 
 @font-face {
@@ -157,6 +158,7 @@ h1, h2, h3, h4, h5 {
 
 div#page-wrapper {
     padding: 3em 2em;
+    background-color: #f7f7f78c;
 }
 
 .left-side-collapsed .logo-icon {
@@ -367,16 +369,24 @@ ul.dropdown-menu.drp-mnu li {
     display: block;
 }
 
+.nav.navbar-nav {
+    padding: 5px;
+}
+
 .nav > li > a {
     position: relative;
     display: block;
-    padding: 17px 15px;
+    padding: 12px 15px;
 }
 
 .nav > li {
     position: relative;
     display: block;
 }
+
+    .nav > li:hover {
+        background-color: #615b5b96;
+    }
 
 .nav-stacked > li + li {
     margin-top: 1px;
@@ -669,6 +679,8 @@ ul.nav li a span {
 
 .sticky-header .main-content {
     padding-top: 50px;
+    /*background-color:gold;*/
+    background-color:transparent;
 }
 
 .sticky-header .menu-right {
@@ -1395,27 +1407,24 @@ a.top-sign {
 }
 /*--albums--*/
 .albums {
-    padding: 4em 0 0 0;
+    padding: 1em 0 0 0;
 }
 
-    .albums .album-item>a:hover em {
+    .albums .album-item > a:hover div.media-play-icon {
         display: block;
     }
 
-    .albums .album-item > a em {
+    .albums .album-item > a div.media-play-icon {
         position: absolute;
         width: 75px;
         height: 75px;
         left: 40px;
         bottom: 37px;
+        top:45px;
         z-index: 44;
-        background: url(../images/play-media-icon.ico) no-repeat;
         display: none;
         cursor: pointer;
-        -webkit-background-size: contain;
-        -moz-background-size: contain;
-        -o-background-size: contain;
-        background-size: contain;
+        font-size:60px;
     }
 
 .content-grid img {
@@ -1431,6 +1440,7 @@ a.top-sign {
     margin-bottom: 2%;
     position: relative;
     padding-left: 0;
+    padding:0;
 }
 
     .content-grid h3 {
@@ -1710,7 +1720,7 @@ i.glyphicon.glyphicon-remove {
 h3.hd-tittle {
     color: #fff;
     font-weight: 600;
-    font-size: 1.6em;
+    font-size: 1.3em;
     margin-bottom: 1em;
 }
 /*--//pricing_table--*/
@@ -1722,6 +1732,9 @@ h3.hd-tittle {
     -moz-border-radius: 0.3em;
     -webkit-border-radius: 0.3em;
     margin: 1.4em 0;
+    display:block;
+    float:left;
+    width:100%;
 }
 
 .banner-button {
@@ -1979,7 +1992,7 @@ img.media-object {
 /*--footer--*/
 .footer {
     background: #222;
-    padding: 3em 4em 5em 6em;
+    padding: 1em;
 }
 
 .footer-grid {
@@ -2107,7 +2120,7 @@ p.email {
 
 .nbs-flexisel-ul {
     position: relative;
-    width: 9999px;
+    width: 99999px;
     margin: 0px;
     padding: 0px;
     list-style-type: none;
@@ -2143,16 +2156,40 @@ p.email {
     }
 /*** Navigation ***/
 .nbs-flexisel-nav-left {
-    display: none;
+    position: absolute;
+    left: 10px;
+    content: ">";
+    color: #000;
+    padding: 10px;
+    background-color: #fff;
+    font-weight: bold;
+    cursor: pointer;
 }
+
+    .nbs-flexisel-nav-left:before {
+        content: "<";
+        font-weight: bold;
+    }
 
 .nbs-flexisel-nav-right {
-    display: none;
+    position: absolute;
+    right: 10px;
+    content: ">";
+    color: #000;
+    padding: 10px;
+    background-color: #fff;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-.review-slider {
-    margin-top: 1.4em;
-}
+    .nbs-flexisel-nav-right:before {
+        content: ">";
+        font-weight: bold;
+    }
+
+        .review-slider {
+            margin-top: 1.4em;
+        }
 
 .slide-title h4 {
     padding: 10px 8px;
@@ -5299,7 +5336,6 @@ a.not {
     box-sizing: border-box;
     background-color: transparent;
     color: white;
-    border: 1px solid #fff;
 }
 
 .dropdown-menu > li > a {
@@ -5371,3 +5407,13 @@ a.not {
     }
 }
 /* end running text*/
+
+#page-wrapper hr {
+    border-top: 1px solid #868585;
+}
+
+.load-more-btn {
+    display: block;
+    height: 35px;
+    position:relative;
+}

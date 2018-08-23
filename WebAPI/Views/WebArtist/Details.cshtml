@@ -1,0 +1,199 @@
+﻿@using WebAPI.Models
+@using MusicStore.BussinessEntity;
+@model WebAPI.Models.ArtistDetailsViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@section css{
+    <!-- Bootstrap Core CSS -->
+    @*<link href="css/bootstrap.css" rel='stylesheet' type='text/css' />*@
+    <!-- Custom CSS -->
+    @*<link href="~/Content/Common/style.css" rel="stylesheet" />*@
+    <!-- Graph CSS -->
+    @*<link href="~/Content/Common/font-awesome.css" rel="stylesheet">*@
+    <!-- jQuery -->
+    <!-- lined-icons -->
+    @*<link rel="stylesheet" href="css/icon-font.css" type='text/css' />*@
+    <link href="~/Content/Common/icon-font.css" rel="stylesheet" />
+    <link href="~/Content/home-page.css" rel="stylesheet" />
+    <link href="~/Content/Libraries/playlist-style.css" rel="stylesheet" />
+    <link href="~/Content/Common/slidebar.css" rel="stylesheet" />
+    <link href="~/Content/album-detail.css" rel="stylesheet" />
+    <link href="~/Content/artist-detail.css" rel="stylesheet" />
+
+}
+
+<script src="~/Scripts/Libraries/playlist.js"></script>
+<script src="~/Scripts/Common/responsiveslides.min.js"></script>
+<script>
+    // You can also use "$(window).load(function() {"
+    $(function () {
+        // Slideshow 4
+        $("#slider4").responsiveSlides({
+            auto: true,
+            pager: true,
+            nav: true,
+            speed: 500,
+            namespace: "callbacks",
+            before: function () {
+                $('.events').append("<li>before event fired.</li>");
+            },
+            after: function () {
+                $('.events').append("<li>after event fired.</li>");
+            }
+        });
+
+    });
+</script>
+
+@section scripts{
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    @*<script src="js/jquery-2.1.4.js"></script>*@
+    @*<script src="~/Scripts/Common/jquery.nicescroll.js"></script>*@
+    <script src="~/Scripts/Common/scripts.js"></script>
+    <script>
+            $(function () {
+                MediaPlayList.init(@Html.Raw(Json.Encode(Model.Songs)));
+
+                $("#getMoreAlbumsBtn").addClass("hide");
+            })
+
+    </script>
+}
+
+<section>
+    <!-- left side end-->
+    <!-- main content start-->
+    <div class="main-content">
+        <div id="page-wrapper">
+            <div class="inner-content">
+                <div class="music-left">
+                    <!--banner-section-->
+                    <div id="albumDetails">
+                        <article>
+                            <figure><img src="@Model.Details.Thumbnail" alt="@Model.Details.Name"></figure>
+                            <div class="album-information-wrapper">
+                                <header>
+                                    <h1>@Model.Details.Name</h1>
+                                    <h3>@Model.Details.Name</h3>
+                                </header>
+                            </div>
+                        </article>
+                    </div>
+                    <!--//End-banner-->
+                    <!--albums-->
+                    @Html.Partial("_ListAlbums", (IList<AlbumSummary>)Model.Albums, new ViewDataDictionary { { "AlbumGroupTitle", "Album of the artist" } })
+                    <!--//End-albums-->
+                </div>
+                <!--//music-left-->
+                <!--/music-right-->
+                <div class="music-right">
+                    <div id="mainwrap">
+                        <div id="nowPlay" class="scroll-left">
+                            <p class="right" id="npTitle"></p>
+                        </div>
+                        <div id="audiowrap">
+                            <div id="audio0">
+                                <audio preload id="audio1" controlslist="nodownload" controls="controls">Your browser does not support HTML5 Audio!</audio>
+                            </div>
+                            <div id="tracks">
+                                <a id="btnPrev">&laquo;</a>
+                                <a id="btnNext">&raquo;</a>
+                            </div>
+                        </div>
+                        <div id="plwrap">
+                            <ul id="plList">
+                                @for (int i = 0; i < Model.Songs.Count; i++)
+                                {
+                                    <li data-mediaurl="@Model.Songs[i].MediaUrl" data-title="@Model.Songs[i].Title">
+                                        <div class="plItem">
+                                            <div class="plNum">@(i + 1)</div>
+                                            <div class="plTitle">@Model.Songs[i].Title</div>
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- //script for play-list -->
+                    <!--//video-main-->
+                    <!--/app_store-->
+                    <div class="apps">
+                        <h3 class="hd-tittle">Music Online now available in</h3>
+                        @*<div class="banner-button">
+                                <a href="#"><img src="~/content/images/1.png" alt=""></a>
+                            </div>*@
+                        <div class="banner-button green-button">
+                            <a href="#"><img src="~/content/images/2.png" alt=""></a>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <!--//app_store-->
+                    <!--/start-paricing-tables-->
+                </div>
+                <!--//music-right-->
+                <div class="clearfix"></div>
+                <!-- /w3l-agile-its -->
+            </div>
+            <!--body wrapper start-->
+
+            <div class="review-slider">
+                <div class="tittle-head">
+                    <h3 class="tittle">Related Artist</h3>
+                    <div class="clearfix"> </div>
+                </div>
+                <ul id="flexiselDemo1">
+                    @foreach (var artist in @Model.RelatedArtists)
+                    {
+                        <li>
+                            <a href="/WebAlbum/Index?id=@artist.Id"><img src="@artist.Thumbnail" alt="@artist.Name" /></a>
+                            <div class="slide-title"><h4>@artist.Name</h4></div>
+                            @*<div class="date-city">
+                                <h5></h5>
+                            </div>*@
+                        </li>
+                    }
+                </ul>
+                <script type="text/javascript">
+                    $(window).load(function () {
+                        $("#flexiselDemo1").flexisel({
+                            visibleItems: 5,
+                            animationSpeed: 1000,
+                            autoPlay: false,
+                            infinite: true,
+                            autoPlaySpeed: 3000,
+                            pauseOnHover: true,
+                            enableResponsiveBreakpoints: true,
+                            responsiveBreakpoints: {
+                                portrait: {
+                                    changePoint: 480,
+                                    visibleItems: 2
+                                },
+                                landscape: {
+                                    changePoint: 640,
+                                    visibleItems: 3
+                                },
+                                tablet: {
+                                    changePoint: 800,
+                                    visibleItems: 4
+                                }
+                            }
+                        });
+                    });
+                </script>
+                <script src="~/Scripts/Common/jquery.flexisel.js"></script>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <!--body wrapper end-->
+        <!-- /w3l-agile -->
+    </div>
+    <!--body wrapper end-->
+    <!-- /w3l-agile -->
+    <!-- main content end-->
+</section>
+
+

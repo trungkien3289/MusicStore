@@ -1,0 +1,139 @@
+﻿@using WebAPI.Models
+@using MusicStore.BussinessEntity
+@model WebAPI.Models.GenreViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+@section css{
+    <link href="~/Content/Common/icon-font.css" rel="stylesheet" />
+    <link href="~/Content/home-page.css" rel="stylesheet" />
+    <link href="~/Content/Libraries/playlist-style.css" rel="stylesheet" />
+    <link href="~/Content/Common/slidebar.css" rel="stylesheet" />
+    <link href="~/Content/album-detail.css" rel="stylesheet" />
+    <link href="~/Content/alphabet-menubar.css" rel="stylesheet" />
+    <link href="~/Content/featured-artists-list.css" rel="stylesheet" />
+    <link href="~/Content/summary-list-item.css" rel="stylesheet" />
+}
+
+
+@section scripts{
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <script src="~/Scripts/Common/scripts.js"></script>
+
+    <script src="~/Scripts/Libraries/playlist.js"></script>
+    <script src="~/Scripts/Common/responsiveslides.min.js"></script>
+    <script>
+    // You can also use "$(window).load(function() {"
+    $(function () {
+        var currentPage = 1;
+        $(".btn-getmoreitems").click(function () {
+            currentPage++;
+            showSpinner();
+            $.ajax({
+                url: "/WebGenre/GetPagingArtist?id=" + @Model.Id + "&page="+currentPage,
+                type: "POST",
+                success: function (response) {
+                    if (response.trim() != "") {
+                        $(".itemsummary-list-wrapper.artists").append(response);
+                    } else {
+                        $(".btn-getmoreitems").remove();
+                    }
+                },
+                error: function (error) {
+
+                },
+                complete: function () {
+                    hideSpinner();
+                }
+            })
+        });
+
+         $(function () {
+            MediaPlayList.init(@Html.Raw(Json.Encode(Model.Songs)));
+        })
+
+        });
+
+        function showSpinner() {
+            $(".btn-getmoreitems").removeClass("hide").addClass("hide");
+            $(".spinner").removeClass("hide");
+        }
+
+        function hideSpinner() {
+            $(".btn-getmoreitems").removeClass("hide");
+            $(".spinner").removeClass("hide").addClass("hide");
+        }
+    </script>
+}
+
+<section>
+    <!-- left side end-->
+    <!-- main content start-->
+    <div class="main-content">
+        <div id="page-wrapper">
+            <div class="inner-content">
+                <div class="music-left">
+                    <!--albums-->
+                    @Html.Partial("_ListArtistSummary", (IList<ArtistEntity>)Model.Artists, new ViewDataDictionary { { "Title", "Musicals" } })
+                    <!--//End-albums-->
+                </div>
+                <!--//music-left-->
+                <!--/music-right-->
+                <div class="music-right">
+                    <div id="mainwrap">
+                        <div id="nowPlay" class="scroll-left">
+                            <p class="right" id="npTitle"></p>
+                        </div>
+                        <div id="audiowrap">
+                            <div id="audio0">
+                                <audio preload id="audio1" controlslist="nodownload" controls="controls">Your browser does not support HTML5 Audio!</audio>
+                            </div>
+                            <div id="tracks">
+                                <a id="btnPrev">&laquo;</a>
+                                <a id="btnNext">&raquo;</a>
+                            </div>
+                        </div>
+                        <div id="plwrap">
+                            <ul id="plList">
+                                @for (int i = 0; i < Model.Songs.Count; i++)
+                                {
+                                    <li data-mediaurl="@Model.Songs[i].MediaUrl" data-title="@Model.Songs[i].Title">
+                                        <div class="plItem">
+                                            <div class="plNum">@(i + 1)</div>
+                                            <div class="plTitle">@Model.Songs[i].Title</div>
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- //script for play-list -->
+                    <!--//video-main-->
+                    <!--/app_store-->
+                    <div class="apps">
+                        <h3 class="hd-tittle">Music Online now available in</h3>
+                        <div class="banner-button green-button">
+                            <a href="#"><img src="~/content/images/2.png" alt=""></a>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <!--//app_store-->
+                    <!--/start-paricing-tables-->
+                </div>
+                <!--//music-right-->
+                <div class="clearfix"></div>
+                <!-- /w3l-agile-its -->
+            </div>
+            <!--body wrapper start-->
+        </div>
+        <div class="clearfix"></div>
+        <!--body wrapper end-->
+        <!-- /w3l-agile -->
+    </div>
+    <!--body wrapper end-->
+    <!-- /w3l-agile -->
+    <!-- main content end-->
+</section>
+
+

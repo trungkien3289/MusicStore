@@ -1,0 +1,161 @@
+﻿@using WebAPI.Models
+@using MusicStore.BussinessEntity
+@model WebAPI.Models.ArtistViewResponse
+@{
+    ViewBag.Title = "Index";
+}
+
+@section css{
+    <link href="~/Content/Common/icon-font.css" rel="stylesheet" />
+    <link href="~/Content/home-page.css" rel="stylesheet" />
+    <link href="~/Content/Libraries/playlist-style.css" rel="stylesheet" />
+    <link href="~/Content/Common/slidebar.css" rel="stylesheet" />
+    <link href="~/Content/album-detail.css" rel="stylesheet" />
+    <link href="~/Content/alphabet-menubar.css" rel="stylesheet" />
+    <link href="~/Content/featured-artists-list.css" rel="stylesheet" />
+    <link href="~/Content/summary-list-item.css" rel="stylesheet" />
+}
+
+
+@section scripts{
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <script src="~/Scripts/Common/scripts.js"></script>
+
+    <script src="~/Scripts/Libraries/playlist.js"></script>
+    <script src="~/Scripts/Common/responsiveslides.min.js"></script>
+    <script>
+    $(function () {
+        $("#slider4").responsiveSlides({
+            auto: true,
+            pager: true,
+            nav: true,
+            speed: 500,
+            namespace: "callbacks",
+            before: function () {
+                $('.events').append("<li>before event fired.</li>");
+            },
+            after: function () {
+                $('.events').append("<li>after event fired.</li>");
+            }
+        });
+        $("#listCharacterFilter li").removeClass("active");
+        $("#listCharacterFilter li.character-item[data-character='@ViewBag.SelectedCharacter']").addClass("active");
+
+        var currentPage = 1;
+        var selectedCharacter = "@ViewBag.SelectedCharacter";
+
+        $("#getMoreArtistsBtn").click(function () {
+            currentPage++;
+            showSpinner();
+            $.ajax({
+                url: "/WebArtist/GetPagingArtistByCharacter?character=" + selectedCharacter + "&page="+currentPage,
+                type: "POST",
+                success: function (response) {
+                    if (response.trim() != "") {
+                        $(".itemsummary-list-wrapper.artists").append(response);
+                    } else {
+                        $("#getMoreArtistsBtn").remove();
+                    }
+                },
+                error: function (error) {
+
+                },
+                complete: function () {
+                    hideSpinner();
+                }
+            })
+        });
+
+        });
+
+        function showSpinner() {
+            $(".btn-getmoreitems").removeClass("hide").addClass("hide");
+            $(".spinner").removeClass("hide");
+        }
+
+        function hideSpinner() {
+            $(".btn-getmoreitems").removeClass("hide");
+            $(".spinner").removeClass("hide").addClass("hide");
+        }
+    </script>
+}
+
+<section>
+    <!-- left side end-->
+    <!-- main content start-->
+    <div class="main-content">
+        <div id="page-wrapper">
+            <div class="inner-content">
+                <div class="music-left">
+                    <!--banner-section-->
+                    <div id="listCharacterFilter">
+                        <ul class="alphabet-menubar">
+                            <li class="character-item active" data-character="a"><a href="/WebArtist?character=a">A</a></li>
+                            <li class="character-item" data-character="b"><a href="/WebArtist?character=b">B</a></li>
+                            <li class="character-item" data-character="c"><a href="/WebArtist?character=c">C</a></li>
+                            <li class="character-item" data-character="d"><a href="/WebArtist?character=d">D</a></li>
+                            <li class="character-item" data-character="e"><a href="/WebArtist?character=e">E</a></li>
+                            <li class="character-item" data-character="f"><a href="/WebArtist?character=f">F</a></li>
+                            <li class="character-item" data-character="g"><a href="/WebArtist?character=g">G</a></li>
+                            <li class="character-item" data-character="h"><a href="/WebArtist?character=h">H</a></li>
+                            <li class="character-item" data-character="i"><a href="/WebArtist?character=i">I</a></li>
+                            <li class="character-item" data-character="j"><a href="/WebArtist?character=j">J</a></li>
+                            <li class="character-item" data-character="k"><a href="/WebArtist?character=k">K</a></li>
+                            <li class="character-item" data-character="l"><a href="/WebArtist?character=l">L</a></li>
+                            <li class="character-item" data-character="m"><a href="/WebArtist?character=m">M</a></li>
+                            <li class="character-item" data-character="n"><a href="/WebArtist?character=n">N</a></li>
+                            <li class="character-item" data-character="o"><a href="/WebArtist?character=o">O</a></li>
+                            <li class="character-item" data-character="p"><a href="/WebArtist?character=p">P</a></li>
+                            <li class="character-item" data-character="q"><a href="/WebArtist?character=q">Q</a></li>
+                            <li class="character-item" data-character="r"><a href="/WebArtist?character=r">R</a></li>
+                            <li class="character-item" data-character="s"><a href="/WebArtist?character=s">S</a></li>
+                            <li class="character-item" data-character="t"><a href="/WebArtist?character=t">T</a></li>
+                            <li class="character-item" data-character="u"><a href="/WebArtist?character=u">U</a></li>
+                            <li class="character-item" data-character="v"><a href="/WebArtist?character=v">V</a></li>
+                            <li class="character-item" data-character="w"><a href="/WebArtist?character=w">W</a></li>
+                            <li class="character-item" data-character="x"><a href="/WebArtist?character=x">X</a></li>
+                            <li class="character-item" data-character="y"><a href="/WebArtist?character=y">Y</a></li>
+                            <li class="character-item" data-character="z"><a href="/WebArtist?character=z">Z</a></li>
+                            <li class="character-item" data-character="0"><a href="/WebArtist?character=0">0-9</a></li>
+                        </ul>
+                    </div>
+                    <!--//End-banner-->
+                    <!--albums-->
+                    @Html.Partial("_ListArtistSummary", (IList<ArtistEntity>)Model.Artists, new ViewDataDictionary { { "Title", "Album of the same artist" } })
+                    <!--//End-albums-->
+                </div>
+                <!--//music-left-->
+                <!--/music-right-->
+                <div class="music-right">
+                    <div id="mainwrap">
+                        @Html.Partial("_ListArtists", (IList<ArtistEntity>)Model.FeaturedArtists, new ViewDataDictionary { { "PartialViewTitle", "Top Artists" } })
+                    </div>
+                    <!-- //script for play-list -->
+                    <!--//video-main-->
+                    <!--/app_store-->
+                    <div class="apps">
+                        <h3 class="hd-tittle">Music Online now available in</h3>
+                        <div class="banner-button green-button">
+                            <a href="#"><img src="~/content/images/2.png" alt=""></a>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <!--//app_store-->
+                    <!--/start-paricing-tables-->
+                </div>
+                <!--//music-right-->
+                <div class="clearfix"></div>
+                <!-- /w3l-agile-its -->
+            </div>
+            <!--body wrapper start-->
+        </div>
+        <div class="clearfix"></div>
+        <!--body wrapper end-->
+        <!-- /w3l-agile -->
+    </div>
+    <!--body wrapper end-->
+    <!-- /w3l-agile -->
+    <!-- main content end-->
+</section>
+
+

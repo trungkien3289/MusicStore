@@ -1,0 +1,128 @@
+﻿@using WebAPI.Models
+@model WebAPI.Models.SongDetailsViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+@section css{
+    <!-- Bootstrap Core CSS -->
+    @*<link href="css/bootstrap.css" rel='stylesheet' type='text/css' />*@
+    <!-- Custom CSS -->
+    @*<link href="~/Content/Common/style.css" rel="stylesheet" />*@
+    <!-- Graph CSS -->
+    @*<link href="~/Content/Common/font-awesome.css" rel="stylesheet">*@
+    <!-- jQuery -->
+    <!-- lined-icons -->
+    @*<link rel="stylesheet" href="css/icon-font.css" type='text/css' />*@
+    <link href="~/Content/Common/icon-font.css" rel="stylesheet" />
+    <link href="~/Content/home-page.css" rel="stylesheet" />
+    <link href="~/Content/Libraries/playlist-style.css" rel="stylesheet" />
+    <link href="~/Content/Common/slidebar.css" rel="stylesheet" />
+    <link href="~/Content/album-detail.css" rel="stylesheet" />
+    <link href="~/Content/featured-artists-list.css" rel="stylesheet" />
+    <style>
+        .audio-player-container{
+            display:block;
+            width:100%;
+        }
+
+        .lyric-song-container{
+            display:block;
+            width:100%;
+        }
+
+        .lyric-song-container>pre {
+            width: 100%;
+            float: left;
+            font-family: arial,tahoma,verdana;
+            text-align: center;
+            line-height: 20px;
+            font-size: 14px;
+            white-space: pre-line;
+            white-space: -moz-pre-line;
+            white-space: -pre-line;
+            white-space: -o-pre-line;
+            word-wrap: break-word;
+            margin: 0 !important;
+            padding: 15px 0;
+        }
+    </style>
+}
+
+<script src="~/Scripts/Libraries/playlist.js"></script>
+<script src="~/Scripts/Common/responsiveslides.min.js"></script>
+
+@section scripts{
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    @*<script src="js/jquery-2.1.4.js"></script>*@
+    @*<script src="~/Scripts/Common/jquery.nicescroll.js"></script>*@
+    <script src="~/Scripts/Common/scripts.js"></script>
+}
+
+<section>
+    <!-- left side end-->
+    <!-- main content start-->
+    <div class="main-content">
+        <div id="page-wrapper">
+            <div class="inner-content">
+                <div class="music-left">
+                    <!--banner-section-->
+                    <div id="albumDetails">
+                        <article>
+                            <figure><img src="@Model.SongDetails.Thumbnail" alt="@Model.SongDetails.Title"></figure>
+                            <div class="album-information-wrapper">
+                                <header>
+                                    <h1>@Model.SongDetails.Title</h1>
+                                    <h3>@Model.SongDetails.ArtistName</h3>
+                                </header>
+
+                            </div>
+                        </article>
+                    </div>
+                    <div class="audio-player-container">
+                        <audio controls>
+                            <source src="@Model.SongDetails.MediaUrl" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                    <div class="lyric-song-container">
+                        <pre>@Model.SongDetails.Lyrics</pre>
+                    </div>
+                    <!--//End-banner-->
+                </div>
+                <!--//music-left-->
+                <!--/music-right-->
+                <div class="music-right">
+                    <div id="mainwrap">
+                        @Html.Partial("_ListArtists", Model.TopArtists, new ViewDataDictionary { { "PartialViewTitle", "Top Artists" } })
+                    </div>
+
+                    <!-- //script for play-list -->
+                    <!--//video-main-->
+                    <!--/app_store-->
+                    <div class="apps">
+                        <h3 class="hd-tittle">Music Online now available in</h3>
+                        <div class="banner-button green-button">
+                            <a href="#"><img src="~/content/images/2.png" alt=""></a>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <!--//app_store-->
+                    <!--/start-paricing-tables-->
+                </div>
+                <!--//music-right-->
+                <div class="clearfix"></div>
+                <!-- /w3l-agile-its -->
+            </div>
+            <!--body wrapper start-->
+        </div>
+        <div class="clearfix"></div>
+        <!--body wrapper end-->
+        <!-- /w3l-agile -->
+    </div>
+    <!--body wrapper end-->
+    <!-- /w3l-agile -->
+    <!-- main content end-->
+</section>
+
+

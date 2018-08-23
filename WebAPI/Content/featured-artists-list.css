@@ -1,0 +1,9 @@
+﻿.featured-artist-list .artist-item {
+    width:33.3%;
+    padding:0;
+    margin:0;
+}
+
+.artist-item img {
+    width: 100%;
+}

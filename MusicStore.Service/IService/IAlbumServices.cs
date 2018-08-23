@@ -10,6 +10,7 @@ namespace MusicStore.Service.IServices
     public interface IAlbumServices
     {
         AlbumEntity GetAlbumById(int albumId);
+        AlbumEntity GetAlbumWithArtists(int albumId);
         IEnumerable<SongEntity> GetSongsOfAlbum(int albumId);
         IEnumerable<AlbumEntity> GetAllAlbums();
         IEnumerable<AlbumEntity> GetFeaturedAlbums();
@@ -22,5 +23,6 @@ namespace MusicStore.Service.IServices
         IEnumerable<AlbumEntity> GetAlbumsOfArtist(int artistId, int top);
         IEnumerable<AlbumEntity> GetAlbumsHasSameArtists(int albumId);
         IEnumerable<AlbumEntity> GetAlbumsHasSameGenres(int albumId);
+        IEnumerable<AlbumEntity> GetAlbumsAfterBeginCharacter(string character, int page, int pagesize);
     }
 }

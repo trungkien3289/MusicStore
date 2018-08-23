@@ -9,14 +9,6 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
-
-    @*<script src="/node_modules/core-js/client/shim.min.js"></script>
-        <script src="/node_modules/zone.js/dist/zone.js"></script>
-        <script src="/node_modules/systemjs/dist/system.src.js"></script>
-        <script src="/systemjs.config.js"></script>
-        <script>
-            System.import('app').catch(function (err) { console.log(err) });
-        </script>*@
 </head>
 <body class="sticky-header left-side-collapsed">
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -34,23 +26,21 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Albums", "Index", "WebAlbum")</li>
+                    <li>@Html.ActionLink("Artists", "Index", "WebArtist")</li>
+                    <li>@Html.ActionLink("Collections", "Index", "WebCollection")</li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categories <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Pop</a></li>
-                            <li><a href="#">Rock</a></li>
-                            <li><a href="#">R&B</a></li>
-                            <li><a href="#">Balard</a></li>
+                        <ul class="dropdown-menu genre-menu">
+                            @Html.Action("GenresMenu", "Home", null)
                         </ul>
                     </li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
-                <form class="navbar-form navbar-right">
+                <form class="navbar-form navbar-right mainmenu-searchform" action="/Home/Search">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
+                        <input type="text" name="q" class="form-control mainmenu-txtquery" placeholder="Search" value="@ViewBag.queryString">
                     </div>
-                    <button type="submit" class="btn btn-search glyphicon glyphicon-search"></button>
+                    <button id="btnSearch" type="submit" class="btn btn-search glyphicon glyphicon-search "></button>
                 </form>
             </div>
         </div>
@@ -58,9 +48,10 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
-        @*<footer>
-                <p>&copy; @DateTime.Now.Year - Music Online</p>
-            </footer>*@
+        <div class="footer">
+            <div class="clearfix"> </div>
+            <p>&copy; @DateTime.Now.Year - Music Online</p>
+        </div>
     </div>
 </body>
 </html>

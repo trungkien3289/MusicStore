@@ -1,0 +1,30 @@
+﻿@using MusicStore.BussinessEntity
+@model IList<CollectionEntity>
+<link href="~/Content/horizontal-spinner.css" rel="stylesheet" />
+<div class="itemsummary-list-wrapper collections">
+    @foreach (var item in Model)
+    {
+        <div class="conatiner-itemsummary">
+            <div class="image-wrapper-itemsummary">
+                <a class="play-icon popup-with-zoom-anim" href="/WebArtist/Details?id=@item.Id"><img src="@item.Thumbnail" title="@item.Title"></a>
+            </div>
+            <div class="infor-wrapper-itemsummary">
+                <div class="item-name">@item.Title</div>
+                <div class="item-description">@item.Description</div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="clearfix"> </div>
+<div class="load-more-btn">
+    <div class="spinner hide">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <a class="btn btn-getmoreitems" id="getMoreCollectionsBtn">Get more...</a>
+</div>
+
+

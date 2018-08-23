@@ -1,18 +1,27 @@
 ﻿@using WebAPI.Models
 @model IList<AlbumSummary>
 
-<div class="albums">
-    <div class="tittle-head">
-        <h3 class="tittle">@ViewData["AlbumGroupTitle"]</h3>
-        <div class="clearfix"> </div>
-    </div>
+    <div class="item-list-wrapper-listalbum albums">
     @foreach (var item in Model)
     {
         <div class="col-md-3 content-grid album-item">
-            <a class="play-icon popup-with-zoom-anim" href="/WebAlbum/Index?id=@item.Id"><img src="@item.Thumbnail" title="@item.Title"><em></em></a>
+            <a class="play-icon popup-with-zoom-anim" href="/WebAlbum/AlbumDetails?id=@item.Id"><img src="@item.Thumbnail" title="@item.Title">
+            <div class="item-infor-overlap-panel">@item.Title</div>
+            <div class="glyphicon glyphicon-play-circle media-play-icon"></div></a>
             @*<a class="button play-icon popup-with-zoom-anim"  href="@item.Url">Listen now</a>*@
         </div>
     }
+    </div>
+    <div class="clearfix"></div>
 
-    <div class="clearfix"> </div>
-</div>
+<style>
+    .item-infor-overlap-panel {
+        position: absolute;
+        bottom: 0;
+        height: 40px;
+        padding: 5px;
+        background-color: #08080873;
+        color: #fff;
+        width:100%;
+    }
+</style>

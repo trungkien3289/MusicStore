@@ -1,11 +1,7 @@
-﻿
-
-
-/*start play list*/
+﻿/*start play list*/
 #plwrap{
-    height:571px;
+    max-height:571px;
     overflow:auto;
 }
-
 /*end play list*/
 

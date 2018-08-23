@@ -76,7 +76,8 @@ namespace MusicStore.Service.Services
 
         public IEnumerable<SongEntity> GetFeaturedSongs()
         {
-            var songs = _unitOfWork.SongRepository.GetManyQueryable(s => s.IsFeatured == true).ToList();
+            //var songs = _unitOfWork.SongRepository.GetManyQueryable(s => s.IsFeatured == true).ToList();
+            var songs = _unitOfWork.SongRepository.GetWithInclude(s => s.IsFeatured == true, "Albums", "Artists").ToList();
             if (songs.Any())
             {
                 Mapper.CreateMap<ms_Song, SongEntity>()
@@ -96,7 +97,7 @@ namespace MusicStore.Service.Services
         {
             if(page > 0 && numberItemsPerPage > 0)
             {
-                var songs = _unitOfWork.SongRepository.GetManyQueryable(s => s.Title.Contains(query)).OrderBy(s => s.Title).Skip(--page*numberItemsPerPage).Take(numberItemsPerPage);
+                var songs = _unitOfWork.SongRepository.GetWithInclude(s => s.Title.Contains(query), "Albums", "Artists").OrderBy(s => s.Title).Skip(--page*numberItemsPerPage).Take(numberItemsPerPage).ToList();
                 if (songs.Any())
                 {
                     Mapper.CreateMap<ms_Song, SongEntity>()

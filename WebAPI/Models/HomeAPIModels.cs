@@ -29,4 +29,15 @@ namespace WebAPI.Models
         [JsonProperty("artists")]
         public IList<ArtistEntity> Artists { get; set; }
     }
+
+    public class WebSearchResult
+    {
+        [JsonProperty("albums")]
+        public IList<AlbumEntity> Albums { get; set; }
+        [JsonProperty("songs")]
+        public IList<SongEntity> Songs { get; set; }
+        [JsonProperty("artists")]
+        public IList<ArtistEntity> Artists { get; set; }
+        public IList<ArtistEntity> TopArtists { get; set; }
+    }
 }

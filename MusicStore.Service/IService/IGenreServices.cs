@@ -14,6 +14,7 @@ namespace MusicStore.Service.IService
         IEnumerable<AlbumEntity> GetAlbumsOfGenre(int id);
         IEnumerable<SongEntity> GetSongsOfGenre(int id);
         IEnumerable<ArtistEntity> GetArtistsOfGenre(int id);
+        IEnumerable<ArtistEntity> GetArtistsOfGenre(int id, int page, int pagesize);
         GenreDetails GetGenreDetails(int id);
     }
 }

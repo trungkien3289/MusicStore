@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace MusicStore.Service.Services
@@ -134,6 +135,65 @@ namespace MusicStore.Service.Services
                 var artistList = Mapper.Map<List<ms_Artist>, List<ArtistEntity>>(artists);
                 return artistList;
             }
+            return null;
+        }
+
+        public IEnumerable<ArtistEntity> GetArtistsAfterBeginCharacter(string character, int page, int pagesize)
+        {
+            IList<ArtistEntity> result = new List<ArtistEntity>();
+            IList<ms_Artist> artists;
+            if (character.Trim().Equals("0-9"))
+            {
+                artists = _unitOfWork.ArtistRepository.GetWithInclude(a => Regex.IsMatch(a.Name, @"^\d"), "Albums", "Songs").OrderBy(a => a.Name).Skip((page - 1) * pagesize).Take(pagesize).ToList();
+            }
+            else
+            {
+                artists = _unitOfWork.ArtistRepository.GetWithInclude(a => a.Name.StartsWith(character), "Albums", "Songs").OrderBy(a => a.Name).Skip((page - 1) * pagesize).Take(pagesize).ToList();
+            }
+            if (artists != null && artists.Any())
+            {
+                for (int i = 0; i < artists.Count(); i++)
+                {
+                    var returnArtist = new ArtistEntity()
+                    {
+                        Id = artists[i].Id,
+                        IsFeatured = artists[i].IsFeatured,
+                        Name = artists[i].Name,
+                        NumberOfAlbums = artists[i].Albums.Count(),
+                        NumberOfSongs = artists[i].Songs.Count(),
+                        Status = artists[i].Status,
+                        Thumbnail = artists[i].Thumbnail,
+                        Url = artists[i].Url
+                    };
+
+                    result.Add(returnArtist);
+                }
+                //Mapper.CreateMap<ms_Artist, ArtistEntity>()
+                //.ForMember(a => a.NumberOfSongs, map => map.MapFrom(albs => albs.Songs.Count()))
+                //.ForMember(a => a.NumberOfAlbums, map => map.MapFrom(albs => albs.Albums.Count()));
+                // result = Mapper.Map<IList<ms_Artist>, IList<ArtistEntity>>(artists);
+                return result;
+            }
+
+            return result;
+        }
+
+        public IEnumerable<ArtistEntity> GetArtistsHasSameGenre(int artistId)
+        {
+            var foundArtist = _unitOfWork.ArtistRepository.GetSingleWithInclude(a => a.Id == artistId, "Genres");
+            if (foundArtist != null)
+            {
+                IList<int> genreIds = foundArtist.Genres.Select(a => a.Id).ToList();
+                var genres = this._unitOfWork.GenreRepository.GetWithInclude(a => genreIds.Contains(a.Id), "Artists").ToList();
+                var returnArtists = genres.SelectMany(a => a.Artists).Distinct<ms_Artist>().ToList();
+                if (returnArtists.Any())
+                {
+                    Mapper.CreateMap<ms_Artist, ArtistEntity>();
+                    var artistEntities = Mapper.Map<List<ms_Artist>, List<ArtistEntity>>(returnArtists);
+                    return artistEntities;
+                }
+            }
+
             return null;
         }
 

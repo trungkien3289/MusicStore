@@ -1,0 +1,9 @@
+﻿@using WebAPI.Models
+@model IList<AlbumSummary>
+
+    @foreach (var item in Model)
+    {
+        <div class="col-md-3 content-grid album-item">
+            <a class="play-icon popup-with-zoom-anim" href="/WebAlbum/AlbumDetails?id=@item.Id"><img src="@item.Thumbnail" title="@item.Title"><div class="glyphicon glyphicon-play-circle media-play-icon"></div></a>
+        </div>
+    }

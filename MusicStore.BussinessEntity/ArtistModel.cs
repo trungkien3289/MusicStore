@@ -23,6 +23,8 @@ namespace MusicStore.BussinessEntity
         public bool IsFeatured { get; set; }
         [JsonProperty("songs")]
         public int NumberOfSongs { get; set; }
+        [JsonIgnore]
+        public int NumberOfAlbums { get; set; }
     }
 
     public class ArtistDetails

@@ -1,0 +1,15 @@
+﻿@using MusicStore.BussinessEntity
+@model IList<SongEntity>
+
+@foreach (var item in Model)
+{
+    <div class="conatiner-itemsummary">
+        <div class="image-wrapper-itemsummary">
+            <a class="play-icon popup-with-zoom-anim" href="/WebSong/Index?id=@item.Id"><img src="@item.Thumbnail" title="@item.Title"></a>
+        </div>
+        <div class="infor-wrapper-itemsummary">
+            <div class="item-name">@item.Title</div>
+            <div class="item-description">@item.ArtistName</div>
+        </div>
+    </div>
+}

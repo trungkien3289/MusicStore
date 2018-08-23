@@ -1,0 +1,186 @@
+﻿@using WebAPI.Models
+@using MusicStore.BussinessEntity
+@model WebAPI.Models.WebSearchResult
+@{
+    ViewBag.Title = "Index";
+}
+
+@section css{
+    <link href="~/Content/Common/icon-font.css" rel="stylesheet" />
+    <link href="~/Content/home-page.css" rel="stylesheet" />
+    <link href="~/Content/Libraries/playlist-style.css" rel="stylesheet" />
+    <link href="~/Content/Common/slidebar.css" rel="stylesheet" />
+    <link href="~/Content/album-detail.css" rel="stylesheet" />
+    <link href="~/Content/alphabet-menubar.css" rel="stylesheet" />
+    <link href="~/Content/featured-artists-list.css" rel="stylesheet" />
+    <link href="~/Content/summary-list-item.css" rel="stylesheet" />
+}
+
+
+@section scripts{
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <script src="~/Scripts/Common/scripts.js"></script>
+
+    <script src="~/Scripts/Libraries/playlist.js"></script>
+    <script src="~/Scripts/Common/responsiveslides.min.js"></script>
+    <script>
+    // You can also use "$(window).load(function() {"
+    $(function () {
+        var currentAlbumPage = 1;
+        var currentArtistPage = 1;
+        var currentSongPage = 1;
+        var queryString = "@ViewBag.queryString";
+
+        $("#getMoreAlbumsBtn").click(function () {
+            var that = this;
+            currentAlbumPage++;
+            showSpinner($(this).parent());
+            $.ajax({
+                url: "/Home/SearchAlbum?q=" + queryString + "&page=" + currentAlbumPage,
+                type: "POST",
+                success: function (response) {
+                    if (response.trim() != "") {
+                        $(".itemsummary-list-wrapper.albums").append(response);
+                    } else {
+                        hideSpinner($(that).parent());
+                        $("#getMoreAlbumsBtn").remove();
+                    }
+                },
+                error: function (error) {
+
+                },
+                complete: function () {
+                    hideSpinner($(that).parent())
+                }
+            })
+        });
+
+        $("#getMoreArtistsBtn").click(function () {
+            var that = this;
+            currentArtistPage++;
+            showSpinner($(this).parent());
+            $.ajax({
+                url: "/Home/SearchArtist?q=" + queryString + "&page=" + currentArtistPage,
+                type: "POST",
+                success: function (response) {
+                    if (response.trim() != "") {
+                        $(".itemsummary-list-wrapper.artists").append(response);
+                    } else {
+                        hideSpinner($(that).parent());
+                        $("#getMoreArtistsBtn").remove();
+                    }
+                },
+                error: function (error) {
+
+                },
+                complete: function () {
+                    hideSpinner($(that).parent())
+                }
+            })
+        });
+
+        $("#getMoreSongsBtn").click(function () {
+            var that = this;
+            currentSongPage++;
+            showSpinner($(this).parent());
+            $.ajax({
+                url: "/Home/SearchSong?q=" + queryString + "&page=" + currentSongPage,
+                type: "POST",
+                success: function (response) {
+                    if (response.trim() != "") {
+                        $(".itemsummary-list-wrapper.songs").append(response);
+                    } else {
+                        hideSpinner($(that).parent());
+                        $("#getMoreSongsBtn").remove();
+                    }
+                },
+                error: function (error) {
+
+                },
+                complete: function () {
+                    hideSpinner($(that).parent())
+                }
+            })
+        });
+
+        });
+
+        function showSpinner(container) {
+            $($(container).find(".btn-getmoreitems")).removeClass("hide").addClass("hide");
+            $($(container).find(".spinner")).removeClass("hide");
+        }
+
+        function hideSpinner(container) {
+            $($(container).find(".btn-getmoreitems")).removeClass("hide");
+            $($(container).find(".spinner")).removeClass("hide").addClass("hide");
+        }
+    </script>
+}
+
+<section>
+    <!-- left side end-->
+    <!-- main content start-->
+    <div class="main-content">
+        <div id="page-wrapper">
+            <div class="inner-content">
+                <div class="music-left">
+                    <!--albums-->
+                    <div class="tittle-head">
+                        <h3 class="tittle">Albums</h3>
+                        <div class="clearfix"> </div>
+                    </div>
+                    @Html.Partial("_ListAlbumSearchSummary", (IList<AlbumEntity>)Model.Albums)
+                    <!--//End-albums-->
+                    <hr>
+                    <!--artists-->
+                    <div class="tittle-head">
+                        <h3 class="tittle">Artists</h3>
+                        <div class="clearfix"> </div>
+                    </div>
+                    @Html.Partial("_ListArtistSummary", (IList<ArtistEntity>)Model.Artists)
+                    <hr>
+                    <!--//End-artists-->
+                    <!--songs-->
+                    <div class="tittle-head">
+                        <h3 class="tittle">Songs</h3>
+                        <div class="clearfix"> </div>
+                    </div>
+                    @Html.Partial("_ListSongSummary", (IList<SongEntity>)Model.Songs)
+                    <hr>
+                    <!--//End-songs-->
+                </div>
+                <!--//music-left-->
+                <!--/music-right-->
+                <div class="music-right">
+                    <div id="mainwrap">
+                        @Html.Partial("_ListArtists", (IList<ArtistEntity>)Model.TopArtists, new ViewDataDictionary { { "PartialViewTitle", "Top Artists" } })
+                    </div>
+                    <!-- //script for play-list -->
+                    <!--//video-main-->
+                    <!--/app_store-->
+                    <div class="apps">
+                        <h3 class="hd-tittle">Music Online now available in</h3>
+                        <div class="banner-button green-button">
+                            <a href="#"><img src="~/content/images/2.png" alt=""></a>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <!--//app_store-->
+                    <!--/start-paricing-tables-->
+                </div>
+                <!--//music-right-->
+                <div class="clearfix"></div>
+                <!-- /w3l-agile-its -->
+            </div>
+            <!--body wrapper start-->
+        </div>
+        <div class="clearfix"></div>
+        <!--body wrapper end-->
+        <!-- /w3l-agile -->
+    </div>
+    <!--body wrapper end-->
+    <!-- /w3l-agile -->
+    <!-- main content end-->
+</section>
+
+

@@ -1,0 +1,27 @@
+﻿#listCharacterFilter {
+    margin-top: 20px;
+}
+
+ul.alphabet-menubar {
+    display: block;
+    height:27px;
+}
+
+ul.alphabet-menubar > li.character-item {
+    display:inline-block;
+    padding:5px;
+    float:left;
+}
+
+    ul.alphabet-menubar > li.character-item:hover{
+        background-color:#ccc;
+        font-style:normal;
+    }
+
+    ul.alphabet-menubar > li.character-item.active{
+        background-color: #454544;
+    }
+
+    ul.alphabet-menubar > li.character-item.active > a {
+        color: #fff;
+    }

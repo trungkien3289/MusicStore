@@ -1,0 +1,20 @@
+﻿.mainmenu-txtquery {
+    border-radius: 0;
+    border: none;
+}
+
+ul.genre-menu {
+    width: 610px;
+    height: 300px;
+}
+
+li.genre-item {
+    display: inline-block;
+    float: left;
+    width: 200px;
+}
+
+.mainmenu-searchform {
+    padding: 0;
+    border: 1px solid #fff!important;
+}

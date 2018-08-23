@@ -1,28 +1,29 @@
 ﻿@using WebAPI.Models
+@using MusicStore.BussinessEntity
 @model WebAPI.Models.AlbumViewModel
 @{
     ViewBag.Title = "Index";
 }
 
 @section css{
-    <!-- Bootstrap Core CSS -->
-    @*<link href="css/bootstrap.css" rel='stylesheet' type='text/css' />*@
-    <!-- Custom CSS -->
-    @*<link href="~/Content/Common/style.css" rel="stylesheet" />*@
-    <!-- Graph CSS -->
-    @*<link href="~/Content/Common/font-awesome.css" rel="stylesheet">*@
-    <!-- jQuery -->
-    <!-- lined-icons -->
-    @*<link rel="stylesheet" href="css/icon-font.css" type='text/css' />*@
     <link href="~/Content/Common/icon-font.css" rel="stylesheet" />
     <link href="~/Content/home-page.css" rel="stylesheet" />
     <link href="~/Content/Libraries/playlist-style.css" rel="stylesheet" />
     <link href="~/Content/Common/slidebar.css" rel="stylesheet" />
+    <link href="~/Content/album-detail.css" rel="stylesheet" />
+    <link href="~/Content/alphabet-menubar.css" rel="stylesheet" />
+    <link href="~/Content/featured-artists-list.css" rel="stylesheet" />
+    <link href="~/Content/summary-list-item.css" rel="stylesheet" />
 }
 
-<script src="~/Scripts/Libraries/playlist.js"></script>
-<script src="~/Scripts/Common/responsiveslides.min.js"></script>
-<script>
+
+@section scripts{
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <script src="~/Scripts/Common/scripts.js"></script>
+
+    <script src="~/Scripts/Libraries/playlist.js"></script>
+    <script src="~/Scripts/Common/responsiveslides.min.js"></script>
+    <script>
     // You can also use "$(window).load(function() {"
     $(function () {
         // Slideshow 4
@@ -39,20 +40,44 @@
                 $('.events').append("<li>after event fired.</li>");
             }
         });
+        $("#listCharacterFilter li").removeClass("active");
+        $("#listCharacterFilter li.character-item[data-character='@ViewBag.SelectedCharacter']").addClass("active");
+        var currentPage = 1;
+        var selectedCharacter = "@ViewBag.SelectedCharacter";
+        $("#getMoreAlbumsBtn").click(function () {
+            currentPage++;
+            showSpinner();
 
-    });
-</script>
+            $.ajax({
+                url: "/WebAlbum/GetPagingAlbumByCharacter?character=" + selectedCharacter + "&page="+currentPage,
+                type: "POST",
+                success: function (response) {
+                    if (response.trim() != "") {
+                        $(".itemsummary-list-wrapper.albums").append(response);
+                    } else {
+                        $("#getMoreAlbumsBtn").remove();
+                    }
+                },
+                error: function (error) {
 
-@section scripts{
-    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-    @*<script src="js/jquery-2.1.4.js"></script>*@
-    @*<script src="~/Scripts/Common/jquery.nicescroll.js"></script>*@
-    <script src="~/Scripts/Common/scripts.js"></script>
-    <script>
-            $(function () {
-                MediaPlayList.init(@Html.Raw(Json.Encode(Model.Songs)));
+                },
+                complete: function () {
+                    hideSpinner();
+                }
             })
+        });
 
+        });
+
+        function showSpinner() {
+            $(".btn-getmoreitems").removeClass("hide").addClass("hide");
+            $(".spinner").removeClass("hide");
+        }
+
+        function hideSpinner() {
+            $(".btn-getmoreitems").removeClass("hide");
+            $(".spinner").removeClass("hide").addClass("hide");
+        }
     </script>
 }
 
@@ -64,59 +89,53 @@
             <div class="inner-content">
                 <div class="music-left">
                     <!--banner-section-->
-                    <div class="banner-section">
-                        <div class="banner">
-                            <div class="callbacks_container">
-                                <img src="">
-                            </div>
-                            <!--banner-->
-                            <div class="clearfix"> </div>
-                        </div>
+                    <div id="listCharacterFilter">
+                        <ul class="alphabet-menubar">
+                            <li class="character-item active" data-character="a"><a href="/WebAlbum?character=a">A</a></li>
+                            <li class="character-item" data-character="b"><a href="/WebAlbum?character=b">B</a></li>
+                            <li class="character-item" data-character="c"><a href="/WebAlbum?character=c">C</a></li>
+                            <li class="character-item" data-character="d"><a href="/WebAlbum?character=d">D</a></li>
+                            <li class="character-item" data-character="e"><a href="/WebAlbum?character=e">E</a></li>
+                            <li class="character-item" data-character="f"><a href="/WebAlbum?character=f">F</a></li>
+                            <li class="character-item" data-character="g"><a href="/WebAlbum?character=g">G</a></li>
+                            <li class="character-item" data-character="h"><a href="/WebAlbum?character=h">H</a></li>
+                            <li class="character-item" data-character="i"><a href="/WebAlbum?character=i">I</a></li>
+                            <li class="character-item" data-character="j"><a href="/WebAlbum?character=j">J</a></li>
+                            <li class="character-item" data-character="k"><a href="/WebAlbum?character=k">K</a></li>
+                            <li class="character-item" data-character="l"><a href="/WebAlbum?character=l">L</a></li>
+                            <li class="character-item" data-character="m"><a href="/WebAlbum?character=m">M</a></li>
+                            <li class="character-item" data-character="n"><a href="/WebAlbum?character=n">N</a></li>
+                            <li class="character-item" data-character="o"><a href="/WebAlbum?character=o">O</a></li>
+                            <li class="character-item" data-character="p"><a href="/WebAlbum?character=p">P</a></li>
+                            <li class="character-item" data-character="q"><a href="/WebAlbum?character=q">Q</a></li>
+                            <li class="character-item" data-character="r"><a href="/WebAlbum?character=r">R</a></li>
+                            <li class="character-item" data-character="s"><a href="/WebAlbum?character=s">S</a></li>
+                            <li class="character-item" data-character="t"><a href="/WebAlbum?character=t">T</a></li>
+                            <li class="character-item" data-character="u"><a href="/WebAlbum?character=u">U</a></li>
+                            <li class="character-item" data-character="v"><a href="/WebAlbum?character=v">V</a></li>
+                            <li class="character-item" data-character="w"><a href="/WebAlbum?character=w">W</a></li>
+                            <li class="character-item" data-character="x"><a href="/WebAlbum?character=x">X</a></li>
+                            <li class="character-item" data-character="y"><a href="/WebAlbum?character=y">Y</a></li>
+                            <li class="character-item" data-character="z"><a href="/WebAlbum?character=z">Z</a></li>
+                            <li class="character-item" data-character="0"><a href="/WebAlbum?character=0">0-9</a></li>
+                        </ul>
                     </div>
                     <!--//End-banner-->
                     <!--albums-->
-                    @Html.Partial("_ListAlbums", (IList<AlbumSummary>)Model.AlbumsSameArtists, new ViewDataDictionary { { "AlbumGroupTitle", "Album of the same artist" } })
+                    @Html.Partial("_ListAlbumSummary", (IList<AlbumSummary>)Model.Albums, new ViewDataDictionary { { "AlbumGroupTitle", "Album of the same artist" } })
                     <!--//End-albums-->
                 </div>
                 <!--//music-left-->
                 <!--/music-right-->
                 <div class="music-right">
                     <div id="mainwrap">
-                        <div id="nowPlay" class="scroll-left">
-                            <p class="right" id="npTitle"></p>
-                        </div>
-                        <div id="audiowrap">
-                            <div id="audio0">
-                                <audio preload id="audio1" controlslist="nodownload" controls="controls">Your browser does not support HTML5 Audio!</audio>
-                            </div>
-                            <div id="tracks">
-                                <a id="btnPrev">&laquo;</a>
-                                <a id="btnNext">&raquo;</a>
-                            </div>
-                        </div>
-                        <div id="plwrap">
-                            <ul id="plList">
-                                @for (int i = 0; i < Model.Songs.Count; i++)
-                                {
-                                    <li data-mediaurl="@Model.Songs[i].MediaUrl" data-title="@Model.Songs[i].Title">
-                                        <div class="plItem">
-                                            <div class="plNum">@i</div>
-                                            <div class="plTitle">@Model.Songs[i].Title</div>
-                                        </div>
-                                    </li>
-                                }
-                            </ul>
-                        </div>
+                        @Html.Partial("_ListArtists", (IList<ArtistEntity>)Model.TopArtists, new ViewDataDictionary { { "PartialViewTitle", "Top Artists" } })
                     </div>
-
                     <!-- //script for play-list -->
                     <!--//video-main-->
                     <!--/app_store-->
                     <div class="apps">
                         <h3 class="hd-tittle">Music Online now available in</h3>
-                        @*<div class="banner-button">
-                            <a href="#"><img src="~/content/images/1.png" alt=""></a>
-                        </div>*@
                         <div class="banner-button green-button">
                             <a href="#"><img src="~/content/images/2.png" alt=""></a>
                         </div>
@@ -130,114 +149,12 @@
                 <!-- /w3l-agile-its -->
             </div>
             <!--body wrapper start-->
-
-            <div class="review-slider">
-                <div class="tittle-head">
-                    <h3 class="tittle">Related Albums</span></h3>
-                    <div class="clearfix"> </div>
-                </div>
-                <ul id="flexiselDemo1">
-                    @foreach (var album in @Model.AlbumsSameGenres)
-                    {
-                        <li>
-                            <a href="/WebAlbum/Index?id=@album.Id"><img src="@album.Thumbnail" alt="@album.Title" /></a>
-                            <div class="slide-title"><h4>@album.Title</h4></div>
-                            <div class="date-city">
-                                <h5>@album.ReleaseDate</h5>
-                            </div>
-                        </li>
-                    }
-                </ul>
-                <script type="text/javascript">
-                    $(window).load(function () {
-                        $("#flexiselDemo1").flexisel({
-                            visibleItems: 5,
-                            animationSpeed: 1000,
-                            autoPlay: true,
-                            autoPlaySpeed: 3000,
-                            pauseOnHover: false,
-                            enableResponsiveBreakpoints: true,
-                            responsiveBreakpoints: {
-                                portrait: {
-                                    changePoint: 480,
-                                    visibleItems: 2
-                                },
-                                landscape: {
-                                    changePoint: 640,
-                                    visibleItems: 3
-                                },
-                                tablet: {
-                                    changePoint: 800,
-                                    visibleItems: 4
-                                }
-                            }
-                        });
-                    });
-                </script>
-                <script src="~/Scripts/Common/jquery.flexisel.js"></script>
-            </div>
         </div>
         <div class="clearfix"></div>
         <!--body wrapper end-->
         <!-- /w3l-agile -->
     </div>
     <!--body wrapper end-->
-    <div class="footer">
-        <div class="footer-grid">
-            <h3>Navigation</h3>
-            <ul class="list1">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="radio.html">All Songs</a></li>
-                <li><a href="browse.html">Albums</a></li>
-                <li><a href="radio.html">New Collections</a></li>
-                <li><a href="blog.html">Blog</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </div>
-        <div class="footer-grid">
-            <h3>Our Account</h3>
-            <ul class="list1">
-                <li><a href="#" data-toggle="modal" data-target="#myModal5">Your Account</a></li>
-                <li><a href="#">Personal information</a></li>
-                <li><a href="#">Addresses</a></li>
-                <li><a href="#">Discount</a></li>
-                <li><a href="#">Orders history</a></li>
-                <li><a href="#">Addresses</a></li>
-                <li><a href="#">Search Terms</a></li>
-            </ul>
-        </div>
-        <div class="footer-grid">
-            <h3>Our Support</h3>
-            <ul class="list1">
-                <li><a href="contact.html">Site Map</a></li>
-                <li><a href="#">Search Terms</a></li>
-                <li><a href="#">Advanced Search</a></li>
-                <li><a href="#">Mobile</a></li>
-                <li><a href="contact.html">Contact Us</a></li>
-                <li><a href="#">Mobile</a></li>
-                <li><a href="#">Addresses</a></li>
-            </ul>
-        </div>
-        <div class="footer-grid">
-            <h3>Newsletter</h3>
-            <p class="footer_desc">Nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat</p>
-            <div class="search_footer">
-                <form>
-                    <input type="text" placeholder="Email...." required="">
-                    <input type="submit" value="Submit">
-                </form>
-            </div>
-        </div>
-        <div class="footer-grid footer-grid_last">
-            <h3>About Us</h3>
-            <p class="footer_desc">Diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat enim ad minim veniam,.</p>
-            <p class="f_text">Phone:  &nbsp;&nbsp;&nbsp;00-250-2131</p>
-            <p class="email">Email : &nbsp;<span><a href="mailto:mail@example.com">info(at)mailing.com</a></span></p>
-        </div>
-        <div class="clearfix"> </div>
-    </div>
-    <!--footer section start-->
-    <!--footer section end-->
     <!-- /w3l-agile -->
     <!-- main content end-->
 </section>

@@ -31,5 +31,7 @@ namespace MusicStore.BussinessEntity
         public IList<ArtistEntity> Artists { get; set; }
         [JsonProperty("songs")]
         public IList<SongEntity> Songs { get; set; }
+        [JsonProperty("name")]
+        public string Name { get; set; }
     }
 }

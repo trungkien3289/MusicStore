@@ -1,0 +1,56 @@
+﻿.itemsummary-list-wrapper {
+    display: table;
+}
+
+.conatiner-itemsummary {
+    display: inline-block;
+    float:left;
+    width: 245px;
+    margin:10px 0;
+}
+
+.image-wrapper-itemsummary {
+    display: table-cell;
+    width: 55px;
+}
+
+    .image-wrapper-itemsummary img {
+        width: 55px;
+        height:55px;
+        display:block;
+    }
+
+.infor-wrapper-itemsummary {
+    display: table-cell;
+    vertical-align:middle;
+    padding-left:5px;
+}
+
+
+    .infor-wrapper-itemsummary .item-name {
+        font-size: 17px;
+        display: block;
+        padding: 3px;
+        font-weight: 300;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        max-height: 38px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+
+    .infor-wrapper-itemsummary .item-description {
+        font-size: 14px;
+        font-style:italic;
+    }
+
+.btn-getmoreitems {
+    background-color: #1f1d1d;
+    color: #fff;
+    float: right;
+}
+
+.btn-getmoreitems:hover {
+    color: #ededed;
+}

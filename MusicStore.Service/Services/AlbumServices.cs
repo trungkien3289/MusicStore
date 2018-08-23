@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Transactions;
 
@@ -35,6 +36,19 @@ namespace MusicStore.Service.Services
             {
                 Mapper.CreateMap<ms_Album, AlbumEntity>();
                 var albumModel = Mapper.Map<ms_Album, AlbumEntity>(album);
+                return albumModel;
+            }
+            return null;
+        }
+
+        public AlbumEntity GetAlbumWithArtists(int albumId)
+        {
+            var album = _unitOfWork.AlbumRepository.GetSingleWithInclude(a => a.Id == albumId, "Artists");
+            if (album != null)
+            {
+                Mapper.CreateMap<ms_Album, AlbumEntity>();
+                var albumModel = Mapper.Map<ms_Album, AlbumEntity>(album);
+                albumModel.ArtistName = String.Join(" - ", album.Artists.Select(a => a.Name).ToList());
                 return albumModel;
             }
             return null;
@@ -131,7 +145,7 @@ namespace MusicStore.Service.Services
 
         public IEnumerable<AlbumEntity> SearchByName(string query, int page = 1, int numberItemsPerPage = 10)
         {
-            var albums = _unitOfWork.AlbumRepository.GetManyQueryable(a => a.Title.Contains(query)).OrderBy(a =>a.Title).Skip(--page*numberItemsPerPage).Take(numberItemsPerPage).ToList();
+            var albums = _unitOfWork.AlbumRepository.GetWithInclude(a => a.Title.Contains(query)).OrderBy(a =>a.Title).Skip(--page*numberItemsPerPage).Take(numberItemsPerPage).ToList();
             if (albums.Any())
             {
                 Mapper.CreateMap<ms_Album, AlbumEntity>();
@@ -232,6 +246,29 @@ namespace MusicStore.Service.Services
             }
 
             return null;
+        }
+
+        public IEnumerable<AlbumEntity> GetAlbumsAfterBeginCharacter(string character,int page, int pagesize)
+        {
+            IList<AlbumEntity> result = new List<AlbumEntity>();
+            IList<ms_Album> albums;
+            if (character.Trim().Equals("0-9"))
+            {
+                albums = _unitOfWork.AlbumRepository.GetWithInclude(a => Regex.IsMatch(a.Title, @"^\d"), "Artists", "Songs").OrderBy(a => a.Title).Skip((page-1)*pagesize).Take(pagesize).ToList();
+            }
+            else
+            {
+                albums = _unitOfWork.AlbumRepository.GetWithInclude(a => a.Title.StartsWith(character), "Artists", "Songs").OrderBy(a => a.Title).Skip((page - 1) * pagesize).Take(pagesize).ToList();
+            }
+            if (albums != null && albums.Any())
+            {
+                Mapper.CreateMap<ms_Album, AlbumEntity>().ForMember(a => a.NumberOfSong, map => map.MapFrom(albs => albs.Songs.Count()))
+                .ForMember(a => a.ArtistName, map => map.MapFrom(albs => String.Join(" - ", albs.Artists.Select(a => a.Name).ToList())));
+                result = Mapper.Map<IList<ms_Album>, IList<AlbumEntity>>(albums);
+                return result;
+            }
+
+            return result;
         }
 
 

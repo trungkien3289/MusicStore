@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using MusicStore.BussinessEntity;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,5 +34,29 @@ namespace WebAPI.Models
     {
         [JsonProperty("playlists")]
         public IList<CollectionSummary> Collections { get; set; }
+    }
+
+    public class CollectionViewModel
+    {
+        public CollectionViewModel()
+        {
+            TopArtists = new List<ArtistEntity>();
+            Collections = new List<CollectionEntity>();
+
+        }
+        public IList<ArtistEntity> TopArtists { get; set; }
+        public IList<CollectionEntity> Collections { get; set; }
+    }
+
+    public class CollectionDetailsViewModel
+    {
+        public CollectionDetailsViewModel()
+        {
+            Songs = new List<SongEntity>();
+            TopCollections = new List<CollectionEntity>();
+        }
+        public IList<SongEntity> Songs { get; set; }
+        public CollectionEntity CollectionDetail { get; set; }
+        public IList<CollectionEntity> TopCollections { get; set; }
     }
 }

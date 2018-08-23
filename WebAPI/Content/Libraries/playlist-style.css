@@ -126,10 +126,8 @@ audio {
 }
 
 #mainwrap {
-    border: 1px solid #050446;
     border-radius: 5px;
     box-sizing: border-box;
-    padding: 5px;
 }
 
 #audiowrap {
@@ -506,6 +504,7 @@ html[data-useragent*="OS 9"] .plSel:hover {
 /* Chrome */
 html[data-useragent*="Chrome"] body {
     color: #5a5a5a;
+    background: #fff9e047;
 }
 
 /*html[data-useragent*="Chrome"] audio {

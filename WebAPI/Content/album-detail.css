@@ -1,0 +1,40 @@
+﻿#albumDetails {
+    padding: 7px !important;
+    border-width: 1px;
+    border-style: solid;
+    font-size: 14px;
+    border-radius: 4px;
+    display: table;
+    width: 100%;
+    background: rgba(18, 22, 39, 0.94);
+    color: #fff;
+    border:none;
+}
+
+    #albumDetails article{
+        display:table-row;
+    }
+
+    #albumDetails figure{
+        display:table-cell;
+        width:180px;
+    }
+
+    #albumDetails .album-information-wrapper {
+        display: table-cell;
+    }
+
+    #albumDetails .album-information-wrapper header h1 {
+        font-size: 36px;
+    }
+
+
+.btn-getmoreitems {
+    background-color: #1f1d1d;
+    color: #fff;
+    float: right;
+}
+
+    .btn-getmoreitems:hover {
+        color: #ededed;
+    }

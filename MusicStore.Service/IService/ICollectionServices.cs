@@ -13,5 +13,6 @@ namespace MusicStore.Service.IService
         CollectionEntity GetCollectionById(int collectionId);
         IEnumerable<CollectionEntity> GetFeaturedCollections();
         IEnumerable<SongEntity> GetSongsOfCollection(int collectionId);
+        IEnumerable<CollectionEntity> GetCollectionsAfterBeginCharacter(string character, int page, int pAGE_SIZE);
     }
 }

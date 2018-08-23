@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace MusicStore.Service.Services
@@ -49,6 +50,28 @@ namespace MusicStore.Service.Services
                 return collectionModel;
             }
             return null;
+        }
+
+        public IEnumerable<CollectionEntity> GetCollectionsAfterBeginCharacter(string character, int page, int pagesize)
+        {
+            IList<CollectionEntity> result = new List<CollectionEntity>();
+            IList<ms_Collection> collections;
+            if (character.Trim().Equals("0-9"))
+            {
+                collections = _unitOfWork.CollectionRepository.GetWithInclude(a => Regex.IsMatch(a.Title, @"^\d"), "Songs").OrderBy(a => a.Title).Skip((page - 1) * pagesize).Take(pagesize).ToList();
+            }
+            else
+            {
+                collections = _unitOfWork.CollectionRepository.GetWithInclude(a => a.Title.StartsWith(character), "Songs").OrderBy(a => a.Title).Skip((page - 1) * pagesize).Take(pagesize).ToList();
+            }
+            if (collections != null && collections.Any())
+            {
+                Mapper.CreateMap<ms_Collection, CollectionEntity>();
+                result = Mapper.Map<IList<ms_Collection>, IList<CollectionEntity>>(collections);
+                return result;
+            }
+
+            return result;
         }
 
         public IEnumerable<CollectionEntity> GetFeaturedCollections()
