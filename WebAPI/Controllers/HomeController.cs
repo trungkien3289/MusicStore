@@ -44,22 +44,23 @@ namespace WebAPI.Controllers
             IList<AlbumSummary> listAlbumModels = new List<AlbumSummary>();
             if (albums != null)
             {
-                Mapper.CreateMap<AlbumEntity, AlbumSummary>().ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => DomainName + Url.Content(ALBUM_IMAGE_PATH+albs.Thumbnail)));
+                Mapper.CreateMap<AlbumEntity, AlbumSummary>().ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => DomainName + Url.Content(ALBUM_IMAGE_PATH+albs.Thumbnail)))
+                    .ForMember(ae => ae.ReleaseDate, map => map.MapFrom(albs => albs.ReleaseDate != null ? ((DateTime)albs.ReleaseDate).ToString("yyyy") : String.Empty));
                 listAlbumModels = Mapper.Map<IList<AlbumEntity>, IList<AlbumSummary>>(albums);
             }
             viewModel.TopAlbums = listAlbumModels;
 
             // Get featured songs
             var listSongs = _songServices.GetFeaturedSongs().ToList();
-            Mapper.CreateMap<SongEntity, SongEntity>().ForMember(ae => ae.MediaUrl, map => map.MapFrom(albs => DomainName + Url.Content(SONG_PATH + albs.MediaUrl)));
+            Mapper.CreateMap<SongEntity, SongEntity>()
+                .ForMember(ae => ae.MediaUrl, map => map.MapFrom(albs => DomainName + Url.Content(SONG_PATH + albs.MediaUrl)))
+                .ForMember(ae => ae.Thumbnail, map => map.MapFrom(s => DomainName + Url.Content(ARTIST_IMAGE_PATH + s.Thumbnail)));
             viewModel.TopSongs = Mapper.Map<IList<SongEntity>, IList<SongEntity>>(listSongs);
             // Get feature albums
             IList<AlbumSummary> listFeaturedAlbumModels = new List<AlbumSummary>();
             IList<AlbumEntity> featuredAlbums = _albumServices.GetFeaturedAlbums().ToList();
             if (featuredAlbums != null)
             {
-                Mapper.CreateMap<AlbumEntity, AlbumSummary>().ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => DomainName + Url.Content(ALBUM_IMAGE_PATH + albs.Thumbnail)))
-                    .ForMember(ae => ae.ReleaseDate, map => map.MapFrom(albs => albs.ReleaseDate!=null? String.Format("{0:YYYY-MM}", albs.ReleaseDate):String.Empty));
                 listFeaturedAlbumModels = Mapper.Map<IList<AlbumEntity>, IList<AlbumSummary>>(featuredAlbums);
             }
             viewModel.FeaturedAlbums = listFeaturedAlbumModels;

@@ -68,7 +68,7 @@ namespace WebAPI.Controllers
             var albums = _albumServices.GetAlbumsAfterBeginCharacter(character, page, PAGE_SIZE).ToList();
             Mapper.CreateMap<AlbumEntity, AlbumSummary>()
                 .ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => DomainName + Url.Content(ALBUM_IMAGE_PATH + albs.Thumbnail)))
-                .ForMember(ae => ae.ReleaseDate, map => map.MapFrom(albs => albs.ReleaseDate != null ? String.Format("{0:yyyy}", albs.ReleaseDate) : String.Empty));
+                .ForMember(ae => ae.ReleaseDate, map => map.MapFrom(albs => albs.ReleaseDate != null ? ((DateTime)albs.ReleaseDate).ToString("yyyy") : String.Empty));
             if (albums != null)
             {
                 returnModel.Albums = Mapper.Map<IList<AlbumEntity>, IList<AlbumSummary>>(albums);
@@ -89,7 +89,7 @@ namespace WebAPI.Controllers
             string DomainName = Request.Url.Scheme + "://" + Request.Url.Authority;
             var albums = _albumServices.GetAlbumsAfterBeginCharacter(character, page, PAGE_SIZE);
             Mapper.CreateMap<AlbumEntity, AlbumSummary>().ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => DomainName + Url.Content(ALBUM_IMAGE_PATH + albs.Thumbnail)))
-                   .ForMember(ae => ae.ReleaseDate, map => map.MapFrom(albs => albs.ReleaseDate != null ? String.Format("{0:YYYY-MM}", albs.ReleaseDate) : String.Empty));
+                   .ForMember(ae => ae.ReleaseDate, map => map.MapFrom(albs => albs.ReleaseDate != null ? ((DateTime)albs.ReleaseDate).ToString("yyyy") : String.Empty));
             IList<AlbumSummary> result = new List<AlbumSummary>();
             if (albums != null)
             {

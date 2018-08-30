@@ -65,10 +65,10 @@ D:\FreelanceProject\Music Store\MusicStore\MusicStore\bin\Microsoft.Owin.Securit
 D:\FreelanceProject\Music Store\MusicStore\MusicStore\bin\Resolver.pdb
 D:\FreelanceProject\Music Store\MusicStore\MusicStore\bin\Unity.Abstractions.pdb
 D:\FreelanceProject\Music Store\MusicStore\MusicStore\bin\Unity.Container.pdb
-D:\FreelanceProject\Music Store\MusicStore\MusicStore\obj\Debug\MusicStore.csprojResolveAssemblyReference.cache
 D:\FreelanceProject\Music Store\MusicStore\MusicStore\obj\Debug\MusicStore.dll
 D:\FreelanceProject\Music Store\MusicStore\MusicStore\obj\Debug\MusicStore.pdb
 D:\FreelanceProject\Music Store\MusicStore\MusicStore\bin\MusicStore.Model.dll.config
 D:\FreelanceProject\Music Store\MusicStore\MusicStore\bin\Resolver.dll.config
 D:\FreelanceProject\Music Store\MusicStore\MusicStore\obj\Debug\MusicStore.csproj.CoreCompileInputs.cache
 D:\FreelanceProject\Music Store\MusicStore\MusicStore\obj\Debug\MusicStore.csproj.CopyComplete
+D:\FreelanceProject\Music Store\MusicStore\MusicStore\obj\Debug\MusicStore.csprojAssemblyReference.cache

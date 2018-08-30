@@ -6,7 +6,7 @@
     {
         <div class="col-md-3 content-grid album-item">
             <a class="play-icon popup-with-zoom-anim" href="/WebAlbum/AlbumDetails?id=@item.Id"><img src="@item.Thumbnail" title="@item.Title">
-            <div class="item-infor-overlap-panel">@item.Title</div>
+            <div class="item-infor-overlap-panel" title="@item.Title">@item.Title</div>
             <div class="glyphicon glyphicon-play-circle media-play-icon"></div></a>
             @*<a class="button play-icon popup-with-zoom-anim"  href="@item.Url">Listen now</a>*@
         </div>
@@ -22,6 +22,12 @@
         padding: 5px;
         background-color: #08080873;
         color: #fff;
-        width:100%;
+        width: 100%;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        max-height: 38px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
     }
 </style>

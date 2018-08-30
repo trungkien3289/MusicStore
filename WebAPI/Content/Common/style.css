@@ -158,7 +158,7 @@ h1, h2, h3, h4, h5 {
 
 div#page-wrapper {
     padding: 3em 2em;
-    background-color: #f7f7f78c;
+    background-color: #1f1e1e8c;
 }
 
 .left-side-collapsed .logo-icon {
@@ -1734,7 +1734,7 @@ h3.hd-tittle {
     margin: 1.4em 0;
     display:block;
     float:left;
-    width:100%;
+    width:400px;
 }
 
 .banner-button {

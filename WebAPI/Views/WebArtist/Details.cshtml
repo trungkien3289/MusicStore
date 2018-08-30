@@ -22,7 +22,7 @@
     <link href="~/Content/Common/slidebar.css" rel="stylesheet" />
     <link href="~/Content/album-detail.css" rel="stylesheet" />
     <link href="~/Content/artist-detail.css" rel="stylesheet" />
-
+    <link href="~/Content/songplaylist.css" rel="stylesheet" />
 }
 
 <script src="~/Scripts/Libraries/playlist.js"></script>
@@ -50,17 +50,11 @@
 
 @section scripts{
     <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-    @*<script src="js/jquery-2.1.4.js"></script>*@
-    @*<script src="~/Scripts/Common/jquery.nicescroll.js"></script>*@
+    <script src="~/Scripts/Common/jquery.nicescroll.js"></script>
+    <script src="~/Scripts/Common/jquery-ui.min.js"></script>
+    <script src="~/Scripts/Common/songplaylist.js"></script>
     <script src="~/Scripts/Common/scripts.js"></script>
-    <script>
-            $(function () {
-                MediaPlayList.init(@Html.Raw(Json.Encode(Model.Songs)));
 
-                $("#getMoreAlbumsBtn").addClass("hide");
-            })
-
-    </script>
 }
 
 <section>
@@ -91,31 +85,7 @@
                 <!--/music-right-->
                 <div class="music-right">
                     <div id="mainwrap">
-                        <div id="nowPlay" class="scroll-left">
-                            <p class="right" id="npTitle"></p>
-                        </div>
-                        <div id="audiowrap">
-                            <div id="audio0">
-                                <audio preload id="audio1" controlslist="nodownload" controls="controls">Your browser does not support HTML5 Audio!</audio>
-                            </div>
-                            <div id="tracks">
-                                <a id="btnPrev">&laquo;</a>
-                                <a id="btnNext">&raquo;</a>
-                            </div>
-                        </div>
-                        <div id="plwrap">
-                            <ul id="plList">
-                                @for (int i = 0; i < Model.Songs.Count; i++)
-                                {
-                                    <li data-mediaurl="@Model.Songs[i].MediaUrl" data-title="@Model.Songs[i].Title">
-                                        <div class="plItem">
-                                            <div class="plNum">@(i + 1)</div>
-                                            <div class="plTitle">@Model.Songs[i].Title</div>
-                                        </div>
-                                    </li>
-                                }
-                            </ul>
-                        </div>
+                        @Html.Partial("_MusicPlayList", (IList<SongEntity>)Model.Songs)
                     </div>
 
                     <!-- //script for play-list -->
@@ -152,8 +122,8 @@
                             <a href="/WebAlbum/Index?id=@artist.Id"><img src="@artist.Thumbnail" alt="@artist.Name" /></a>
                             <div class="slide-title"><h4>@artist.Name</h4></div>
                             @*<div class="date-city">
-                                <h5></h5>
-                            </div>*@
+                                    <h5></h5>
+                                </div>*@
                         </li>
                     }
                 </ul>

@@ -11,7 +11,10 @@
             </div>
             <div class="infor-wrapper-itemsummary">
                 <div class="item-name">@item.Name</div>
-                <div class="item-description">@item.NumberOfAlbums  albums</div>
+                @if (item.NumberOfAlbums != 0)
+                {
+                    <div class="item-description">@item.NumberOfAlbums  albums</div>
+                }
             </div>
         </div>
     }

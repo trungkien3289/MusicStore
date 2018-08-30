@@ -99,6 +99,7 @@
     <Compile Include="DataModels\system_Token.cs" />
     <Compile Include="DataModels\system_User.cs" />
     <Compile Include="DependencyResolver.cs" />
+    <Compile Include="GenericRepository\AlbumRepository.cs" />
     <Compile Include="GenericRepository\GenericRepository.cs" />
     <Compile Include="Migrations\201804231550254_initial_database.cs" />
     <Compile Include="Migrations\201804231550254_initial_database.Designer.cs">

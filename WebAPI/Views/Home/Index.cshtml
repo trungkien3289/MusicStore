@@ -1,4 +1,5 @@
 ﻿@using WebAPI.Models
+@using MusicStore.BussinessEntity
 @model WebAPI.Models.HomeViewModel
 
 @{
@@ -20,41 +21,37 @@
     <link href="~/Content/home-page.css" rel="stylesheet" />
     <link href="~/Content/Libraries/playlist-style.css" rel="stylesheet" />
     <link href="~/Content/Common/slidebar.css" rel="stylesheet" />
+    <link href="~/Content/songplaylist.css" rel="stylesheet" />
 }
 
-<script src="~/Scripts/Libraries/playlist.js"></script>
-<script src="~/Scripts/Common/responsiveslides.min.js"></script>
-<script>
-    // You can also use "$(window).load(function() {"
-    $(function () {
-        // Slideshow 4
-        $("#slider4").responsiveSlides({
-            auto: true,
-            pager: true,
-            nav: true,
-            speed: 500,
-            namespace: "callbacks",
-            before: function () {
-                $('.events').append("<li>before event fired.</li>");
-            },
-            after: function () {
-                $('.events').append("<li>after event fired.</li>");
-            }
-        });
 
-    });
-</script>
 
 @section scripts{
     <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-    @*<script src="js/jquery-2.1.4.js"></script>*@
-    @*<script src="~/Scripts/Common/jquery.nicescroll.js"></script>*@
+    <script src="~/Scripts/Common/jquery.nicescroll.js"></script>
     <script src="~/Scripts/Common/scripts.js"></script>
+    <script src="~/Scripts/Common/jquery-ui.min.js"></script>
+    <script src="~/Scripts/Common/songplaylist.js"></script>
+    <script src="~/Scripts/Common/responsiveslides.min.js"></script>
     <script>
-            $(function () {
-                MediaPlayList.init(@Html.Raw(Json.Encode(Model.TopSongs)));
-            })
+        $(function () {
+            $("#mainwrap .playlist").niceScroll();
+            // Slideshow 4
+            $("#slider4").responsiveSlides({
+                auto: true,
+                pager: false,
+                nav: false,
+                speed: 500,
+                namespace: "callbacks",
+                before: function () {
+                    $('.events').append("<li>before event fired.</li>");
+                },
+                after: function () {
+                    $('.events').append("<li>after event fired.</li>");
+                }
+            });
 
+        });
     </script>
 }
 
@@ -72,36 +69,34 @@
                                 <ul class="rslides callbacks callbacks1" id="slider4">
                                     <li>
                                         <div class="banner-img">
-                                            <img src="~/content/images/11.jpg" class="img-responsive" alt="">
+                                            <img src="~/content/images/11.png" class="img-responsive" alt="">
                                         </div>
-                                        <div class="banner-info">
-                                            <a class="trend" href="single.html">TRENDING</a>
-                                            <h3>Let Your Home</h3>
-                                            <p>Album by <span>Rock star</span></p>
-                                        </div>
+                                        @*<div class="banner-info">
+                                                <a class="trend" href="single.html">TRENDING</a>
+                                                <h3>Let Your Home</h3>
+                                                <p>Album by <span>Rock star</span></p>
+                                            </div>*@
 
                                     </li>
                                     <li>
                                         <div class="banner-img">
                                             <img src="~/content/images/22.jpg" class="img-responsive" alt="">
                                         </div>
-                                        <div class="banner-info">
-                                            <a class="trend" href="single.html">TRENDING</a>
-                                            <h3>Charis Brown feet</h3>
-                                            <p>Album by <span>Rock star</span></p>
-                                        </div>
-
-
+                                        @*<div class="banner-info">
+                                                <a class="trend" href="single.html">TRENDING</a>
+                                                <h3>Charis Brown feet</h3>
+                                                <p>Album by <span>Rock star</span></p>
+                                            </div>*@
                                     </li>
                                     <li>
                                         <div class="banner-img">
-                                            <img src="~/content/images/33.jpg" class="img-responsive" alt="">
+                                            <img src="~/content/images/33.png" class="img-responsive" alt="">
                                         </div>
-                                        <div class="banner-info">
-                                            <a class="trend" href="single.html">TRENDING</a>
-                                            <h3>Let Your Home</h3>
-                                            <p>Album by <span>Rock star</span></p>
-                                        </div>
+                                        @*<div class="banner-info">
+                                                <a class="trend" href="single.html">TRENDING</a>
+                                                <h3>Let Your Home</h3>
+                                                <p>Album by <span>Rock star</span></p>
+                                            </div>*@
 
                                         <!-- /w3layouts-agileits -->
                                     </li>
@@ -120,31 +115,7 @@
                 <!--/music-right-->
                 <div class="music-right">
                     <div id="mainwrap">
-                        <div id="nowPlay" class="scroll-left">
-                            <p class="right" id="npTitle"></p>
-                        </div>
-                        <div id="audiowrap">
-                            <div id="audio0">
-                                <audio preload id="audio1" controlslist="nodownload" controls="controls">Your browser does not support HTML5 Audio!</audio>
-                            </div>
-                            <div id="tracks">
-                                <a id="btnPrev">&laquo;</a>
-                                <a id="btnNext">&raquo;</a>
-                            </div>
-                        </div>
-                        <div id="plwrap">
-                            <ul id="plList">
-                                @for (int i = 0; i < Model.TopSongs.Count; i++)
-                                    {
-                                        <li data-mediaurl="@Model.TopSongs[i].MediaUrl" data-title="@Model.TopSongs[i].Title">
-                                            <div class="plItem">
-                                                <div class="plNum">@(i+1)</div>
-                                                <div class="plTitle">@Model.TopSongs[i].Title</div>
-                                            </div>
-                                        </li>
-                                    }
-                            </ul>
-                        </div>
+                        @Html.Partial("_MusicPlayList", (IList<SongEntity>)Model.TopSongs)
                     </div>
 
                     <!-- //script for play-list -->
@@ -153,8 +124,8 @@
                     <div class="apps">
                         <h3 class="hd-tittle">Music Online now available in</h3>
                         @*<div class="banner-button">
-                            <a href="#"><img src="~/content/images/1.png" alt=""></a>
-                        </div>*@
+                                <a href="#"><img src="~/content/images/1.png" alt=""></a>
+                            </div>*@
                         <div class="banner-button green-button">
                             <a href="#"><img src="~/content/images/2.png" alt=""></a>
                         </div>
@@ -178,13 +149,10 @@
                     @foreach (var album in @Model.FeaturedAlbums)
                     {
                         <li>
-                            <a href="/WebAlbum/Index?id=@album.Id"><img src="@album.Thumbnail" alt="@album.Title" /></a>
+                            <a href="/WebAlbum/AlbumDetails?id=@album.Id"><img src="@album.Thumbnail" alt="@album.Title" /></a>
                             <div class="slide-title"><h4>@album.Title</h4></div>
                             <div class="date-city">
                                 <h5>@album.ReleaseDate</h5>
-                                @*<div class="buy-tickets">
-                                    <a href="single.html">READ MORE</a>
-                                </div>*@
                             </div>
                         </li>
                     }
@@ -223,7 +191,6 @@
         <!-- /w3l-agile -->
     </div>
     <!--body wrapper end-->
-
     <!-- /w3l-agile -->
     <!-- main content end-->
 </section>

@@ -193,6 +193,19 @@ namespace MusicStore.Model.UnitOfWork
 
         }
 
+        public ms_Album GetAlbumOfSong(int songId)
+        {
+            try
+            {
+                var song = _context.Set<ms_Song>().Where(s => s.Id == songId).First();
+                var album = song.Albums.FirstOrDefault();
+                return album;
+            }catch(Exception ex)
+            {
+                return null;
+            }
+        }
+
         #endregion
 
         #region Implementing IDiosposable...
