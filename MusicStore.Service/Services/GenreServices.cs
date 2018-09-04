@@ -67,9 +67,12 @@ namespace MusicStore.Service.Services
                 {
                     Mapper.CreateMap<ms_Song, SongEntity>()
                     .ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => albs.Artists.Count() > 0 ? albs.Artists.First().Thumbnail : String.Empty))
-                    .ForMember(ae => ae.AlbumId, map => map.MapFrom(albs => albs.Albums.Count() > 0 ? albs.Albums.First().Id : 0))
-                    .ForMember(ae => ae.AlbumName, map => map.MapFrom(albs => albs.Albums.Count() > 0 ? albs.Albums.First().Title : String.Empty))
-                    .ForMember(ae => ae.AlbumThumbnail, map => map.MapFrom(albs => albs.Albums.Count() > 0 ? albs.Albums.First().Thumbnail : String.Empty))
+                    //.ForMember(ae => ae.AlbumId, map => map.MapFrom(albs => albs.Albums.Count() > 0 ? albs.Albums.First().Id : 0))
+                    //.ForMember(ae => ae.AlbumName, map => map.MapFrom(albs => albs.Albums.Count() > 0 ? albs.Albums.First().Title : String.Empty))
+                    //.ForMember(ae => ae.AlbumThumbnail, map => map.MapFrom(albs => albs.Albums.Count() > 0 ? albs.Albums.First().Thumbnail : String.Empty))
+                     .ForMember(ae => ae.AlbumName, map => map.MapFrom(albs => String.Empty))
+                       .ForMember(ae => ae.AlbumThumbnail, map => map.MapFrom(albs => String.Empty))
+                       .ForMember(ae => ae.Description, map => map.MapFrom(albs => String.Empty))
                     .ForMember(ae => ae.ArtistName, map => map.MapFrom(albs => albs.Artists.Count() > 0 ? albs.Artists.First().Name : String.Empty))
                     .ForMember(ae => ae.ArtistId, map => map.MapFrom(albs => albs.Artists.Count() > 0 ? albs.Artists.First().Id : 0));
                     songEntities = Mapper.Map<List<ms_Song>, List<SongEntity>>(genre.Songs.ToList());
@@ -105,8 +108,7 @@ namespace MusicStore.Service.Services
 
         public GenreDetails GetGenreDetails(int id)
         {
-            //var genre = _unitOfWork.GenreRepository.GetSingleWithInclude(g => g.Id == id, "Artists", "Artists.Songs", "Artists.Songs.Albums");
-            var genre = _unitOfWork.GenreRepository.GetSingleWithInclude(g => g.Id == id, "Artists", "Artists.Songs");
+            var genre = _unitOfWork.GenreRepository.GetFirst(g => g.Id == id);
             List<ArtistEntity> artistEntities = new List<ArtistEntity>();
             List<SongEntity> songEntities = new List<SongEntity>();
             if (genre != null)
@@ -116,7 +118,8 @@ namespace MusicStore.Service.Services
 
                 if (genre.Artists.Any())
                 {
-                    artistEntities = Mapper.Map<List<ms_Artist>, List<ArtistEntity>>(genre.Artists.ToList());
+                    var artists = genre.Artists.Where(a => a.Songs.Count() > 0).ToList();
+                    artistEntities = Mapper.Map<List<ms_Artist>, List<ArtistEntity>>(artists);
                     List<ms_Song> songs = new List<ms_Song>();
                     foreach (var artist in genre.Artists)
                     {
@@ -125,39 +128,15 @@ namespace MusicStore.Service.Services
                        //.ForMember(ae => ae.AlbumId, map => map.MapFrom(albs => albs.Albums.Count() > 0 ? albs.Albums.First().Id : 0))
                        //.ForMember(ae => ae.AlbumName, map => map.MapFrom(albs => albs.Albums.Count() > 0 ? albs.Albums.First().Title : String.Empty))
                        //.ForMember(ae => ae.AlbumThumbnail, map => map.MapFrom(albs => albs.Albums.Count() > 0 ? albs.Albums.First().Thumbnail : String.Empty))
+                       .ForMember(ae => ae.AlbumName, map => map.MapFrom(albs => String.Empty))
+                       .ForMember(ae => ae.AlbumThumbnail, map => map.MapFrom(albs => String.Empty))
+                       .ForMember(ae => ae.Description, map => map.MapFrom(albs => String.Empty))
                        .ForMember(ae => ae.ArtistName, map => map.MapFrom(albs => artist.Name))
                        .ForMember(ae => ae.ArtistId, map => map.MapFrom(albs => artist.Id));
-
-
 
                         if (artist.Songs.Any())
                         {
                             songEntities = Mapper.Map<List<ms_Song>, List<SongEntity>>(artist.Songs.ToList());
-
-                            //foreach (var song in artist.Songs)
-                            //{
-                            //    var album = song.Albums.FirstOrDefault();
-                            //    songEntities.Add(
-                            //        new SongEntity()
-                            //        {
-                            //            Id = song.Id,
-                            //            AlbumId = album.Id,
-                            //            AlbumName = album.Title,
-                            //            Title = song.Title,
-                            //            AlbumThumbnail = album.Thumbnail,
-                            //            ArtistId = artist.Id.ToString(),
-                            //            ArtistName = artist.Name,
-                            //            Description = song.Description,
-                            //            Duration = song.Duration,
-                            //            IsFeatured = song.IsFeatured,
-                            //            Lyrics = song.Lyrics,
-                            //            MediaUrl = song.MediaUrl,
-                            //            Quality = song.Quality,
-                            //            Status = song.Status,
-                            //            Thumbnail = artist.Thumbnail,
-                            //            Url = song.Url
-                            //        });
-                            //}
                         }
                     }
                 }
