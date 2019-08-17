@@ -56,10 +56,13 @@
     <Compile Include="IService\IArtistServices.cs" />
     <Compile Include="IService\ICollectionServices.cs" />
     <Compile Include="IService\IGenreServices.cs" />
+    <Compile Include="IService\IProjectServices.cs" />
     <Compile Include="IService\ISongServices.cs" />
     <Compile Include="IService\ITokenServices.cs" />
     <Compile Include="IService\IUserServices.cs" />
+    <Compile Include="MapperInitialization.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ProjectServices.cs" />
     <Compile Include="Services\AlbumServices.cs" />
     <Compile Include="Services\ApplicationServices.cs" />
     <Compile Include="Services\ArtistServices.cs" />

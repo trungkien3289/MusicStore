@@ -87,6 +87,10 @@
     <Compile Include="DataContext\MainDbContext.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DataModels\fl_Project.cs" />
+    <Compile Include="DataModels\fl_RequestComment.cs" />
+    <Compile Include="DataModels\fl_Task.cs" />
+    <Compile Include="DataModels\fl_TaskRequest.cs" />
     <Compile Include="DataModels\IdentityModels.cs" />
     <Compile Include="DataModels\ms_Album.cs" />
     <Compile Include="DataModels\ms_Application.cs" />
@@ -98,6 +102,7 @@
     <Compile Include="DataModels\system_RouteData.cs" />
     <Compile Include="DataModels\system_Token.cs" />
     <Compile Include="DataModels\system_User.cs" />
+    <Compile Include="DataModels\system_UserRole.cs" />
     <Compile Include="DependencyResolver.cs" />
     <Compile Include="GenericRepository\AlbumRepository.cs" />
     <Compile Include="GenericRepository\GenericRepository.cs" />
@@ -137,9 +142,9 @@
     <Compile Include="Migrations\201806210115086_add_isfeatured_property_for_collection.Designer.cs">
       <DependentUpon>201806210115086_add_isfeatured_property_for_collection.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201908170346516_Add Duration column.cs" />
-    <Compile Include="Migrations\201908170346516_Add Duration column.Designer.cs">
-      <DependentUpon>201908170346516_Add Duration column.cs</DependentUpon>
+    <Compile Include="Migrations\201908170712205_Init table and relationship for freeland management feature.cs" />
+    <Compile Include="Migrations\201908170712205_Init table and relationship for freeland management feature.Designer.cs">
+      <DependentUpon>201908170712205_Init table and relationship for freeland management feature.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -184,8 +189,8 @@
     <EmbeddedResource Include="Migrations\201806210115086_add_isfeatured_property_for_collection.resx">
       <DependentUpon>201806210115086_add_isfeatured_property_for_collection.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908170346516_Add Duration column.resx">
-      <DependentUpon>201908170346516_Add Duration column.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201908170712205_Init table and relationship for freeland management feature.resx">
+      <DependentUpon>201908170712205_Init table and relationship for freeland management feature.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

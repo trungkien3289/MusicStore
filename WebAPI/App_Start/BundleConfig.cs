@@ -26,6 +26,17 @@ namespace WebAPI
                       "~/Content/Common/style.css",
                         "~/Content/Common/font-awesome.css",
                         "~/Content/main-menu.css"));
+
+            bundles.Add(new StyleBundle("~/Content/dashboard_css").Include(
+                      "~/Content/bootstrap.css",
+                      "~/Content/Common/icons.css",
+                        "~/Content/Common/font-awesome.css",
+                        "~/Content/Dashboard/layout.css",
+                        "~/Content/Dashboard/custom.css"
+                        ));
+
+            bundles.Add(new ScriptBundle("~/bundles/dashboard_js").Include(
+                      "~/Scripts/DashBoard/dashboard-main.js"));
         }
     }
 }

@@ -61,6 +61,12 @@ namespace MusicStore.Model.DataContext
         public DbSet<system_Logging> Logging { get; set; }
         public DbSet<ms_Application> ms_application { get; set; }
 
+        public DbSet<system_UserRole> UserRole { get; set; }
+        public DbSet<fl_Project> Project { get; set; }
+        public DbSet<fl_RequestComment> RequestComments { get; set; }
+        public DbSet<fl_Task> Task { get; set; }
+        public DbSet<fl_TaskRequest> TaskRequest { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -84,8 +90,6 @@ namespace MusicStore.Model.DataContext
                 .Map(t => t.MapLeftKey("SongId")
                     .MapRightKey("AlbumId")
                     .ToTable("ms_Song_Album"));
-
-
             modelBuilder.Entity<ms_Artist>()
                 .HasMany(c => c.Albums).WithMany(i => i.Artists)
                 .Map(t => t.MapLeftKey("ArtistId")
@@ -103,6 +107,47 @@ namespace MusicStore.Model.DataContext
                 .Map(t => t.MapLeftKey("ArtistId")
                     .MapRightKey("GenreId")
                     .ToTable("ms_Artist_Genre"));
+
+            modelBuilder.Entity<fl_Project>()
+                .HasMany(c => c.Tasks).WithRequired(t => t.Project)
+                .HasForeignKey<int>(t => t.ProjectId);
+
+            modelBuilder.Entity<fl_Project>()
+                .HasMany(c => c.Leaders).WithMany(t => t.LeaderProjects)
+                .Map(t => t.MapLeftKey("Id")
+                    .MapRightKey("UserId")
+                    .ToTable("fl_Project_LeaderUser"));
+
+            modelBuilder.Entity<fl_Project>()
+                .HasMany(c => c.Developers).WithMany(t => t.DeveloperProjects)
+                .Map(t => t.MapLeftKey("Id")
+                    .MapRightKey("UserId")
+                    .ToTable("fl_Project_DeveloperUser"));
+
+            modelBuilder.Entity<fl_Task>()
+                .HasOptional(c => c.Assignee).WithMany(t => t.Tasks)
+                .HasForeignKey<Nullable<int>>(t => t.AssigneeId);
+
+            modelBuilder.Entity<fl_TaskRequest>()
+               .HasMany(c => c.Developers).WithMany(t => t.DeveloperTaskRequests)
+                .Map(t => t.MapLeftKey("Id")
+                    .MapRightKey("UserId")
+                    .ToTable("fl_TaskRequest_DeveloperUser"));
+
+            modelBuilder.Entity<fl_TaskRequest>()
+               .HasOptional(tr => tr.Assignee).WithMany(u => u.AssigneeTaskRequests)
+                .HasForeignKey<Nullable<int>>(tr => tr.AssigneeId);
+
+            modelBuilder.Entity<fl_TaskRequest>()
+              .HasRequired(c => c.Task).WithOptional(t => t.TaskRequest);
+
+            modelBuilder.Entity<fl_RequestComment>()
+             .HasRequired(rc => rc.User).WithMany(u => u.RequestComments)
+              .HasForeignKey<int>(tr => tr.UserId);
+
+            modelBuilder.Entity<fl_RequestComment>()
+            .HasRequired(rc => rc.TaskRequest).WithMany(tr => tr.RequestComments)
+             .HasForeignKey<int>(tr => tr.TaskRequestId);
         }
     }
 }

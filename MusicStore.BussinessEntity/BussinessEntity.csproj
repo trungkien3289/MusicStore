@@ -49,6 +49,9 @@
     <Compile Include="CollectionEntity.cs" />
     <Compile Include="Enums\ItemType.cs" />
     <Compile Include="GenreEntity.cs" />
+    <Compile Include="UserEntity.cs" />
+    <Compile Include="TaskEntity.cs" />
+    <Compile Include="ProjectEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SongEntity.cs" />
     <Compile Include="TokenEntity.cs" />

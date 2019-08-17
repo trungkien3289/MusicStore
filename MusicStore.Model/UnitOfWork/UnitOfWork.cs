@@ -25,6 +25,11 @@ namespace MusicStore.Model.UnitOfWork
         private GenericRepository<system_User> _userRepository;
         private GenericRepository<system_Token> _tokenRepository;
         private GenericRepository<ms_Application> _applicationRepository;
+        private GenericRepository<fl_Project> _projectRepository;
+        private GenericRepository<fl_Task> _taskRepository;
+        private GenericRepository<fl_TaskRequest> _taskRequestRepository;
+        private GenericRepository<fl_RequestComment> _requestCommentRepository;
+        private GenericRepository<system_UserRole> _userRoleRepository;
 
         #endregion
 
@@ -157,6 +162,86 @@ namespace MusicStore.Model.UnitOfWork
                 }
 
                 return _applicationRepository;
+            }
+        }
+
+        /// <summary>
+        /// Get/Set Property for project repository.
+        /// </summary>
+        public GenericRepository<fl_Project> ProjectRepository
+        {
+            get
+            {
+                if (this._projectRepository == null)
+                {
+                    this._projectRepository = new GenericRepository<fl_Project>(_context);
+                }
+
+                return this._projectRepository;
+            }
+        }
+
+        /// <summary>
+        /// Get/Set Property for task repository.
+        /// </summary>
+        public GenericRepository<fl_Task> TaskRepository
+        {
+            get
+            {
+                if (this._taskRepository == null)
+                {
+                    this._taskRepository = new GenericRepository<fl_Task>(_context);
+                }
+
+                return this._taskRepository;
+            }
+        }
+
+        /// <summary>
+        /// Get/Set Property for task request repository.
+        /// </summary>
+        public GenericRepository<fl_TaskRequest> TaskRequestRepository
+        {
+            get
+            {
+                if (this._taskRequestRepository == null)
+                {
+                    this._taskRequestRepository = new GenericRepository<fl_TaskRequest>(_context);
+                }
+
+                return this._taskRequestRepository;
+            }
+        }
+
+        /// <summary>
+        /// Get/Set Property for request comment repository.
+        /// </summary>
+        public GenericRepository<fl_RequestComment> RequestCommentRepository
+        {
+            get
+            {
+                if (this._requestCommentRepository == null)
+                {
+                    this._requestCommentRepository = new GenericRepository<fl_RequestComment>(_context);
+                }
+
+                return this._requestCommentRepository;
+            }
+        }
+
+        /// <summary>
+        /// Get/Set Property for request comment repository.
+        /// </summary>
+        public GenericRepository<system_UserRole> UserRoleRepository
+        {
+            get
+            {
+                if (this._userRoleRepository == null)
+                {
+                    this._userRoleRepository = new GenericRepository<system_UserRole>(_context);
+                }
+
+                return this._userRoleRepository;
             }
         }
         #endregion

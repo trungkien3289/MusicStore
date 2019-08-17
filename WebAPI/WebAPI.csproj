@@ -245,6 +245,8 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="APIControllers\AlbumController.cs" />
     <Compile Include="APIControllers\ArtistController.cs" />
+    <Compile Include="Controllers\DashBoardController.cs" />
+    <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\WebAlbumController.cs" />
     <Compile Include="Controllers\AuthenticateController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -269,6 +271,7 @@
     <Compile Include="Models\GenreViewModel.cs" />
     <Compile Include="Models\HomeAPIModels.cs" />
     <Compile Include="Models\HomeViewModel.cs" />
+    <Compile Include="Models\ProjectViewModel.cs" />
     <Compile Include="Models\SongViewModels.cs" />
     <Compile Include="Models\SummarySongModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -292,6 +295,8 @@
     <Content Include="Content\Common\popuo-box.css" />
     <Content Include="Content\Common\slidebar.css" />
     <Content Include="Content\Common\style.css" />
+    <Content Include="Content\fonts\fa-solid-900.svg" />
+    <Content Include="Content\fonts\Pe-icon-7-stroke.svg" />
     <Content Include="Content\Images\11.png" />
     <Content Include="Content\Images\33.png" />
     <Content Include="Content\Images\background.png" />
@@ -299,6 +304,7 @@
     <Content Include="Content\Images\playing.png" />
     <Content Include="Content\Images\spr3.png" />
     <Content Include="Content\Images\spr.png" />
+    <Content Include="Content\DashBoard\layout.css" />
     <Content Include="Content\songplaylist.css" />
     <Content Include="Content\featured-artists-list.css" />
     <Content Include="Content\fonts\digital-7-webfont.svg" />
@@ -357,7 +363,9 @@
     <Content Include="Content\Video\Taylor-Swift-Bad Blood.mp4" />
     <Content Include="Content\Video\Taylor-Swift-Bad_Blood.webm" />
     <Content Include="Content\Video\Taylor-Swift.mp4" />
+    <Content Include="fonts\fa-solid-900.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\Pe-icon-7-stroke.svg" />
     <Content Include="Global.asax" />
     <Content Include="favicon.ico" />
     <Content Include="Scripts\bootstrap.js" />
@@ -415,6 +423,21 @@
     <Content Include="Content\fonts\weathericons-regular-webfont.ttf" />
     <Content Include="Content\fonts\weathericons-regular-webfont.woff" />
     <Content Include="Content\fonts\WeatherIcons-Regular.otf" />
+    <Content Include="Content\fonts\fa-solid-900.eot" />
+    <Content Include="Content\fonts\fa-solid-900.ttf" />
+    <Content Include="Content\fonts\fa-solid-900.woff" />
+    <Content Include="Content\fonts\fa-solid-900.woff2" />
+    <Content Include="Content\fonts\Pe-icon-7-stroke.eot" />
+    <Content Include="Content\fonts\Pe-icon-7-stroke.ttf" />
+    <Content Include="Content\fonts\Pe-icon-7-stroke.woff" />
+    <Content Include="fonts\fa-solid-900.eot" />
+    <Content Include="fonts\fa-solid-900.ttf" />
+    <Content Include="fonts\fa-solid-900.woff" />
+    <Content Include="fonts\fa-solid-900.woff2" />
+    <Content Include="fonts\Pe-icon-7-stroke.eot" />
+    <Content Include="fonts\Pe-icon-7-stroke.ttf" />
+    <Content Include="fonts\Pe-icon-7-stroke.woff" />
+    <Content Include="Content\DashBoard\custom.css" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Common\bootstrap.js" />
@@ -436,6 +459,7 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\Libraries\playlist.js" />
+    <Content Include="Scripts\DashBoard\dashboard-main.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -480,6 +504,9 @@
     <Content Include="Views\WebCollection\Details.cshtml" />
     <Content Include="Views\Shared\_ListCollections.cshtml" />
     <Content Include="Views\Shared\_MusicPlayList.cshtml" />
+    <Content Include="Views\Shared\_DashBoard_Layout .cshtml" />
+    <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\Project\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
