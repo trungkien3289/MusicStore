@@ -38,21 +38,22 @@ namespace WebAPI.Controllers
             {
                 IList<SongEntity> listSongsOfCollection = _collectionServices.GetSongsOfCollection(id).ToList();
 
-                Mapper.CreateMap<SongEntity, SongEntity>()
-                    .ForMember(ae => ae.MediaUrl, map => map.MapFrom(albs => DomainName + Url.Content(SONG_PATH + albs.MediaUrl)));
-                collectionViewModel.Songs = Mapper.Map<IList<SongEntity>, IList<SongEntity>>(listSongsOfCollection);
+                var songMapperConfig = new MapperConfiguration(cfg => cfg.CreateMap<SongEntity, SongEntity>()
+                .ForMember(ae => ae.MediaUrl, map => map.MapFrom(albs => DomainName + Url.Content(SONG_PATH + albs.MediaUrl))));
+                var songMapper = songMapperConfig.CreateMapper();
+                collectionViewModel.Songs = songMapper.Map<IList<SongEntity>, IList<SongEntity>>(listSongsOfCollection);
 
-                Mapper.CreateMap<CollectionEntity, CollectionEntity>()
-                    .ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => DomainName + Url.Content(ALBUM_IMAGE_PATH + albs.Thumbnail)));
-                collectionViewModel.CollectionDetail = Mapper.Map<CollectionEntity, CollectionEntity>(collection);
+                var collectionMapperConfig = new MapperConfiguration(cfg => cfg.CreateMap<CollectionEntity, CollectionEntity>()
+                .ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => DomainName + Url.Content(ALBUM_IMAGE_PATH + albs.Thumbnail))));
+                var collectionMapper = collectionMapperConfig.CreateMapper();
+                collectionViewModel.CollectionDetail = collectionMapper.Map<CollectionEntity, CollectionEntity>(collection);
 
                 var featuredCollections = _collectionServices.GetFeaturedCollections();
                 IList<CollectionEntity> listCollectionModels = new List<CollectionEntity>();
                 if (featuredCollections != null)
                 {
-                    Mapper.CreateMap<CollectionEntity, CollectionEntity>()
-                        .ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => !String.IsNullOrEmpty(albs.Thumbnail) ? Url.Content(COLLECTION_IMAGE_PATH + albs.Thumbnail) : String.Empty));
-                    listCollectionModels = Mapper.Map<IList<CollectionEntity>, IList<CollectionEntity>>(featuredCollections.ToList());
+
+                    listCollectionModels = collectionMapper.Map<IList<CollectionEntity>, IList<CollectionEntity>>(featuredCollections.ToList());
                 }
 
                 collectionViewModel.TopCollections = listCollectionModels;
@@ -68,16 +69,21 @@ namespace WebAPI.Controllers
             string DomainName = Request.Url.Scheme + "://" + Request.Url.Authority;
             CollectionViewModel returnModel = new CollectionViewModel();
             var collections = _collectionServices.GetCollectionsAfterBeginCharacter(character, page, PAGE_SIZE);
-            Mapper.CreateMap<CollectionEntity, CollectionEntity>()
-                .ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => !String.IsNullOrEmpty(albs.Thumbnail) ? Url.Content(COLLECTION_IMAGE_PATH + albs.Thumbnail) : String.Empty));
+
+            var collectionMapperConfig = new MapperConfiguration(cfg => cfg.CreateMap<CollectionEntity, CollectionEntity>()
+            .ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => !String.IsNullOrEmpty(albs.Thumbnail) ? Url.Content(COLLECTION_IMAGE_PATH + albs.Thumbnail) : String.Empty)));
+            var collectionMapper = collectionMapperConfig.CreateMapper();
+
             if (collections != null)
             {
-                returnModel.Collections = Mapper.Map<IList<CollectionEntity>, IList<CollectionEntity>>(collections.ToList());
+                returnModel.Collections = collectionMapper.Map<IList<CollectionEntity>, IList<CollectionEntity>>(collections.ToList());
             }
 
             var featuredArtists = _artistServices.GetFeaturedArtists().ToList();
-            Mapper.CreateMap<ArtistEntity, ArtistEntity>().ForMember(s => s.Thumbnail, map => map.MapFrom(ss => !String.IsNullOrEmpty(ss.Thumbnail) ? Url.Content(ARTIST_IMAGE_PATH + ss.Thumbnail): String.Empty));
-            returnModel.TopArtists = Mapper.Map<List<ArtistEntity>, List<ArtistEntity>>(featuredArtists);
+            var artistMapperConfig = new MapperConfiguration(cfg => cfg.CreateMap<ArtistEntity, ArtistEntity>()
+            .ForMember(s => s.Thumbnail, map => map.MapFrom(ss => !String.IsNullOrEmpty(ss.Thumbnail) ? Url.Content(ARTIST_IMAGE_PATH + ss.Thumbnail) : String.Empty)));
+            var artistMapper = artistMapperConfig.CreateMapper();
+            returnModel.TopArtists = artistMapper.Map<List<ArtistEntity>, List<ArtistEntity>>(featuredArtists);
 
             ViewBag.SelectedCharacter = character;
 
@@ -89,12 +95,13 @@ namespace WebAPI.Controllers
         {
             string DomainName = Request.Url.Scheme + "://" + Request.Url.Authority;
             var collections = _collectionServices.GetCollectionsAfterBeginCharacter(character, page, PAGE_SIZE);
-            Mapper.CreateMap<CollectionEntity, CollectionEntity>()
-                .ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => !String.IsNullOrEmpty(albs.Thumbnail) ? Url.Content(COLLECTION_IMAGE_PATH + albs.Thumbnail) : String.Empty));
+            var collectionMapperConfig = new MapperConfiguration(cfg => cfg.CreateMap<CollectionEntity, CollectionEntity>()
+             .ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => !String.IsNullOrEmpty(albs.Thumbnail) ? Url.Content(COLLECTION_IMAGE_PATH + albs.Thumbnail) : String.Empty)));
+            var collectionMapper = collectionMapperConfig.CreateMapper();
             IList<CollectionEntity> result = new List<CollectionEntity>();
             if (collections != null)
             {
-                result = Mapper.Map<IList<CollectionEntity>, IList<CollectionEntity>>(collections.ToList());
+                result = collectionMapper.Map<IList<CollectionEntity>, IList<CollectionEntity>>(collections.ToList());
             }
 
             return PartialView("_ListCollectionSummaryItem", result);

@@ -1520,7 +1520,7 @@ h3.tittle {
     float: left;
     font-size: 1.8em;
     font-weight: 700;
-    color: #444;
+    color: #c1bdbd;
 }
 
 h4.tittle {
@@ -1993,6 +1993,7 @@ img.media-object {
 .footer {
     background: #222;
     padding: 1em;
+    color:#fff;
 }
 
 .footer-grid {

@@ -31,10 +31,11 @@ namespace MusicStore.Service.Services
         {
             var applications = _unitOfWork.ApplicationRepository.GetAll();
 
-            if(applications!=null && applications.Any())
+            if (applications != null && applications.Any())
             {
-                Mapper.CreateMap<ms_Application, ApplicationEntity>();
-                var listApplication = Mapper.Map<List<ms_Application>, List<ApplicationEntity>>(applications.ToList());
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<ms_Application, ApplicationEntity>());
+                var mapper = config.CreateMapper();
+                var listApplication = mapper.Map<List<ms_Application>, List<ApplicationEntity>>(applications.ToList());
                 return listApplication;
             }
 

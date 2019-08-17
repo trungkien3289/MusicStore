@@ -23,6 +23,7 @@ namespace MusicStore.Model.GenericRepository
         public GenericRepository(DbContext context)
         {
             this.Context = context;
+            //this.Context.Configuration.LazyLoadingEnabled = false;
             this.DbSet = context.Set<TEntity>();
         }
         #endregion

@@ -37,15 +37,19 @@ namespace WebAPI.Controllers
             var song = _songServices.GetSongById(id);
             if (song != null)
             {
-                Mapper.CreateMap<SongEntity, ShortSummarySongModel>()
-                  .ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => !String.IsNullOrEmpty(albs.Thumbnail) ? Url.Content(ARTIST_IMAGE_PATH + albs.Thumbnail) : String.Empty))
-                  .ForMember(ae => ae.MediaUrl, map => map.MapFrom(s => !String.IsNullOrEmpty(s.MediaUrl) ? Url.Content(SONG_BASE_PATH + s.MediaUrl) : String.Empty));
-                var foundSong = Mapper.Map<SongEntity, ShortSummarySongModel>(song);
+                var songMapperConfig = new MapperConfiguration(cfg => cfg.CreateMap<SongEntity, ShortSummarySongModel>()
+                 .ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => !String.IsNullOrEmpty(albs.Thumbnail) ? Url.Content(ARTIST_IMAGE_PATH + albs.Thumbnail) : String.Empty))
+                  .ForMember(ae => ae.MediaUrl, map => map.MapFrom(s => !String.IsNullOrEmpty(s.MediaUrl) ? Url.Content(SONG_BASE_PATH + s.MediaUrl) : String.Empty)));
+                var songMapper = songMapperConfig.CreateMapper();
+                var foundSong = songMapper.Map<SongEntity, ShortSummarySongModel>(song);
                 viewModel.SongDetails = foundSong;
+
                 // Get top Artists
                 var featuredArtists = _artistServices.GetFeaturedArtists().ToList();
-                Mapper.CreateMap<ArtistEntity, ArtistEntity>().ForMember(s => s.Thumbnail, map => map.MapFrom(ss => Url.Content(ARTIST_IMAGE_PATH + ss.Thumbnail)));
-                viewModel.TopArtists = Mapper.Map<List<ArtistEntity>, List<ArtistEntity>>(featuredArtists);
+                var artistMapperConfig = new MapperConfiguration(cfg => cfg.CreateMap<ArtistEntity, ArtistEntity>()
+                .ForMember(s => s.Thumbnail, map => map.MapFrom(ss => Url.Content(ARTIST_IMAGE_PATH + ss.Thumbnail))));
+                var artistMapper = artistMapperConfig.CreateMapper();
+                viewModel.TopArtists = artistMapper.Map<List<ArtistEntity>, List<ArtistEntity>>(featuredArtists);
                 return View(viewModel);
             }
 

@@ -137,6 +137,10 @@
     <Compile Include="Migrations\201806210115086_add_isfeatured_property_for_collection.Designer.cs">
       <DependentUpon>201806210115086_add_isfeatured_property_for_collection.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908170346516_Add Duration column.cs" />
+    <Compile Include="Migrations\201908170346516_Add Duration column.Designer.cs">
+      <DependentUpon>201908170346516_Add Duration column.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitOfWork\IUnitOfWork.cs" />
@@ -179,6 +183,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806210115086_add_isfeatured_property_for_collection.resx">
       <DependentUpon>201806210115086_add_isfeatured_property_for_collection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908170346516_Add Duration column.resx">
+      <DependentUpon>201908170346516_Add Duration column.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

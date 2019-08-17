@@ -32,31 +32,24 @@ namespace WebAPI.Controllers
             string DomainName = Request.Url.Scheme + "://" + Request.Url.Authority;
             ArtistViewResponse returnModel = new ArtistViewResponse();
             var artists = _artistServices.GetArtistsAfterBeginCharacter(character, page, PAGE_SIZE).ToList();
-            Mapper.CreateMap<ArtistEntity, ArtistEntity>()
-                .ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => DomainName + Url.Content(ARTIST_IMAGE_PATH + albs.Thumbnail)))
+            var artistMapperConfig = new MapperConfiguration(cfg => cfg.CreateMap<ArtistEntity, ArtistEntity>()
+             .ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => DomainName + Url.Content(ARTIST_IMAGE_PATH + albs.Thumbnail)))
                 .ForMember(a => a.NumberOfSongs, map => map.MapFrom(albs => albs.NumberOfSongs))
-                .ForMember(a => a.NumberOfAlbums, map => map.MapFrom(albs => albs.NumberOfAlbums));
-            //if (artists != null && artists.Any())
-            //{
-            //    for (int i = 0; i < artists.Count(); i++)
-            //    {
-            //        artists[i].Thumbnail = Url.Content(ARTIST_IMAGE_PATH + artists[i].Thumbnail);
-            //    }
-            //}
-
-            //returnModel.Artists = artists;
+                .ForMember(a => a.NumberOfAlbums, map => map.MapFrom(albs => albs.NumberOfAlbums)));
+            var artistMapper = artistMapperConfig.CreateMapper();
             if (artists != null)
             {
-                returnModel.Artists = Mapper.Map<IList<ArtistEntity>, IList<ArtistEntity>>(artists.ToList());
+                returnModel.Artists = artistMapper.Map<IList<ArtistEntity>, IList<ArtistEntity>>(artists.ToList());
             }
 
             var featuredArtists = _artistServices.GetFeaturedArtists().ToList();
-            //Mapper.CreateMap<ArtistEntity, ArtistEntity>().ForMember(s => s.Thumbnail, map => map.MapFrom(ss => Url.Content(ARTIST_IMAGE_PATH + ss.Thumbnail)));
             returnModel.FeaturedArtists = Mapper.Map<List<ArtistEntity>, List<ArtistEntity>>(featuredArtists);
 
             var featuredAlbums = _albumServices.GetFeaturedAlbums().ToList();
-            Mapper.CreateMap<AlbumEntity, AlbumSummary>().ForMember(s => s.Thumbnail, map => map.MapFrom(ss => Url.Content(ALBUM_IMAGE_PATH + ss.Thumbnail)));
-            returnModel.FeaturedAlbums = Mapper.Map<List<AlbumEntity>, List<AlbumSummary>>(featuredAlbums);
+            var albumMapperConfig = new MapperConfiguration(cfg => cfg.CreateMap<AlbumEntity, AlbumSummary>()
+                .ForMember(s => s.Thumbnail, map => map.MapFrom(ss => Url.Content(ALBUM_IMAGE_PATH + ss.Thumbnail))));
+            var albumMapper = albumMapperConfig.CreateMapper();
+            returnModel.FeaturedAlbums = albumMapper.Map<List<AlbumEntity>, List<AlbumSummary>>(featuredAlbums);
 
             ViewBag.SelectedCharacter = character;
 
@@ -74,29 +67,33 @@ namespace WebAPI.Controllers
                 var listAlbumsOfArtists = _artistServices.GetAlbumsOfArtist(id);
                 var listArtistHasSameGenres = _artistServices.GetArtistsHasSameGenre(id);
 
-                Mapper.CreateMap<AlbumEntity, AlbumSummary>().ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => DomainName + Url.Content(ALBUM_IMAGE_PATH + albs.Thumbnail)));
+                var albumMapperConfig = new MapperConfiguration(cfg => cfg.CreateMap<AlbumEntity, AlbumSummary>()
+                .ForMember(s => s.Thumbnail, map => map.MapFrom(ss => Url.Content(ALBUM_IMAGE_PATH + ss.Thumbnail))));
+                var albumMapper = albumMapperConfig.CreateMapper();
                 if (listAlbumsOfArtists != null)
                 {
-                    artistViewModel.Albums = Mapper.Map<IList<AlbumEntity>, IList<AlbumSummary>>(listAlbumsOfArtists.ToList());
+                    artistViewModel.Albums = albumMapper.Map<IList<AlbumEntity>, IList<AlbumSummary>>(listAlbumsOfArtists.ToList());
                 }
 
-                Mapper.CreateMap<ArtistEntity, ArtistEntity>().ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => DomainName + Url.Content(ARTIST_IMAGE_PATH + albs.Thumbnail)));
+                var artistMapperConfig = new MapperConfiguration(cfg => cfg.CreateMap<ArtistEntity, ArtistEntity>()
+                    .ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => DomainName + Url.Content(ARTIST_IMAGE_PATH + albs.Thumbnail))));
+                var artistMapper = artistMapperConfig.CreateMapper();
                 if (listArtistHasSameGenres != null)
                 {
-                    artistViewModel.RelatedArtists = Mapper.Map<IList<ArtistEntity>, IList<ArtistEntity>>(listArtistHasSameGenres.ToList());
+                    artistViewModel.RelatedArtists = artistMapper.Map<IList<ArtistEntity>, IList<ArtistEntity>>(listArtistHasSameGenres.ToList());
                 }
 
-                Mapper.CreateMap<SongEntity, SongEntity>().ForMember(ae => ae.MediaUrl, map => map.MapFrom(albs => DomainName + Url.Content(SONG_PATH + albs.MediaUrl)));
-                artistViewModel.Songs = Mapper.Map<IList<SongEntity>, IList<SongEntity>>(listSongsOfArtists);
+                var songMapperConfig = new MapperConfiguration(cfg => cfg.CreateMap<SongEntity, SongEntity>()
+                    .ForMember(ae => ae.MediaUrl, map => map.MapFrom(albs => DomainName + Url.Content(SONG_PATH + albs.MediaUrl))));
+                var songMapper = songMapperConfig.CreateMapper();
+                artistViewModel.Songs = songMapper.Map<IList<SongEntity>, IList<SongEntity>>(listSongsOfArtists);
 
-                
-                artistViewModel.Details = Mapper.Map<ArtistEntity, ArtistEntity>(artist);
+                artistViewModel.Details = artistMapper.Map<ArtistEntity, ArtistEntity>(artist);
 
                 return View(artistViewModel);
             }
 
             return RedirectToAction("Error", "Home");
-
         }
 
         [HttpPost]
@@ -104,11 +101,13 @@ namespace WebAPI.Controllers
         {
             string DomainName = Request.Url.Scheme + "://" + Request.Url.Authority;
             var artists = _artistServices.GetArtistsAfterBeginCharacter(character, page, PAGE_SIZE);
-            Mapper.CreateMap<ArtistEntity, ArtistEntity>().ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => DomainName + Url.Content(ARTIST_IMAGE_PATH + albs.Thumbnail)));
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<ArtistEntity, ArtistEntity>()
+                .ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => DomainName + Url.Content(ARTIST_IMAGE_PATH + albs.Thumbnail))));
+            var mapper = config.CreateMapper();
             IList<ArtistEntity> result = new List<ArtistEntity>();
             if (artists != null)
             {
-                result = Mapper.Map<IList<ArtistEntity>, IList<ArtistEntity>>(artists.ToList());
+                result = mapper.Map<IList<ArtistEntity>, IList<ArtistEntity>>(artists.ToList());
             }
 
             return PartialView("_ListArtistSummaryItem", result);
