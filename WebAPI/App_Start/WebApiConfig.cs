@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Web.Http;
 using WebAPI.ActionFilters;
+using WebApiThrottle;
 
 namespace WebAPI
 {
@@ -37,6 +38,15 @@ namespace WebAPI
             //   routeTemplate: "api/{controller}/action/{action}/{id}",
             //   defaults: new { id = RouteParameter.Optional }
             //);
+
+            config.MessageHandlers.Add(new ThrottlingHandler()
+            {
+                Policy = new ThrottlePolicy(perSecond: 10, perMinute: 40, perHour: 300, perDay: 300, perWeek: 6000)
+                {
+                    IpThrottling = true
+                },
+                Repository = new CacheRepository()
+            });
         }
     }
 }

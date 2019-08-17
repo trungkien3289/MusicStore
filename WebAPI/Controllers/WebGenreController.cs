@@ -38,21 +38,24 @@ namespace WebAPI.Controllers
             returnModel.Id = id;
             returnModel.Name = genre.Name;
             var artists = _genreServices.GetArtistsOfGenre(id, page, PAGE_SIZE);
-            Mapper.CreateMap<ArtistEntity, ArtistEntity>().ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => DomainName + Url.Content(ARTIST_IMAGE_PATH + albs.Thumbnail)));
+            var artistConfig = new MapperConfiguration(cfg => cfg.CreateMap<ArtistEntity, ArtistEntity>()
+            .ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => DomainName + Url.Content(ARTIST_IMAGE_PATH + albs.Thumbnail))));
+            var artistMapper = artistConfig.CreateMapper();
             if (artists != null)
             {
-                returnModel.Artists = Mapper.Map<IList<ArtistEntity>, IList<ArtistEntity>>(artists.ToList());
+                returnModel.Artists = artistMapper.Map<IList<ArtistEntity>, IList<ArtistEntity>>(artists.ToList());
             }
 
             var featuredSongs = _genreServices.GetSongsOfGenre(id).Take(10).ToList();
 
             if (featuredSongs.Any())
             {
-                Mapper.CreateMap<SongEntity, SongEntity>()
-                     .ForMember(a => a.AlbumThumbnail, map => map.MapFrom(al => !String.IsNullOrEmpty(al.AlbumThumbnail) ? Url.Content(ALBUM_IMAGE_PATH + al.AlbumThumbnail) : String.Empty))
+                var songMapperConfig = new MapperConfiguration(cfg => cfg.CreateMap<SongEntity, SongEntity>()
+                 .ForMember(a => a.AlbumThumbnail, map => map.MapFrom(al => !String.IsNullOrEmpty(al.AlbumThumbnail) ? Url.Content(ALBUM_IMAGE_PATH + al.AlbumThumbnail) : String.Empty))
                     .ForMember(a => a.Thumbnail, map => map.MapFrom(al => !String.IsNullOrEmpty(al.Thumbnail) ? Url.Content(ARTIST_IMAGE_PATH + al.Thumbnail) : String.Empty))
-                    .ForMember(a => a.MediaUrl, map => map.MapFrom(al => !String.IsNullOrEmpty(al.MediaUrl) ? Url.Content(SONG_BASE_PATH + al.MediaUrl) : String.Empty));
-                returnModel.Songs = Mapper.Map<List<SongEntity>, List<SongEntity>>(featuredSongs);
+                    .ForMember(a => a.MediaUrl, map => map.MapFrom(al => !String.IsNullOrEmpty(al.MediaUrl) ? Url.Content(SONG_BASE_PATH + al.MediaUrl) : String.Empty)));
+                var songMapper = songMapperConfig.CreateMapper();
+                returnModel.Songs = songMapper.Map<List<SongEntity>, List<SongEntity>>(featuredSongs);
             }
 
             return View(returnModel);
@@ -63,11 +66,13 @@ namespace WebAPI.Controllers
         {
             string DomainName = Request.Url.Scheme + "://" + Request.Url.Authority;
             var artists = _genreServices.GetArtistsOfGenre(id, page, PAGE_SIZE);
-            Mapper.CreateMap<ArtistEntity, ArtistEntity>().ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => DomainName + Url.Content(ARTIST_IMAGE_PATH + albs.Thumbnail)));
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<ArtistEntity, ArtistEntity>()
+            .ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => DomainName + Url.Content(ARTIST_IMAGE_PATH + albs.Thumbnail))));
+            var mapper = config.CreateMapper();
             IList<ArtistEntity> result = new List<ArtistEntity>();
             if (artists != null)
             {
-                result = Mapper.Map<IList<ArtistEntity>, IList<ArtistEntity>>(artists.ToList());
+                result = mapper.Map<IList<ArtistEntity>, IList<ArtistEntity>>(artists.ToList());
             }
 
             return PartialView("_ListArtistSummaryItem", result);

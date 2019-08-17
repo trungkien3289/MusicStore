@@ -46,8 +46,10 @@ namespace WebAPI.Controllers
                 var artistEntities = artists as List<ArtistEntity> ?? artists.ToList();
                 if (artistEntities.Any())
                 {
-                    Mapper.CreateMap<ArtistEntity, ArtistEntity>().ForMember(s => s.Thumbnail, map => map.MapFrom(ss => Url.Content(ARTIST_IMAGE_PATH + ss.Thumbnail)));
-                    var artistLists = Mapper.Map<List<ArtistEntity>, List<ArtistEntity>>(artistEntities);
+                    var config = new MapperConfiguration(cfg => cfg.CreateMap<ArtistEntity, ArtistEntity>()
+                    .ForMember(s => s.Thumbnail, map => map.MapFrom(ss => Url.Content(ARTIST_IMAGE_PATH + ss.Thumbnail).Replace("https", "http"))));
+                    var mapper = config.CreateMapper();
+                    var artistLists = mapper.Map<List<ArtistEntity>, List<ArtistEntity>>(artistEntities);
                     return Request.CreateResponse(HttpStatusCode.OK, artistLists);
                 }
             }
@@ -75,10 +77,12 @@ namespace WebAPI.Controllers
 
             if (artists != null)
             {
-                if (artists != null &&artists.Any())
+                if (artists != null && artists.Any())
                 {
-                    Mapper.CreateMap<ArtistEntity, ArtistEntity>().ForMember(s => s.Thumbnail, map => map.MapFrom(ss => Url.Content(ARTIST_IMAGE_PATH + ss.Thumbnail)));
-                    artistLists = Mapper.Map<List<ArtistEntity>, List<ArtistEntity>>(artists.ToList());
+                    var config = new MapperConfiguration(cfg => cfg.CreateMap<ArtistEntity, ArtistEntity>()
+                    .ForMember(s => s.Thumbnail, map => map.MapFrom(ss => Url.Content(ARTIST_IMAGE_PATH + ss.Thumbnail).Replace("https", "http"))));
+                    var mapper = config.CreateMapper();
+                    artistLists = mapper.Map<List<ArtistEntity>, List<ArtistEntity>>(artists.ToList());
                 }
             }
 
@@ -99,8 +103,10 @@ namespace WebAPI.Controllers
             {
                 if (songs.Any())
                 {
-                    Mapper.CreateMap<SongEntity, SummarySongModel>().ForMember(s => s.MediaUrl, map => map.MapFrom(ss => Url.Content(SONG_BASE_PATH + ss.MediaUrl)));
-                    var songModels = Mapper.Map<List<SongEntity>, List<SummarySongModel>>(songs);
+                    var config = new MapperConfiguration(cfg => cfg.CreateMap<SongEntity, SummarySongModel>()
+                    .ForMember(s => s.MediaUrl, map => map.MapFrom(ss => Url.Content(SONG_BASE_PATH + ss.MediaUrl))));
+                    var mapper = config.CreateMapper();
+                    var songModels = mapper.Map<List<SongEntity>, List<SummarySongModel>>(songs);
                     return Request.CreateResponse(HttpStatusCode.OK, songModels);
                 }
                 else
@@ -119,14 +125,16 @@ namespace WebAPI.Controllers
             IList<SummarySongModel> listSongsOfArtist = new List<SummarySongModel>();
             if (songs != null && songs.Any())
             {
-                if(top != 0) {
+                if (top != 0)
+                {
                     songs = songs.Take(top).ToList();
                 }
-                Mapper.CreateMap<SongEntity, SummarySongModel>()
-                    .ForMember(s => s.MediaUrl, map => map.MapFrom(ss =>!String.IsNullOrEmpty(ss.MediaUrl)? Url.Content(SONG_BASE_PATH + ss.MediaUrl):String.Empty))
-                .ForMember(s => s.AlbumThumbnail, map => map.MapFrom(ss => !String.IsNullOrEmpty(ss.AlbumThumbnail) ? Url.Content(ALBUM_IMAGE_PATH + ss.AlbumThumbnail) : String.Empty))
-                .ForMember(s => s.Thumbnail, map => map.MapFrom(ss => !String.IsNullOrEmpty(ss.Thumbnail) ? Url.Content(ARTIST_IMAGE_PATH + ss.Thumbnail) : String.Empty));
-                listSongsOfArtist = Mapper.Map<List<SongEntity>, List<SummarySongModel>>(songs.ToList());
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<SongEntity, SummarySongModel>()
+                 .ForMember(s => s.MediaUrl, map => map.MapFrom(ss => !String.IsNullOrEmpty(ss.MediaUrl) ? Url.Content(SONG_BASE_PATH + ss.MediaUrl) : String.Empty))
+                .ForMember(s => s.AlbumThumbnail, map => map.MapFrom(ss => !String.IsNullOrEmpty(ss.AlbumThumbnail) ? Url.Content(ALBUM_IMAGE_PATH + ss.AlbumThumbnail).Replace("https", "http") : String.Empty))
+                .ForMember(s => s.Thumbnail, map => map.MapFrom(ss => !String.IsNullOrEmpty(ss.Thumbnail) ? Url.Content(ARTIST_IMAGE_PATH + ss.Thumbnail).Replace("https", "http") : String.Empty)));
+                var mapper = config.CreateMapper();
+                listSongsOfArtist = mapper.Map<List<SongEntity>, List<SummarySongModel>>(songs.ToList());
             }
 
             GetTopSongsOfArtistResponse result = new GetTopSongsOfArtistResponse()
@@ -140,12 +148,14 @@ namespace WebAPI.Controllers
         public HttpResponseMessage GetAlbumsOfArtist(int id)
         {
             var albums = _artistServices.GetAlbumsOfArtist(id).ToList();
-            if(albums != null)
+            if (albums != null)
             {
                 if (albums.Any())
                 {
-                    Mapper.CreateMap<AlbumEntity, AlbumEntity>().ForMember(s => s.Thumbnail, map => map.MapFrom(ss => Url.Content(ALBUM_IMAGE_PATH + ss.Thumbnail)));
-                    var albumModels = Mapper.Map<List<AlbumEntity>, List<AlbumEntity>>(albums);
+                    var config = new MapperConfiguration(cfg => cfg.CreateMap<AlbumEntity, AlbumEntity>()
+                    .ForMember(s => s.Thumbnail, map => map.MapFrom(ss => Url.Content(ALBUM_IMAGE_PATH + ss.Thumbnail).Replace("https", "http"))));
+                    var mapper = config.CreateMapper();
+                    var albumModels = mapper.Map<List<AlbumEntity>, List<AlbumEntity>>(albums);
                     return Request.CreateResponse(HttpStatusCode.OK, albumModels);
                 }
                 else

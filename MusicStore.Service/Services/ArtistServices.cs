@@ -32,9 +32,10 @@ namespace MusicStore.Service.Services
             var artists = _unitOfWork.ArtistRepository.GetWithInclude(null, "Songs").ToList();
             if (artists.Any())
             {
-                Mapper.CreateMap<ms_Artist, ArtistEntity>()
-                    .ForMember(ae => ae.NumberOfSongs, map => map.MapFrom(artist => artist.Songs.Count()));
-                var artistList = Mapper.Map<List<ms_Artist>,List<ArtistEntity>>(artists);
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<ms_Artist, ArtistEntity>()
+                .ForMember(ae => ae.NumberOfSongs, map => map.MapFrom(artist => artist.Songs.Count())));
+                var mapper = config.CreateMapper();
+                var artistList = mapper.Map<List<ms_Artist>, List<ArtistEntity>>(artists);
                 return artistList;
             }
             return null;
@@ -43,10 +44,11 @@ namespace MusicStore.Service.Services
         public ArtistEntity GetArtistById(int artistId)
         {
             var artist = _unitOfWork.ArtistRepository.GetByID(artistId);
-            if(artist != null)
+            if (artist != null)
             {
-                Mapper.CreateMap<ms_Artist, ArtistEntity>();
-                var artistEntity = Mapper.Map<ms_Artist, ArtistEntity>(artist);
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<ms_Artist, ArtistEntity>());
+                var mapper = config.CreateMapper();
+                var artistEntity = mapper.Map<ms_Artist, ArtistEntity>(artist);
                 return artistEntity;
             }
             return null;
@@ -58,8 +60,9 @@ namespace MusicStore.Service.Services
             if (foundGenre == null) return null;
             if (foundGenre.Artists.Any())
             {
-                Mapper.CreateMap<ms_Artist, ArtistEntity>();
-                var artistsModel = Mapper.Map<List<ms_Artist>, List<ArtistEntity>>(foundGenre.Artists.ToList());
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<ms_Artist, ArtistEntity>());
+                var mapper = config.CreateMapper();
+                var artistsModel = mapper.Map<List<ms_Artist>, List<ArtistEntity>>(foundGenre.Artists.ToList());
                 return artistsModel;
             }
             return null;
@@ -70,9 +73,10 @@ namespace MusicStore.Service.Services
             var artists = _unitOfWork.ArtistRepository.GetWithInclude(null, "Songs").Take(top).ToList();
             if (artists.Any())
             {
-                Mapper.CreateMap<ms_Artist, ArtistEntity>()
-                    .ForMember(ae => ae.NumberOfSongs, map => map.MapFrom(artist => artist.Songs.Count()));
-                var artistList = Mapper.Map<List<ms_Artist>, List<ArtistEntity>>(artists);
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<ms_Artist, ArtistEntity>()
+                .ForMember(ae => ae.NumberOfSongs, map => map.MapFrom(artist => artist.Songs.Count())));
+                var mapper = config.CreateMapper();
+                var artistList = mapper.Map<List<ms_Artist>, List<ArtistEntity>>(artists);
                 return artistList;
             }
             return null;
@@ -83,9 +87,10 @@ namespace MusicStore.Service.Services
             var artists = _unitOfWork.ArtistRepository.GetWithInclude(a => a.IsFeatured == true, "Songs").ToList();
             if (artists.Any())
             {
-                Mapper.CreateMap<ms_Artist, ArtistEntity>()
-                    .ForMember(ae => ae.NumberOfSongs, map => map.MapFrom(artist => artist.Songs.Count()));
-                var artistList = Mapper.Map<List<ms_Artist>, List<ArtistEntity>>(artists);
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<ms_Artist, ArtistEntity>()
+               .ForMember(ae => ae.NumberOfSongs, map => map.MapFrom(artist => artist.Songs.Count())));
+                var mapper = config.CreateMapper();
+                var artistList = mapper.Map<List<ms_Artist>, List<ArtistEntity>>(artists);
                 return artistList;
             }
             return null;
@@ -97,15 +102,15 @@ namespace MusicStore.Service.Services
             if (artist != null)
             {
                 IList<SongEntity> songs = new List<SongEntity>();
-
-                Mapper.CreateMap<ms_Song, SongEntity>()
-                    .ForMember(ae => ae.AlbumId, map => map.MapFrom(s => s.Albums.Count() > 0 ? s.Albums.First().Id : 0))
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<ms_Song, SongEntity>()
+               .ForMember(ae => ae.AlbumId, map => map.MapFrom(s => s.Albums.Count() > 0 ? s.Albums.First().Id : 0))
                     .ForMember(ae => ae.AlbumName, map => map.MapFrom(s => s.Albums.Count() > 0 ? s.Albums.First().Title : String.Empty))
                     .ForMember(ae => ae.AlbumThumbnail, map => map.MapFrom(s => s.Albums.Count() > 0 ? s.Albums.First().Thumbnail : String.Empty))
                     .ForMember(ae => ae.ArtistId, map => map.MapFrom(albs => artist.Id))
                     .ForMember(ae => ae.ArtistName, map => map.MapFrom(albs => artist.Name))
-                    .ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => artist.Thumbnail));
-                var artistList = Mapper.Map<List<ms_Song>, List<SongEntity>>(artist.Songs.ToList());
+                    .ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => artist.Thumbnail)));
+                var mapper = config.CreateMapper();
+                var artistList = mapper.Map<List<ms_Song>, List<SongEntity>>(artist.Songs.ToList());
                 return artistList;
             }
             return null;
@@ -117,9 +122,9 @@ namespace MusicStore.Service.Services
             if (artist != null)
             {
                 IList<AlbumEntity> albums = new List<AlbumEntity>();
-
-                Mapper.CreateMap<ms_Album, AlbumEntity>();
-                var albumEntitys = Mapper.Map<List<ms_Album>, List<AlbumEntity>>(artist.Albums.ToList());
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<ms_Album, AlbumEntity>());
+                var mapper = config.CreateMapper();
+                var albumEntitys = mapper.Map<List<ms_Album>, List<AlbumEntity>>(artist.Albums.ToList());
                 return albumEntitys;
             }
             return null;
@@ -127,12 +132,13 @@ namespace MusicStore.Service.Services
 
         public IEnumerable<ArtistEntity> SearchByName(string query, int page = 1, int numberItemsPerPage = 10)
         {
-            var artists = _unitOfWork.ArtistRepository.GetWithInclude(a => a.Name.Contains(query), "Songs").OrderBy(a => a.Name).Skip(--page*numberItemsPerPage).Take(numberItemsPerPage).ToList();
+            var artists = _unitOfWork.ArtistRepository.GetWithInclude(a => a.Name.Contains(query), "Songs").OrderBy(a => a.Name).Skip(--page * numberItemsPerPage).Take(numberItemsPerPage).ToList();
             if (artists.Any())
             {
-                Mapper.CreateMap<ms_Artist, ArtistEntity>()
-                    .ForMember(ae => ae.NumberOfSongs, map => map.MapFrom(albs => albs.Songs.Count()));
-                var artistList = Mapper.Map<List<ms_Artist>, List<ArtistEntity>>(artists);
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<ms_Artist, ArtistEntity>()
+                .ForMember(ae => ae.NumberOfSongs, map => map.MapFrom(albs => albs.Songs.Count())));
+                var mapper = config.CreateMapper();
+                var artistList = mapper.Map<List<ms_Artist>, List<ArtistEntity>>(artists);
                 return artistList;
             }
             return null;
@@ -188,8 +194,9 @@ namespace MusicStore.Service.Services
                 var returnArtists = genres.SelectMany(a => a.Artists).Distinct<ms_Artist>().ToList();
                 if (returnArtists.Any())
                 {
-                    Mapper.CreateMap<ms_Artist, ArtistEntity>();
-                    var artistEntities = Mapper.Map<List<ms_Artist>, List<ArtistEntity>>(returnArtists);
+                    var config = new MapperConfiguration(cfg => cfg.CreateMap<ms_Artist, ArtistEntity>());
+                    var mapper = config.CreateMapper();
+                    var artistEntities = mapper.Map<List<ms_Artist>, List<ArtistEntity>>(returnArtists);
                     return artistEntities;
                 }
             }

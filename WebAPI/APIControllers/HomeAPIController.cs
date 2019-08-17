@@ -46,31 +46,35 @@ namespace WebAPI.APIControllers
         {
             var songs = _songServices.SearchByName(q, page, numberItemsPerPage);
             IList<SongEntity> listSongModels = new List<SongEntity>();
-            if (songs!=null && songs.Any())
+            if (songs != null && songs.Any())
             {
-                Mapper.CreateMap<SongEntity, SongEntity>()
-                    .ForMember(s => s.MediaUrl, map => map.MapFrom(ss => !String.IsNullOrEmpty(ss.MediaUrl) ? Url.Content(SONG_BASE_PATH + ss.MediaUrl) : String.Empty))
-                    .ForMember(s => s.AlbumThumbnail, map => map.MapFrom(ss => !String.IsNullOrEmpty(ss.AlbumThumbnail) ? Url.Content(ALBUM_IMAGE_PATH + ss.AlbumThumbnail) : String.Empty))
-                    .ForMember(s => s.Thumbnail, map => map.MapFrom(ss => !String.IsNullOrEmpty(ss.Thumbnail) ? Url.Content(ARTIST_IMAGE_PATH + ss.Thumbnail) : String.Empty)); ;
-                listSongModels = Mapper.Map<IList<SongEntity>, IList<SongEntity>>(songs.ToList());
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<SongEntity, SongEntity>()
+                  .ForMember(s => s.MediaUrl, map => map.MapFrom(ss => !String.IsNullOrEmpty(ss.MediaUrl) ? Url.Content(SONG_BASE_PATH + ss.MediaUrl) : String.Empty))
+                    .ForMember(s => s.AlbumThumbnail, map => map.MapFrom(ss => !String.IsNullOrEmpty(ss.AlbumThumbnail) ? Url.Content(ALBUM_IMAGE_PATH + ss.AlbumThumbnail).Replace("https", "http") : String.Empty))
+                    .ForMember(s => s.Thumbnail, map => map.MapFrom(ss => !String.IsNullOrEmpty(ss.Thumbnail) ? Url.Content(ARTIST_IMAGE_PATH + ss.Thumbnail).Replace("https", "http") : String.Empty)));
+                var mapper = config.CreateMapper();
+
+                listSongModels = mapper.Map<IList<SongEntity>, IList<SongEntity>>(songs.ToList());
             }
 
-            var albums = _albumServices.SearchByName(q ,page, numberItemsPerPage);
+            var albums = _albumServices.SearchByName(q, page, numberItemsPerPage);
             IList<AlbumEntity> listAlbumModels = new List<AlbumEntity>();
-            if (albums !=null && albums.Any())
+            if (albums != null && albums.Any())
             {
-                Mapper.CreateMap<AlbumEntity, AlbumEntity>()
-                    .ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => !string.IsNullOrEmpty(albs.Thumbnail) ? Url.Content(ALBUM_IMAGE_PATH + albs.Thumbnail) : ""));
-                listAlbumModels = Mapper.Map<IList<AlbumEntity>, IList<AlbumEntity>>(albums.ToList());
+                var albumMapperConfig = new MapperConfiguration(cfg => cfg.CreateMap<AlbumEntity, AlbumEntity>()
+                .ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => !string.IsNullOrEmpty(albs.Thumbnail) ? Url.Content(ALBUM_IMAGE_PATH + albs.Thumbnail).Replace("https", "http") : "")));
+                var albumMapper = albumMapperConfig.CreateMapper();
+                listAlbumModels = albumMapper.Map<IList<AlbumEntity>, IList<AlbumEntity>>(albums.ToList());
             }
 
             var artists = _artistServices.SearchByName(q, page, numberItemsPerPage);
             IList<ArtistEntity> listArtistModels = new List<ArtistEntity>();
-            if (artists !=null && artists.Any())
+            if (artists != null && artists.Any())
             {
-                Mapper.CreateMap<ArtistEntity, ArtistEntity>()
-                    .ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => !string.IsNullOrEmpty(albs.Thumbnail) ? Url.Content(ARTIST_IMAGE_PATH + albs.Thumbnail) : ""));
-                listArtistModels = Mapper.Map<IList<ArtistEntity>, IList<ArtistEntity>>(artists.ToList());
+                var artistMapperConfig = new MapperConfiguration(cfg => cfg.CreateMap<ArtistEntity, ArtistEntity>()
+               .ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => !string.IsNullOrEmpty(albs.Thumbnail) ? Url.Content(ALBUM_IMAGE_PATH + albs.Thumbnail).Replace("https", "http") : "")));
+                var artistMapper = artistMapperConfig.CreateMapper();
+                listArtistModels = artistMapper.Map<IList<ArtistEntity>, IList<ArtistEntity>>(artists.ToList());
             }
 
             SearchResult result = new SearchResult()
