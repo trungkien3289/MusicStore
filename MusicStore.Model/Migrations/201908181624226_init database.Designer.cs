@@ -7,13 +7,13 @@ namespace MusicStore.Model.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class Addtaskrequestdevelopmenttable : IMigrationMetadata
+    public sealed partial class initdatabase : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Addtaskrequestdevelopmenttable));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(initdatabase));
         
         string IMigrationMetadata.Id
         {
-            get { return "201908172349246_Add task request development table"; }
+            get { return "201908181624226_init database"; }
         }
         
         string IMigrationMetadata.Source

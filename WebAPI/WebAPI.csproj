@@ -270,6 +270,7 @@
     <Compile Include="Models\ArtistAPIModels.cs" />
     <Compile Include="Models\ArtistViewModels.cs" />
     <Compile Include="Models\CollectionViewModels.cs" />
+    <Compile Include="Models\DashboardViewModels.cs" />
     <Compile Include="Models\GenreAPIModels.cs" />
     <Compile Include="Models\GenreViewModel.cs" />
     <Compile Include="Models\HomeAPIModels.cs" />
@@ -461,6 +462,7 @@
     <Content Include="Scripts\Common\uisearch.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\Libraries\knockout-3.5.0.js" />
     <Content Include="Scripts\Libraries\playlist.js" />
     <Content Include="Scripts\DashBoard\dashboard-main.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />

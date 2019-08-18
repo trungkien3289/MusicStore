@@ -140,7 +140,9 @@ namespace MusicStore.Model.DataContext
                 .HasForeignKey<Nullable<int>>(tr => tr.AssigneeId);
 
             modelBuilder.Entity<fl_TaskRequest>()
-              .HasRequired(c => c.Task).WithOptional(t => t.TaskRequest);
+              .HasRequired(c => c.Task).WithOptional(t => t.TaskRequest)
+               .Map(m => m.MapKey("TaskId"));
+
 
             modelBuilder.Entity<fl_RequestComment>()
              .HasRequired(rc => rc.User).WithMany(u => u.RequestComments)

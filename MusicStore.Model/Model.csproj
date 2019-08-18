@@ -110,53 +110,9 @@
     <Compile Include="GenericRepository\ProjectRepository.cs" />
     <Compile Include="GenericRepository\TaskRepository.cs" />
     <Compile Include="GenericRepository\TaskRequestRepository.cs" />
-    <Compile Include="Migrations\201804231550254_initial_database.cs" />
-    <Compile Include="Migrations\201804231550254_initial_database.Designer.cs">
-      <DependentUpon>201804231550254_initial_database.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805021516210_add NLog for log information into database.cs" />
-    <Compile Include="Migrations\201805021516210_add NLog for log information into database.Designer.cs">
-      <DependentUpon>201805021516210_add NLog for log information into database.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805150045051_add_url_field_for_genre_table.cs" />
-    <Compile Include="Migrations\201805150045051_add_url_field_for_genre_table.Designer.cs">
-      <DependentUpon>201805150045051_add_url_field_for_genre_table.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805151436190_add_relationship_between_artist_genre.cs" />
-    <Compile Include="Migrations\201805151436190_add_relationship_between_artist_genre.Designer.cs">
-      <DependentUpon>201805151436190_add_relationship_between_artist_genre.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805190826486_add_isfeatured_property_for_album_artist_song.cs" />
-    <Compile Include="Migrations\201805190826486_add_isfeatured_property_for_album_artist_song.Designer.cs">
-      <DependentUpon>201805190826486_add_isfeatured_property_for_album_artist_song.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201806081423032_add_qualify_of_song.cs" />
-    <Compile Include="Migrations\201806081423032_add_qualify_of_song.Designer.cs">
-      <DependentUpon>201806081423032_add_qualify_of_song.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201806081515431_add_thumnail_property_for_genre.cs" />
-    <Compile Include="Migrations\201806081515431_add_thumnail_property_for_genre.Designer.cs">
-      <DependentUpon>201806081515431_add_thumnail_property_for_genre.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201806121640287_update_quality_data_type.cs" />
-    <Compile Include="Migrations\201806121640287_update_quality_data_type.Designer.cs">
-      <DependentUpon>201806121640287_update_quality_data_type.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201806210115086_add_isfeatured_property_for_collection.cs" />
-    <Compile Include="Migrations\201806210115086_add_isfeatured_property_for_collection.Designer.cs">
-      <DependentUpon>201806210115086_add_isfeatured_property_for_collection.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201908170712205_Init table and relationship for freeland management feature.cs" />
-    <Compile Include="Migrations\201908170712205_Init table and relationship for freeland management feature.Designer.cs">
-      <DependentUpon>201908170712205_Init table and relationship for freeland management feature.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201908172349246_Add task request development table.cs" />
-    <Compile Include="Migrations\201908172349246_Add task request development table.Designer.cs">
-      <DependentUpon>201908172349246_Add task request development table.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201908180839063_update task request developer table.cs" />
-    <Compile Include="Migrations\201908180839063_update task request developer table.Designer.cs">
-      <DependentUpon>201908180839063_update task request developer table.cs</DependentUpon>
+    <Compile Include="Migrations\201908181624226_init database.cs" />
+    <Compile Include="Migrations\201908181624226_init database.Designer.cs">
+      <DependentUpon>201908181624226_init database.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -178,41 +134,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201804231550254_initial_database.resx">
-      <DependentUpon>201804231550254_initial_database.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805021516210_add NLog for log information into database.resx">
-      <DependentUpon>201805021516210_add NLog for log information into database.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805150045051_add_url_field_for_genre_table.resx">
-      <DependentUpon>201805150045051_add_url_field_for_genre_table.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805151436190_add_relationship_between_artist_genre.resx">
-      <DependentUpon>201805151436190_add_relationship_between_artist_genre.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805190826486_add_isfeatured_property_for_album_artist_song.resx">
-      <DependentUpon>201805190826486_add_isfeatured_property_for_album_artist_song.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806081423032_add_qualify_of_song.resx">
-      <DependentUpon>201806081423032_add_qualify_of_song.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806081515431_add_thumnail_property_for_genre.resx">
-      <DependentUpon>201806081515431_add_thumnail_property_for_genre.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806121640287_update_quality_data_type.resx">
-      <DependentUpon>201806121640287_update_quality_data_type.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806210115086_add_isfeatured_property_for_collection.resx">
-      <DependentUpon>201806210115086_add_isfeatured_property_for_collection.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908170712205_Init table and relationship for freeland management feature.resx">
-      <DependentUpon>201908170712205_Init table and relationship for freeland management feature.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908172349246_Add task request development table.resx">
-      <DependentUpon>201908172349246_Add task request development table.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908180839063_update task request developer table.resx">
-      <DependentUpon>201908180839063_update task request developer table.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201908181624226_init database.resx">
+      <DependentUpon>201908181624226_init database.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

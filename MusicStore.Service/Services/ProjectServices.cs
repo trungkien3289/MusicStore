@@ -57,6 +57,15 @@ namespace MusicStore.Service.Services
             return results;
         }
 
+        public IEnumerable<ProjectEntity> GetWithTaskRequestByUserId(int id)
+        {
+            var projects = _unitOfWork.ProjectRepository.GetProjectWithTaskRequestByUserId(id);
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<fl_Project, ProjectEntity>());
+            var mapper = config.CreateMapper();
+            var results = mapper.Map<IEnumerable<fl_Project>, IEnumerable<ProjectEntity>>(projects);
+            return results;
+        }
+
         public IEnumerable<TaskEntity> GetTasks(int id)
         {
             var project = _unitOfWork.ProjectRepository.GetWithInclude(a => a.Id == id, "Tasks").FirstOrDefault();
@@ -161,6 +170,7 @@ namespace MusicStore.Service.Services
 
             return null;
         }
+
 
         #endregion
     }

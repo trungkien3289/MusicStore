@@ -7,6 +7,7 @@ namespace MusicStore.Service.IService
     {
         ProjectEntity GetById(int id);
         IEnumerable<ProjectEntity> GetByUserId(int id);
+        IEnumerable<ProjectEntity> GetWithTaskRequestByUserId(int id);
         IEnumerable<TaskEntity> GetTasks(int id);
         IEnumerable<ProjectEntity> GetAll();
         IEnumerable<ProjectEntity> SearchByName(string query, int page = 1, int numberItemsPerPage = 10);

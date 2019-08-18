@@ -5,37 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="~/favicon.ico">
     @Styles.Render("~/Content/dashboard_css")
-    @Scripts.Render("~/bundles/modernizr")
     @RenderSection("css", required: false)
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/dashboard_js")
     @RenderSection("scripts", required: false)
 </head>
 <body class="sticky-header left-side-collapsed">
     <div class="app-container app-theme-white body-tabs-shadow fixed-header">
         <div class="app-header header-shadow">
-            <div class="app-header__logo">
-                <div class="logo-src"></div>
-                <div class="header__pane ml-auto">
-                    <div>
-                        <button type="button" class="hamburger close-sidebar-btn hamburger--elastic" data-class="closed-sidebar">
-                            <span class="hamburger-box">
-                                <span class="hamburger-inner"></span>
-                            </span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="app-header__mobile-menu">
-                <div>
-                    <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav">
-                        <span class="hamburger-box">
-                            <span class="hamburger-inner"></span>
-                        </span>
-                    </button>
-                </div>
-            </div>
             <div class="app-header__content">
                 <div class="app-header-left">
                     <div class="search-wrapper">
@@ -47,21 +23,27 @@
                     </div>
                     <ul class="header-menu nav">
                         <li class="nav-item">
-                            <a href="javascript:void(0);" class="nav-link">
+                            <a href="~/dashboard" class="nav-link active">
                                 <i class="nav-link-icon fa fa-database"> </i>
-                                Statistics
+                                Dashboard
                             </a>
                         </li>
                         <li class="btn-group nav-item">
-                            <a href="javascript:void(0);" class="nav-link">
+                            <a href="~/project" class="nav-link">
                                 <i class="nav-link-icon fa fa-edit"></i>
                                 Projects
                             </a>
                         </li>
                         <li class="dropdown nav-item">
-                            <a href="javascript:void(0);" class="nav-link">
+                            <a href="~/task" class="nav-link">
                                 <i class="nav-link-icon fa fa-cog"></i>
-                                Settings
+                                Tasks
+                            </a>
+                        </li>
+                        <li class="dropdown nav-item">
+                            <a href="~/user" class="nav-link">
+                                <i class="nav-link-icon fa fa-cog"></i>
+                                Users
                             </a>
                         </li>
                     </ul>
