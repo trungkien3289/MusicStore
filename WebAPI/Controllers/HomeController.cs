@@ -40,7 +40,8 @@ namespace WebAPI.Controllers
             string DomainName = Request.Url.Scheme + "://" + Request.Url.Authority;
             HomeViewModel viewModel = new HomeViewModel();
             // Get top albums
-            IList<AlbumEntity> albums = _albumServices.GetTopAlbums(NUMBER_OF_ALBUM_ON_HOMEPAGE).ToList();
+            //IList<AlbumEntity> albums = _albumServices.GetTopAlbums(NUMBER_OF_ALBUM_ON_HOMEPAGE).ToList();
+            IList<AlbumEntity> albums = new List<AlbumEntity>();
             IList<AlbumSummary> listAlbumModels = new List<AlbumSummary>();
             var albumMapperConfig = new MapperConfiguration(cfg => cfg.CreateMap<AlbumEntity, AlbumSummary>()
                    .ForMember(ae => ae.Thumbnail, map => map.MapFrom(albs => DomainName + Url.Content(ALBUM_IMAGE_PATH + albs.Thumbnail)))
@@ -53,7 +54,8 @@ namespace WebAPI.Controllers
             viewModel.TopAlbums = listAlbumModels;
 
             // Get featured songs
-            var listSongs = _songServices.GetFeaturedSongs().ToList();
+            var listSongs = new List<SongEntity>();
+            //var listSongs = _songServices.GetFeaturedSongs().ToList();
             var songMapperConfig = new MapperConfiguration(cfg => cfg.CreateMap<SongEntity, SongEntity>()
                    .ForMember(ae => ae.MediaUrl, map => map.MapFrom(albs => DomainName + Url.Content(SONG_PATH + albs.MediaUrl)))
                 .ForMember(ae => ae.Thumbnail, map => map.MapFrom(s => DomainName + Url.Content(ARTIST_IMAGE_PATH + s.Thumbnail))));
@@ -61,7 +63,8 @@ namespace WebAPI.Controllers
             viewModel.TopSongs = songMapper.Map<IList<SongEntity>, IList<SongEntity>>(listSongs);
             // Get feature albums
             IList<AlbumSummary> listFeaturedAlbumModels = new List<AlbumSummary>();
-            IList<AlbumEntity> featuredAlbums = _albumServices.GetFeaturedAlbums().ToList();
+            //IList<AlbumEntity> featuredAlbums = _albumServices.GetFeaturedAlbums().ToList();
+            IList<AlbumEntity> featuredAlbums = new List<AlbumEntity>();
             if (featuredAlbums != null)
             {
                 listFeaturedAlbumModels = albumMapper.Map<IList<AlbumEntity>, IList<AlbumSummary>>(featuredAlbums);
@@ -163,7 +166,8 @@ namespace WebAPI.Controllers
 
         public ActionResult GenresMenu()
         {
-            var genres = _genreServices.GetAllGenres().ToList();
+            //var genres = _genreServices.GetAllGenres().ToList();
+            var genres = new List<GenreEntity>();
             return PartialView(genres);
         }
 

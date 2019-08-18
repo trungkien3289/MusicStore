@@ -18,8 +18,9 @@ namespace MusicStore.Model.DataModels
         public int RoleId { get; set; }
         public bool IsActive { get; set; }
 
+        public virtual system_UserRole Role { get; set; }
         public virtual ICollection<fl_Task> Tasks { get; set; }
-        public virtual ICollection<fl_TaskRequest> DeveloperTaskRequests { get; set; }
+        //public virtual ICollection<fl_TaskRequest> DeveloperTaskRequests { get; set; }
         public virtual ICollection<fl_TaskRequest> AssigneeTaskRequests { get; set; }
         public virtual ICollection<fl_Project> LeaderProjects { get; set; }
         public virtual ICollection<fl_Project> DeveloperProjects { get; set; }

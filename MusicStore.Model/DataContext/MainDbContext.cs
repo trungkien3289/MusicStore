@@ -66,6 +66,7 @@ namespace MusicStore.Model.DataContext
         public DbSet<fl_RequestComment> RequestComments { get; set; }
         public DbSet<fl_Task> Task { get; set; }
         public DbSet<fl_TaskRequest> TaskRequest { get; set; }
+        public DbSet<fl_TaskRequestDeveloper> TaskRequestDeveloper { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -128,11 +129,11 @@ namespace MusicStore.Model.DataContext
                 .HasOptional(c => c.Assignee).WithMany(t => t.Tasks)
                 .HasForeignKey<Nullable<int>>(t => t.AssigneeId);
 
-            modelBuilder.Entity<fl_TaskRequest>()
-               .HasMany(c => c.Developers).WithMany(t => t.DeveloperTaskRequests)
-                .Map(t => t.MapLeftKey("Id")
-                    .MapRightKey("UserId")
-                    .ToTable("fl_TaskRequest_DeveloperUser"));
+            //modelBuilder.Entity<fl_TaskRequest>()
+            //   .HasMany(c => c.Developers).WithMany(t => t.DeveloperTaskRequests)
+            //    .Map(t => t.MapLeftKey("Id")
+            //        .MapRightKey("UserId")
+            //        .ToTable("fl_TaskRequest_DeveloperUser"));
 
             modelBuilder.Entity<fl_TaskRequest>()
                .HasOptional(tr => tr.Assignee).WithMany(u => u.AssigneeTaskRequests)
@@ -148,6 +149,15 @@ namespace MusicStore.Model.DataContext
             modelBuilder.Entity<fl_RequestComment>()
             .HasRequired(rc => rc.TaskRequest).WithMany(tr => tr.RequestComments)
              .HasForeignKey<int>(tr => tr.TaskRequestId);
+
+            modelBuilder.Entity<system_User>()
+            .HasRequired(u => u.Role).WithMany(r => r.Users)
+             .HasForeignKey<int>(u => u.RoleId);
+
+            modelBuilder.Entity<fl_TaskRequestDeveloper>()
+           .HasRequired(trd => trd.TaskRequest).WithMany(tr => tr.Developers)
+            .HasForeignKey<int>(trd => trd.TaskRequestId);
+
         }
     }
 }

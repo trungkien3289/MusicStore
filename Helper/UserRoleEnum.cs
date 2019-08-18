@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MusicStore.BussinessEntity.Enums
+namespace Helper
 {
-    public enum ItemType
+    public enum UserRoleEnum
     {
-        Album = 0,
-        Song = 1,
-        Artist = 2
+        ADMIN = 0,
+        USER = 1,
     }
 }

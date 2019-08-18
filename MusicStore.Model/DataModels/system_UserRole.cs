@@ -12,5 +12,7 @@ namespace MusicStore.Model.DataModels
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
+
+        public virtual ICollection<system_User> Users { get; set; }
     }
 }

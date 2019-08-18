@@ -25,11 +25,12 @@ namespace MusicStore.Model.UnitOfWork
         private GenericRepository<system_User> _userRepository;
         private GenericRepository<system_Token> _tokenRepository;
         private GenericRepository<ms_Application> _applicationRepository;
-        private GenericRepository<fl_Project> _projectRepository;
-        private GenericRepository<fl_Task> _taskRepository;
-        private GenericRepository<fl_TaskRequest> _taskRequestRepository;
+        private ProjectRepository _projectRepository;
+        private TaskRepository _taskRepository;
+        private TaskRequestRepository _taskRequestRepository;
         private GenericRepository<fl_RequestComment> _requestCommentRepository;
         private GenericRepository<system_UserRole> _userRoleRepository;
+        private GenericRepository<fl_TaskRequestDeveloper> _taskRequestDeveloperRepository;
 
         #endregion
 
@@ -168,13 +169,13 @@ namespace MusicStore.Model.UnitOfWork
         /// <summary>
         /// Get/Set Property for project repository.
         /// </summary>
-        public GenericRepository<fl_Project> ProjectRepository
+        public ProjectRepository ProjectRepository
         {
             get
             {
                 if (this._projectRepository == null)
                 {
-                    this._projectRepository = new GenericRepository<fl_Project>(_context);
+                    this._projectRepository = new ProjectRepository(_context);
                 }
 
                 return this._projectRepository;
@@ -184,13 +185,13 @@ namespace MusicStore.Model.UnitOfWork
         /// <summary>
         /// Get/Set Property for task repository.
         /// </summary>
-        public GenericRepository<fl_Task> TaskRepository
+        public TaskRepository TaskRepository
         {
             get
             {
                 if (this._taskRepository == null)
                 {
-                    this._taskRepository = new GenericRepository<fl_Task>(_context);
+                    this._taskRepository = new TaskRepository(_context);
                 }
 
                 return this._taskRepository;
@@ -200,13 +201,13 @@ namespace MusicStore.Model.UnitOfWork
         /// <summary>
         /// Get/Set Property for task request repository.
         /// </summary>
-        public GenericRepository<fl_TaskRequest> TaskRequestRepository
+        public TaskRequestRepository TaskRequestRepository
         {
             get
             {
                 if (this._taskRequestRepository == null)
                 {
-                    this._taskRequestRepository = new GenericRepository<fl_TaskRequest>(_context);
+                    this._taskRequestRepository = new TaskRequestRepository(_context);
                 }
 
                 return this._taskRequestRepository;
@@ -242,6 +243,22 @@ namespace MusicStore.Model.UnitOfWork
                 }
 
                 return this._userRoleRepository;
+            }
+        }
+
+        /// <summary>
+        /// Get/Set Property for request task request developer repository.
+        /// </summary>
+        public GenericRepository<fl_TaskRequestDeveloper> TaskRequestDeveloperRepository
+        {
+            get
+            {
+                if (this._taskRequestDeveloperRepository == null)
+                {
+                    this._taskRequestDeveloperRepository = new GenericRepository<fl_TaskRequestDeveloper>(_context);
+                }
+
+                return this._taskRequestDeveloperRepository;
             }
         }
         #endregion

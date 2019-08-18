@@ -11,12 +11,12 @@ using WebAPI.Models;
 
 namespace WebAPI.Controllers
 {
-    public class ProjectController : Controller
+    public class WebProjectController : Controller
     {
 
         private IProjectServices _projectServices;
 
-        public ProjectController(IProjectServices projectService)
+        public WebProjectController(IProjectServices projectService)
         {
             _projectServices = projectService;
         }

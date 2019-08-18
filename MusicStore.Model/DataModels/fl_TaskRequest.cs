@@ -12,6 +12,7 @@ namespace MusicStore.Model.DataModels
         [Key]
         public int Id { get; set; }
         public int TaskId { get; set; }
+        public int ProjectId { get; set; }
         public string Description { get; set; }
         /// <summary>
         /// Task Status New| Active|Close
@@ -21,7 +22,7 @@ namespace MusicStore.Model.DataModels
 
         public virtual system_User Assignee { get; set; }
         public virtual fl_Task Task { get; set; }
-        public virtual ICollection<system_User> Developers { get; set; }
+        public virtual ICollection<fl_TaskRequestDeveloper> Developers { get; set; }
         public virtual ICollection<fl_RequestComment> RequestComments { get; set; }
     }
 }

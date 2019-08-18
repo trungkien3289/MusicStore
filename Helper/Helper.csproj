@@ -43,6 +43,8 @@
     <Compile Include="Constants.cs" />
     <Compile Include="LinkFactory\Interface1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TaskRequestStatusEnum.cs" />
+    <Compile Include="UserRoleEnum.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

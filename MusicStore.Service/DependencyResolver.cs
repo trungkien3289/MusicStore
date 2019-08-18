@@ -24,7 +24,9 @@ namespace MusicStore.Service
             registerComponent.RegisterType<ITokenServices, TokenServices>();
             registerComponent.RegisterType<IApplicationServices, ApplicationServices>();
             registerComponent.RegisterType<ICollectionServices, CollectionServices>();
-
+            registerComponent.RegisterType<IProjectServices, ProjectServices>();
+            registerComponent.RegisterType<ITaskServices, TaskServices>();
+            registerComponent.RegisterType<ITaskRequestServices, TaskRequestServices>();
         }
     }
 }

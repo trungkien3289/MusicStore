@@ -58,6 +58,8 @@
     <Compile Include="IService\IGenreServices.cs" />
     <Compile Include="IService\IProjectServices.cs" />
     <Compile Include="IService\ISongServices.cs" />
+    <Compile Include="IService\ITaskRequestServices.cs" />
+    <Compile Include="IService\ITaskServices.cs" />
     <Compile Include="IService\ITokenServices.cs" />
     <Compile Include="IService\IUserServices.cs" />
     <Compile Include="MapperInitialization.cs" />
@@ -69,6 +71,8 @@
     <Compile Include="Services\CollectionServices.cs" />
     <Compile Include="Services\GenreServices.cs" />
     <Compile Include="Services\SongServices.cs" />
+    <Compile Include="Services\TaskRequestServices.cs" />
+    <Compile Include="Services\TaskServices.cs" />
     <Compile Include="Services\TokenServices.cs" />
     <Compile Include="Services\UserServices.cs" />
   </ItemGroup>
@@ -77,6 +81,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Helper\Helper.csproj">
+      <Project>{6e9ab574-f3e5-40eb-aacb-9c390c970afa}</Project>
+      <Name>Helper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MusicStore.BussinessEntity\BussinessEntity.csproj">
       <Project>{959e2c95-65a6-403f-b595-abc572a1f6a5}</Project>
       <Name>BussinessEntity</Name>

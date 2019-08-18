@@ -43,6 +43,20 @@ namespace MusicStore.Service.Services
             return null;
         }
 
+        /// <summary>
+        /// Get projects of user(user is admin or leader or developer)
+        /// </summary>
+        /// <param name="id">User id</param>
+        /// <returns></returns>
+        public IEnumerable<ProjectEntity> GetByUserId(int id)
+        {
+            var projects = _unitOfWork.ProjectRepository.GetProjectByUserId(id);
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<fl_Project, ProjectEntity>());
+            var mapper = config.CreateMapper();
+            var results = mapper.Map<IEnumerable<fl_Project>, IEnumerable<ProjectEntity>>(projects);
+            return results;
+        }
+
         public IEnumerable<TaskEntity> GetTasks(int id)
         {
             var project = _unitOfWork.ProjectRepository.GetWithInclude(a => a.Id == id, "Tasks").FirstOrDefault();
@@ -69,7 +83,7 @@ namespace MusicStore.Service.Services
             return null;
         }
 
-        public int Create(ProjectEntity model)
+        public ProjectEntity Create(ProjectEntity model)
         {
             using (var scope = new TransactionScope())
             {
@@ -79,29 +93,24 @@ namespace MusicStore.Service.Services
                 _unitOfWork.ProjectRepository.Insert(entity);
                 _unitOfWork.Save();
                 scope.Complete();
-
-                return entity.Id;
+                model.Id = entity.Id;
+                return model;
             }
         }
 
-        public bool Update(int id, ProjectEntity model)
+        public ProjectEntity Update(int id, ProjectEntity model)
         {
-            var success = false;
-            if (model != null)
+            using (var scope = new TransactionScope())
             {
-                using (var scope = new TransactionScope())
-                {
-                    var project = _unitOfWork.ProjectRepository.GetByID(id);
-                    project.Name = model.Name;
-                    project.Description = model.Description;
-                    project.Status = model.Status;
-                    _unitOfWork.Save();
-                    scope.Complete();
-                    success = true;
-                }
+                var project = _unitOfWork.ProjectRepository.GetByID(id);
+                project.Name = model.Name;
+                project.Description = model.Description;
+                project.Status = model.Status;
+                _unitOfWork.Save();
+                scope.Complete();
             }
 
-            return success;
+            return model;
         }
 
         public bool Delete(int id)

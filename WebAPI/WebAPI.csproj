@@ -209,7 +209,10 @@
     <Compile Include="APIControllers\CollectionController.cs" />
     <Compile Include="APIControllers\GenreController.cs" />
     <Compile Include="APIControllers\HomeAPIController.cs" />
+    <Compile Include="APIControllers\ProjectController.cs" />
     <Compile Include="APIControllers\SongController.cs" />
+    <Compile Include="APIControllers\TaskController.cs" />
+    <Compile Include="APIControllers\TaskRequestController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -246,7 +249,7 @@
     <Compile Include="APIControllers\AlbumController.cs" />
     <Compile Include="APIControllers\ArtistController.cs" />
     <Compile Include="Controllers\DashBoardController.cs" />
-    <Compile Include="Controllers\ProjectController.cs" />
+    <Compile Include="Controllers\WebProjectController.cs" />
     <Compile Include="Controllers\WebAlbumController.cs" />
     <Compile Include="Controllers\AuthenticateController.cs" />
     <Compile Include="Controllers\HomeController.cs" />

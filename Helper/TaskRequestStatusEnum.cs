@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MusicStore.BussinessEntity.Enums
+namespace Helper
 {
-    public enum ItemType
+    public enum TaskRequestStatusEnum
     {
-        Album = 0,
-        Song = 1,
-        Artist = 2
+        New = 0,
+        Active = 1,
+        Close = 2,
     }
 }

@@ -6,12 +6,13 @@ namespace MusicStore.Service.IService
     public interface IProjectServices
     {
         ProjectEntity GetById(int id);
+        IEnumerable<ProjectEntity> GetByUserId(int id);
         IEnumerable<TaskEntity> GetTasks(int id);
         IEnumerable<ProjectEntity> GetAll();
         IEnumerable<ProjectEntity> SearchByName(string query, int page = 1, int numberItemsPerPage = 10);
         IEnumerable<ProjectEntity> Get(int page = 1, int numberItemsPerPage = 10);
-        int Create(ProjectEntity model);
-        bool Update(int id, ProjectEntity model);
+        ProjectEntity Create(ProjectEntity model);
+        ProjectEntity Update(int id, ProjectEntity model);
         bool Delete(int id);
     }
 }
