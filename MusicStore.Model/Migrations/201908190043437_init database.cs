@@ -156,7 +156,9 @@ namespace MusicStore.Model.Migrations
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.system_User", t => t.AssigneeId)
+                .ForeignKey("dbo.fl_Project", t => t.ProjectId, cascadeDelete: true)
                 .ForeignKey("dbo.fl_Task", t => t.TaskId)
+                .Index(t => t.ProjectId)
                 .Index(t => t.AssigneeId)
                 .Index(t => t.TaskId);
             
@@ -437,6 +439,7 @@ namespace MusicStore.Model.Migrations
             DropForeignKey("dbo.fl_Task", "AssigneeId", "dbo.system_User");
             DropForeignKey("dbo.fl_RequestComment", "UserId", "dbo.system_User");
             DropForeignKey("dbo.fl_RequestComment", "TaskRequestId", "dbo.fl_TaskRequest");
+            DropForeignKey("dbo.fl_TaskRequest", "ProjectId", "dbo.fl_Project");
             DropForeignKey("dbo.fl_TaskRequestDeveloper", "UserId", "dbo.system_User");
             DropForeignKey("dbo.fl_TaskRequestDeveloper", "TaskRequestId", "dbo.fl_TaskRequest");
             DropForeignKey("dbo.fl_TaskRequest", "AssigneeId", "dbo.system_User");
@@ -484,6 +487,7 @@ namespace MusicStore.Model.Migrations
             DropIndex("dbo.fl_TaskRequestDeveloper", new[] { "TaskRequestId" });
             DropIndex("dbo.fl_TaskRequest", new[] { "TaskId" });
             DropIndex("dbo.fl_TaskRequest", new[] { "AssigneeId" });
+            DropIndex("dbo.fl_TaskRequest", new[] { "ProjectId" });
             DropIndex("dbo.system_User", new[] { "RoleId" });
             DropTable("dbo.fl_Project_LeaderUser");
             DropTable("dbo.fl_Project_DeveloperUser");

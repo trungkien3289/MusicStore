@@ -48,59 +48,15 @@ namespace MusicStore.Model.GenericRepository
                 throw new Exception("UserCannotFound");
             }
 
-            if (user.RoleId == (int)UserRoleEnum.ADMIN)
+            var taskRequests = this.Context.Set<fl_TaskRequest>().Where(tr => tr.Developers.Any(d => d.Id == userId));
+            var projectIds = taskRequests.GroupBy(tr => tr.ProjectId).Select(gr => gr.Key).ToList();
+            var projects = this.Context.Set<fl_Project>().Where(p => projectIds.Contains(p.Id)).ToList();
+            foreach (var project in projects)
             {
-                return this.DbSet.Select(p => new fl_Project()
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Description = p.Description,
-                    Status = p.Status,
-                    StartDate = p.StartDate,
-                    EndDate = p.EndDate,
-                    Tasks = p.Tasks.Where(t => t.TaskRequest != null).Select(task => new fl_Task()
-                    {
-                        Id = task.Id,
-                        Name = task.Name,
-                        Description = task.Description,
-                        AssigneeId = task.AssigneeId,
-                        Status = task.Status,
-                        StartDate = task.StartDate,
-                        EndDate = task.EndDate,
-                        ProjectId = task.ProjectId,
-                        EstimatedTime = task.EstimatedTime,
-                    }).ToList()
-                }).ToList();
+                project.TaskRequests = taskRequests.Where(tr => tr.ProjectId == project.Id).ToList();
             }
-            else
-            {
-                var tempProjects = this.DbSet.Where(p => p.Leaders.Any(u => u.UserId == userId)
-                       || p.Developers.Any(u => u.UserId == userId)).Include("Tasks").ToList();
-                var results =
-                        tempProjects.Select(p => new fl_Project()
-                        {
-                            Id = p.Id,
-                            Name = p.Name,
-                            Description = p.Description,
-                            Status = p.Status,
-                            StartDate = p.StartDate,
-                            EndDate = p.EndDate,
-                            Tasks = p.Tasks.Where(t => t.TaskRequest != null).Select(task => new fl_Task()
-                            {
-                                Id = task.Id,
-                                Name = task.Name,
-                                Description = task.Description,
-                                AssigneeId = task.AssigneeId,
-                                Status = task.Status,
-                                StartDate = task.StartDate,
-                                EndDate = task.EndDate,
-                                ProjectId = task.ProjectId,
-                                EstimatedTime = task.EstimatedTime,
-                            }).ToList()
-                        }).ToList();
 
-                return results;
-            }
+            return projects;
         }
     }
 }

@@ -22,6 +22,7 @@ namespace MusicStore.Model.DataModels
         public int Status { get; set; }
         public Nullable<int> AssigneeId { get; set; }
 
+        public virtual fl_Project Project { get; set; }
         public virtual system_User Assignee { get; set; }
         public virtual fl_Task Task { get; set; }
         public virtual ICollection<fl_TaskRequestDeveloper> Developers { get; set; }

@@ -143,6 +143,10 @@ namespace MusicStore.Model.DataContext
               .HasRequired(c => c.Task).WithOptional(t => t.TaskRequest)
                .Map(m => m.MapKey("TaskId"));
 
+            modelBuilder.Entity<fl_TaskRequest>()
+             .HasRequired(c => c.Project).WithMany(t => t.TaskRequests)
+              .HasForeignKey<int>(u => u.ProjectId);
+
 
             modelBuilder.Entity<fl_RequestComment>()
              .HasRequired(rc => rc.User).WithMany(u => u.RequestComments)

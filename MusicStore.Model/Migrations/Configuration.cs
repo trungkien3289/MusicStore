@@ -248,7 +248,7 @@ namespace MusicStore.Model.Migrations
             var taskRequest1 = new DataModels.fl_TaskRequest()
             {
                 Id = 1,
-                ProjectId = 1,
+                Project = project1,
                 Description = "Analyze requirements urgent",
                 Status = 1,
                 AssigneeId = null,
@@ -257,7 +257,7 @@ namespace MusicStore.Model.Migrations
              var taskRequest2 = new DataModels.fl_TaskRequest()
              {
                  Id = 2,
-                 ProjectId = 1,
+                 Project = project1,
                  Description = "Design Database urgent",
                  Status = 1,
                  AssigneeId = null,
@@ -266,7 +266,7 @@ namespace MusicStore.Model.Migrations
             var taskRequest3 = new DataModels.fl_TaskRequest()
             {
                 Id = 3,
-                ProjectId = 3,
+                Project = project3,
                 Description = "Implement news page urgent",
                 Status = 1,
                 AssigneeId = null,
@@ -275,7 +275,7 @@ namespace MusicStore.Model.Migrations
             var taskRequest4 = new DataModels.fl_TaskRequest()
             {
                 Id = 4,
-                ProjectId = 2,
+                Project = project2,
                 Description = "Implement add product to card",
                 Status = 1,
                 AssigneeId = null,

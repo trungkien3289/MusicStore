@@ -20,6 +20,7 @@ namespace MusicStore.Model.DataModels
         /// </summary>
         public int Status { get; set; }
 
+        public virtual ICollection<fl_TaskRequest> TaskRequests { get; set; }
         public virtual ICollection<fl_Task> Tasks { get; set; }
         public virtual ICollection<system_User> Leaders { get; set; }
         public virtual ICollection<system_User> Developers { get; set; }

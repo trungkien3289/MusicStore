@@ -21,7 +21,7 @@
                                 {
                                     <li>
                                         <a href="#">
-                                            <i class="metismenu-icon pe-7s-car"></i>
+                                            <i class="metismenu-icon pe-7s-note2"></i>
                                             @project.Name
                                             <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                         </a>
@@ -46,17 +46,17 @@
                                 {
                                     <li>
                                         <a href="#">
-                                            <i class="metismenu-icon pe-7s-car"></i>
+                                            <i class="metismenu-icon pe-7s-note2"></i>
                                             @project.Name
                                             <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                         </a>
                                         <ul>
-                                            @foreach (var task in project.Tasks)
+                                            @foreach (var taskRequest in project.TaskRequests)
                                             {
                                                 <li>
                                                     <a href="components-tabs.html">
                                                         <i class="metismenu-icon">
-                                                        </i>@task.Name
+                                                        </i>@taskRequest.Description
                                                     </a>
                                                 </li>
                                             }

@@ -13,7 +13,7 @@ namespace MusicStore.Model.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201908181624226_init database"; }
+            get { return "201908190043437_init database"; }
         }
         
         string IMigrationMetadata.Source

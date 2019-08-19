@@ -18,6 +18,7 @@ namespace MusicStore.BussinessEntity
         /// </summary>
         public int Status { get; set; }
 
+        public ICollection<TaskRequestEntity> TaskRequests { get; set; }
         public ICollection<TaskEntity> Tasks { get; set; }
         public ICollection<UserEntity> Leaders { get; set; }
         public ICollection<UserEntity> Developers { get; set; }
