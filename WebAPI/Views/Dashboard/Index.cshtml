@@ -95,13 +95,14 @@
                         </table>
 
                         <button data-bind="click: addSeat, enable: seats().length < 5">Reserve another seat</button>
-                        <h2>Project Details</h2>
-                        <p data-bind="with : projectDetail">
-                            Name: <span data-bind="text: Name"> </span>,
-                            Description: <span data-bind="text: Description"> </span>
-                        </p>
+
                     </div>
                 </div>
+                <h2>Project Details</h2>
+                <p data-bind="with : projectDetail">
+                    Name: <span data-bind="text: Name"> </span>,
+                    Description: <span data-bind="text: Description"> </span>
+                </p>
             </div>
         </div>
     </div>
