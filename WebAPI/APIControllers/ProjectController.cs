@@ -31,7 +31,8 @@ namespace WebAPI.APIControllers
             }
         }
 
-        public HttpResponseMessage Get(int page = 1) {
+        [Route("projects/{page}")]
+        public HttpResponseMessage GetWithPaging([FromUri]int page = 1) {
 
             var projects = _projectServices.Get(page);
             if (projects != null)
@@ -39,6 +40,18 @@ namespace WebAPI.APIControllers
                 return Request.CreateResponse(HttpStatusCode.OK, projects);
             }
             return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Albums not found");
+        }
+
+
+        [Route("api/projects/{projectId}")]
+        public HttpResponseMessage GetById([FromUri]int projectId)
+        {
+            var project = _projectServices.GetById(projectId);
+            if (project != null)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, project);
+            }
+            return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Project not found");
         }
 
         public HttpResponseMessage Add(ProjectEntity project)

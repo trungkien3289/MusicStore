@@ -8,4 +8,9 @@
     height: 100%;
 }
 
-.app-main .app-main__inner
+.vertical-nav-menu.project-tree li .tree-node-container{
+    display:flex;
+}
+
+.vertical-nav-menu.project-tree li a {
+}

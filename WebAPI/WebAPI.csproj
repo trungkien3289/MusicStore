@@ -299,6 +299,7 @@
     <Content Include="Content\Common\popuo-box.css" />
     <Content Include="Content\Common\slidebar.css" />
     <Content Include="Content\Common\style.css" />
+    <Content Include="Content\DashBoard\custom.css" />
     <Content Include="Content\fonts\fa-solid-900.svg" />
     <Content Include="Content\fonts\Pe-icon-7-stroke.svg" />
     <Content Include="Content\Images\11.png" />
@@ -374,76 +375,8 @@
     <Content Include="favicon.ico" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Areas\HelpPage\Views\Web.config" />
-    <Content Include="Areas\HelpPage\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\ResourceModel.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\Index.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\TextSample.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\SimpleTypeModelDescription.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\Samples.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\Parameters.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ModelDescriptionLink.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\KeyValuePairModelDescription.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\InvalidSample.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ImageSample.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\HelpPageApiModel.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\EnumTypeModelDescription.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\DictionaryModelDescription.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ComplexTypeModelDescription.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
-    <Content Include="ApplicationInsights.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Video\Ellie-Goulding.ogv" />
-    <Content Include="Content\Video\Mark-Ronson-Uptown.ogv" />
-    <Content Include="Content\Video\Maroon-Sugar.ogv" />
-    <Content Include="Content\Video\Pharrell-Williams.ogv" />
-    <Content Include="Content\Video\Taylor-Swift-Bad_Blood.ogv" />
-    <Content Include="Content\Media\Blue Browne.ogg" />
-    <Content Include="Content\Media\Georgia.ogg" />
-    <Content Include="Content\fonts\digital-7-webfont.eot" />
-    <Content Include="Content\fonts\digital-7-webfont.ttf" />
-    <Content Include="Content\fonts\digital-7-webfont.woff" />
-    <Content Include="Content\fonts\digital-7_italic-webfont.eot" />
-    <Content Include="Content\fonts\digital-7_italic-webfont.ttf" />
-    <Content Include="Content\fonts\digital-7_italic-webfont.woff" />
-    <Content Include="Content\fonts\digital-7_mono-webfont.eot" />
-    <Content Include="Content\fonts\digital-7_mono-webfont.ttf" />
-    <Content Include="Content\fonts\digital-7_mono-webfont.woff" />
-    <Content Include="Content\fonts\fontawesome-webfont.eot" />
-    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
-    <Content Include="Content\fonts\fontawesome-webfont.woff" />
-    <Content Include="Content\fonts\FontAwesome.otf" />
-    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="Content\fonts\Lato-Regular.ttf" />
-    <Content Include="Content\fonts\MavenPro-Bold.ttf" />
-    <Content Include="Content\fonts\MavenPro-Regular.ttf" />
-    <Content Include="Content\fonts\weathericons-regular-webfont.eot" />
-    <Content Include="Content\fonts\weathericons-regular-webfont.ttf" />
-    <Content Include="Content\fonts\weathericons-regular-webfont.woff" />
-    <Content Include="Content\fonts\WeatherIcons-Regular.otf" />
-    <Content Include="Content\fonts\fa-solid-900.eot" />
-    <Content Include="Content\fonts\fa-solid-900.ttf" />
-    <Content Include="Content\fonts\fa-solid-900.woff" />
-    <Content Include="Content\fonts\fa-solid-900.woff2" />
-    <Content Include="Content\fonts\Pe-icon-7-stroke.eot" />
-    <Content Include="Content\fonts\Pe-icon-7-stroke.ttf" />
-    <Content Include="Content\fonts\Pe-icon-7-stroke.woff" />
-    <Content Include="fonts\fa-solid-900.eot" />
-    <Content Include="fonts\fa-solid-900.ttf" />
-    <Content Include="fonts\fa-solid-900.woff" />
-    <Content Include="fonts\fa-solid-900.woff2" />
-    <Content Include="fonts\Pe-icon-7-stroke.eot" />
-    <Content Include="fonts\Pe-icon-7-stroke.ttf" />
-    <Content Include="fonts\Pe-icon-7-stroke.woff" />
-    <Content Include="Content\DashBoard\custom.css" />
-    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\build\dashboard.js" />
+    <Content Include="Scripts\build\projectManagement.js" />
     <Content Include="Scripts\Common\bootstrap.js" />
     <Content Include="Scripts\Common\classie.js" />
     <Content Include="Scripts\Common\easyResponsiveTabs.js" />
@@ -455,87 +388,77 @@
     <Content Include="Scripts\Common\jquery.jplayer.min.js" />
     <Content Include="Scripts\Common\jquery.magnific-popup.js" />
     <Content Include="Scripts\Common\jquery.nicescroll.js" />
-    <Content Include="Scripts\Common\songplaylist.js" />
     <Content Include="Scripts\Common\mediaelement-and-player.min.js" />
     <Content Include="Scripts\Common\responsiveslides.min.js" />
     <Content Include="Scripts\Common\scripts.js" />
+    <Content Include="Scripts\Common\songplaylist.js" />
     <Content Include="Scripts\Common\uisearch.js" />
+    <Content Include="Scripts\DashBoard\dashboard-main.js" />
+    <Content Include="Scripts\DashBoard\es6\main.js" />
+    <Content Include="Scripts\DashBoard\es6\person.js" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\DashBoard\es6\project-details-model.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\Libraries\knockout-3.5.0.js" />
     <Content Include="Scripts\Libraries\playlist.js" />
-    <Content Include="Scripts\DashBoard\dashboard-main.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\ProjectManagement\es6\main.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Web.config">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <Content Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
-    <Content Include="Views\Web.config" />
-    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="webpack.common.js" />
+    <Content Include="webpack.config.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Web.config" />
+    <Content Include="package.json" />
+    <Content Include="package-lock.json" />
+    <None Include="packages.config" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\Home\Error.cshtml" />
+    <Content Include="Views\Home\GenresMenu.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\Search.cshtml" />
+    <Content Include="Views\Project\Create.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_DashBoard_Layout .cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_ListAlbums.cshtml" />
-    <Content Include="Views\Home\Error.cshtml" />
-    <Content Include="Views\WebAlbum\Index.cshtml" />
-    <Content Include="Views\Home\GenresMenu.cshtml" />
-    <Content Include="Views\WebAlbum\AlbumDetails.cshtml" />
-    <Content Include="Views\Shared\_ListArtists.cshtml" />
-    <Content Include="Views\WebAlbum\_ListAlbumItem.cshtml" />
-    <Content Include="Views\Shared\_ListAlbumSummary.cshtml" />
-    <Content Include="Views\Shared\_ListAlbumSummaryItem.cshtml" />
-    <Content Include="Views\WebArtist\Index.cshtml" />
-    <Content Include="Views\Shared\_ListArtistSummary.cshtml" />
-    <Content Include="Views\Shared\_ListArtistSummaryItem.cshtml" />
-    <Content Include="Views\WebArtist\Details.cshtml" />
-    <Content Include="Views\WebGenre\Index.cshtml" />
-    <Content Include="Views\Home\Search.cshtml" />
-    <Content Include="Views\Shared\_ListSongSummary.cshtml" />
-    <Content Include="Views\Shared\_ListSongSummaryItem.cshtml" />
     <Content Include="Views\Shared\_ListAlbumSearchSummary.cshtml" />
     <Content Include="Views\Shared\_ListAlbumSearchSummaryItem.cshtml" />
-    <Content Include="Views\WebSong\Index.cshtml" />
-    <Content Include="Views\WebCollection\Index.cshtml" />
+    <Content Include="Views\Shared\_ListAlbumSummary.cshtml" />
+    <Content Include="Views\Shared\_ListAlbumSummaryItem.cshtml" />
+    <Content Include="Views\Shared\_ListArtists.cshtml" />
+    <Content Include="Views\Shared\_ListArtistSummary.cshtml" />
+    <Content Include="Views\Shared\_ListArtistSummaryItem.cshtml" />
+    <Content Include="Views\Shared\_ListCollections.cshtml" />
     <Content Include="Views\Shared\_ListCollectionSummary.cshtml" />
     <Content Include="Views\Shared\_ListCollectionSummaryItem.cshtml" />
-    <Content Include="Views\WebCollection\Details.cshtml" />
-    <Content Include="Views\Shared\_ListCollections.cshtml" />
+    <Content Include="Views\Shared\_ListSongSummary.cshtml" />
+    <Content Include="Views\Shared\_ListSongSummaryItem.cshtml" />
     <Content Include="Views\Shared\_MusicPlayList.cshtml" />
-    <Content Include="Views\Shared\_DashBoard_Layout .cshtml" />
-    <Content Include="Views\Dashboard\Index.cshtml" />
-    <Content Include="Views\Project\Create.cshtml" />
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\WebAlbum\AlbumDetails.cshtml" />
+    <Content Include="Views\WebAlbum\Index.cshtml" />
+    <Content Include="Views\WebAlbum\_ListAlbumItem.cshtml" />
+    <Content Include="Views\WebArtist\Details.cshtml" />
+    <Content Include="Views\WebArtist\Index.cshtml" />
+    <Content Include="Views\WebCollection\Details.cshtml" />
+    <Content Include="Views\WebCollection\Index.cshtml" />
+    <Content Include="Views\WebGenre\Index.cshtml" />
+    <Content Include="Views\WebSong\Index.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Data\AlbumImages\" />
-    <Folder Include="Data\Album_Songs\" />
-    <Folder Include="Data\Artist_Images\" />
-    <Folder Include="Data\Collection_Images\" />
-    <Folder Include="Data\Genre_Images\" />
     <Folder Include="Views\Album\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Helper\Helper.csproj">
@@ -554,9 +477,6 @@
       <Project>{99bdece1-0816-4389-a1f9-d67d1176e44c}</Project>
       <Name>Resolver</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -594,6 +514,10 @@
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.2.8.0-beta4\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.2.8.0-beta4\build\Microsoft.Net.Compilers.props'))" />
   </Target>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
