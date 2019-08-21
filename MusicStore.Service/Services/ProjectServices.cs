@@ -30,7 +30,35 @@ namespace MusicStore.Service.Services
 
         #region public functions
 
+        /// <summary>
+        /// Get project details
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ProjectEntity GetById(int id)
+        {
+            var entity = _unitOfWork.ProjectRepository.GetByID(id);
+            if (entity != null)
+            {
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<fl_Project, ProjectEntity>()
+                     .ForMember(p => p.Leaders, opt => opt.Ignore())
+                     .ForMember(p => p.Developers, opt => opt.Ignore())
+                     .ForMember(p => p.TaskRequests, opt => opt.Ignore())
+                     .ForMember(p => p.Tasks, opt => opt.Ignore())
+                     );
+                var mapper = config.CreateMapper();
+                var model = mapper.Map<fl_Project, ProjectEntity>(entity);
+                return model;
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Get project details with developers and leaders
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ProjectEntity GetProjectDetailsById(int id)
         {
             var entity = _unitOfWork.ProjectRepository.GetByID(id);
             if (entity != null)

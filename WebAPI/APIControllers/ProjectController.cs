@@ -31,7 +31,7 @@ namespace WebAPI.APIControllers
             }
         }
 
-        [Route("projects/{page}")]
+        [Route("api/projects/{page}")]
         public HttpResponseMessage GetWithPaging([FromUri]int page = 1) {
 
             var projects = _projectServices.Get(page);
@@ -46,7 +46,7 @@ namespace WebAPI.APIControllers
         [Route("api/projects/{projectId}")]
         public HttpResponseMessage GetById([FromUri]int projectId)
         {
-            var project = _projectServices.GetById(projectId);
+            var project = _projectServices.GetProjectDetailsById(projectId);
             if (project != null)
             {
                 return Request.CreateResponse(HttpStatusCode.OK, project);

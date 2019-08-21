@@ -6,5 +6,7 @@
         this.StartDate = projectModel ? projectModel.StartDate : 0;
         this.EndDate = projectModel ? projectModel.EndDate : 0;
         this.Status = projectModel ? projectModel.Status : 0;
+        this.Developers = projectModel ? projectModel.Developers : 0;
+        this.Leaders = projectModel ? projectModel.Leaders : 0;
     }
 }

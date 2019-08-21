@@ -6,16 +6,32 @@ $(document).ready(function () {
     ko.applyBindings(dashboardManagement);
 });
 
+const ProjectDisplayMode = {
+    DASHBOARD: 0,
+    PROJECT_DETAILS: 1,
+    TASK_DETAILS: 2,
+    TASK_REQUEST: 3,
+};
+
 export default class DashboardManagement {
     constructor() {
         this._service = new Service();
-        this.init();
-        this.curentProject = ko.observable(new ProjectDetailsModel(), document.getElementById("projectPanel"));
-        this.ProjectStatus = "Karl";
-    }
-
-    init() {
         this.bindEventProjectTaskPanel();
+        this.curentProject = ko.observable(new ProjectDetailsModel());
+        this.ProjectStatus = "Karl";
+        this.displayMode = ko.observable(ProjectDisplayMode.DASHBOARD);
+        this.isShowProjectDetails = ko.computed(function () {
+            return this.displayMode() == ProjectDisplayMode.PROJECT_DETAILS;
+        }, this);
+        this.isShowTaskDetails = ko.computed(function () {
+            return this.displayMode() == ProjectDisplayMode.TASK_DETAILS;
+        }, this);
+        this.isShowTaskRequest = ko.computed(function () {
+            return this.displayMode() == ProjectDisplayMode.TASK_REQUEST;
+        }, this);
+        this.isShowDashboard = ko.computed(function () {
+            return this.displayMode() == ProjectDisplayMode.DASHBOARD;
+        }, this);
     }
     bindEventProjectTaskPanel() {
         var self = this;
@@ -24,6 +40,7 @@ export default class DashboardManagement {
             self._service.getProjectDetails(projectId).then(response => {
                 console.log(response);
                 if (response.status === 200) {
+                    self.displayMode(ProjectDisplayMode.PROJECT_DETAILS);
                     var projectDetails = new ProjectDetailsModel(response.data);
                     self.curentProject(new ProjectDetailsModel(projectDetails));
                 }

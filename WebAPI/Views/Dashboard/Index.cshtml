@@ -10,7 +10,7 @@
 <div class="app-main__outer">
     <div class="app-main__inner">
         <div class="row dashboard-content-panel">
-            <div class="col-md-4 col-xl-4 card">
+            <div class="col-md-4 col-xl-4 card left-panel">
                 <div class="card-header card-header-tab-animation">
                     <ul class="nav nav-justified">
                         <li class="nav-item"><a data-toggle="tab" href="#tab-eg8-0" class="active nav-link">Projects</a></li>
@@ -22,59 +22,74 @@
                         <div class="tab-pane active project-task-panel" id="tab-eg8-0" role="tabpanel">
                             @foreach (var project in Model.projectWithTasks)
                             {
-                                <ul class="vertical-nav-menu">
-                                    <li>
-                                        <a href="#" data-id="@project.Id" class="btn-project-item">
-                                            <i class="metismenu-icon pe-7s-note2"></i>
-                                            @project.Name
-                                            <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
-                                        </a>
-                                        <ul>
-                                            @foreach (var task in project.Tasks)
-                                            {
-                                                <li>
-                                                    <a href="#" data-id="@task.Id" class="btn-task-item">
-                                                        <i class="metismenu-icon">
-                                                        </i>@task.Name
-                                                    </a>
-                                                </li>
-                                            }
-                                        </ul>
-                                    </li>
-                                </ul>
+                                <div class="d-flex flex-row align-items-center" height="30px">
+                                    <a class="btn-toogle-panel" data-toggle="collapse" href="#project@(project.Id)" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                        <i class="metismenu-state-icon pe-7s-angle-up caret-left"></i>
+                                    </a>
+                                    <i class="metismenu-icon pe-7s-note2"></i>
+                                    <a class="btn-project-item" data-id="@project.Id">@project.Name</a>
+                                </div>
+                                <div class="collapse" id="project@(project.Id)">
+                                    <ul class="vertical-nav-menu project-tree">
+                                        @foreach (var task in project.Tasks)
+                                        {
+                                            <li>
+                                                <a data-id="@task.Id" class="btn-task-item">
+                                                    <i class="metismenu-icon">
+                                                    </i>@task.Name
+                                                </a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
                             }
                         </div>
                         <div class="tab-pane project-request-panel" id="tab-eg8-1" role="tabpanel">
                             @foreach (var project in Model.projectWithRequestTasks)
                             {
-                                <ul class="vertical-nav-menu project-tree">
-                                    <li>
-                                        <a href="#" data-id="@project.Id" class="btn-project-item">
-                                            <i class="metismenu-icon pe-7s-note2"></i>
-                                            @project.Name
-                                            <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
-                                        </a>
-                                        <ul>
-                                            @foreach (var taskRequest in project.TaskRequests)
-                                            {
-                                                <li>
-                                                    <a href="#" data-id="@taskRequest.Id" class="btn-task-item">
-                                                        <i class="metismenu-icon">
-                                                        </i>@taskRequest.Description
-                                                    </a>
-                                                </li>
-                                            }
-                                        </ul>
-                                    </li>
-                                </ul>
+                                <div class="d-flex flex-row align-items-center" height="30px">
+                                    <a class="btn-toogle-panel" data-toggle="collapse" href="#project@(project.Id)" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                        <i class="metismenu-state-icon pe-7s-angle-up caret-left"></i>
+                                    </a>
+                                    <i class="metismenu-icon pe-7s-note2"></i>
+                                    <a class="btn-project-item" data-id="@project.Id">@project.Name</a>
+                                </div>
+                                <div class="collapse" id="project@(project.Id)">
+                                    <ul class="vertical-nav-menu project-tree">
+                                        @foreach (var taskRequest in project.TaskRequests)
+                                        {
+                                            <li>
+                                                <a data-id="@taskRequest.Id" class="btn-task-request-item">
+                                                    <i class="metismenu-icon">
+                                                    </i>@taskRequest.Description
+                                                </a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
                             }
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-8 col-xl-8">
-                <div id="projectPanel">
-                    <div data-bind="template: {name:'projectDetailTemplate', data: curentProject}"></div>
+            <div class="col-md-8 col-xl-8 right-panel">
+                <div id="DashboardPanel" data-bind="if: isShowDashboard">
+                    Dashboard
+                    <div data-bind="template: {name:'dashboardTemplate', data: curentProject}"></div>
+                </div>
+                <div id="ProjectPanel" data-bind="if: isShowProjectDetails">
+                    Project
+                    <div data-bind="template: {name:'projectDetailsTemplate', data: curentProject}"></div>
+                </div>
+                <div id="TaskPanel" data-bind="if: isShowTaskDetails">
+                    Task
+                    <div data-bind="template: {name:'taskDetailsTemplate', data: curentProject}"></div>
+                </div>
+                <div id="TaskRequestPanel" data-bind="if: isShowTaskRequest">
+                    Task Request
+                    <div data-bind="template: {name:'taskRequestTemplate', data: curentProject}"></div>
                 </div>
             </div>
         </div>
@@ -90,15 +105,22 @@
     </tr>
 </script>
 
-<script type="text/x-jquery-tmpl" id="projectDetailTemplate">
+<script type="text/x-jquery-tmpl" id="dashboardTemplate">
     <div class="main-card card">
+        <div class="card-header">Dashboard</div>
+        <div class="card-body d-flex flex-column">
+
+        </div>
+    </div>
+</script>
+
+<script type="text/x-jquery-tmpl" id="projectDetailsTemplate">
+    <div class="main-card card">
+        <div class="card-header">Project Details</div>
         <div class="card-body d-flex flex-column">
             <div class="d-flex flex-row bd-highligh align-items-center">
                 <i class="nav-link-icon fa fa-suitcase"> </i>
                 <div class="project-title" data-bind="text: Name"></div>
-            </div>
-            <div class="d-flex flex-row bd-highligh align-items-center">
-                <p data-bind="text: Description"></p>
             </div>
             <div class="d-flex flex-row bd-highligh align-items-center">
                 <div>
@@ -110,6 +132,26 @@
                     <span data-bind="text: EndDate"></span>
                 </div>
             </div>
+            <div class="d-flex flex-row bd-highligh align-items-center">
+                <p data-bind="text: Description"></p>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/x-jquery-tmpl" id="taskDetailsTemplate">
+    <div class="main-card card">
+        <div class="card-header">Task Details</div>
+        <div class="card-body d-flex flex-column">
+            
+        </div>
+    </div>
+</script>
+
+<script type="text/x-jquery-tmpl" id="taskRequestTemplate">
+    <div class="main-card card">
+        <div class="card-header">Task Request</div>
+        <div class="card-body d-flex flex-column">
+
         </div>
     </div>
 </script>

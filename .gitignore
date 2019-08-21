@@ -111,6 +111,9 @@ DocProject/Help/html
 csx
 *.build.csdef
 
+# Node package of npm
+node_modules/
+
 # Windows Store app package directory
 AppPackages/
 
@@ -172,3 +175,6 @@ Kopie von*
 /packages
 /src/packages
 /build
+
+package-lock.json
+.vs/

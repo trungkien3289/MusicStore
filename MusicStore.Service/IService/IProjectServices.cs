@@ -6,6 +6,7 @@ namespace MusicStore.Service.IService
     public interface IProjectServices
     {
         ProjectEntity GetById(int id);
+        ProjectEntity GetProjectDetailsById(int id)
         IEnumerable<ProjectEntity> GetByUserId(int id);
         IEnumerable<ProjectEntity> GetWithTaskRequestByUserId(int id);
         IEnumerable<TaskEntity> GetTasks(int id);
