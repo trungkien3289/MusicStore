@@ -80,7 +80,6 @@
                     <div data-bind="template: {name:'dashboardTemplate', data: curentProject}"></div>
                 </div>
                 <div id="ProjectPanel" data-bind="if: isShowProjectDetails">
-                    Project
                     <div data-bind="template: {name:'projectDetailsTemplate', data: curentProject}"></div>
                 </div>
                 <div id="TaskPanel" data-bind="if: isShowTaskDetails">
@@ -118,22 +117,50 @@
     <div class="main-card card">
         <div class="card-header">Project Details</div>
         <div class="card-body d-flex flex-column">
-            <div class="d-flex flex-row bd-highligh align-items-center">
-                <i class="nav-link-icon fa fa-suitcase"> </i>
+            <div class="row-data align-items-center project-title-panel">
+                <span class="icon-space-wrapper">
+                    <i class="nav-link-icon fa fa-suitcase"> </i>
+                </span>
                 <div class="project-title" data-bind="text: Name"></div>
             </div>
-            <div class="d-flex flex-row bd-highligh align-items-center">
-                <div>
-                    <i class="fa fa-calendar-alt"></i>
+            <div class="row-data bd-highligh">
+                <i><p data-bind="text: Description"></p></i>
+            </div>
+            <div class="row-data project-time-panel">
+                <div class="d-flex flex-column time-group-controls">
+                    <div class="d-flex flex-row align-items-center">
+                        <span class="icon-space-wrapper">
+                            <i class="fa fa-calendar-alt"></i>
+                        </span>
+                        <span class="time-group-subject">Start Date</span>
+                    </div>
                     <span data-bind="text: StartDate"></span>
                 </div>
-                <div>
-                    <i class="fa fa-calendar-alt"></i>
+                <div class="d-flex flex-column time-group-controls">
+                    <div class="d-flex flex-row align-items-center">
+                        <span class="icon-space-wrapper"><i class="fa fa-calendar-alt"></i></span>
+                        <span class="time-group-subject">End Date</span>
+                    </div>
                     <span data-bind="text: EndDate"></span>
                 </div>
             </div>
-            <div class="d-flex flex-row bd-highligh align-items-center">
-                <p data-bind="text: Description"></p>
+            <div class="row-data user-group-controls">
+                <label>Leaders</label>
+                <div data-bind="foreach: Leaders" class="d-flex flex-row align-items-center">
+                    <div class="project-member-wrapper">
+                        <span><i class="fas fa-user-tie"></i></span>
+                        <div data-bind="text: Name"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row-data user-group-controls">
+                <label>Developers</label>
+                <div data-bind="foreach: Developers" class="d-flex flex-row align-items-center">
+                    <div class="project-member-wrapper">
+                        <span><i class="fas fa-user"></i></span>
+                        <div data-bind="text: Name"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

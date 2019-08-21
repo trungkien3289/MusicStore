@@ -64,8 +64,6 @@ namespace MusicStore.Service.Services
             if (entity != null)
             {
                 var config = new MapperConfiguration(cfg => cfg.CreateMap<fl_Project, ProjectEntity>()
-                     .ForMember(p => p.Leaders, opt => opt.Ignore())
-                     .ForMember(p => p.Developers, opt => opt.Ignore())
                      .ForMember(p => p.TaskRequests, opt => opt.Ignore())
                      .ForMember(p => p.Tasks, opt => opt.Ignore())
                      );

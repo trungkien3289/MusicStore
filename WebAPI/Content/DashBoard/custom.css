@@ -2,10 +2,14 @@
     font-size: 14px;
 }
 
-.dashboard-content-panel{
-    display:flex;
-    width:100%;
-    height: 100%;
+.dashboard-content-panel {
+    display: flex;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0;
 }
 
 .vertical-nav-menu.project-tree li .tree-node-container{
@@ -49,6 +53,46 @@
     display: none;
 }
 
-.dashboard-content-panel .left-panel{
+.dashboard-content-panel .left-panel {
     font-size: 14px;
+    display: flex;
+}
+
+.icon-space-wrapper{
+    margin-right: 10px;
+}
+
+.time-group-controls{
+    flex: 1 1 auto;
+}
+
+.time-group-subject{
+    font-weight:bold;
+}
+
+.project-time-panel{
+    /*display:flex;*/
+}
+
+.user-group-controls label {
+    font-weight: bold;
+    flex: 0 0 100px;
+}
+
+.project-member-wrapper {
+    flex: 0 0 60px;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.project-title-panel{
+    font-size:30px;
+}
+
+.card-body .row-data {
+    display: flex;
+    flex-direction:row;
+    align-items:center;
+    padding: 10px 0;
 }
