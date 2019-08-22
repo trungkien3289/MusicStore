@@ -20,5 +20,7 @@ namespace MusicStore.BussinessEntity
         public DateTime EndDate { get; set; }
         public DateTime StartDate { get; set; }
         public float EstimatedTime { get; set; }
+
+        public UserEntity Assignee { get; set; }
     }
 }

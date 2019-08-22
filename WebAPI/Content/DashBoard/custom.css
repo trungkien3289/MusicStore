@@ -17,6 +17,7 @@
 }
 
 .vertical-nav-menu.project-tree li a {
+    cursor:pointer;
 }
 
 .dashboard-content-panel .left-panel .btn-project-item {
@@ -37,19 +38,24 @@
         cursor:pointer;
     }
 
-.btn-toogle-panel.collapsed .pe-7s-angle-down {
-    display:none;
-}
-
-.btn-toogle-panel .pe-7s-angle-down {
-    display: inline-block;
+.btn-toogle-panel{
+    flex: 0 0 30px;
+    font-size: 30px;
 }
 
 .btn-toogle-panel.collapsed .pe-7s-angle-up {
-    display: inline-block;
+    display: none;
 }
 
 .btn-toogle-panel .pe-7s-angle-up {
+    display: inline-block;
+}
+
+.btn-toogle-panel.collapsed .pe-7s-angle-down {
+    display: inline-block;
+}
+
+.btn-toogle-panel .pe-7s-angle-down {
     display: none;
 }
 
