@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MusicStore.BussinessEntity.ProjectEntity>
+﻿@model IEnumerable<MusicStore.BussinessEntity.TaskEntity>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_DashBoard_Layout .cshtml";
@@ -7,10 +7,10 @@
 <div class="col-md-12">
     <div class="main-card mb-3 card">
         <div class="card-header">
-            Projects
+            Tasks
             <div class="btn-actions-pane-right">
                 <div role="group" class="btn-group-sm btn-group">
-                    <button class="btn btn-primary">@Html.ActionLink("New", "CreateProject", "Project", new { @Style = "color: #fff; text-decoration: none !important;" })</button>
+                    <button class="btn btn-primary">@Html.ActionLink("New", "CreateTask", "Task", new { @Style = "color: #fff; text-decoration: none !important;" })</button>
                 </div>
             </div>
         </div>
@@ -27,10 +27,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var project in Model)
+                    @foreach (var task in Model)
                     {
                         <tr>
-                            <td class="text-center text-muted">#@project.Id</td>
+                            <td class="text-center text-muted">#@task.Id</td>
                             <td>
                                 <div class="widget-content p-0">
                                     <div class="widget-content-wrapper">
@@ -40,14 +40,14 @@
                                             </div>
                                         </div>
                                         <div class="widget-content-left flex2">
-                                            <div class="widget-heading">@project.Name</div>
-                                            <div class="widget-subheading opacity-7">@project.Description</div>
+                                            <div class="widget-heading">@task.Name</div>
+                                            <div class="widget-subheading opacity-7">@task.Description</div>
                                         </div>
                                     </div>
                                 </div>
                             </td>
-                            <td class="text-center">@project.StartDate</td>
-                            <td class="text-center">@project.EndDate</td>
+                            <td class="text-center">@task.StartDate</td>
+                            <td class="text-center">@task.EndDate</td>
 
                             <td class="text-center">
                                 <div class="badge badge-pill badge-info">New</div>

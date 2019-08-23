@@ -1,18 +1,24 @@
-﻿@model MusicStore.BussinessEntity.ProjectEntity
+﻿@model MusicStore.BussinessEntity.TaskEntity
 @{
-    ViewBag.Title = "CreateProject";
+    ViewBag.Title = "CreateTask";
     Layout = "~/Views/Shared/_DashBoard_Layout .cshtml";
 }
 
 <div class="card-body">
-    <h5 class="card-title">New a Project</h5>
+    <h5 class="card-title">New a Task</h5>
     <div style="display: flex; justify-content: center;">
-        @using (Html.BeginForm("CreateProject", "Project", FormMethod.Post, new { @class = "needs-validation was-validated col-9" }))
+        @using (Html.BeginForm("CreateTask", "Task", FormMethod.Post, new { @class = "needs-validation was-validated col-9" }))
         {
             <div class="form-row">
                 <div class="col-md-6 mb-3">
                     <label for="validationCustom01">Name</label>
                     @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @id = "validationCustom01", @class = "form-control", required = "", value = "Name" } })
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-6 mb-3">
+                    <label for="validationCustom01">Project</label>
+                    @Html.DropDownList("ProjectId", null, new { @class = "form-control" })
                 </div>
             </div>
             <div class="form-row">

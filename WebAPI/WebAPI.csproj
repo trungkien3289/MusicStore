@@ -250,6 +250,7 @@
     <Compile Include="APIControllers\ArtistController.cs" />
     <Compile Include="Controllers\DashBoardController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
+    <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Controllers\WebProjectController.cs" />
     <Compile Include="Controllers\WebAlbumController.cs" />
     <Compile Include="Controllers\AuthenticateController.cs" />
@@ -453,6 +454,8 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Project\Index.cshtml" />
     <Content Include="Views\Project\CreateProject.cshtml" />
+    <Content Include="Views\Task\Index.cshtml" />
+    <Content Include="Views\Task\CreateTask.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -472,6 +475,10 @@
     <ProjectReference Include="..\MusicStore.BussinessEntity\BussinessEntity.csproj">
       <Project>{959e2c95-65a6-403f-b595-abc572a1f6a5}</Project>
       <Name>BussinessEntity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MusicStore.Model\Model.csproj">
+      <Project>{462519B3-F99E-4972-BFBE-0FE72F8C6E10}</Project>
+      <Name>Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\MusicStore.Service\Service.csproj">
       <Project>{65ea2467-8161-4ede-aa4a-0cf92017b0cc}</Project>

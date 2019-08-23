@@ -85,7 +85,20 @@ namespace MusicStore.Service.Services
             return null;
         }
 
-        public TaskEntity Update(int id, TaskEntity model)
+		public IEnumerable<TaskEntity> GetAll()
+		{
+			var tasks = _unitOfWork.TaskRepository.GetAll().ToList();
+			if (tasks.Any())
+			{
+				var config = new MapperConfiguration(cfg => cfg.CreateMap<fl_Task, TaskEntity>());
+				var mapper = config.CreateMapper();
+				var model = mapper.Map<List<fl_Task>, List<TaskEntity>>(tasks);
+				return model;
+			}
+			return null;
+		}
+
+		public TaskEntity Update(int id, TaskEntity model)
         {
             using (var scope = new TransactionScope())
             {
