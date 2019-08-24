@@ -3,11 +3,17 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_DashBoard_Layout .cshtml";
 }
-
+@section scripts{
+    <script src="~/Scripts/build/projectManagement.js"></script>
+}
+@section css{
+    <link href="~/Content/ProjectManagement/scss/main.css" rel="stylesheet" />
+    <link href="~/Content/Common/materialize-css-icon.css" rel="stylesheet" />
+}
 <div class="col-md-12">
     <div class="main-card mb-3 card">
         <div class="card-header">
-            Projects
+            <a class="waves-effect waves-light btn"><i class="material-icons left">cloud</i>button</a>
             <div class="btn-actions-pane-right">
                 <div role="group" class="btn-group-sm btn-group">
                     <button class="btn btn-primary">@Html.ActionLink("New", "Create", "Project", new { @Style = "color: #fff; text-decoration: none !important;" })</button>
@@ -46,7 +52,6 @@
                             </td>
                             <td class="text-center">@project.StartDate</td>
                             <td class="text-center">@project.EndDate</td>
-
                             <td class="text-center">
                                 <div class="badge badge-pill badge-info">New</div>
                             </td>
@@ -68,4 +73,3 @@
         </div>
     </div>
 </div>
-

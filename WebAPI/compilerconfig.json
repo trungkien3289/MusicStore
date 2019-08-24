@@ -2,5 +2,9 @@
   {
     "outputFile": "Content/DashBoard/scss/main.css",
     "inputFile": "Content/DashBoard/scss/main.scss"
+  },
+  {
+    "outputFile": "Content/ProjectManagement/scss/main.css",
+    "inputFile": "Content/ProjectManagement/scss/main.scss"
   }
 ]
