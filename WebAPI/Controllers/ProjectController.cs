@@ -35,5 +35,16 @@ namespace WebAPI.Controllers
 			_projectServices.Create(project);
 			return RedirectToAction("Index");
 		}
+
+		public ActionResult DeleteProject(int id)
+		{
+			var foundProject = _projectServices.GetById(id);
+			if (foundProject != null)
+			{
+				_projectServices.Delete(id);
+
+			}
+			return RedirectToAction("Index");
+		}
 	}
 }
