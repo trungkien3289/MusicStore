@@ -278,6 +278,7 @@
     <Compile Include="Controllers\DashBoardController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\TaskRequestController.cs" />
     <Compile Include="Controllers\WebProjectController.cs" />
     <Compile Include="Controllers\WebAlbumController.cs" />
@@ -474,7 +475,9 @@
     <Content Include="Views\Home\GenresMenu.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Search.cshtml" />
+    <Content Include="Views\Project\Index.cshtml" />
     <Content Include="Views\Project\Create.cshtml" />
+    <Content Include="Views\Project\Update.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_DashBoard_Layout .cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -506,6 +509,10 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\_UserAccount_Layout.cshtml" />
+    <Content Include="Views\Project\Detail.cshtml" />
+    <Content Include="Views\Task\CreateTask.cshtml" />
+    <Content Include="Views\Task\Index.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Project\CreateProject.cshtml" />
     <Content Include="Views\Project\Index.cshtml" />
     <Content Include="Views\TaskRequest\Index.cshtml" />
