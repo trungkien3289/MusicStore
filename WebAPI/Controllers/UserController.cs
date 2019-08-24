@@ -1,4 +1,4 @@
-﻿using MusicStore.Service.IServices;
+﻿using MusicStore.Service.IService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +23,7 @@ namespace WebAPI.Controllers
             return View(users);
         }
 
-		public ActionResult DeleteUser(int id)
+		public ActionResult Delete(int id)
 		{
 			var foundUser = _userServices.GetById(id);
 			if (foundUser != null)

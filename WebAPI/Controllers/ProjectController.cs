@@ -1,22 +1,31 @@
 ﻿using MusicStore.BussinessEntity;
 using MusicStore.Service.IService;
 using System.Web.Mvc;
+using WebAPI.Filters;
 
 namespace WebAPI.Controllers
 {
 	public class ProjectController : Controller
 	{
 		private IProjectServices _projectServices;
+		private ITaskServices _taskServices;
 
-		public ProjectController(IProjectServices projectServices)
+		public ProjectController(IProjectServices projectServices, ITaskServices taskServices)
 		{
-			this._projectServices = projectServices;
+			_projectServices = projectServices;
+			_taskServices = taskServices;
 		}
 		// GET: Project
 		public ActionResult Index()
 		{
+			var user = new BasicAuthenticationIdentity("admin", "admin")
+			{
+				UserId = 1,
+				RoleId = 1,
+			};
 			// get projects
 			var viewModel = _projectServices.GetAll();
+			ViewBag.UserInfor = user;
 			return View(viewModel);
 		}
 
@@ -72,6 +81,12 @@ namespace WebAPI.Controllers
 
 
 			return RedirectToAction("Index");
+		}
+
+		public ActionResult Detail(int projectId)
+		{
+			var tasks = _taskServices.Get(projectId, 1, 10);
+			return View(tasks);
 		}
 	}
 }

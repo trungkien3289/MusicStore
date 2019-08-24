@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MusicStore.BussinessEntity.ProjectEntity>
+﻿@model IEnumerable<MusicStore.BussinessEntity.TaskEntity>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_DashBoard_Layout .cshtml";
@@ -7,10 +7,10 @@
 <div class="col-md-12">
     <div class="main-card mb-3 card">
         <div class="card-header">
-            Projects
+            Tasks
             <div class="btn-actions-pane-right">
                 <div role="group" class="btn-group-sm btn-group">
-                    <button class="btn btn-primary">@Html.ActionLink("New", "Create", "Project", new { @Style = "color: #fff; text-decoration: none !important;" })</button>
+                    <button class="btn btn-primary">@Html.ActionLink("New", "CreateTask", "Task", new { @Style = "color: #fff; text-decoration: none !important;" })</button>
                 </div>
             </div>
         </div>
@@ -26,7 +26,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var project in Model)
+                    @foreach (var task in Model)
                     {
                         <tr>
                             <td>
@@ -38,27 +38,21 @@
                                             </div>
                                         </div>
                                         <div class="widget-content-left flex2">
-                                            <div class="widget-heading">@project.Name</div>
-                                            <div class="widget-subheading opacity-7">@project.Description</div>
+                                            <div class="widget-heading">@task.Name</div>
+                                            <div class="widget-subheading opacity-7">@task.Description</div>
                                         </div>
                                     </div>
                                 </div>
                             </td>
-                            <td class="text-center">@project.StartDate</td>
-                            <td class="text-center">@project.EndDate</td>
+                            <td class="text-center">@task.StartDate</td>
+                            <td class="text-center">@task.EndDate</td>
 
                             <td class="text-center">
                                 <div class="badge badge-pill badge-info">New</div>
                             </td>
                             <td class="text-center">
-                                <button type="button" class="btn btn-primary btn-sm">
-                                    @Html.ActionLink("Detail", "Detail", new { id = project.Id }, new { @Style = "color: #fff; text-decoration: none !important;" })
-                                </button>
-                                <button type="button" class="btn btn-success btn-sm">
-                                    @Html.ActionLink("Update", "Update", new { id = project.Id }, new { @Style = "color: #fff; text-decoration: none !important;" })
-                                </button>
-                                <button type="button" class="btn btn-danger btn-sm">
-                                    @Html.ActionLink("Delete", "Delete", new { id = project.Id }, new { @Style = "color: #fff; text-decoration: none !important;" })
+                                <button type="button" id="PopoverCustomT-1" class="btn btn-primary btn-sm">
+                                    @Html.ActionLink("Delete", "DeleteTask", new { id = task.Id }, new { @Style = "color: #fff; text-decoration: none !important;" })
                                 </button>
                             </td>
                         </tr>
@@ -66,6 +60,10 @@
                 </tbody>
             </table>
         </div>
+        @*<div class="d-block text-center card-footer">
+                <button class="mr-2 btn-icon btn-icon-only btn btn-outline-danger"><i class="pe-7s-trash btn-icon-wrapper"> </i></button>
+                <button class="btn-wide btn btn-success">Save</button>
+            </div>*@
     </div>
 </div>
 
