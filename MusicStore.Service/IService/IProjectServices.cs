@@ -16,5 +16,6 @@ namespace MusicStore.Service.IService
         ProjectEntity Create(ProjectEntity model);
         ProjectEntity Update(int id, ProjectEntity model);
         bool Delete(int id);
+        int Count(int userId);
     }
 }

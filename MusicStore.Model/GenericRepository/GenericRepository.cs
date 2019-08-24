@@ -195,6 +195,10 @@ namespace MusicStore.Model.GenericRepository
             return DbSet.First<TEntity>(predicate);
         }
 
+        public Int32 Count(Func<TEntity, bool> where)
+        {
+            return DbSet.Count(where);
+        }
 
         #endregion
     }

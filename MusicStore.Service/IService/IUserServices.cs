@@ -5,18 +5,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MusicStore.Service.IServices
+namespace MusicStore.Service.IService
 {
     public interface IUserServices
     {
-		UserEntity GetById(int id);
-		IEnumerable<UserEntity> GetAll();
         int Authenticate(string userName, string password);
-		UserEntity Add(UserEntity model);
+        UserEntity Add(UserEntity model);
         void SetActive(int userId, bool isActive);
         UserEntity UpdateName(int userId, string userName);
         void ChangePassword(int userId, string oldPassword, string newPassword);
         void UpdateRole(int userId, int roleId);
-		bool Delete(int id);
-	}
+        bool IsUserExisted(string userName);
+        int GetTotalUser();
+        UserEntity RequestRegisterUser(string userName, string password, string email);
+    }
 }

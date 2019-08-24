@@ -202,6 +202,16 @@ namespace MusicStore.Service.Services
             return null;
         }
 
+        /// <summary>
+        /// Get number of projects, which user join as leader or developer
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public int  Count(int userId)
+        {
+           int totalProjects = _unitOfWork.ProjectRepository.CountProjectByUserId(userId);
+           return totalProjects;
+        }
 
         #endregion
     }

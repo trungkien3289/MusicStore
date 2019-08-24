@@ -31,8 +31,7 @@ namespace WebAPI
                       //"~/Content/bootstrap.css",
                       //"~/Content/Common/icons.css",
                       //  "~/Content/Common/font-awesome.css",
-                        "~/Content/Dashboard/layout.css",
-                        "~/Content/Dashboard/custom.css"
+                        "~/Content/Dashboard/layout.css"
                         ));
 
             bundles.Add(new ScriptBundle("~/bundles/dashboard_js").Include(
@@ -41,3 +40,4 @@ namespace WebAPI
         }
     }
 }
+

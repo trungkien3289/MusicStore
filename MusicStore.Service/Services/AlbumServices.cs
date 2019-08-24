@@ -2,7 +2,7 @@
 using MusicStore.BussinessEntity;
 using MusicStore.Model.DataModels;
 using MusicStore.Model.UnitOfWork;
-using MusicStore.Service.IServices;
+using MusicStore.Service.IService;
 using System;
 using System.Collections.Generic;
 using System.Linq;

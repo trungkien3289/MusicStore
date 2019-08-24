@@ -1,20 +1,14 @@
 ﻿using MusicStore.Service.IService;
-using MusicStore.Service.IServices;
 using MusicStore.Service.Services;
-using Resolver;
-using System;
-using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.Composition;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MusicStore.Service
 {
-    [Export(typeof(IComponent))]
-    public class DependencyResolver : IComponent
+    [Export(typeof(Resolver.IComponent))]
+    public class DependencyResolver : Resolver.IComponent
     {
-        public void SetUp(IRegisterComponent registerComponent)
+        public void SetUp(Resolver.IRegisterComponent registerComponent)
         {
             registerComponent.RegisterType<IAlbumServices, AlbumServices>();
             registerComponent.RegisterType<IArtistServices, ArtistServices>();

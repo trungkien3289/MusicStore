@@ -15,5 +15,7 @@ namespace MusicStore.Service.IService
         TaskEntity Create(TaskEntity model);
         TaskEntity Update(int id, TaskEntity model);
         bool Delete(int id);
+        int Count(int userId);
     }
 }
+

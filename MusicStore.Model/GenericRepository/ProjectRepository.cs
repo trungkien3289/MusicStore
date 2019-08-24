@@ -1,11 +1,8 @@
-﻿using Helper;
 using MusicStore.Model.DataModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MusicStore.Model.GenericRepository
 {
@@ -28,7 +25,7 @@ namespace MusicStore.Model.GenericRepository
                 throw new Exception("UserCannotFound");
             }
 
-            if(user.RoleId == (int)UserRoleEnum.ADMIN)
+            if(user.RoleId == 1)
             {
                 return GetAll();
             }
@@ -38,6 +35,11 @@ namespace MusicStore.Model.GenericRepository
                     .Where(p => p.Leaders.Any(u => u.UserId == userId) 
                     || p.Developers.Any(u => u.UserId == userId)).Include("Tasks").ToList();
             }
+        }
+
+        public int CountProjectByUserId(int userId)
+        {
+            return this.DbSet.Count(p => p.Leaders.Any(u => u.UserId == userId) || p.Developers.Any(u => u.UserId == userId));
         }
 
         public IEnumerable<fl_Project> GetProjectWithTaskRequestByUserId(int userId)
@@ -60,3 +62,4 @@ namespace MusicStore.Model.GenericRepository
         }
     }
 }
+
