@@ -251,6 +251,7 @@
     <Compile Include="Controllers\DashBoardController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\WebProjectController.cs" />
     <Compile Include="Controllers\WebAlbumController.cs" />
     <Compile Include="Controllers\AuthenticateController.cs" />
@@ -456,6 +457,7 @@
     <Content Include="Views\Project\CreateProject.cshtml" />
     <Content Include="Views\Task\Index.cshtml" />
     <Content Include="Views\Task\CreateTask.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

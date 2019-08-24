@@ -21,9 +21,22 @@ namespace MusicStore.Service.Services
             _unitOfWork = unitOfWork;
         }
 
-        #region public functions
+		#region public functions
 
-        public UserEntity Add(UserEntity model)
+		public IEnumerable<UserEntity> GetAll()
+		{
+			var users = _unitOfWork.UserRepository.GetAll().ToList();
+			if (users.Any())
+			{
+				var config = new MapperConfiguration(cfg => cfg.CreateMap<system_User, UserEntity>());
+				var mapper = config.CreateMapper();
+				var results = mapper.Map<List<system_User>, List<UserEntity>>(users);
+				return results;
+			}
+			return null;
+		}
+
+		public UserEntity Add(UserEntity model)
         {
             using (var scope = new TransactionScope())
             {
