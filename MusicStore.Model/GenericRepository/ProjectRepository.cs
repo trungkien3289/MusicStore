@@ -1,11 +1,8 @@
-﻿using Helper;
 using MusicStore.Model.DataModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MusicStore.Model.GenericRepository
 {
@@ -28,7 +25,7 @@ namespace MusicStore.Model.GenericRepository
                 throw new Exception("UserCannotFound");
             }
 
-            if(user.RoleId == (int)UserRoleEnum.ADMIN)
+            if(user.RoleId == 1)
             {
                 return GetAll();
             }
@@ -65,3 +62,4 @@ namespace MusicStore.Model.GenericRepository
         }
     }
 }
+

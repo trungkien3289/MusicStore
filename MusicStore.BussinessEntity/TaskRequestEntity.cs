@@ -17,9 +17,9 @@ namespace MusicStore.BussinessEntity
         /// </summary>
         public int Status { get; set; }
         public Nullable<int> AssigneeId { get; set; }
-
         public virtual ProjectEntity Project { get; set; }
         public virtual UserEntity Assignee { get; set; }
         public virtual TaskEntity Task { get; set; }
     }
 }
+

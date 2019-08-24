@@ -158,6 +158,7 @@ namespace MusicStore.Service.Services
 
         public TaskRequestEntity Update(int id, TaskRequestEntity model)
         {
+
             using (var scope = new TransactionScope())
             {
                 var task = _unitOfWork.TaskRequestRepository.GetByID(id);
@@ -188,3 +189,4 @@ namespace MusicStore.Service.Services
         #endregion
     }
 }
+

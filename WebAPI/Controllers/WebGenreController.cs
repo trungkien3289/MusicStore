@@ -78,4 +78,5 @@ namespace WebAPI.Controllers
             return PartialView("_ListArtistSummaryItem", result);
         }
     }
+
 }
