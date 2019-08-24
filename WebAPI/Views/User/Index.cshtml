@@ -44,7 +44,9 @@
                                 <div class="badge badge-pill badge-info">Active</div>
                             </td>
                             <td class="text-center">
-                                <button type="button" id="PopoverCustomT-1" class="btn btn-primary btn-sm">Delete</button>
+                                <button type="button" id="PopoverCustomT-1" class="btn btn-primary btn-sm">
+                                    @Html.ActionLink("Delete", "DeleteUser", new { id = user.UserId }, new { @Style = "color: #fff; text-decoration: none !important;" })
+                                </button>
                             </td>
                         </tr>
                     }

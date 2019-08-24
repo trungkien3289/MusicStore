@@ -15,11 +15,23 @@ namespace WebAPI.Controllers
 		{
 			this._userServices = userServices;
 		}
+
 		// GET: User
 		public ActionResult Index()
         {
 			var users = _userServices.GetAll();
             return View(users);
         }
-    }
+
+		public ActionResult DeleteUser(int id)
+		{
+			var foundUser = _userServices.GetById(id);
+			if (foundUser != null)
+			{
+				_userServices.Delete(id);
+
+			}
+			return RedirectToAction("Index");
+		}
+	}
 }

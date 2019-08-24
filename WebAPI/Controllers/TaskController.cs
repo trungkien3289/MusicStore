@@ -37,5 +37,16 @@ namespace WebAPI.Controllers
 			_taskServices.Create(task);
 			return RedirectToAction("Index");
 		}
+
+		public ActionResult DeleteTask(int id)
+		{
+			var foundTask = _taskServices.GetById(id);
+			if (foundTask != null)
+			{
+				_taskServices.Delete(id);
+
+			}
+			return RedirectToAction("Index");
+		}
 	}
 }

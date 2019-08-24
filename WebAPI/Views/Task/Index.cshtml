@@ -51,7 +51,9 @@
                                 <div class="badge badge-pill badge-info">New</div>
                             </td>
                             <td class="text-center">
-                                <button type="button" id="PopoverCustomT-1" class="btn btn-primary btn-sm">Delete</button>
+                                <button type="button" id="PopoverCustomT-1" class="btn btn-primary btn-sm">
+                                    @Html.ActionLink("Delete", "DeleteTask", new { id = task.Id }, new { @Style = "color: #fff; text-decoration: none !important;" })
+                                </button>
                             </td>
                         </tr>
                     }
