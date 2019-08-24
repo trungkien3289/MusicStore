@@ -1,4 +1,8 @@
 ﻿﻿@using Helper;
+@using WebAPI.Filters;
+@{ 
+    var identity = System.Threading.Thread.CurrentPrincipal.Identity as BasicAuthenticationIdentity;
+}
 
 <!DOCTYPE html>
 <html>
@@ -55,7 +59,7 @@
                 </div>
                 <div class="app-header-right">
                     <div class="header-btn-lg pr-0">
-                        @if (ViewBag.UserInfor.IsAuthenticated)
+                        @if (identity != null && identity.IsAuthenticated)
                         {
                             <div class="widget-content p-0">
                                 <div class="widget-content-wrapper">
@@ -73,10 +77,10 @@
                                     </div>
                                     <div class="widget-content-left  ml-3 header-user-info">
                                         <div class="widget-heading">
-                                            @ViewBag.UserInfor.UserName
+                                            @identity.UserName
                                         </div>
                                         <div class="widget-subheading">
-                                            @if (ViewBag.UserInfor.RoleId == (int)UserRoleEnum.ADMIN)
+                                            @if (identity.RoleId == (int)UserRoleEnum.ADMIN)
                                             {
                                                 <span>Admin</span>
                                             }

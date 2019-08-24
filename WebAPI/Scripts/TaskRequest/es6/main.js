@@ -1,5 +1,4 @@
-﻿import Person from './person';
-import axios from 'axios';
+﻿import axios from 'axios';
 import ProjectDetailsModel from './project-details-model';
 import TaskDetailsModel from './task-details-model';
 import TaskRequestModel from './task-request-model';
@@ -7,8 +6,8 @@ import DashBoardModel from './dashboard-model';
 import * as moment from 'moment';
 
 $(document).ready(function () {
-    var dashboardManagement = new DashboardManagement();
-    ko.applyBindings(dashboardManagement);
+    var taskRequestManagement = new TaskRequestManagement();
+    ko.applyBindings(taskRequestManagement);
 });
 
 const ProjectDisplayMode = {
@@ -18,7 +17,7 @@ const ProjectDisplayMode = {
     TASK_REQUEST: 3,
 };
 
-export default class DashboardManagement {
+export default class TaskRequestManagement {
     constructor() {
         this._service = new Service();
         this.bindEventProjectTaskPanel();

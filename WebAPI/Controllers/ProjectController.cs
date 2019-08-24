@@ -5,10 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebAPI.ActionFilters;
+using WebAPI.Filters;
 
 namespace WebAPI.Controllers
 {
-	public class ProjectController : Controller
+    [AuthorizationRequiredMVCController]
+    public class ProjectController : Controller
 	{
 		private IProjectServices _projectServices;
 
@@ -16,12 +19,13 @@ namespace WebAPI.Controllers
 		{
 			this._projectServices = projectServices;
 		}
-		// GET: Project
-		public ActionResult Index()
+
+        // GET: Project
+        public ActionResult Index()
 		{
-			// get projects
-			var viewModel = _projectServices.GetAll();
-			return View(viewModel);
+            // get projects
+            var viewModel = _projectServices.GetAll();
+            return View(viewModel);
 		}
 
 		public ActionResult CreateProject()

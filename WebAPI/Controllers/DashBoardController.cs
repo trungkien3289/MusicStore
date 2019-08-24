@@ -32,8 +32,6 @@ namespace WebAPI.Controllers
                 projectWithRequestTasks = _projectServices.GetWithTaskRequestByUserId(user.UserId)
             };
 
-            ViewBag.UserInfor = user;
-
             return View(viewModel);
         }
     }

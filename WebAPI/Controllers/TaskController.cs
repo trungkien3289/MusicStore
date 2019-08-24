@@ -3,11 +3,12 @@ using MusicStore.Service.IService;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using WebAPI.ActionFilters;
 
 namespace WebAPI.Controllers
 {
-
-	public class TaskController : Controller
+    [AuthorizationRequiredAttributeMVC]
+    public class TaskController : Controller
 	{
 		private ITaskServices _taskServices;
 		private IProjectServices _projectServices;

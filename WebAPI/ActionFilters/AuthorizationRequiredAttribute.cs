@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Security.Principal;
 using System.Threading;
 using System.Web;
@@ -13,17 +14,29 @@ using WebAPI.Filters;
 
 namespace WebAPI.ActionFilters
 {
-    public class AuthorizationRequiredAttribute : ActionFilterAttribute
+    public class AuthorizationRequiredAttribute : ActionFilterAttribute, IActionFilter
     {
         private const string Token = "Token";
 
         public override void OnActionExecuting(HttpActionContext filterContext)
         {
             var tokenService = filterContext.ControllerContext.Configuration.DependencyResolver.GetService(typeof(ITokenServices)) as ITokenServices;
-            if (filterContext.Request.Headers.Contains(Token))
+            //Get token for call ajax from website and get token from cookies
+            string tokenValue = "";
+            CookieHeaderValue cookie = filterContext.Request.Headers.GetCookies("Token").FirstOrDefault();
+            if (cookie != null)
             {
-                var tokenValue = filterContext.Request.Headers.GetValues(Token).First();
-
+                tokenValue = cookie["Token"].Value;
+            }
+            // Get token for device request with token is keep in request headers
+            if (String.IsNullOrEmpty(tokenValue) && filterContext.Request.Headers.Contains(Token))
+            {
+                tokenValue = filterContext.Request.Headers.GetValues(Token).First();
+            }
+            //if (filterContext.Request.Headers.Contains(Token))
+            //{
+            //tokenValue = filterContext.Request.Headers.GetValues(Token).First();
+            if (!String.IsNullOrEmpty(tokenValue)) { 
                 // Validate Token
                 if (tokenService != null && !tokenService.ValidateToken(tokenValue))
                 {
