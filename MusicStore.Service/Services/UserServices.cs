@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
+using Helper;
 using MusicStore.BussinessEntity;
 using MusicStore.Model.DataModels;
 using MusicStore.Model.UnitOfWork;
-using MusicStore.Service.IServices;
+using MusicStore.Service.IService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -115,6 +116,64 @@ namespace MusicStore.Service.Services
         {
             var user = _unitOfWork.UserRepository.Get(u => u.UserId == userId);
             return user != null ? true : false;
+        }
+
+        public bool IsUserExisted(string userName)
+        {
+            var user = _unitOfWork.UserRepository.Get(u => u.UserName == userName);
+            if (user != null && user.UserId > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public int GetTotalUser()
+        {
+            return _unitOfWork.UserRepository.Count(u => u.IsActive);
+        }
+
+        public UserEntity RequestRegisterUser(string userName, string password, string email)
+        {
+            try
+            {
+                if (_unitOfWork.UserRepository.Count(u => u.UserName == userName) > 0)
+                {
+                    throw new Exception("UserName is existed.");
+                }
+
+                if (_unitOfWork.UserRepository.Count(u => u.Email == email) > 0)
+                {
+                    throw new Exception("Email is existed.");
+                }
+
+                var newUser = new system_User()
+                {
+                    UserName = userName,
+                    Password = password,
+                    Email = email,
+                    Name = userName,
+                    RoleId = (int)UserRoleEnum.USER,
+                    IsActive = false,
+                };
+                _unitOfWork.UserRepository.Insert(newUser);
+                _unitOfWork.Save();
+
+                return new UserEntity()
+                {
+                    UserId = newUser.UserId,
+                    UserName = newUser.UserName,
+                    Password = newUser.Password,
+                    Email = newUser.Email
+                };
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error when create user");
+            }
         }
 
         #endregion

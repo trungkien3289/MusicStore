@@ -141,6 +141,21 @@ namespace MusicStore.Service.Services
             return null;
         }
 
+        public TaskRequestEntity GetSummary(int id)
+        {
+            var entity = _unitOfWork.TaskRequestRepository.GetByID(id);
+            if (entity != null)
+            {
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<fl_TaskRequest, TaskRequestEntity>()
+                .ForMember(tr => tr.Project, opt => opt.Ignore())
+                );
+                var mapper = config.CreateMapper();
+                var model = mapper.Map<fl_TaskRequest, TaskRequestEntity>(entity);
+                return model;
+            }
+            return null;
+        }
+
         public TaskRequestEntity Update(int id, TaskRequestEntity model)
         {
             using (var scope = new TransactionScope())
@@ -164,6 +179,11 @@ namespace MusicStore.Service.Services
             var project = _unitOfWork.ProjectRepository.GetFirst(p => p.Id == projectId);
             var leaderIds = project.Leaders.Select(l => l.UserId).ToList();
             return leaderIds.Contains(userId);
+        }
+
+        public int Count(int userId)
+        {
+            return _unitOfWork.TaskRequestRepository.Count(tr => tr.AssigneeId == userId);
         }
         #endregion
     }

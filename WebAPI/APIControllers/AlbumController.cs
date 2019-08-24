@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MusicStore.BussinessEntity;
-using MusicStore.Service.IServices;
+using MusicStore.Service.IService;
 using MusicStore.Service.Services;
 using System;
 using System.Collections.Generic;

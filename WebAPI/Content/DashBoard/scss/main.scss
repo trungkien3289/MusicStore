@@ -1,0 +1,119 @@
+﻿body {
+    .right-panel {
+    }
+}
+
+html {
+    font-size: 14px;
+}
+
+.dashboard-content-panel {
+    display: flex;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+
+    .card-header {
+        font-size: 1.2rem
+    }
+
+    .left-panel {
+        font-size: 15px;
+        display: flex;
+
+        .btn-project-item {
+            line-height: 2.4rem;
+            height: 2.4rem;
+            padding: 0 1rem 0 12px;
+            position: relative;
+            border-radius: .25rem;
+            color: #343a40;
+            white-space: nowrap;
+            transition: all .2s;
+            margin: .1rem 0;
+
+            &:hover {
+                background: #e0f3ff;
+                text-decoration: none;
+                cursor: pointer;
+            }
+        }
+
+        .btn-toogle-panel {
+            flex: 0 0 30px;
+            font-size: 30px;
+
+            &.collapsed {
+                .pe-7s-angle-up {
+                    display: none;
+                }
+
+                .pe-7s-angle-down {
+                    display: inline-block;
+                }
+            }
+
+            .pe-7s-angle-up {
+                display: inline-block;
+            }
+
+            .pe-7s-angle-down {
+                display: none;
+            }
+        }
+
+        .project-tree {
+            li {
+                .tree-node-container {
+                    display: flex;
+                }
+
+                a {
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+
+    .icon-space-wrapper {
+        margin-right: 10px;
+    }
+
+    .time-group-controls {
+        flex: 1 1 auto;
+    }
+
+    .time-group-subject {
+        font-weight: bold;
+    }
+
+    .user-group-controls label {
+        font-weight: bold;
+        flex: 0 0 100px;
+    }
+
+    .project-member-wrapper {
+        flex: 0 0 60px;
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .project-title-panel {
+        font-size: 30px;
+    }
+
+    .card-body .row-data {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 10px 0;
+    }
+}
+
+
+

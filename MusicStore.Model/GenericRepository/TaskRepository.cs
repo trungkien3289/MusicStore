@@ -35,5 +35,6 @@ namespace MusicStore.Model.GenericRepository
 
             return query.Skip((page - 1) * numberItemsPerPage).Take(numberItemsPerPage);
         }
+
     }
 }

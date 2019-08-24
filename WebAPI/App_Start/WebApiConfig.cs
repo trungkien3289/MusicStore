@@ -17,11 +17,11 @@ namespace WebAPI
             // Web API routes
             config.MapHttpAttributeRoutes();
 
-            //config.Routes.MapHttpRoute(
-            //    name: "DefaultApi",
-            //    routeTemplate: "api/{controller}/{id}",
-            //    defaults: new { id = RouteParameter.Optional }
-            //);
+            config.Routes.MapHttpRoute(
+                name: "DefaultApi",
+                routeTemplate: "api/{controller}/{id}",
+                defaults: new { id = RouteParameter.Optional }
+            );
 
             config.Routes.MapHttpRoute(
                 name: "ActionBased",
@@ -39,14 +39,14 @@ namespace WebAPI
             //   defaults: new { id = RouteParameter.Optional }
             //);
 
-            config.MessageHandlers.Add(new ThrottlingHandler()
-            {
-                Policy = new ThrottlePolicy(perSecond: 10, perMinute: 40, perHour: 300, perDay: 300, perWeek: 6000)
-                {
-                    IpThrottling = true
-                },
-                Repository = new CacheRepository()
-            });
+            //config.MessageHandlers.Add(new ThrottlingHandler()
+            //{
+            //    Policy = new ThrottlePolicy(perSecond: 10, perMinute: 40, perHour: 300, perDay: 300, perWeek: 6000)
+            //    {
+            //        IpThrottling = true
+            //    },
+            //    Repository = new CacheRepository()
+            //});
         }
     }
 }

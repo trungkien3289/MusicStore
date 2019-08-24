@@ -47,6 +47,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AttributeRouting, Version=3.5.6.0, Culture=neutral, PublicKeyToken=c10f85d521a011a9, processorArchitecture=MSIL">
+      <HintPath>..\packages\AttributeRouting.Core.3.5.6\lib\net40\AttributeRouting.dll</HintPath>
+    </Reference>
+    <Reference Include="AttributeRouting.Web, Version=3.5.6.0, Culture=neutral, PublicKeyToken=c10f85d521a011a9, processorArchitecture=MSIL">
+      <HintPath>..\packages\AttributeRouting.Core.Web.3.5.6\lib\net40\AttributeRouting.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="AttributeRouting.Web.Http, Version=3.5.6.0, Culture=neutral, PublicKeyToken=c10f85d521a011a9, processorArchitecture=MSIL">
+      <HintPath>..\packages\AttributeRouting.Core.Http.3.5.6\lib\net40\AttributeRouting.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="AttributeRouting.Web.Http.WebHost, Version=3.5.6.0, Culture=neutral, PublicKeyToken=c10f85d521a011a9, processorArchitecture=MSIL">
+      <HintPath>..\packages\AttributeRouting.WebApi.3.5.6\lib\net40\AttributeRouting.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="AutoMapper, Version=7.0.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.7.0.1\lib\net45\AutoMapper.dll</HintPath>
     </Reference>
@@ -167,6 +179,9 @@
     <Reference Include="Unity.WebApi, Version=5.3.0.0, Culture=neutral, PublicKeyToken=43da31bc42a85347, processorArchitecture=MSIL">
       <HintPath>..\packages\Unity.WebAPI.5.3.0\lib\net45\Unity.WebApi.dll</HintPath>
     </Reference>
+    <Reference Include="WebActivator, Version=1.5.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivator.1.5.3\lib\net40\WebActivator.dll</HintPath>
+    </Reference>
     <Reference Include="WebApiThrottle, Version=1.5.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\WebApiThrottle.1.5.4\lib\net45\WebApiThrottle.dll</HintPath>
     </Reference>
@@ -204,15 +219,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActionFilters\AuthorizationRequiredAttribute.cs" />
+    <Compile Include="ActionFilters\AuthorizationRequiredAttributeMVC.cs" />
     <Compile Include="ActionFilters\GlobalExceptionAttribute.cs" />
     <Compile Include="ActionFilters\LoggingFilterAttribute.cs" />
+    <Compile Include="APIControllers\AuthenticateController.cs" />
     <Compile Include="APIControllers\CollectionController.cs" />
+    <Compile Include="APIControllers\DashBoardController.cs" />
     <Compile Include="APIControllers\GenreController.cs" />
     <Compile Include="APIControllers\HomeAPIController.cs" />
     <Compile Include="APIControllers\ProjectController.cs" />
     <Compile Include="APIControllers\SongController.cs" />
     <Compile Include="APIControllers\TaskController.cs" />
     <Compile Include="APIControllers\TaskRequestController.cs" />
+    <Compile Include="App_Start\AttributeRoutingHttpConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -248,10 +267,10 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="APIControllers\AlbumController.cs" />
     <Compile Include="APIControllers\ArtistController.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DashBoardController.cs" />
     <Compile Include="Controllers\WebProjectController.cs" />
     <Compile Include="Controllers\WebAlbumController.cs" />
-    <Compile Include="Controllers\AuthenticateController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Controllers\WebArtistController.cs" />
@@ -275,6 +294,7 @@
     <Compile Include="Models\GenreViewModel.cs" />
     <Compile Include="Models\HomeAPIModels.cs" />
     <Compile Include="Models\HomeViewModel.cs" />
+    <Compile Include="Models\MessageModel\DashBoard.cs" />
     <Compile Include="Models\ProjectViewModel.cs" />
     <Compile Include="Models\SongViewModels.cs" />
     <Compile Include="Models\SummarySongModel.cs" />
@@ -300,6 +320,12 @@
     <Content Include="Content\Common\slidebar.css" />
     <Content Include="Content\Common\style.css" />
     <Content Include="Content\DashBoard\custom.css" />
+    <Content Include="Content\DashBoard\scss\main.css">
+      <DependentUpon>main.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\DashBoard\scss\main.min.css">
+      <DependentUpon>main.css</DependentUpon>
+    </Content>
     <Content Include="Content\fonts\fa-solid-900.svg" />
     <Content Include="Content\fonts\Pe-icon-7-stroke.svg" />
     <Content Include="Content\Images\11.png" />
@@ -376,7 +402,10 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\build\dashboard.js" />
+    <Content Include="Scripts\build\login.js" />
+    <Content Include="Scripts\build\pageHeader.js" />
     <Content Include="Scripts\build\projectManagement.js" />
+    <Content Include="Scripts\build\register.js" />
     <Content Include="Scripts\Common\bootstrap.js" />
     <Content Include="Scripts\Common\classie.js" />
     <Content Include="Scripts\Common\easyResponsiveTabs.js" />
@@ -394,17 +423,29 @@
     <Content Include="Scripts\Common\songplaylist.js" />
     <Content Include="Scripts\Common\uisearch.js" />
     <Content Include="Scripts\DashBoard\dashboard-main.js" />
+    <Content Include="Scripts\DashBoard\es6\dashboard-model.js" />
     <Content Include="Scripts\DashBoard\es6\main.js" />
     <Content Include="Scripts\DashBoard\es6\person.js" />
+    <Content Include="Content\DashBoard\scss\main.scss" />
+    <Content Include="Content\ProjectManagement\scss\main.scss" />
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
+    <Content Include="Content\DashBoard\scss\common.scss" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\DashBoard\es6\task-details-model.js" />
     <Content Include="Scripts\DashBoard\es6\project-details-model.js" />
+    <Content Include="Scripts\DashBoard\es6\task-request-model.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\Libraries\knockout-3.5.0.js" />
     <Content Include="Scripts\Libraries\playlist.js" />
+    <Content Include="Scripts\Login\es6\main.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\PageHeader\es6\main.js" />
     <Content Include="Scripts\ProjectManagement\es6\main.js" />
+    <Content Include="Scripts\Register\es6\main.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="webpack.common.js" />
@@ -450,6 +491,9 @@
     <Content Include="Views\WebGenre\Index.cshtml" />
     <Content Include="Views\WebSong\Index.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Shared\_UserAccount_Layout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -459,6 +503,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\build\" />
     <Folder Include="Views\Album\" />
   </ItemGroup>
   <ItemGroup>

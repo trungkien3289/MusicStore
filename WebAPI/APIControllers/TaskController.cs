@@ -30,6 +30,11 @@ namespace WebAPI.APIControllers
             return Request.CreateErrorResponse(HttpStatusCode.NotFound, "There is no task found.");
         }
 
+        /// <summary>
+        /// get task details by id
+        /// </summary>
+        /// <param name="taskId"></param>
+        /// <returns></returns>
         [Route("api/tasks/{taskId}")]
         [HttpGet]
         public HttpResponseMessage Details([FromUri]int taskId)

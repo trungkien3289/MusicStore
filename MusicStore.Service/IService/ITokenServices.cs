@@ -37,6 +37,13 @@ namespace MusicStore.Service.IService
         /// <param name="userId"></param>
         /// <returns></returns>
         bool DeleteByUserId(int userId);
+
+        /// <summary>
+        /// Get User Identity from token
+        /// </summary>
+        /// <param name="tokenId"></param>
+        /// <returns></returns>
+        UserEntity getUserInforFromToken(string tokenId);
         #endregion
     }
 }

@@ -2,6 +2,8 @@
 import axios from 'axios';
 import ProjectDetailsModel from './project-details-model';
 import TaskDetailsModel from './task-details-model';
+import TaskRequestModel from './task-request-model';
+import DashBoardModel from './dashboard-model';
 import * as moment from 'moment';
 
 $(document).ready(function () {
@@ -20,8 +22,11 @@ export default class DashboardManagement {
     constructor() {
         this._service = new Service();
         this.bindEventProjectTaskPanel();
+        this.getDashBoardData();
+        this.dashboard = ko.observable(new DashBoardModel());
         this.currentProject = ko.observable(new ProjectDetailsModel());
         this.currentTask = ko.observable(new TaskDetailsModel());
+        this.currentTaskRequest = ko.observable(new TaskRequestModel());
         this.ProjectStatus = "Karl";
         this.displayMode = ko.observable(ProjectDisplayMode.DASHBOARD);
         this.isShowProjectDetails = ko.computed(function () {
@@ -45,7 +50,10 @@ export default class DashboardManagement {
                 console.log(response);
                 if (response.status === 200) {
                     self.displayMode(ProjectDisplayMode.PROJECT_DETAILS);
-                    var projectDetails = new ProjectDetailsModel(response.data);
+                    var data = response.data;
+                    data.StartDate = moment(new Date(data.StartDate)).format("DD/MM/YYYY hh:mm:ss");
+                    data.EndDate = moment(new Date(data.EndDate)).format("DD/MM/YYYY hh:mm:ss");
+                    var projectDetails = new ProjectDetailsModel(data);
                     self.currentProject(new ProjectDetailsModel(projectDetails));
                 }
             });
@@ -65,6 +73,37 @@ export default class DashboardManagement {
                 }
             });
         });
+
+        $(".project-request-panel .btn-task-request-item").bind("click", (e) => {
+            var taskRequestId = $(e.target).data("id");
+            self._service.getTaskRequestDetails(taskRequestId).then(response => {
+                console.log(response);
+                if (response.status === 200) {
+                    self.displayMode(ProjectDisplayMode.TASK_REQUEST);
+                    var data = response.data;
+                    data.Task.StartDate = self.convertDateTime(data.Task.StartDate, "DD/MM/YYYY hh:mm:ss");
+                    data.Task.EndDate = self.convertDateTime(data.Task.EndDate, "DD/MM/YYYY hh:mm:ss");
+                    var taskRequestDetails = new TaskRequestModel(data);
+                    self.currentTaskRequest(new TaskRequestModel(taskRequestDetails));
+                }
+            });
+        });
+
+    }
+
+    getDashBoardData() {
+        var self = this;
+        this._service.getDashBoardData().then(response => {
+            console.log(response);
+            if (response.status === 200) {
+                self.displayMode(ProjectDisplayMode.DASHBOARD);
+                self.dashboard(new DashBoardModel(response.data));
+            }
+        });
+    }
+
+    convertDateTime(dateString, format) {
+        return moment(new Date(dateString)).format(format);
     }
 }
 
@@ -73,12 +112,40 @@ export class Service {
         this._apiBaseUrl = `/api/`;
     }
 
+    getDashBoardData() {
+        return axios.get(
+            `${this._apiBaseUrl}dashboard/data`,
+            {
+                withCredentials: true
+            }
+        );
+    }
+
     getProjectDetails(projectId) {
-        return axios.get(`${this._apiBaseUrl}projects/${projectId}`);
+        return axios.get(
+            `${this._apiBaseUrl}projects/${projectId}`,
+            {
+                withCredentials: true
+            }
+        );
     }
 
     getTaskDetails(taskId) {
-        return axios.get(`${this._apiBaseUrl}tasks/${taskId}`);
+        return axios.get(
+            `${this._apiBaseUrl}tasks/${taskId}`,
+            {
+                withCredentials: true
+            }
+        );
+    }
+
+    getTaskRequestDetails(taskRequestId) {
+        return axios.get(
+            `${this._apiBaseUrl}task/requests/${taskRequestId}`,
+            {
+                withCredentials: true
+            }
+        );
     }
 }
 

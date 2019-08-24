@@ -4,10 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebAPI.ActionFilters;
+using WebAPI.Filters;
 using WebAPI.Models;
 
 namespace WebAPI.Controllers
 {
+    [AuthorizationRequiredAttributeMVC]
     public class DashBoardController : Controller
     {
         private IProjectServices _projectServices;
@@ -21,13 +24,16 @@ namespace WebAPI.Controllers
         public ActionResult Index()
         {
             // get current user
-            var userId = 2;
+            var user =  System.Threading.Thread.CurrentPrincipal.Identity as BasicAuthenticationIdentity;
             // get projects
             var viewModel = new DashboardViewModel()
             {
-                projectWithTasks = _projectServices.GetByUserId(userId),
-                projectWithRequestTasks = _projectServices.GetWithTaskRequestByUserId(userId)
+                projectWithTasks = _projectServices.GetByUserId(user.UserId),
+                projectWithRequestTasks = _projectServices.GetWithTaskRequestByUserId(user.UserId)
             };
+
+            ViewBag.UserInfor = user;
+
             return View(viewModel);
         }
     }

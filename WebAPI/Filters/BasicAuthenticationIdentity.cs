@@ -24,6 +24,16 @@ namespace WebAPI.Filters
         public int UserId { get; set; }
 
         /// <summary>
+        /// Get/Set for RoleId
+        /// </summary>
+        public int RoleId { get; set; }
+
+        /// <summary>
+        /// Get/Set for RoleId
+        /// </summary>
+        public string Token { get; set; }
+
+        /// <summary>
         /// Basic Authentication Identity Constructor
         /// </summary>
         /// <param name="userName"></param>

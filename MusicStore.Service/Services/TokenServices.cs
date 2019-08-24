@@ -86,5 +86,30 @@ namespace MusicStore.Service.Services
             }
             return false;
         }
+
+        public UserEntity getUserInforFromToken(string tokenId)
+        {
+            var token = _unitOfWork.TokenRepository.Get(t => t.AuthToken == tokenId && t.ExpiresOn > DateTime.Now);
+
+            if (token != null)
+            {
+               var user = _unitOfWork.UserRepository.GetByID(token.UserId);
+                if(user == null)
+                {
+                    throw new Exception("User cannot found with user id along with token");
+                }
+
+                return new UserEntity()
+                {
+                    UserName = user.UserName,
+                    Name = user.Name,
+                    UserId = user.UserId,
+                    Password = user.Password,
+                    RoleId = user.RoleId
+                };
+            }
+
+            throw new Exception("Token not found.");
+        }
     }
 }

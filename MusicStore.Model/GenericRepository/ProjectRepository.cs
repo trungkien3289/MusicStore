@@ -40,6 +40,11 @@ namespace MusicStore.Model.GenericRepository
             }
         }
 
+        public int CountProjectByUserId(int userId)
+        {
+            return this.DbSet.Count(p => p.Leaders.Any(u => u.UserId == userId) || p.Developers.Any(u => u.UserId == userId));
+        }
+
         public IEnumerable<fl_Project> GetProjectWithTaskRequestByUserId(int userId)
         {
             var user = this.Context.Set<system_User>().Where(u => u.UserId == userId).FirstOrDefault();

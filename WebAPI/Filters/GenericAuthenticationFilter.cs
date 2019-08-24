@@ -74,7 +74,7 @@ namespace WebAPI.Filters
         {
             string authHeaderValue = null;
             var authRequest = filterContext.Request.Headers.Authorization;
-            if(authRequest != null && !String.IsNullOrEmpty(authRequest.Scheme) && authRequest.Scheme == "Basic")
+            if(authRequest != null && !String.IsNullOrEmpty(authRequest.Scheme) && authRequest.Scheme == "BasicCustom")
             {
                 authHeaderValue = authRequest.Parameter;
             }

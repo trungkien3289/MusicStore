@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MusicStore.Service.IServices
+namespace MusicStore.Service.IService
 {
     public interface IUserServices
     {
@@ -15,5 +15,8 @@ namespace MusicStore.Service.IServices
         UserEntity UpdateName(int userId, string userName);
         void ChangePassword(int userId, string oldPassword, string newPassword);
         void UpdateRole(int userId, int roleId);
+        bool IsUserExisted(string userName);
+        int GetTotalUser();
+        UserEntity RequestRegisterUser(string userName, string password, string email);
     }
 }

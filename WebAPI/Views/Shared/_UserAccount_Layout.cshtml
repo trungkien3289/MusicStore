@@ -1,0 +1,20 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="~/favicon.ico">
+    @Styles.Render("~/Content/dashboard_css")
+    @RenderSection("css", required: false)
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/dashboard_js")
+    @RenderSection("scripts", required: false)
+</head>
+<body class="sticky-header left-side-collapsed">
+    <div class="app-container app-theme-white body-tabs-shadow">
+        <div class="app-container">
+            @RenderBody()
+        </div>
+    </div>
+</body>
+</html>

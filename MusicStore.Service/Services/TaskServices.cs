@@ -24,6 +24,8 @@ namespace MusicStore.Service.Services
             this._unitOfWork = unitOfWork;
         }
 
+       
+
         #endregion
 
         #region public functions
@@ -103,6 +105,10 @@ namespace MusicStore.Service.Services
             return model;
         }
 
+        public int Count(int userId)
+        {
+            return _unitOfWork.TaskRepository.Count(t => t.AssigneeId == userId);
+        }
         #endregion
     }
 }
