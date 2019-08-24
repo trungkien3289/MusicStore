@@ -424,7 +424,6 @@
     <Content Include="Views\Home\GenresMenu.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Search.cshtml" />
-    <Content Include="Views\Project\Create.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_DashBoard_Layout .cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -454,10 +453,11 @@
     <Content Include="Views\WebSong\Index.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Project\Index.cshtml" />
-    <Content Include="Views\Project\CreateProject.cshtml" />
+    <Content Include="Views\Project\Create.cshtml" />
     <Content Include="Views\Task\Index.cshtml" />
     <Content Include="Views\Task\CreateTask.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\Project\Update.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

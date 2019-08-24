@@ -1,9 +1,5 @@
 ﻿using MusicStore.BussinessEntity;
 using MusicStore.Service.IService;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace WebAPI.Controllers
@@ -24,19 +20,19 @@ namespace WebAPI.Controllers
 			return View(viewModel);
 		}
 
-		public ActionResult CreateProject()
+		public ActionResult Create()
 		{
 			return View();
 		}
 
 		[HttpPost]
-		public ActionResult CreateProject(ProjectEntity project)
+		public ActionResult Create(ProjectEntity project)
 		{
 			_projectServices.Create(project);
 			return RedirectToAction("Index");
 		}
 
-		public ActionResult DeleteProject(int id)
+		public ActionResult Delete(int id)
 		{
 			var foundProject = _projectServices.GetById(id);
 			if (foundProject != null)
@@ -44,6 +40,37 @@ namespace WebAPI.Controllers
 				_projectServices.Delete(id);
 
 			}
+			return RedirectToAction("Index");
+		}
+
+		[HttpGet]
+		public ActionResult Update(int id)
+		{
+			if (id == null)
+			{
+				return RedirectToAction("Index");
+			}
+
+			var project = _projectServices.GetById(id);
+
+			return View(project);
+		}
+
+		[HttpPost]
+		public ActionResult Update(ProjectEntity project)
+		{
+			var updateProject = _projectServices.GetById(project.Id);
+			if (updateProject != null)
+			{
+				updateProject.Name = project.Name;
+				updateProject.Description = project.Description;
+				updateProject.StartDate = project.StartDate;
+				updateProject.EndDate = project.EndDate;
+
+				_projectServices.Update(updateProject.Id, updateProject);
+			}
+
+
 			return RedirectToAction("Index");
 		}
 	}
