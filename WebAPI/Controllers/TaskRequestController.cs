@@ -5,6 +5,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebAPI.ActionFilters;
+using WebAPI.Filters;
+using WebAPI.Models;
 
 namespace WebAPI.Controllers
 {
@@ -29,7 +31,14 @@ namespace WebAPI.Controllers
         // GET: TaskRequest
         public ActionResult Index()
         {
-            return View();
+            // get current user
+            var user = System.Threading.Thread.CurrentPrincipal.Identity as BasicAuthenticationIdentity;
+            // get projects
+            TaskRequestViewModel viewModel = new TaskRequestViewModel()
+            {
+                projectWithTasks = _projectServices.GetByUserId(user.UserId),
+            };
+            return View(viewModel);
         }
     }
 }

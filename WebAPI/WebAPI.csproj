@@ -306,9 +306,11 @@
     <Compile Include="Models\HomeAPIModels.cs" />
     <Compile Include="Models\HomeViewModel.cs" />
     <Compile Include="Models\MessageModel\DashBoard.cs" />
+    <Compile Include="Models\MessageModel\TaskRequest.cs" />
     <Compile Include="Models\ProjectViewModel.cs" />
     <Compile Include="Models\SongViewModels.cs" />
     <Compile Include="Models\SummarySongModel.cs" />
+    <Compile Include="Models\TaskRequestViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -327,6 +329,7 @@
     <Content Include="Content\Common\icon-font.css" />
     <Content Include="Content\Common\icons.css" />
     <Content Include="Content\Common\jplayer.blue.monday.min.css" />
+    <Content Include="Content\Common\materialize-css-icon.css" />
     <Content Include="Content\Common\popuo-box.css" />
     <Content Include="Content\Common\slidebar.css" />
     <Content Include="Content\Common\style.css" />
@@ -347,6 +350,12 @@
     <Content Include="Content\Images\spr3.png" />
     <Content Include="Content\Images\spr.png" />
     <Content Include="Content\DashBoard\layout.css" />
+    <Content Include="Content\ProjectManagement\scss\main.css">
+      <DependentUpon>main.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\ProjectManagement\scss\main.min.css">
+      <DependentUpon>main.css</DependentUpon>
+    </Content>
     <Content Include="Content\songplaylist.css" />
     <Content Include="Content\featured-artists-list.css" />
     <Content Include="Content\fonts\digital-7-webfont.svg" />
@@ -388,6 +397,12 @@
     <Content Include="Content\Media\Blue Browne.mp3" />
     <Content Include="Content\Media\Georgia.mp3" />
     <Content Include="Content\summary-list-item.css" />
+    <Content Include="Content\TaskRequest\scss\main.css">
+      <DependentUpon>main.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\TaskRequest\scss\main.min.css">
+      <DependentUpon>main.css</DependentUpon>
+    </Content>
     <Content Include="Content\Video\Ellie-Goulding.mp4" />
     <Content Include="Content\Video\Ellie-Goulding.webm" />
     <Content Include="Content\Video\Mark-Ronson-Uptown.mp4" />
@@ -410,6 +425,43 @@
     <Content Include="fonts\Pe-icon-7-stroke.svg" />
     <Content Include="Global.asax" />
     <Content Include="favicon.ico" />
+    <Content Include="node_modules\materialize-css\dist\css\materialize.css" />
+    <Content Include="node_modules\materialize-css\dist\css\materialize.min.css" />
+    <Content Include="node_modules\materialize-css\dist\js\materialize.js" />
+    <Content Include="node_modules\materialize-css\dist\js\materialize.min.js" />
+    <Content Include="node_modules\materialize-css\extras\noUiSlider\nouislider.css" />
+    <Content Include="node_modules\materialize-css\extras\noUiSlider\nouislider.js" />
+    <Content Include="node_modules\materialize-css\extras\noUiSlider\nouislider.min.js" />
+    <Content Include="node_modules\materialize-css\Gruntfile.js" />
+    <Content Include="node_modules\materialize-css\js\anime.min.js" />
+    <Content Include="node_modules\materialize-css\js\autocomplete.js" />
+    <Content Include="node_modules\materialize-css\js\buttons.js" />
+    <Content Include="node_modules\materialize-css\js\cards.js" />
+    <Content Include="node_modules\materialize-css\js\carousel.js" />
+    <Content Include="node_modules\materialize-css\js\cash.js" />
+    <Content Include="node_modules\materialize-css\js\characterCounter.js" />
+    <Content Include="node_modules\materialize-css\js\chips.js" />
+    <Content Include="node_modules\materialize-css\js\collapsible.js" />
+    <Content Include="node_modules\materialize-css\js\component.js" />
+    <Content Include="node_modules\materialize-css\js\datepicker.js" />
+    <Content Include="node_modules\materialize-css\js\dropdown.js" />
+    <Content Include="node_modules\materialize-css\js\forms.js" />
+    <Content Include="node_modules\materialize-css\js\global.js" />
+    <Content Include="node_modules\materialize-css\js\materialbox.js" />
+    <Content Include="node_modules\materialize-css\js\modal.js" />
+    <Content Include="node_modules\materialize-css\js\parallax.js" />
+    <Content Include="node_modules\materialize-css\js\pushpin.js" />
+    <Content Include="node_modules\materialize-css\js\range.js" />
+    <Content Include="node_modules\materialize-css\js\scrollspy.js" />
+    <Content Include="node_modules\materialize-css\js\select.js" />
+    <Content Include="node_modules\materialize-css\js\sidenav.js" />
+    <Content Include="node_modules\materialize-css\js\slider.js" />
+    <Content Include="node_modules\materialize-css\js\tabs.js" />
+    <Content Include="node_modules\materialize-css\js\tapTarget.js" />
+    <Content Include="node_modules\materialize-css\js\timepicker.js" />
+    <Content Include="node_modules\materialize-css\js\toasts.js" />
+    <Content Include="node_modules\materialize-css\js\tooltip.js" />
+    <Content Include="node_modules\materialize-css\js\waves.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\build\dashboard.js" />
@@ -420,6 +472,8 @@
     <Content Include="Scripts\Common\bootstrap.js" />
     <Content Include="Scripts\Common\classie.js" />
     <Content Include="Scripts\Common\easyResponsiveTabs.js" />
+    <Content Include="Scripts\Common\es6\enum.js" />
+    <Content Include="Scripts\Common\es6\utils.js" />
     <Content Include="Scripts\Common\jplayer.playlist.min.js" />
     <Content Include="Scripts\Common\jquery-2.1.4.js" />
     <Content Include="Scripts\Common\jquery-ui-1.8.21.custom.min.js" />
@@ -444,6 +498,52 @@
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
     <Content Include="Content\DashBoard\scss\common.scss" />
+    <Content Include="node_modules\materialize-css\CHANGELOG.md" />
+    <Content Include="node_modules\materialize-css\LICENSE" />
+    <Content Include="node_modules\materialize-css\package.json" />
+    <Content Include="node_modules\materialize-css\README.md" />
+    <Content Include="node_modules\materialize-css\sass\components\forms\_checkboxes.scss" />
+    <Content Include="node_modules\materialize-css\sass\components\forms\_file-input.scss" />
+    <Content Include="node_modules\materialize-css\sass\components\forms\_forms.scss" />
+    <Content Include="node_modules\materialize-css\sass\components\forms\_input-fields.scss" />
+    <Content Include="node_modules\materialize-css\sass\components\forms\_radio-buttons.scss" />
+    <Content Include="node_modules\materialize-css\sass\components\forms\_range.scss" />
+    <Content Include="node_modules\materialize-css\sass\components\forms\_select.scss" />
+    <Content Include="node_modules\materialize-css\sass\components\forms\_switches.scss" />
+    <Content Include="node_modules\materialize-css\sass\components\_badges.scss" />
+    <Content Include="node_modules\materialize-css\sass\components\_buttons.scss" />
+    <Content Include="node_modules\materialize-css\sass\components\_cards.scss" />
+    <Content Include="node_modules\materialize-css\sass\components\_carousel.scss" />
+    <Content Include="node_modules\materialize-css\sass\components\_chips.scss" />
+    <Content Include="node_modules\materialize-css\sass\components\_collapsible.scss" />
+    <Content Include="node_modules\materialize-css\sass\components\_color-classes.scss" />
+    <Content Include="node_modules\materialize-css\sass\components\_color-variables.scss" />
+    <Content Include="node_modules\materialize-css\sass\components\_datepicker.scss" />
+    <Content Include="node_modules\materialize-css\sass\components\_dropdown.scss" />
+    <Content Include="node_modules\materialize-css\sass\components\_global.scss" />
+    <Content Include="node_modules\materialize-css\sass\components\_grid.scss" />
+    <Content Include="node_modules\materialize-css\sass\components\_icons-material-design.scss" />
+    <Content Include="node_modules\materialize-css\sass\components\_materialbox.scss" />
+    <Content Include="node_modules\materialize-css\sass\components\_modal.scss" />
+    <Content Include="node_modules\materialize-css\sass\components\_navbar.scss" />
+    <Content Include="node_modules\materialize-css\sass\components\_normalize.scss" />
+    <Content Include="node_modules\materialize-css\sass\components\_preloader.scss" />
+    <Content Include="node_modules\materialize-css\sass\components\_pulse.scss" />
+    <Content Include="node_modules\materialize-css\sass\components\_sidenav.scss" />
+    <Content Include="node_modules\materialize-css\sass\components\_slider.scss" />
+    <Content Include="node_modules\materialize-css\sass\components\_table_of_contents.scss" />
+    <Content Include="node_modules\materialize-css\sass\components\_tabs.scss" />
+    <Content Include="node_modules\materialize-css\sass\components\_tapTarget.scss" />
+    <Content Include="node_modules\materialize-css\sass\components\_timepicker.scss" />
+    <Content Include="node_modules\materialize-css\sass\components\_toast.scss" />
+    <Content Include="node_modules\materialize-css\sass\components\_tooltip.scss" />
+    <Content Include="node_modules\materialize-css\sass\components\_transitions.scss" />
+    <Content Include="node_modules\materialize-css\sass\components\_typography.scss" />
+    <Content Include="node_modules\materialize-css\sass\components\_variables.scss" />
+    <Content Include="node_modules\materialize-css\sass\components\_waves.scss" />
+    <Content Include="node_modules\materialize-css\sass\materialize.scss" />
+    <Content Include="Content\fonts\materialize-font.woff2" />
+    <Content Include="Content\TaskRequest\scss\main.scss" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\DashBoard\es6\task-details-model.js" />
     <Content Include="Scripts\DashBoard\es6\project-details-model.js" />
@@ -459,6 +559,9 @@
     <Content Include="Scripts\Register\es6\main.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\TaskRequest\es6\main.js" />
+    <Content Include="Scripts\TaskRequest\es6\task-details-taskrequest.js" />
+    <Content Include="Scripts\TaskRequest\es6\task-request-model.js" />
     <Content Include="webpack.common.js" />
     <Content Include="webpack.config.js" />
   </ItemGroup>
@@ -479,7 +582,7 @@
     <Content Include="Views\Project\Create.cshtml" />
     <Content Include="Views\Project\Update.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_DashBoard_Layout .cshtml" />
+    <Content Include="Views\Shared\_DashBoard_Layout.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_ListAlbums.cshtml" />
     <Content Include="Views\Shared\_ListAlbumSearchSummary.cshtml" />

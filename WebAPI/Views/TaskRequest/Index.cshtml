@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_DashBoard_Layout .cshtml";
+    Layout = "~/Views/Shared/_DashBoard_Layout.cshtml";
 }
 
 @section scripts{
@@ -49,7 +49,7 @@
                 </div>
             </div>
             <div class="col-md-8 col-xl-8 right-panel">
-                <div id="TaskPanel" data-bind="if: isShowTaskDetails">
+                <div id="TaskPanel" data-bind="if: isShowContentPanel">
                     <div data-bind="template: {name:'taskDetailsTemplate', data: currentTask}"></div>
                 </div>
             </div>

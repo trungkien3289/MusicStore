@@ -7,7 +7,8 @@ module.exports = {
         login: './Scripts/Login/es6/main.js',
         register: './Scripts/Register/es6/main.js',
         dashboard: './Scripts/DashBoard/es6/main.js',
-        projectManagement: './Scripts/ProjectManagement/es6/main.js'
+        projectManagement: './Scripts/ProjectManagement/es6/main.js',
+        taskRequest: './Scripts/TaskRequest/es6/main.js'
     },
     output: {
         filename: '[name].js',
