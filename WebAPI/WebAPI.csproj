@@ -466,10 +466,12 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\build\dashboard.js" />
+    <Content Include="Scripts\build\layout.js" />
     <Content Include="Scripts\build\login.js" />
     <Content Include="Scripts\build\pageHeader.js" />
     <Content Include="Scripts\build\projectManagement.js" />
     <Content Include="Scripts\build\register.js" />
+    <Content Include="Scripts\build\taskRequest.js" />
     <Content Include="Scripts\Common\bootstrap.js" />
     <Content Include="Scripts\Common\classie.js" />
     <Content Include="Scripts\Common\easyResponsiveTabs.js" />
@@ -551,6 +553,7 @@
     <Content Include="Scripts\DashBoard\es6\task-request-model.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\Layout\es6\main.js" />
     <Content Include="Scripts\Libraries\knockout-3.5.0.js" />
     <Content Include="Scripts\Libraries\playlist.js" />
     <Content Include="Scripts\Login\es6\main.js" />
@@ -618,7 +621,6 @@
     <Content Include="Views\Task\Index.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Project\CreateProject.cshtml" />
-    <Content Include="Views\Project\Index.cshtml" />
     <Content Include="Views\TaskRequest\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
