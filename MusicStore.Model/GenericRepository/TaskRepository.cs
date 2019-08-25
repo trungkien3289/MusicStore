@@ -33,7 +33,7 @@ namespace MusicStore.Model.GenericRepository
                 query = query.Where(t => t.Status == status);
             }
 
-            return query.Skip((page - 1) * numberItemsPerPage).Take(numberItemsPerPage);
+            return query.OrderBy(t => t.Name).Skip((page - 1) * numberItemsPerPage).Take(numberItemsPerPage);
         }
 
     }

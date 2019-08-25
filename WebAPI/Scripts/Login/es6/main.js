@@ -23,17 +23,32 @@ export default class LoginPage {
             if (!self.validate()) return;
             self.requestLogin().then(response => {
                 console.log(response);
-                if (response.status === 200) {
-                    var token = response.request.getResponseHeader('Token');
-                    var tokenExpiry = response.request.getResponseHeader('TokenExpiry');
-                    //sessionStorage.setItem('accessToken', data.access_token);
-                    var myDate = new Date();
-                    myDate.setMonth(myDate.getSeconds() + tokenExpiry);
-                    document.cookie = `Token=${token}; TokenExpiry=${tokenExpiry};expires=${myDate};domain=${self.host};`;
-                    window.location.replace(self.returnUrl);
+                switch(response.status) {
+                    case 200: {
+                        var token = response.request.getResponseHeader('Token');
+                        var tokenExpiry = response.request.getResponseHeader('TokenExpiry');
+                        //sessionStorage.setItem('accessToken', data.access_token);
+                        var myDate = new Date();
+                        myDate.setMonth(myDate.getSeconds() + tokenExpiry);
+                        document.cookie = `Token=${token}; TokenExpiry=${tokenExpiry};expires=${myDate};domain=${self.host};`;
+                        window.location.replace(self.returnUrl);
+                        break;
+                    }
+                    default: {
+                        self.errorMessage("status is not handle");
+                    }
                 }
-            }).catch(error => {
-                self.errorMessage(error.response.data);
+
+            }).catch(response => {
+                switch (response.response.status) {
+                    case 401: {
+                        self.errorMessage("UserName or Password is invalid.");
+                        break;
+                    }
+                    default: {
+                        self.errorMessage(response.response.data);
+                    }
+                }
             });
         });
     }

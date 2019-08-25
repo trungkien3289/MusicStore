@@ -14,7 +14,8 @@ namespace WebAPI.Controllers
 
 		public ProjectController(IProjectServices projectServices, ITaskServices taskServices)
 		{
-			this._projectServices = projectServices;
+			_projectServices = projectServices;
+			_taskServices = taskServices;
 		}
 
         // GET: Project
@@ -51,11 +52,6 @@ namespace WebAPI.Controllers
 		[HttpGet]
 		public ActionResult Update(int id)
 		{
-			if (id == null)
-			{
-				return RedirectToAction("Index");
-			}
-
 			var project = _projectServices.GetById(id);
 
 			return View(project);
@@ -79,9 +75,9 @@ namespace WebAPI.Controllers
 			return RedirectToAction("Index");
 		}
 
-		public ActionResult Detail(int projectId)
+		public ActionResult Detail(int id)
 		{
-			var tasks = _taskServices.Get(projectId, 1, 10);
+			var tasks = _taskServices.Get(id, null, null);
 			return View(tasks);
 		}
 	}
