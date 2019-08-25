@@ -7,16 +7,74 @@
     <script src="~/Scripts/build/projectManagement.js"></script>
 }
 @section css{
-   
+
 }
 <div class="col-md-12">
     <div class="main-card mb-3 card">
         <div class="card-header">
-            <a class="waves-effect waves-light btn"><i class="material-icons left">cloud</i>button</a>
             <div class="btn-actions-pane-right">
-                <div role="group" class="btn-group-sm btn-group">
-                    <button class="btn btn-primary">@Html.ActionLink("New", "Create", "Project", new { @Style = "color: #fff; text-decoration: none !important;" })</button>
+                <!-- Modal Trigger -->
+                <a class="waves-effect waves-light btn modal-trigger" href="#projectEditor">New</a>
+
+                <!-- Modal Structure -->
+                <div id="projectEditor" class="modal modal-fixed-footer">
+                    <div class="modal-content">
+                        <h6>New Project</h6>
+                        <form class="col s12" id="projectForm">
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input type="text" class="validate" data-bind="value: Name" required />
+                                    <label>Name</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <textarea class="materialize-textarea" data-bind="value: Description"></textarea>
+                                    <label>Description</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <input type="text" class="datepicker" required data-bind="value: StartDate" />
+                                    <label>Start Date</label>
+                                </div>
+                                <div class="input-field col s6">
+                                    <input type="text" class="datepicker" required data-bind="value: EndDate" />
+                                    <label>End Date</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <select multiple>
+                                        <option value="" disabled>Choose your option</option>
+                                        <option value="1">Option 1</option>
+                                        <option value="2">Option 2</option>
+                                        <option value="3">Option 3</option>
+                                    </select>
+                                    <label>Leaders</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <select multiple>
+                                        <option value="" disabled>Choose your option</option>
+                                        <option value="1">Option 1</option>
+                                        <option value="2">Option 2</option>
+                                        <option value="3">Option 3</option>
+                                    </select>
+                                    <label>Developer</label>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <a class="waves-effect waves-light btn-small" data-bind="click: cancelSaveProject">Cancel</a>
+                        <a class="waves-effect waves-light btn-small ml-2" data-bind="click: saveProject">Save</a>
+                    </div>
                 </div>
+                @*<div role="group" class="btn-group-sm btn-group">
+                        <button class="btn btn-primary">@Html.ActionLink("New", "Create", "Project", new { @Style = "color: #fff; text-decoration: none !important;" })</button>
+                    </div>*@
             </div>
         </div>
         <div class="table-responsive">
