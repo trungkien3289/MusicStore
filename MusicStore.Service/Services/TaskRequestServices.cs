@@ -79,19 +79,30 @@ namespace MusicStore.Service.Services
             {
                 var task = _unitOfWork.TaskRepository.GetByID(model.TaskId);
                 if (task == null) throw new Exception("Task not found.");
+                if (task.TaskRequest != null) throw new Exception("Task Request already exist in Task.");
                 var project = _unitOfWork.ProjectRepository.GetByID(model.ProjectId);
                 if (project == null) throw new Exception("Project not found.");
-                //var config = new MapperConfiguration(cfg => cfg.CreateMap<TaskRequestEntity, fl_TaskRequest>());
-                //var mapper = config.CreateMapper();
-                //var entity = mapper.Map<TaskRequestEntity, fl_TaskRequest>(model);
-                //entity.Task = task;
                 fl_TaskRequest newTaskRequest = new fl_TaskRequest()
                 {
                     Description = model.Description,
                     Status = model.Status,
                     Task = task,
-                    Project = project
+                    Project = project,
+                    Developers = new List<fl_TaskRequestDeveloper>()
                 };
+
+                //if (model.Developers.Count() > 0)
+                //{
+                //    foreach (var developer in model.Developers)
+                //    {
+                //        newTaskRequest.Developers.Add(new fl_TaskRequestDeveloper()
+                //        {
+                //            IsJoin = false,
+                //            UserId = developer.UserId
+                //        });
+                //    }
+                //}
+
                 _unitOfWork.TaskRequestRepository.Insert(newTaskRequest);
                 _unitOfWork.Save();
                 scope.Complete();
