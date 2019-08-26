@@ -14,7 +14,7 @@
         <div class="card-header">
             <div class="btn-actions-pane-right">
                 <!-- Modal Trigger -->
-                <a class="waves-effect waves-light btn modal-trigger" href="#projectEditor">New</a>
+                <a class="waves-effect waves-light btn" data-bind="click: newProject">New</a>
 
                 <!-- Modal Structure -->
                 <div id="projectEditor" class="modal modal-fixed-footer">
@@ -45,23 +45,13 @@
                             </div>
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <select multiple>
-                                        <option value="" disabled>Choose your option</option>
-                                        <option value="1">Option 1</option>
-                                        <option value="2">Option 2</option>
-                                        <option value="3">Option 3</option>
-                                    </select>
+                                    <select data-bind="options: $root.availableDevelopers, selectedOptions: Leaders, optionsText: 'Name'" size="5" multiple="true"></select>
                                     <label>Leaders</label>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <select multiple>
-                                        <option value="" disabled>Choose your option</option>
-                                        <option value="1">Option 1</option>
-                                        <option value="2">Option 2</option>
-                                        <option value="3">Option 3</option>
-                                    </select>
+                                    <select data-bind="options: $root.availableDevelopers, selectedOptions: Developers, optionsText: 'Name'" size="5" multiple="true"></select>
                                     <label>Developer</label>
                                 </div>
                             </div>
