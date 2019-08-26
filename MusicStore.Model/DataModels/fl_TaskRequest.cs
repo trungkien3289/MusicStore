@@ -12,8 +12,6 @@ namespace MusicStore.Model.DataModels
     {
         [Key]
         public int Id { get; set; }
-        [Column("Task")]
-        public int TaskId { get; set; }
         public int ProjectId { get; set; }
         public string Description { get; set; }
         /// <summary>

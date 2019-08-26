@@ -239,6 +239,7 @@
     <Compile Include="APIControllers\SongController.cs" />
     <Compile Include="APIControllers\TaskController.cs" />
     <Compile Include="APIControllers\TaskRequestController.cs" />
+    <Compile Include="APIControllers\UserController.cs" />
     <Compile Include="App_Start\AttributeRoutingHttpConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -308,6 +309,7 @@
     <Compile Include="Models\HomeViewModel.cs" />
     <Compile Include="Models\MessageModel\DashBoard.cs" />
     <Compile Include="Models\MessageModel\TaskRequest.cs" />
+    <Compile Include="Models\MessageModel\UserMessageModel.cs" />
     <Compile Include="Models\ProjectViewModel.cs" />
     <Compile Include="Models\SongViewModels.cs" />
     <Compile Include="Models\SummarySongModel.cs" />
@@ -563,6 +565,7 @@
     <Content Include="Scripts\Register\es6\main.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\TaskRequest\es6\addedit-taskrequest-viewmodel.js" />
     <Content Include="Scripts\TaskRequest\es6\main.js" />
     <Content Include="Scripts\TaskRequest\es6\task-details-taskrequest.js" />
     <Content Include="Scripts\TaskRequest\es6\task-request-model.js" />

@@ -139,13 +139,15 @@ namespace MusicStore.Model.DataContext
                .HasOptional(tr => tr.Assignee).WithMany(u => u.AssigneeTaskRequests)
                 .HasForeignKey<Nullable<int>>(tr => tr.AssigneeId);
 
-            modelBuilder.Entity<fl_TaskRequest>()
-              .HasRequired(c => c.Task).WithOptional(t => t.TaskRequest)
-               .Map(m => m.MapKey("TaskId"));
+            //modelBuilder.Entity<fl_Task>()
+            //    .HasOptional(t => t.TaskRequest).WithOptionalPrincipal(tr => tr.Task);
 
             modelBuilder.Entity<fl_TaskRequest>()
-             .HasRequired(c => c.Project).WithMany(t => t.TaskRequests)
-              .HasForeignKey<int>(u => u.ProjectId);
+                .HasRequired(t => t.Task).WithOptional(tr => tr.TaskRequest).Map(x => x.MapKey("TaskId"));
+
+            //modelBuilder.Entity<fl_TaskRequest>()
+            // .HasRequired(c => c.Project).WithMany(t => t.TaskRequests)
+            //  .HasForeignKey<int>(u => u.ProjectId);
 
 
             modelBuilder.Entity<fl_RequestComment>()

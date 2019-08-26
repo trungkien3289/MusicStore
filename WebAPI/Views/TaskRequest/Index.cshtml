@@ -12,7 +12,7 @@
 }
 <div class="app-main__outer">
     <div class="app-main__inner">
-        <div class="row dashboard-content-panel">
+        <div class="row task-request-management-wrapper">
             <div class="col-md-4 col-xl-4 card left-panel">
                 <div class="card-header card-header-tab-animation">
                     Projects
@@ -49,19 +49,61 @@
                 </div>
             </div>
             <div class="col-md-8 col-xl-8 right-panel">
-                <div id="TaskPanel" data-bind="if: isShowContentPanel">
-                    <div data-bind="template: {name:'taskDetailsTemplate', data: currentTask}"></div>
+                <div data-bind="if: isShowContentPanel">
+                    <div class="task-details-container" data-bind="template: {name:'taskDetailsTemplate', data: currentTask}"></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+<!-- Add Task Request Dialog -->
+<div id="addTaskRequestDialog" class="modal modal-fixed-footer">
+    <div class="modal-header">
+        Add Task Request
+    </div>
+    <div class="modal-content" data-bind="template: {name: 'addTaskRequestDialogTemplate', data: addEditTaskRequestModel}">
+        
+    </div>
+    <div class="modal-footer">
+        <a id="btnOK" class="waves-effect waves-orange btn-flat" data-bind="click: $root.okBtnDialogClick">OK</a>
+        <a id="btnCancel" class="modal-close waves-effect btn-flat">Cancel</a>
+    </div>
+</div>
+
+<script type="text/x-jquery-tmpl" id="addTaskRequestDialogTemplate">
+        <div class="form-group">
+            <div class="input-field col s12">
+                <textarea id="description_addTaskRequest" class="materialize-textarea" data-bind="value: Description"></textarea>
+                <label for="description_addTaskRequest">Description</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <select>
+                <option value="" disabled selected>Status</option>
+                <option value="" disabled selected>Choose your option</option>
+                <option value="0">New</option>
+                <option value="1">Active</option>
+            </select>
+            <label>Materialize Select</label>
+        </div>
+
+        <div class="form-group">
+            <div class="input-field col s12">
+                <select data-bind="options: $root.availableDevelopers, selectedOptions: Developers, optionsText: 'Name'" size="5" multiple="true">
+                </select>
+                <label>Developers</label>
+            </div>
+        </div>
+</script>
+
 <script type="text/x-jquery-tmpl" id="taskDetailsTemplate">
     <div class="main-card card">
         <div class="card-header">
-            <span>Task Details</span>
-            
+            <span class="title">Task Details</span>
+            <a class="waves-effect waves-light btn-small btn-add-task-request" 
+               data-bind="enable: $data.Assignee != null,click:$root.addTaskRequestBtnClick, clickBubble: false">
+            <i class="material-icons left">add</i>Add Request</a>
         </div>
         <div class="card-body d-flex flex-column">
             <div class="row-data align-items-center project-title-panel">

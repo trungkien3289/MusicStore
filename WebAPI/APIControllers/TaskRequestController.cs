@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using WebAPI.ActionFilters;
 
 namespace WebAPI.APIControllers
 {
@@ -47,6 +48,9 @@ namespace WebAPI.APIControllers
             return Request.CreateErrorResponse(HttpStatusCode.NotFound, "There is no task request found.");
         }
 
+        [AuthorizationRequiredAttribute]
+        [HttpPost]
+        [Route("api/taskrequest/create")]
         public HttpResponseMessage Add(TaskRequestEntity taskRequest)
         {
             var createdTaskRequest = _taskRequestServices.Create(taskRequest);

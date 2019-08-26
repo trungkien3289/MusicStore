@@ -1,4 +1,4 @@
-﻿.dashboard-content-panel {
+﻿.task-request-management-wrapper {
     display: flex;
     position: absolute;
     top: 70px;
@@ -65,6 +65,19 @@
                 a {
                     cursor: pointer;
                 }
+            }
+        }
+    }
+
+    .task-details-container {
+        .card-header {
+            .title {
+                flex: 1 1 auto;
+            }
+
+            .btn-add-task-request{
+                flex: 0 0 170px;
+                color:#fff;
             }
         }
     }

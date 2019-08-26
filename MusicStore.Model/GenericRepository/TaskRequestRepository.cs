@@ -24,7 +24,6 @@ namespace MusicStore.Model.GenericRepository
                                   select new fl_TaskRequest
                                   {
                                       Id = tr.Id,
-                                      TaskId = tr.TaskId,
                                       Status = tr.Status,
                                       AssigneeId = tr.AssigneeId,
                                       Description = tr.Description,
