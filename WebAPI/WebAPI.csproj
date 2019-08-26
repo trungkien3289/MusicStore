@@ -623,7 +623,6 @@
     <Content Include="Views\Task\CreateTask.cshtml" />
     <Content Include="Views\Task\Index.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
-    <Content Include="Views\Project\CreateProject.cshtml" />
     <Content Include="Views\TaskRequest\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
