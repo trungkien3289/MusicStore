@@ -1,11 +1,11 @@
 ﻿import axios from 'axios';
 
 $(document).ready(function () {
-    ko.applyBindings(new LoginPage(returnUrl, host));
+    ko.applyBindings(new LoginPage(returnUrl, host, applicationPath));
 });
 
 export default class LoginPage {
-    constructor(returnUrl, host) {
+    constructor(returnUrl, host, applicationPath) {
         this.bindEvents();
         this.userName = ko.observable("");
         this.password = ko.observable("");
@@ -15,6 +15,7 @@ export default class LoginPage {
         this.errorMessage = ko.observable("");
         this.returnUrl = returnUrl;
         this.host = host;
+        this.applicationPath = applicationPath;
     }
     bindEvents() {
         var self = this;
@@ -64,7 +65,7 @@ export default class LoginPage {
 
     requestLogin() {
         return axios.post(
-            '/get/token',
+            `${this.applicationPath}/get/token`,
             {
                 userName: this.userName(),
                 password: this.password()

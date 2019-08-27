@@ -4,26 +4,26 @@ $(document).ready(function () {
     $('.modal').modal();
     $('.datepicker').datepicker();
 
-    this.project = new ProjectModelView();
+    this.project = new ProjectModelView(applicationPath);
     ko.applyBindings(this.project);
 
 });
 
 export default class ProjectModelView {
-    constructor(Id, Name, Description, StartDate, EndDate, Status, Leaders, Developers) {
-        this._service = new Service();
+    constructor(applicationPath) {
+        this._service = new Service(applicationPath);
         this._projectEditorDialog = null;
 
         this.initComponents();
 
-        this.Id = ko.observable(Id);
-        this.Name = ko.observable(Name);
-        this.Description = ko.observable(Description);
-        this.StartDate = ko.observable(StartDate);
-        this.EndDate = ko.observable(EndDate);
-        this.Status = ko.observable(Status);
-        this.Leaders = ko.observable(Leaders);
-        this.Developers = ko.observable(Developers);
+        this.Id = ko.observable("");
+        this.Name = ko.observable("");
+        this.Description = ko.observable("");
+        this.StartDate = ko.observable();
+        this.EndDate = ko.observable();
+        this.Status = ko.observable();
+        this.Leaders = ko.observable([]);
+        this.Developers = ko.observable([]);
         this.availableDevelopers = ko.observableArray([]);
 
         this.newProject = () => {
@@ -107,8 +107,8 @@ export default class ProjectModelView {
 }
 
 export class Service {
-    constructor() {
-        this._apiBaseUrl = `/api/`;
+    constructor(applicationPath) {
+        this._apiBaseUrl = `${applicationPath}/api/`;
     }
 
     addProject(projectModelView) {

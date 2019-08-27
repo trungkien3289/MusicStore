@@ -19,6 +19,10 @@
     <link href="~/Content/Common/materialize-css-icon.css" rel="stylesheet" />
     <script src="~/Scripts/build/layout.js"></script>
     <script src="~/Scripts/build/pageHeader.js"></script>
+    <script>
+        var host = "@Request.Url.Host";
+        var applicationPath = "@HttpContext.Current.Request.ApplicationPath";
+    </script>
 </head>
 <body class="sticky-header left-side-collapsed">
     <div class="app-container app-theme-white body-tabs-shadow fixed-header">

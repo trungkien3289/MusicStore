@@ -4,13 +4,14 @@ import AddEditTaskRequestViewModel from './addedit-taskrequest-viewmodel';
 import * as moment from 'moment';
 
 $(document).ready(function () {
-    var taskRequestManagement = new TaskRequestManagement();
+    var taskRequestManagement = new TaskRequestManagement(applicationPath);
     ko.applyBindings(taskRequestManagement);
 });
 
 export default class TaskRequestManagement {
-    constructor() {
-        this._service = new Service();
+    constructor(applicationPath) {
+        this.applicationPath = applicationPath;
+        this._service = new Service(applicationPath);
         this._dialog = null;
         this.bindEventProjectTaskPanel();
         this.initComponents();
@@ -115,8 +116,8 @@ export default class TaskRequestManagement {
 }
 
 export class Service {
-    constructor() {
-        this._apiBaseUrl = `/api/`;
+    constructor(applicationPath) {
+        this._apiBaseUrl = `${applicationPath}/api/`;
     }
 
     getTaskDetails(taskId) {

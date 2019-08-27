@@ -1,11 +1,12 @@
 ﻿import axios from 'axios';
 
 $(document).ready(function () {
-    new PageHeader();
+    new PageHeader(applicationPath);
 });
 
 export default class PageHeader {
-    constructor() {
+    constructor(applicationPath) {
+        this.applicationPath = applicationPath;
         this.bindEvents();
     }
     bindEvents() {
@@ -23,7 +24,7 @@ export default class PageHeader {
             //    });
 
             self.deleteAllCookies();
-            window.location.replace("/");
+            window.location.replace(`${self.applicationPath}/`);
         });
     }
 
@@ -40,7 +41,7 @@ export default class PageHeader {
 
     requestSignOut() {
         return axios.post(
-            '/api/signout', 
+            `${this.applicationPath}/api/signout`, 
             {
                 withCredentials: true
             }

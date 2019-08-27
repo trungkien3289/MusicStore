@@ -9,7 +9,8 @@
 @section scripts{
     <script>
     var returnUrl = "@ViewBag.ReturnUrl";
-    var host = "@Request.Url.Host";
+        var host = "@Request.Url.Host";
+        var applicationPath = "@HttpContext.Current.Request.ApplicationPath";
     </script>
     <script src="~/Scripts/build/login.js"></script>
 }

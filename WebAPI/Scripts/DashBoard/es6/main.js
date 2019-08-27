@@ -7,7 +7,7 @@ import DashBoardModel from './dashboard-model';
 import * as moment from 'moment';
 
 $(document).ready(function () {
-    var dashboardManagement = new DashboardManagement();
+    var dashboardManagement = new DashboardManagement(applicationPath);
     ko.applyBindings(dashboardManagement);
 });
 
@@ -19,8 +19,9 @@ const ProjectDisplayMode = {
 };
 
 export default class DashboardManagement {
-    constructor() {
-        this._service = new Service();
+    constructor(applicationPath) {
+        this.applicationPath = applicationPath;
+        this._service = new Service(applicationPath);
         this.bindEventProjectTaskPanel();
         this.getDashBoardData();
         this.dashboard = ko.observable(new DashBoardModel());
@@ -123,8 +124,8 @@ export default class DashboardManagement {
 }
 
 export class Service {
-    constructor() {
-        this._apiBaseUrl = `/api/`;
+    constructor(applicationPath) {
+        this._apiBaseUrl = `${applicationPath}/api/`;
     }
 
     getDashBoardData(token) {
