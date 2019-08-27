@@ -20,7 +20,6 @@ namespace MusicStore.BussinessEntity
         public virtual ProjectEntity Project { get; set; }
         public virtual UserEntity Assignee { get; set; }
         public virtual TaskEntity Task { get; set; }
-        //public virtual ICollection<TaskRequestDeveloperEntity> Developers { get; set; }
     }
 
     public class CreateTaskRequestRequest

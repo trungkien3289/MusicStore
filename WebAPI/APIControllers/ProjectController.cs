@@ -54,6 +54,7 @@ namespace WebAPI.APIControllers
             return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Project not found");
         }
 
+		[HttpPost]
 		[Route("api/addProject")]
 		public HttpResponseMessage Add(ProjectEntity project)
         {
