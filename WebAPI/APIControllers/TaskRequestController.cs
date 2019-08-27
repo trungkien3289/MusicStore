@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using WebAPI.ActionFilters;
+using WebAPI.Models.MessageModel;
 
 namespace WebAPI.APIControllers
 {
@@ -51,7 +52,7 @@ namespace WebAPI.APIControllers
         [AuthorizationRequiredAttribute]
         [HttpPost]
         [Route("api/taskrequest/create")]
-        public HttpResponseMessage Add(TaskRequestEntity taskRequest)
+        public HttpResponseMessage Add(CreateTaskRequestRequest taskRequest)
         {
             var createdTaskRequest = _taskRequestServices.Create(taskRequest);
             if (createdTaskRequest != null)

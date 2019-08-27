@@ -12,7 +12,7 @@ namespace MusicStore.Service.IService
         TaskRequestEntity GetById(int id);
         TaskRequestEntity GetSummary(int id);
         IEnumerable<TaskRequestEntity> Get(int projectId, int userId, int page = 1, int numberItemsPerPage = 10);
-        TaskRequestEntity Create(TaskRequestEntity model);
+        TaskRequestEntity Create(CreateTaskRequestRequest model);
         TaskRequestEntity Update(int id, TaskRequestEntity model);
         bool Delete(int id);
         void ApproveTaskRequest(int userId, int taskRequestId);

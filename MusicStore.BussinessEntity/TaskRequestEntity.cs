@@ -22,5 +22,21 @@ namespace MusicStore.BussinessEntity
         public virtual TaskEntity Task { get; set; }
         //public virtual ICollection<TaskRequestDeveloperEntity> Developers { get; set; }
     }
+
+    public class CreateTaskRequestRequest
+    {
+        public CreateTaskRequestRequest()
+        {
+            Developers = new List<int>();
+        }
+        public int TaskId { get; set; }
+        public int ProjectId { get; set; }
+        public string Description { get; set; }
+        /// <summary>
+        /// Task Status New| Active|Close
+        /// </summary>
+        public int Status { get; set; }
+        public IList<int> Developers { get; set; }
+    }
 }
 

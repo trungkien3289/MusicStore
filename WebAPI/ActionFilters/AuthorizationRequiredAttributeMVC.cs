@@ -22,7 +22,7 @@ namespace WebAPI.ActionFilters
             var returnUrl = string.Empty;
             if (url.Contains("login"))
             {
-                returnUrl = "/";
+                returnUrl = "~/";
             }
             else
             {
@@ -36,7 +36,7 @@ namespace WebAPI.ActionFilters
                 // Validate Token
                 if (tokenService != null && !tokenService.ValidateToken(tokenValue))
                 {
-                    filterContext.Result = new RedirectResult("/Account/login?returnUrl=" + returnUrl);
+                    filterContext.Result = new RedirectResult("~/Account/login?returnUrl=" + returnUrl);
                 }
 
                 try
@@ -57,7 +57,7 @@ namespace WebAPI.ActionFilters
             }
             else
             {
-                filterContext.Result = new RedirectResult("/Account/login?returnUrl=" + returnUrl);
+                filterContext.Result = new RedirectResult("~/Account/login?returnUrl=" + returnUrl);
             }
 
             base.OnActionExecuting(filterContext);

@@ -53,6 +53,7 @@ export default class TaskRequestManagement {
 
         // call api
         var newRequestModel = ko.toJS(this.addEditTaskRequestModel());
+        newRequestModel.Developers = newRequestModel.Developers.map(dev => dev.Id);
         this._service.createTaskRequest(newRequestModel).then(response => {
             if (response.status === 200) {
                 alert("Add task request successful.");

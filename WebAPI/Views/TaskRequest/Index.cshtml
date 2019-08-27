@@ -66,7 +66,7 @@
         
     </div>
     <div class="modal-footer">
-        <a id="btnOK" class="waves-effect waves-orange btn-flat" data-bind="click: $root.okBtnDialogClick">OK</a>
+        <a id="btnOK" class="waves-effect waves-orange btn-flat btn" data-bind="click: $root.okBtnDialogClick">OK</a>
         <a id="btnCancel" class="modal-close waves-effect btn-flat">Cancel</a>
     </div>
 </div>
@@ -79,19 +79,18 @@
             </div>
         </div>
         <div class="form-group">
-            <select>
-                <option value="" disabled selected>Status</option>
-                <option value="" disabled selected>Choose your option</option>
-                <option value="0">New</option>
-                <option value="1">Active</option>
-            </select>
-            <label>Materialize Select</label>
+            <div class="input-field col s12">
+                <select>
+                    <option value="" disabled selected>Choose your option</option>
+                    <option value="0">New</option>
+                    <option value="1">Active</option>
+                </select>
+                <label>Status</label>
+            </div>
         </div>
-
         <div class="form-group">
             <div class="input-field col s12">
-                <select data-bind="options: $root.availableDevelopers, selectedOptions: Developers, optionsText: 'Name'" size="5" multiple="true">
-                </select>
+                <select data-bind="options: $root.availableDevelopers, selectedOptions: Developers, optionsText: 'Name'" size="5" multiple="true"></select>
                 <label>Developers</label>
             </div>
         </div>

@@ -73,7 +73,7 @@ namespace MusicStore.Service.Services
         #endregion
 
         #region public functions
-        public TaskRequestEntity Create(TaskRequestEntity model)
+        public TaskRequestEntity Create(CreateTaskRequestRequest model)
         {
             using (var scope = new TransactionScope())
             {
@@ -91,23 +91,27 @@ namespace MusicStore.Service.Services
                     Developers = new List<fl_TaskRequestDeveloper>()
                 };
 
-                //if (model.Developers.Count() > 0)
-                //{
-                //    foreach (var developer in model.Developers)
-                //    {
-                //        newTaskRequest.Developers.Add(new fl_TaskRequestDeveloper()
-                //        {
-                //            IsJoin = false,
-                //            UserId = developer.UserId
-                //        });
-                //    }
-                //}
+                if (model.Developers.Count() > 0)
+                {
+                    foreach (var id in model.Developers)
+                    {
+                        newTaskRequest.Developers.Add(new fl_TaskRequestDeveloper()
+                        {
+                            IsJoin = false,
+                            UserId = id
+                        });
+                    }
+                }
 
                 _unitOfWork.TaskRequestRepository.Insert(newTaskRequest);
                 _unitOfWork.Save();
                 scope.Complete();
-                model.Id = newTaskRequest.Id;
-                return model;
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<fl_TaskRequest, TaskRequestEntity>()
+                    .ForMember(p => p.Project, opt => opt.Ignore())
+                );
+                var mapper = config.CreateMapper();
+                var returnModel = mapper.Map<fl_TaskRequest, TaskRequestEntity>(newTaskRequest);
+                return returnModel;
             }
         }
 

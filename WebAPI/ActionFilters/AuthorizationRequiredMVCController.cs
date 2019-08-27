@@ -25,7 +25,7 @@ namespace WebAPI.ActionFilters
                 // Validate Token
                 if (tokenService != null && !tokenService.ValidateToken(tokenValue))
                 {
-                    filterContext.Result = new RedirectResult("/Account/login?returnUrl=/");
+                    filterContext.Result = new RedirectResult("~/Account/login?returnUrl=/");
                 }
 
                 try

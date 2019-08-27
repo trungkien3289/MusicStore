@@ -118,3 +118,11 @@
         padding: 10px 0;
     }
 }
+
+.modal.modal-fixed-footer {
+    .modal-content {
+        border: none;
+        border-radius: 0;
+    }
+}
+

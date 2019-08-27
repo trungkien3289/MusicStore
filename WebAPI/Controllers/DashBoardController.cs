@@ -24,7 +24,7 @@ namespace WebAPI.Controllers
         public ActionResult Index()
         {
             // get current user
-            var user =  System.Threading.Thread.CurrentPrincipal.Identity as BasicAuthenticationIdentity;
+            var user = System.Threading.Thread.CurrentPrincipal.Identity as BasicAuthenticationIdentity;
             // get projects
             var viewModel = new DashboardViewModel()
             {
