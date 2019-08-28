@@ -42,7 +42,7 @@ namespace WebAPI.APIControllers
         [ApiAuthenticationFilter]
         [Route("login")]
         [Route("authenticate")]
-        [Route("get/token")]
+        [Route("api/get/token")]
         [HttpPost]
         public HttpResponseMessage Authenticate()
         {

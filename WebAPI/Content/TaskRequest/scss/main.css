@@ -40,9 +40,9 @@
       display: flex; }
     .task-request-management-wrapper .left-panel .project-tree li a {
       cursor: pointer; }
-  .task-request-management-wrapper .task-details-container .card-header .title {
+  .task-request-management-wrapper .task-request-details-container .card-header .title {
     flex: 1 1 auto; }
-  .task-request-management-wrapper .task-details-container .card-header .btn-add-task-request {
+  .task-request-management-wrapper .task-request-details-container .card-header .btn-add-task-request {
     flex: 0 0 170px;
     color: #fff; }
   .task-request-management-wrapper .icon-space-wrapper {

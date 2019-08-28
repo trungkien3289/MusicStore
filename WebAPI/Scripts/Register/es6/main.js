@@ -13,7 +13,11 @@ export default class RegisterPage {
         this.rePassword = ko.observable("");
         this.errorMessage = ko.observable("");
         this.host = host;
-        this.applicationPath = applicationPath;
+        if (Utils.isStringNullOrEmpty(applicationPath)) {
+            this._apiBaseUrl = `api/`;
+        } else {
+            this._apiBaseUrl = `${applicationPath}api/`;
+        }
     }
     bindEvents() {
         var self = this;
@@ -62,7 +66,7 @@ export default class RegisterPage {
 
     requestRegister() {
         return axios.post(
-            `${this.applicationPath}/post/register`,
+            `${this._apiBaseUrl}post/register`,
             {
                 userName: this.userName(),
                 password: this.password(),

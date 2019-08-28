@@ -1,5 +1,5 @@
 ﻿export default class Utils {
-    getCookie(cname) {
+    static getCookie(cname) {
         var name = cname + "=";
         var ca = document.cookie.split(';');
         for (var i = 0; i < ca.length; i++) {
@@ -12,5 +12,9 @@
             }
         }
         return "";
+    }
+
+    static isStringNullOrEmpty(string) {
+        return (string == null || string.trim() == "");
     }
 }

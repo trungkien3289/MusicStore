@@ -1,4 +1,5 @@
 ﻿import axios from 'axios';
+import Utils from '../../Common/es6/utils';
 
 $(document).ready(function () {
     new PageHeader(applicationPath);
@@ -6,7 +7,11 @@ $(document).ready(function () {
 
 export default class PageHeader {
     constructor(applicationPath) {
-        this.applicationPath = applicationPath;
+        if (Utils.isStringNullOrEmpty(applicationPath)) {
+            this._apiBaseUrl = `api/`;
+        } else {
+            this._apiBaseUrl = `${applicationPath}api/`;
+        }
         this.bindEvents();
     }
     bindEvents() {
@@ -41,7 +46,7 @@ export default class PageHeader {
 
     requestSignOut() {
         return axios.post(
-            `${this.applicationPath}/api/signout`, 
+            `${this._apiBaseUrl}signout`, 
             {
                 withCredentials: true
             }

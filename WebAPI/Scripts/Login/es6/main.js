@@ -1,4 +1,5 @@
 ﻿import axios from 'axios';
+import Utils from '../../Common/es6/utils';
 
 $(document).ready(function () {
     ko.applyBindings(new LoginPage(returnUrl, host, applicationPath));
@@ -15,7 +16,12 @@ export default class LoginPage {
         this.errorMessage = ko.observable("");
         this.returnUrl = returnUrl;
         this.host = host;
-        this.applicationPath = applicationPath;
+
+        if (Utils.isStringNullOrEmpty(applicationPath)) {
+            this._apiBaseUrl = `api/`;
+        } else {
+            this._apiBaseUrl = `${applicationPath}api/`;
+        }
     }
     bindEvents() {
         var self = this;
@@ -65,7 +71,7 @@ export default class LoginPage {
 
     requestLogin() {
         return axios.post(
-            `${this.applicationPath}/get/token`,
+            `${this._apiBaseUrl}get/token`,
             {
                 userName: this.userName(),
                 password: this.password()

@@ -1,4 +1,5 @@
 ﻿import axios from 'axios';
+import Utils from '../../Common/es6/utils';
 
 $(document).ready(function () {
     $('.modal').modal();
@@ -108,7 +109,11 @@ export default class ProjectModelView {
 
 export class Service {
     constructor(applicationPath) {
-        this._apiBaseUrl = `${applicationPath}/api/`;
+        if (Utils.isStringNullOrEmpty(applicationPath)) {
+            this._apiBaseUrl = `api/`;
+        } else {
+            this._apiBaseUrl = `${applicationPath}api/`;
+        }
     }
 
     addProject(projectModelView) {

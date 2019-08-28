@@ -72,6 +72,22 @@ namespace MusicStore.Service.Services
 
         #endregion
 
+        #region private function
+        private bool IsLeader(int projectId, int userId)
+        {
+            var project = _unitOfWork.ProjectRepository.GetFirst(p => p.Id == projectId);
+            var leaderIds = project.Leaders.Select(l => l.UserId).ToList();
+            return leaderIds.Contains(userId);
+        }
+
+        public int Count(int userId)
+        {
+            return _unitOfWork.TaskRequestRepository.Count(tr => tr.AssigneeId == userId);
+        }
+
+
+        #endregion
+
         #region public functions
         public TaskRequestEntity Create(CreateTaskRequestRequest model)
         {
@@ -199,19 +215,35 @@ namespace MusicStore.Service.Services
             return model;
         }
 
-        #endregion
-
-        #region private function
-        private bool IsLeader(int projectId, int userId)
+        public CreateTaskRequestResponse GetTaskRequestOfTask(int taskId)
         {
-            var project = _unitOfWork.ProjectRepository.GetFirst(p => p.Id == projectId);
-            var leaderIds = project.Leaders.Select(l => l.UserId).ToList();
-            return leaderIds.Contains(userId);
-        }
+            var task = _unitOfWork.TaskRepository.GetFirst(t => t.Id == taskId);
+            if(task.TaskRequest!= null)
+            {
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<fl_TaskRequest, CreateTaskRequestResponse>()
+                .ForMember(m => m.Developers, opt => opt.Ignore()));
+                var mapper = config.CreateMapper();
+                var model = mapper.Map<fl_TaskRequest, CreateTaskRequestResponse>(task.TaskRequest);
 
-        public int Count(int userId)
-        {
-            return _unitOfWork.TaskRequestRepository.Count(tr => tr.AssigneeId == userId);
+                model.Developers = new List<TaskRequestDeveloperSummary>();
+                foreach (var dev in task.TaskRequest.Developers)
+                {
+                    model.Developers.Add(new TaskRequestDeveloperSummary()
+                    {
+                        UserId = dev.UserId,
+                        UserName = dev.User.UserName,
+                        TaskRequestId = task.TaskRequest.Id,
+                        IsJoin = dev.IsJoin
+                    });
+                }
+
+                return model;
+            }
+            else
+            {
+                return null;
+            }
+           
         }
         #endregion
     }

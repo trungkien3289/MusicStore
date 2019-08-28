@@ -5,6 +5,7 @@ import TaskDetailsModel from './task-details-model';
 import TaskRequestModel from './task-request-model';
 import DashBoardModel from './dashboard-model';
 import * as moment from 'moment';
+import Utils from '../../Common/es6/utils';
 
 $(document).ready(function () {
     var dashboardManagement = new DashboardManagement(applicationPath);
@@ -125,7 +126,11 @@ export default class DashboardManagement {
 
 export class Service {
     constructor(applicationPath) {
-        this._apiBaseUrl = `${applicationPath}/api/`;
+        if (Utils.isStringNullOrEmpty(applicationPath)) {
+            this._apiBaseUrl = `api/`;
+        } else {
+            this._apiBaseUrl = `${applicationPath}api/`;
+        }
     }
 
     getDashBoardData(token) {

@@ -13,10 +13,12 @@ namespace WebAPI.APIControllers
     public class TaskController : ApiController
     {
         private readonly ITaskServices _taskServices;
+        private readonly ITaskRequestServices _taskRequestServices;
 
-        public TaskController(ITaskServices taskServices)
+        public TaskController(ITaskServices taskServices, ITaskRequestServices taskRequestServices)
         {
             _taskServices = taskServices;
+            _taskRequestServices = taskRequestServices;
         }
 
         public HttpResponseMessage Get(int? projectId, int? userId, int? status, int page = 1)
@@ -85,6 +87,14 @@ namespace WebAPI.APIControllers
             {
                 return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Error on delete task");
             }
+        }
+
+        [Route("api/tasks/{taskId}/taskrequest")]
+        [HttpGet]
+        public HttpResponseMessage GetTaskRequestOfTask([FromUri]int taskId)
+        {
+            var taskRequest = _taskRequestServices.GetTaskRequestOfTask(taskId);
+            return Request.CreateResponse(HttpStatusCode.OK, taskRequest);
         }
     }
 }

@@ -18,6 +18,7 @@ namespace MusicStore.Service.IService
         void ApproveTaskRequest(int userId, int taskRequestId);
         void JoinTaskRequest(int taskRequestId, int userId);
         int Count(int userId);
+        CreateTaskRequestResponse GetTaskRequestOfTask(int taskId);
     }
 }
 

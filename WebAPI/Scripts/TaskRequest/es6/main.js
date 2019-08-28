@@ -1,7 +1,9 @@
 ﻿import axios from 'axios';
 import TaskDetailsModel from './task-details-taskrequest';
 import AddEditTaskRequestViewModel from './addedit-taskrequest-viewmodel';
+import TaskRequestModel from './task-request-model';
 import * as moment from 'moment';
+import Utils from '../../Common/es6/utils';
 
 $(document).ready(function () {
     var taskRequestManagement = new TaskRequestManagement(applicationPath);
@@ -18,12 +20,14 @@ export default class TaskRequestManagement {
         // viewmodel properties
         // task details
         this.currentTask = ko.observable(new TaskDetailsModel());
+        this.currentTaskRequest = ko.observable(new TaskRequestModel());
         this.isShowContentPanel = ko.observable(false);
         // task request add/edit viewmodel
         this.addEditTaskRequestModel = ko.observable(new AddEditTaskRequestViewModel());
         this.availableDevelopers = ko.observableArray([]);
         this.isShowAddEditTaskRequestDialog = ko.observable(false);
         this.addTaskRequestBtnClick = this.addTaskRequestHandler.bind(this);
+        this.pickUpDeveloperBtnClick = this.pickUpDeveloperHandler.bind(this);
         this.okBtnDialogClick = this.okBtnDialogClickHandler.bind(this);
         this.errorMessage = ko.observable("");
     }
@@ -55,13 +59,56 @@ export default class TaskRequestManagement {
         // call api
         var newRequestModel = ko.toJS(this.addEditTaskRequestModel());
         newRequestModel.Developers = newRequestModel.Developers.map(dev => dev.Id);
-        this._service.createTaskRequest(newRequestModel).then(response => {
+        this._service.createTaskRequest(newRequestModel)
+        .then(function(response) {
+                if (response.status === 200) {
+                    self.showDialog(false);
+                    //reload page
+
+                }
+            }).catch(function (error) {
+                if (error.response) {
+                    // The request was made and the server responded with a status code
+                    // that falls out of the range of 2xx
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                } else if (error.request) {
+                    // The request was made but no response was received
+                    // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                    // http.ClientRequest in node.js
+                    console.log(error.request);
+                } else {
+                    // Something happened in setting up the request that triggered an Error
+                    console.log('Error', error.message);
+                }
+                console.log(error.config);
+        });
+    }
+
+    pickUpDeveloperHandler(taskRequestId, userId) {
+        this._service.assigneDeveloperForTaskRequest(taskRequestId, userId).then(response => {
             if (response.status === 200) {
                 alert("Add task request successful.");
                 self.showDialog(false);
             }
-        }).catch(response => {
-            self.errorMessage(response.response.data);
+        }).catch(function (error) {
+            if (error.response) {
+                // The request was made and the server responded with a status code
+                // that falls out of the range of 2xx
+                console.log(error.response.data);
+                console.log(error.response.status);
+                console.log(error.response.headers);
+            } else if (error.request) {
+                // The request was made but no response was received
+                // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                // http.ClientRequest in node.js
+                console.log(error.request);
+            } else {
+                // Something happened in setting up the request that triggered an Error
+                console.log('Error', error.message);
+            }
+            console.log(error.config);
         });
     }
 
@@ -69,21 +116,26 @@ export default class TaskRequestManagement {
         var self = this;
         $(".project-task-panel .btn-task-item").bind("click", (e) => {
             var taskId = $(e.target).data("id");
-            self._service.getTaskDetails(taskId).then(response => {
-                console.log(response);
-                if (response.status === 200) {
+            self.getTaskDetails(taskId);
+        });
+    }
+
+    getTaskDetails(taskId) {
+        var self = this;
+        axios.all([self._service.getTaskDetails(taskId), self._service.getTaskRequestOfTask(taskId)])
+            .then(axios.spread(function (taskRes, taskRequestRes) {
+                
+                if (taskRes.status == 200 && taskRequestRes.status == 200) {
+                    // Update Task Details panel
                     self.isShowContentPanel(true);
-                    var data = response.data;
+                    let data = taskRes.data;
                     data.StartDate = moment(new Date(data.StartDate)).format("DD/MM/YYYY hh:mm:ss");
                     data.EndDate = moment(new Date(data.EndDate)).format("DD/MM/YYYY hh:mm:ss");
-                    var taskDetails = new TaskDetailsModel(data);
-                    self.currentTask(new TaskDetailsModel(taskDetails));
+                    self.currentTask(new TaskDetailsModel(data));
+                    // Update Task Request Details panel
+                    self.currentTaskRequest(new TaskRequestModel(taskRequestRes.data));
                 }
-            }).catch(response => {
-                //show error
-                self.errorMessage(response.response.data);
-            });
-        });
+            }));
     }
 
     convertDateTime(dateString, format) {
@@ -117,7 +169,11 @@ export default class TaskRequestManagement {
 
 export class Service {
     constructor(applicationPath) {
-        this._apiBaseUrl = `${applicationPath}/api/`;
+        if (Utils.isStringNullOrEmpty(applicationPath)) {
+            this._apiBaseUrl = `api/`;
+        } else {
+            this._apiBaseUrl = `${applicationPath}api/`;
+        }
     }
 
     getTaskDetails(taskId) {
@@ -151,6 +207,24 @@ export class Service {
         return axios.post(
             `${this._apiBaseUrl}taskrequest/create`,
             newTaskRequest,
+            {
+                withCredentials: true
+            }
+        );
+    }
+
+    getTaskRequestOfTask(taskId) {
+        return axios.get(
+            `${this._apiBaseUrl}tasks/${taskId}/taskrequest`,
+            {
+                withCredentials: true
+            }
+        );
+    }
+
+    assigneDeveloperForTaskRequest(taskRequestId, userId) {
+        return axios.get(
+            `${this._apiBaseUrl}taskrequest/${taskRequestId}/pickdeveloper/${userId}`,
             {
                 withCredentials: true
             }
