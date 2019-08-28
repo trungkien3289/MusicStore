@@ -64,22 +64,15 @@ export default class TaskRequestManagement {
                 if (response.status === 200) {
                     self.showDialog(false);
                     //reload page
-
                 }
             }).catch(function (error) {
                 if (error.response) {
-                    // The request was made and the server responded with a status code
-                    // that falls out of the range of 2xx
                     console.log(error.response.data);
                     console.log(error.response.status);
                     console.log(error.response.headers);
                 } else if (error.request) {
-                    // The request was made but no response was received
-                    // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-                    // http.ClientRequest in node.js
                     console.log(error.request);
                 } else {
-                    // Something happened in setting up the request that triggered an Error
                     console.log('Error', error.message);
                 }
                 console.log(error.config);
@@ -87,25 +80,21 @@ export default class TaskRequestManagement {
     }
 
     pickUpDeveloperHandler(taskRequestId, userId) {
-        this._service.assigneDeveloperForTaskRequest(taskRequestId, userId).then(response => {
+        var self = this;
+        this._service.assigneDeveloperForTaskRequest(taskRequestId, userId)
+            .then(function (response) {
             if (response.status === 200) {
-                alert("Add task request successful.");
-                self.showDialog(false);
+                // notify assign developer successful.
+                alert("Assign developer successful.");
             }
         }).catch(function (error) {
             if (error.response) {
-                // The request was made and the server responded with a status code
-                // that falls out of the range of 2xx
                 console.log(error.response.data);
                 console.log(error.response.status);
                 console.log(error.response.headers);
             } else if (error.request) {
-                // The request was made but no response was received
-                // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-                // http.ClientRequest in node.js
                 console.log(error.request);
             } else {
-                // Something happened in setting up the request that triggered an Error
                 console.log('Error', error.message);
             }
             console.log(error.config);
@@ -223,7 +212,7 @@ export class Service {
     }
 
     assigneDeveloperForTaskRequest(taskRequestId, userId) {
-        return axios.get(
+        return axios.post(
             `${this._apiBaseUrl}taskrequest/${taskRequestId}/pickdeveloper/${userId}`,
             {
                 withCredentials: true

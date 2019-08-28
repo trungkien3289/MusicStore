@@ -12,8 +12,8 @@
 }
 <div class="app-main__outer">
     <div class="app-main__inner">
-        <div class="row task-request-management-wrapper">
-            <div class="col-md-4 col-xl-4 card left-panel">
+        <div class="task-request-management-wrapper">
+            <div class="col-md-3 col-xl-3 card left-panel">
                 <div class="card-header card-header-tab-animation">
                     Projects
                 </div>
@@ -48,22 +48,18 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-8 col-xl-8 right-panel">
+            <div class="col-md-9 col-xl-9 right-panel main-card card">
                 <div data-bind="if: isShowContentPanel" class="task-request-details-container">
-                    <div class="task-details-container">
-                        <div class="main-card card">
-                            <div class="card-header">
-                                <span class="title">Task Request Details</span>
-                                <a class="waves-effect waves-light btn-small btn-add-task-request"
-                                   data-bind="enable: currentTask.Assignee ,click:$root.addTaskRequestBtnClick, clickBubble: false">
-                                    <i class="material-icons left">add</i>Add Request
-                                </a>
-                            </div>
-                            <div class="card-body d-flex flex-column">
-                                <div class="task-details-panel" data-bind="template: {name:'taskDetailsTemplate', data: currentTask}"></div>
-                                <div class="task-request-details-panel" data-bind="template: {name:'taskRequestDetailsTemplate', data: currentTaskRequest}"></div>
-                            </div>
-                        </div>
+                    <div class="card-header">
+                        <span class="title">Task Request Details</span>
+                        <button class="waves-effect waves-light btn-small btn-add-task-request"
+                            data-bind="enable: $root.currentTask.Assignee == null ,click:$root.addTaskRequestBtnClick, clickBubble: false">
+                            <i class="material-icons">add</i>Add Request
+                        </button>
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <div class="task-details-panel" data-bind="template: {name:'taskDetailsTemplate', data: currentTask}"></div>
+                        <div class="task-request-details-panel" data-bind="template: {name:'taskRequestDetailsTemplate', data: currentTaskRequest}"></div>
                     </div>
                 </div>
             </div>
@@ -118,7 +114,7 @@
         <div class="project-title" data-bind="text: Name"></div>
     </div>
     <div class="row-data bd-highligh">
-        <i><p data-bind="text: Description"></p></i>
+        <p class=""><i data-bind="text: Description"></i></p>
     </div>
     <div class="row-data project-time-panel">
         <div class="d-flex flex-column time-group-controls">
@@ -137,7 +133,7 @@
             </div>
             <span data-bind="text: EndDate"></span>
         </div>
-        <div class="d-flex flex-column time-group-controls">
+        <div class="d-flex flex-column align-items-center time-group-controls">
             <div class="d-flex flex-row align-items-center">
                 <span class="icon-space-wrapper"><i class="fa fa-calendar-alt"></i></span>
                 <span class="time-group-subject">Estimate Time(hours)</span>
@@ -145,42 +141,45 @@
             <span data-bind="text: EstimatedTime"></span>
         </div>
     </div>
+    <div class="form-group row" data-bind="if: Assignee != null">
+        <label class="font-weight-bold col-sm-2 col-form-label">Task Request Assignee</label>
+        <div class="col-sm-10 d-flex flex-row align-items-center" data-bind="with: Assignee">
+            <div class="project-member-wrapper">
+                <span><i class="fas fa-user-tie"></i></span>
+                <div data-bind="text: Name"></div>
+            </div>
+        </div>
+    </div>
 </script>
 
 <script type="text/x-jquery-tmpl" id="taskRequestDetailsTemplate">
-        <div class="row-data user-group-controls">
-            <label class="font-weight-bold">Request Description</label>
-            <i><p data-bind="text: Description"></p></i>
-        </div>
-        <div class="row-data user-group-controls">
-            <label class="font-weight-bold">Request Status</label>
+    <div class="form-group row">
+        <label class="font-weight-bold col-sm-2 col-form-label">Request Status</label>
+        <div class="col-sm-10 d-flex flex-row align-items-center">
             <div data-bind="if: Status == 0">
-                <span class="badge blue">New</span>
+                <span class="new badge blue float-left" data-badge-caption="">New</span>
             </div>
             <div data-bind="if: Status == 1">
-                <span class="badge blue">Active</span>
+                <span class="new badge blue float-left" data-badge-caption="">Active</span>
             </div>
             <div data-bind="if: Status == 2">
-                <span class="badge blue">Close</span>
+                <span class="new badge blue float-left" data-badge-caption="">Close</span>
             </div>
         </div>
-        @*<div class="row-data user-group-controls">
-            <label>Task Request Assignee</label>
-            <div data-bind="if: Assignee, with: Assignee" class="d-flex flex-row align-items-center">
-                <div class="project-member-wrapper">
-                    <span><i class="fas fa-user-tie"></i></span>
-                    <div data-bind="text: Name"></div>
-                </div>
-            </div>
-        </div>*@
-        <div class="row-data user-group-controls">
-            <label>Task Request Developer Target</label>
+    </div>
+    <div class="form-group row">
+        <label class="font-weight-bold col-sm-2 col-form-label">Request Description</label>
+        <p class="col-sm-12"><i data-bind="text: Description"></i></p>
+    </div>
+    <div class="form-group row">
+        <label for="listTaskRequestDeveloper" class="font-weight-bold col-sm-12 col-form-label">Task Request Developer Target</label>
+        <div id="listTaskRequestDeveloper" class="col-sm-12">
             <table>
                 <thead>
                     <tr>
                         <th>Name</th>
                         <th>Status</th>
-                        <th width="80px;"></th>
+                        <th width="120px;"></th>
                     </tr>
                 </thead>
 
@@ -189,17 +188,18 @@
                         <td data-bind="text: UserName"></td>
                         <td>
                             <div data-bind="if: IsJoin">
-                                <span class="badge blue">Joined</span>
+                                <span class="new badge blue" data-badge-caption="">Joined</span>
                             </div>
                             <div data-bind="ifnot : IsJoin">
-                                <span class="badge blue">Pending</span>
+                                <span class="new badge blue" data-badge-caption="">Pending</span>
                             </div>
                         </td>
                         <td>
-                            <div data-bind="if: IsJoin"><a data-bind="click: function(data, event) { $root.pickUpDeveloperBtnClick(TaskRequestId, UserId) }" class="waves-effect waves-light btn"><i class="material-icons left">send</i>Pick</a></div>
+                            <div data-bind="if: IsJoin"><button data-bind="click: function(data, event) { $root.pickUpDeveloperBtnClick(TaskRequestId, UserId) }" class="waves-effect waves-light btn"><i class="material-icons right">send</i>Pick</button></div>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
+    </div>
 </script>

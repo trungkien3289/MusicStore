@@ -27,19 +27,24 @@ namespace MusicStore.Service.Services
 
         public void ApproveTaskRequest(int userId, int taskRequestId)
         {
-            if(IsJoinedTaskRequestDeveloper(userId, taskRequestId))
+            if (IsTaskRequestClose(taskRequestId)) throw new Exception("Task Request is close");
+            if (IsJoinedTaskRequestDeveloper(userId, taskRequestId))
             {
                 var taskRequest = _unitOfWork.TaskRequestRepository.GetByID(taskRequestId);
                 taskRequest.AssigneeId = userId;
                 taskRequest.Status = (int)TaskRequestStatusEnum.Close;
+                taskRequest.Task.AssigneeId = userId;
                 _unitOfWork.Save();
             }
-
-            throw new Exception("User does not belong to list joined developer of this task");
+            else
+            {
+                throw new Exception("User does not belong to list joined developer of this task");
+            }
         }
 
         public void JoinTaskRequest(int taskRequestId, int userId)
         {
+            if (IsTaskRequestClose(taskRequestId)) throw new Exception("Task Request is close");
             if(IsTaskRequestDeveloper(userId, taskRequestId))
             {
                 var taskRequestDeveloper = _unitOfWork.TaskRequestDeveloperRepository.GetFirst(
@@ -51,23 +56,6 @@ namespace MusicStore.Service.Services
             }
 
             throw new Exception("User does not belong to list developer of this task");
-        }
-
-        private bool IsTaskRequestDeveloper(int userId, int taskRequestId)
-        {
-            var taskRequestDeveloper = _unitOfWork.TaskRequestDeveloperRepository.Get(
-               trd => trd.UserId == userId
-               && trd.TaskRequestId == taskRequestId);
-            return taskRequestDeveloper != null ? true : false;
-        }
-
-        private bool IsJoinedTaskRequestDeveloper(int userId, int taskRequestId)
-        {
-            var joinedTaskRequestDeveloper = _unitOfWork.TaskRequestDeveloperRepository.Get(
-                trd => trd.UserId == userId
-                && trd.TaskRequestId == taskRequestId 
-                && trd.IsJoin);
-            return joinedTaskRequestDeveloper != null ? true : false;
         }
 
         #endregion
@@ -85,7 +73,28 @@ namespace MusicStore.Service.Services
             return _unitOfWork.TaskRequestRepository.Count(tr => tr.AssigneeId == userId);
         }
 
+        private bool IsTaskRequestDeveloper(int userId, int taskRequestId)
+        {
+            var taskRequestDeveloper = _unitOfWork.TaskRequestDeveloperRepository.Get(
+               trd => trd.UserId == userId
+               && trd.TaskRequestId == taskRequestId);
+            return taskRequestDeveloper != null ? true : false;
+        }
+        private bool IsJoinedTaskRequestDeveloper(int userId, int taskRequestId)
+        {
+            var joinedTaskRequestDeveloper = _unitOfWork.TaskRequestDeveloperRepository.Count(
+                trd => trd.UserId == userId
+                && trd.TaskRequestId == taskRequestId
+                && trd.IsJoin);
+            return joinedTaskRequestDeveloper > 0 ? true : false;
+        }
 
+        private bool IsTaskRequestClose(int taskRequestId)
+        {
+            var taskRequest = _unitOfWork.TaskRequestRepository.GetByID(taskRequestId);
+            if (taskRequest == null) throw new Exception("Task Request Not found");
+            return (taskRequest.Status == (int)TaskRequestStatusEnum.Close || taskRequest.AssigneeId != null);
+        }
         #endregion
 
         #region public functions

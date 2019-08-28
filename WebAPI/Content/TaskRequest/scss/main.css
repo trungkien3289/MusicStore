@@ -1,4 +1,7 @@
-﻿.task-request-management-wrapper {
+﻿.app-main {
+  margin: 0 10px; }
+
+.task-request-management-wrapper {
   display: flex;
   position: absolute;
   top: 70px;
@@ -6,11 +9,15 @@
   right: 0;
   bottom: 0;
   margin: 0; }
+  .task-request-management-wrapper .font-weight-bold {
+    color: #495057; }
   .task-request-management-wrapper .card-header {
     font-size: 1.2rem; }
   .task-request-management-wrapper .left-panel {
     font-size: 15px;
-    display: flex; }
+    display: flex;
+    box-sizing: border-box;
+    border-right: 10px solid #fafbfc; }
     .task-request-management-wrapper .left-panel .btn-project-item {
       line-height: 2.4rem;
       height: 2.4rem;
@@ -43,8 +50,9 @@
   .task-request-management-wrapper .task-request-details-container .card-header .title {
     flex: 1 1 auto; }
   .task-request-management-wrapper .task-request-details-container .card-header .btn-add-task-request {
-    flex: 0 0 170px;
-    color: #fff; }
+    flex: 0 0 150px;
+    color: #fff;
+    display: flex; }
   .task-request-management-wrapper .icon-space-wrapper {
     margin-right: 10px; }
   .task-request-management-wrapper .time-group-controls {
@@ -66,7 +74,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 10px 0; }
+    padding: 10px 15px; }
 
 .modal.modal-fixed-footer .modal-content {
   border: none;

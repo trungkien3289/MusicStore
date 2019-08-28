@@ -91,7 +91,9 @@ namespace WebAPI.APIControllers
             }
         }
 
-        public HttpResponseMessage ApproveTaskRequest(int userId, int taskRequestId)
+        [Route("api/taskrequest/{taskRequestId}/pickdeveloper/{userId}")]
+        [HttpPost]
+        public HttpResponseMessage ApproveTaskRequest(int taskRequestId, int userId)
         {
             try
             {
@@ -100,9 +102,10 @@ namespace WebAPI.APIControllers
             }
             catch(Exception ex)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex.Message);
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex.Message);
             }
         }
+
         public HttpResponseMessage JoinTaskRequest(int userId, int taskRequestId)
         {
             try
