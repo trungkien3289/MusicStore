@@ -1,5 +1,6 @@
 ﻿import axios from 'axios';
 import Utils from '../../Common/es6/utils';
+import * as Toastr from 'toastr';
 
 $(document).ready(function () {
     $('.modal').modal();
@@ -7,7 +8,6 @@ $(document).ready(function () {
 
     this.project = new ProjectModelView(applicationPath);
     ko.applyBindings(this.project);
-
 });
 
 export default class ProjectModelView {
@@ -67,6 +67,7 @@ export default class ProjectModelView {
                 console.log(response);
                 if (response.status === 200) {
                     location.reload();
+                    Toastr.info('Are you the 6 fingered man?');
                 }
             });
 
