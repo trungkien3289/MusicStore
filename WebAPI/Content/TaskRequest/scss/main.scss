@@ -25,6 +25,15 @@
         box-sizing: border-box;
         border-right: 10px solid #fafbfc;
 
+        .project-task-panel {
+            .btn-task-item {
+                &.selected {
+                    background-color: #2196F3;
+                    color: #fff;
+                }
+            }
+        }
+
         .btn-project-item {
             line-height: 2.4rem;
             height: 2.4rem;
@@ -88,7 +97,7 @@
             .btn-add-task-request {
                 flex: 0 0 150px;
                 color: #fff;
-                display:flex;
+                display: flex;
             }
         }
     }

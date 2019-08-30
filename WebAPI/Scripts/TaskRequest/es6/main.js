@@ -22,6 +22,10 @@ export default class TaskRequestManagement {
         this.currentTask = ko.observable(new TaskDetailsModel());
         this.currentTaskRequest = ko.observable(new TaskRequestModel());
         this.isShowContentPanel = ko.observable(false);
+        this.hasTaskRequest = ko.observable(false);
+        this.isTaskAssignee = ko.computed(function () {
+            return this.currentTask().Assignee != null;
+        }, this);
         // task request add/edit viewmodel
         this.addEditTaskRequestModel = ko.observable(new AddEditTaskRequestViewModel());
         this.availableDevelopers = ko.observableArray([]);
@@ -45,8 +49,8 @@ export default class TaskRequestManagement {
     addTaskRequestHandler() {
         var self = this;
         this.getAvailableDevelopers(function () {
-            var taskId = self.currentTask() != null ? self.currentTask().Id : null;
-            var projectId = self.currentTask() != null ? self.currentTask().ProjectId : null;
+            var taskId = self.getCurrentTaskId();
+            var projectId = self.getCurrentProjectId();
             self.addEditTaskRequestModel(new AddEditTaskRequestViewModel(projectId, taskId));
             self.showDialog(true);
         });
@@ -64,6 +68,12 @@ export default class TaskRequestManagement {
                 if (response.status === 200) {
                     self.showDialog(false);
                     //reload page
+                    let taskId = self.getCurrentTaskId();
+                    if (taskId) {
+                        self.getTaskDetails(taskId);
+                    } else {
+                        throw new Error("There is no selected task");
+                    }
                 }
             }).catch(function (error) {
                 if (error.response) {
@@ -86,6 +96,12 @@ export default class TaskRequestManagement {
             if (response.status === 200) {
                 // notify assign developer successful.
                 alert("Assign developer successful.");
+                let taskId = self.getCurrentTaskId();
+                if (taskId) {
+                    self.getTaskDetails(taskId);
+                } else {
+                    throw new Error("There is no selected task");
+                }
             }
         }).catch(function (error) {
             if (error.response) {
@@ -101,11 +117,21 @@ export default class TaskRequestManagement {
         });
     }
 
+    getCurrentTaskId() {
+        return this.currentTask() != null ? this.currentTask().Id : null;
+    }
+
+    getCurrentProjectId() {
+        return this.currentTask() != null ? this.currentTask().ProjectId : null;
+    }
+
     bindEventProjectTaskPanel() {
         var self = this;
         $(".project-task-panel .btn-task-item").bind("click", (e) => {
             var taskId = $(e.target).data("id");
             self.getTaskDetails(taskId);
+            $(".project-task-panel .btn-task-item").removeClass("selected");
+            $(e.target).addClass("selected");
         });
     }
 
@@ -122,6 +148,7 @@ export default class TaskRequestManagement {
                     data.EndDate = moment(new Date(data.EndDate)).format("DD/MM/YYYY hh:mm:ss");
                     self.currentTask(new TaskDetailsModel(data));
                     // Update Task Request Details panel
+                    self.hasTaskRequest(taskRequestRes.data != null);
                     self.currentTaskRequest(new TaskRequestModel(taskRequestRes.data));
                 }
             }));

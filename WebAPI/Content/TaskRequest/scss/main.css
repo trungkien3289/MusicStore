@@ -18,6 +18,9 @@
     display: flex;
     box-sizing: border-box;
     border-right: 10px solid #fafbfc; }
+    .task-request-management-wrapper .left-panel .project-task-panel .btn-task-item.selected {
+      background-color: #2196F3;
+      color: #fff; }
     .task-request-management-wrapper .left-panel .btn-project-item {
       line-height: 2.4rem;
       height: 2.4rem;

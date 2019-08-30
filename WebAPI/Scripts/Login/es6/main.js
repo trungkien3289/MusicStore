@@ -70,6 +70,7 @@ export default class LoginPage {
     }
 
     requestLogin() {
+        let authentication = this.authorizationHeader();
         return axios.post(
             `${this._apiBaseUrl}get/token`,
             {
@@ -77,10 +78,10 @@ export default class LoginPage {
                 password: this.password()
             },
             {
-                headers: {
-                    Authorization: this.authorizationHeader()
-                }
-            }
+                headers: { 'Authorization': authentication }
+            },
+            
+                //withCredentials: true
         );
     }
 }

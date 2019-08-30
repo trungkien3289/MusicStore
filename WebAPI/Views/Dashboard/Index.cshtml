@@ -254,7 +254,13 @@
 
 <script type="text/x-jquery-tmpl" id="taskRequestTemplate">
     <div class="main-card card" >
-        <div class="card-header">Task Request Details</div>
+        <div class="card-header">
+            <span class="title">Task Request Details</span>
+            <button class="waves-effect waves-light btn-small btn-add-task-request blue"
+                    data-bind="visible: CanJoin ,click:$root.addTaskRequestBtnClick, clickBubble: false">
+                <i class="material-icons">send</i>Join Request
+            </button>
+        </div>
         <div class="card-body d-flex flex-column">
             <div class="task-container d-flex flex-column" data-bind="with:Task">
                 <div class="row-data align-items-center project-title-panel">

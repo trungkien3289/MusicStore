@@ -52,14 +52,16 @@
                 <div data-bind="if: isShowContentPanel" class="task-request-details-container">
                     <div class="card-header">
                         <span class="title">Task Request Details</span>
-                        <button class="waves-effect waves-light btn-small btn-add-task-request"
-                            data-bind="enable: $root.currentTask.Assignee == null ,click:$root.addTaskRequestBtnClick, clickBubble: false">
+                        <button class="waves-effect waves-light btn-small btn-add-task-request blue"
+                            data-bind="hidden: hasTaskRequest ,click:$root.addTaskRequestBtnClick, clickBubble: false">
                             <i class="material-icons">add</i>Add Request
                         </button>
                     </div>
                     <div class="card-body d-flex flex-column">
                         <div class="task-details-panel" data-bind="template: {name:'taskDetailsTemplate', data: currentTask}"></div>
-                        <div class="task-request-details-panel" data-bind="template: {name:'taskRequestDetailsTemplate', data: currentTaskRequest}"></div>
+                        <div class="task-request-details-wrapper" data-bind="visible: hasTaskRequest">
+                            <div class="task-request-details-panel" data-bind="template: {name:'taskRequestDetailsTemplate', data: currentTaskRequest}"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -195,7 +197,7 @@
                             </div>
                         </td>
                         <td>
-                            <div data-bind="if: IsJoin"><button data-bind="click: function(data, event) { $root.pickUpDeveloperBtnClick(TaskRequestId, UserId) }" class="waves-effect waves-light btn"><i class="material-icons right">send</i>Pick</button></div>
+                            <div data-bind="ifnot:$root.isTaskAssignee"><button data-bind="visible:IsJoin, click: function(data, event) { $root.pickUpDeveloperBtnClick(TaskRequestId, UserId) }" class="waves-effect waves-light btn blue"><i class="material-icons right">send</i>Pick</button></div>
                         </td>
                     </tr>
                 </tbody>
