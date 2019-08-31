@@ -1,6 +1,6 @@
 ﻿﻿@using Helper;
 @using WebAPI.Filters;
-@{ 
+@{
     var identity = System.Threading.Thread.CurrentPrincipal.Identity as BasicAuthenticationIdentity;
 }
 
@@ -19,12 +19,21 @@
     <link href="~/Content/Common/materialize-css-icon.css" rel="stylesheet" />
     <script src="~/Scripts/build/layout.js"></script>
     <script src="~/Scripts/build/pageHeader.js"></script>
+    <link href="~/node_modules/toastr/build/toastr.css" rel="stylesheet" />
     <script>
         var host = "@Request.Url.Host";
         var applicationPath = "@HttpContext.Current.Request.ApplicationPath";
     </script>
+    <script language="javascript" type="text/javascript">
+        $(window).load(function () {
+            $('#loading').hide();
+        });
+    </script>
 </head>
 <body class="sticky-header left-side-collapsed">
+    <div id="loading">
+        <img id="loading-image" src="~/Content/Images/loading.gif" alt="Loading..." />
+    </div>
     <div class="app-container app-theme-white body-tabs-shadow fixed-header">
         <div class="app-header header-shadow">
             <div class="app-header__content">
@@ -103,10 +112,10 @@
                                         </div>
                                     </div>
                                     @*<div class="widget-content-right header-user-info ml-3">
-                                        <button type="button" class="btn-shadow p-1 btn btn-primary btn-sm show-toastr-example">
-                                            <i class="fa text-white fa-calendar pr-1 pl-1"></i>
-                                        </button>
-                                    </div>*@
+                                            <button type="button" class="btn-shadow p-1 btn btn-primary btn-sm show-toastr-example">
+                                                <i class="fa text-white fa-calendar pr-1 pl-1"></i>
+                                            </button>
+                                        </div>*@
                                 </div>
                             </div>
                         }

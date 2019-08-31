@@ -4761,7 +4761,7 @@ textarea.materialize-textarea + label:after, .select-wrapper + label:after {
     .input-field > label:not(.label-icon).active {
       transform: translateY(-14px) scale(0.8);
       transform-origin: 0 0; }
-  .input-field > input[type]:-webkit-autofill:not(.browser-default) + label,
+  .input-field > input[type]:-webkit-autofill:not(.browser-default):not([type="search"]) + label,
   .input-field > input[type=date]:not(.browser-default) + label,
   .input-field > input[type=time]:not(.browser-default) + label {
     transform: translateY(-14px) scale(0.8);
@@ -6165,7 +6165,7 @@ input[type=range]::-ms-thumb {
   .tap-target-wrapper.open .tap-target-wave::after {
     visibility: visible;
     animation: pulse-animation 1s cubic-bezier(0.24, 0, 0.38, 1) infinite;
-    transition: opacity .3s, transform .3s, visibility 0s 1s; }
+    transition: opacity .3s, transform .3s, visibility 0s 1s; }
 
 .tap-target {
   position: absolute;
@@ -6200,7 +6200,7 @@ input[type=range]::-ms-thumb {
     transition: transform .3s; }
   .tap-target-wave::after {
     visibility: hidden;
-    transition: opacity .3s, transform .3s, visibility 0s;
+    transition: opacity .3s, transform .3s, visibility 0s;
     z-index: -1; }
 
 .tap-target-origin {
@@ -6524,3 +6524,23 @@ input[type=range]::-ms-thumb {
     bottom: auto;
     text-align: center;
     margin-top: 1.2rem; } }
+
+.modal.datepicker-modal {
+  height: 406px;
+  width: 617px; }
+
+#loading {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0.5;
+  background-color: #fff;
+  z-index: 99; }
+
+#loading-image {
+  z-index: 100; }
