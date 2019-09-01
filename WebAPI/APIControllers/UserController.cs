@@ -29,8 +29,8 @@ namespace WebAPI.APIControllers
         {
             var availableDevelopers = _userServices.GetAll().Select(u => new DeveloperItemMessageModel()
             {
-                Id = u.UserId,
-                Name = u.UserName
+                UserId = u.UserId,
+                UserName = u.UserName
             });
 
             return Request.CreateResponse(HttpStatusCode.OK, availableDevelopers);

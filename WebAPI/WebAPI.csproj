@@ -570,6 +570,7 @@
     <Content Include="Scripts\DashBoard\es6\task-details-model.js" />
     <Content Include="Scripts\DashBoard\es6\project-details-model.js" />
     <Content Include="Scripts\DashBoard\es6\task-request-model.js" />
+    <Content Include="Scripts\DashBoard\es6\taskrequest-project-model.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\Layout\es6\main.js" />
@@ -584,6 +585,7 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\TaskRequest\es6\addedit-taskrequest-viewmodel.js" />
     <Content Include="Scripts\TaskRequest\es6\main.js" />
+    <Content Include="Scripts\TaskRequest\es6\project-model.js" />
     <Content Include="Scripts\TaskRequest\es6\task-details-taskrequest.js" />
     <Content Include="Scripts\TaskRequest\es6\task-request-model.js" />
     <Content Include="webpack.common.js" />

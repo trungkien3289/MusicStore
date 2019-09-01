@@ -17,12 +17,27 @@ html {
     margin: 0;
 
     .card-header {
-        font-size: 1.2rem
+        font-size: 1.2rem;
+
+        .title {
+            flex: 1 1 auto;
+        }
+
+        .btn-join-task-request {
+            flex: 0 0 11rem;
+        }
     }
 
     .left-panel {
         font-size: 15px;
         display: flex;
+
+        .tree-node-btn {
+            &.selected {
+                background-color: #2196F3;
+                color: #fff;
+            }
+        }
 
         .btn-project-item {
             line-height: 2.4rem;

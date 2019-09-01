@@ -25,39 +25,6 @@ namespace MusicStore.Service.Services
             this._unitOfWork = unitOfWork;
         }
 
-        public void ApproveTaskRequest(int userId, int taskRequestId)
-        {
-            if (IsTaskRequestClose(taskRequestId)) throw new Exception("Task Request is close");
-            if (IsJoinedTaskRequestDeveloper(userId, taskRequestId))
-            {
-                var taskRequest = _unitOfWork.TaskRequestRepository.GetByID(taskRequestId);
-                taskRequest.AssigneeId = userId;
-                taskRequest.Status = (int)TaskRequestStatusEnum.Close;
-                taskRequest.Task.AssigneeId = userId;
-                _unitOfWork.Save();
-            }
-            else
-            {
-                throw new Exception("User does not belong to list joined developer of this task");
-            }
-        }
-
-        public void JoinTaskRequest(int taskRequestId, int userId)
-        {
-            if (IsTaskRequestClose(taskRequestId)) throw new Exception("Task Request is close");
-            if(IsTaskRequestDeveloper(userId, taskRequestId))
-            {
-                var taskRequestDeveloper = _unitOfWork.TaskRequestDeveloperRepository.GetFirst(
-                    trd => trd.UserId == userId 
-                    && trd.TaskRequestId == taskRequestId);
-
-                taskRequestDeveloper.IsJoin = true;
-                _unitOfWork.Save();
-            }
-
-            throw new Exception("User does not belong to list developer of this task");
-        }
-
         #endregion
 
         #region private function
@@ -93,8 +60,16 @@ namespace MusicStore.Service.Services
         {
             var taskRequest = _unitOfWork.TaskRequestRepository.GetByID(taskRequestId);
             if (taskRequest == null) throw new Exception("Task Request Not found");
-            return (taskRequest.Status == (int)TaskRequestStatusEnum.Close || taskRequest.AssigneeId != null);
+            return (taskRequest.Status == (int)TaskRequestStatusEnum.Close);
         }
+
+        private bool IsTaskRequestAssigned(int taskRequestId)
+        {
+            var taskRequest = _unitOfWork.TaskRequestRepository.GetByID(taskRequestId);
+            if (taskRequest == null) throw new Exception("Task Request Not found");
+            return (taskRequest.AssigneeId != null);
+        }
+
         #endregion
 
         #region public functions
@@ -208,31 +183,60 @@ namespace MusicStore.Service.Services
             return null;
         }
 
-        public TaskRequestEntity Update(int id, TaskRequestEntity model)
+        public TaskRequestEntity Update(int id, UpdateTaskRequestRequest model)
         {
 
             using (var scope = new TransactionScope())
             {
-                var task = _unitOfWork.TaskRequestRepository.GetByID(id);
-                task.Description = model.Description;
-                task.Status = model.Status;
-                task.AssigneeId = model.AssigneeId;
-                _unitOfWork.Save();
-                scope.Complete();
-            }
+                var taskRequest = _unitOfWork.TaskRequestRepository.GetByID(id);
+                taskRequest.Description = model.Description;
+                taskRequest.Status = model.Status;
+                var cloneListDevelopers = new List<fl_TaskRequestDeveloper>(taskRequest.Developers);
 
-            return model;
+                // Delete all developers of task request
+                foreach (var dev in cloneListDevelopers)
+                {
+                    _unitOfWork.TaskRequestDeveloperRepository.Delete(d => d.Id == dev.Id);
+
+                }
+                taskRequest.Developers.Clear();
+
+                foreach (var devId in model.Developers)
+                {
+                    var taskRequestDeveloper = new fl_TaskRequestDeveloper()
+                    {
+                        IsJoin = false,
+                        UserId = devId
+                    };
+                    var oldDev = cloneListDevelopers.FirstOrDefault(d => d.UserId == devId);
+                    if (oldDev != null)
+                    {
+                        taskRequestDeveloper.IsJoin = oldDev.IsJoin;
+                    }
+                    taskRequest.Developers.Add(taskRequestDeveloper);
+                }
+                _unitOfWork.Save();
+
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<fl_TaskRequest, TaskRequestEntity>()
+                .ForMember(tr => tr.Project, opt => opt.Ignore())
+                );
+                var mapper = config.CreateMapper();
+                var returnModel = mapper.Map<fl_TaskRequest, TaskRequestEntity>(taskRequest);
+                scope.Complete();
+
+                return returnModel;
+            }
         }
 
-        public CreateTaskRequestResponse GetTaskRequestOfTask(int taskId)
+        public CreateUpdateTaskRequestResponse GetTaskRequestOfTask(int taskId)
         {
             var task = _unitOfWork.TaskRepository.GetFirst(t => t.Id == taskId);
             if(task.TaskRequest!= null)
             {
-                var config = new MapperConfiguration(cfg => cfg.CreateMap<fl_TaskRequest, CreateTaskRequestResponse>()
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<fl_TaskRequest, CreateUpdateTaskRequestResponse>()
                 .ForMember(m => m.Developers, opt => opt.Ignore()));
                 var mapper = config.CreateMapper();
-                var model = mapper.Map<fl_TaskRequest, CreateTaskRequestResponse>(task.TaskRequest);
+                var model = mapper.Map<fl_TaskRequest, CreateUpdateTaskRequestResponse>(task.TaskRequest);
 
                 model.Developers = new List<TaskRequestDeveloperSummary>();
                 foreach (var dev in task.TaskRequest.Developers)
@@ -242,7 +246,8 @@ namespace MusicStore.Service.Services
                         UserId = dev.UserId,
                         UserName = dev.User.UserName,
                         TaskRequestId = task.TaskRequest.Id,
-                        IsJoin = dev.IsJoin
+                        IsJoin = dev.IsJoin,
+                        IsAssigned = dev.UserId == task.AssigneeId? true: false
                     });
                 }
 
@@ -253,6 +258,66 @@ namespace MusicStore.Service.Services
                 return null;
             }
            
+        }
+
+        public GetUserTaskRequestDetailsResponse GetUserTaskRequestDetails(int taskRequestId, int userId)
+        {
+            var entity = _unitOfWork.TaskRequestRepository.GetByID(taskRequestId);
+            if (entity == null) throw new Exception("Task Request Not Found.");
+            if (!entity.Developers.Any(dev => dev.UserId == userId)) throw new Exception("User is not belong to list target deeloper of task request.");
+
+            var result = new GetUserTaskRequestDetailsResponse();
+            result.IsJoin = entity.Developers.First(d => d.UserId == userId).IsJoin;
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<fl_TaskRequest, TaskRequestEntity>()
+            .ForMember(tr => tr.Project, opt => opt.Ignore())
+            );
+            var mapper = config.CreateMapper();
+            result.TaskRequestDetails = mapper.Map<fl_TaskRequest, TaskRequestEntity>(entity);
+            return result;
+        }
+
+        public void ApproveTaskRequest(int userId, int taskRequestId)
+        {
+            if (IsTaskRequestClose(taskRequestId) && IsTaskRequestAssigned(taskRequestId)) throw new Exception("Task Request is close or assigned.");
+            if (IsJoinedTaskRequestDeveloper(userId, taskRequestId))
+            {
+                var taskRequest = _unitOfWork.TaskRequestRepository.GetByID(taskRequestId);
+                taskRequest.AssigneeId = userId;
+                taskRequest.Status = (int)TaskRequestStatusEnum.Close;
+                taskRequest.Task.AssigneeId = userId;
+                _unitOfWork.Save();
+            }
+            else
+            {
+                throw new Exception("User does not belong to list joined developer of this task");
+            }
+        }
+
+        public void JoinTaskRequest(int taskRequestId, int userId)
+        {
+            if (IsTaskRequestClose(taskRequestId) && IsTaskRequestAssigned(taskRequestId)) throw new Exception("Task Request is close or assigned.");
+            if (IsTaskRequestDeveloper(userId, taskRequestId))
+            {
+                var taskRequestDeveloper = _unitOfWork.TaskRequestDeveloperRepository.GetFirst(
+                    trd => trd.UserId == userId
+                    && trd.TaskRequestId == taskRequestId);
+
+                taskRequestDeveloper.IsJoin = true;
+                _unitOfWork.Save();
+            }
+            else
+            {
+                throw new Exception("User does not belong to list developer of this task");
+            }
+        }
+
+        public void UnassignTaskRequest(int taskRequestId)
+        {
+            if (IsTaskRequestClose(taskRequestId)) throw new Exception("Task Request is close");
+            var taskRequest = _unitOfWork.TaskRequestRepository.GetByID(taskRequestId);
+            taskRequest.AssigneeId = null;
+            taskRequest.Task.AssigneeId = null;
+            _unitOfWork.Save();
         }
         #endregion
     }

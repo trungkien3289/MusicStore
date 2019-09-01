@@ -11,9 +11,16 @@
   margin: 0; }
   .dashboard-content-panel .card-header {
     font-size: 1.2rem; }
+    .dashboard-content-panel .card-header .title {
+      flex: 1 1 auto; }
+    .dashboard-content-panel .card-header .btn-join-task-request {
+      flex: 0 0 11rem; }
   .dashboard-content-panel .left-panel {
     font-size: 15px;
     display: flex; }
+    .dashboard-content-panel .left-panel .tree-node-btn.selected {
+      background-color: #2196F3;
+      color: #fff; }
     .dashboard-content-panel .left-panel .btn-project-item {
       line-height: 2.4rem;
       height: 2.4rem;

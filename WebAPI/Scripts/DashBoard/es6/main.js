@@ -4,6 +4,7 @@ import ProjectDetailsModel from './project-details-model';
 import TaskDetailsModel from './task-details-model';
 import TaskRequestModel from './task-request-model';
 import DashBoardModel from './dashboard-model';
+import TaskRequestProjectModel from './taskrequest-project-model';
 import * as moment from 'moment';
 import Utils from '../../Common/es6/utils';
 
@@ -23,13 +24,13 @@ export default class DashboardManagement {
     constructor(applicationPath) {
         this.applicationPath = applicationPath;
         this._service = new Service(applicationPath);
-        this.bindEventProjectTaskPanel();
+        this.taskRequestProjects = ko.observableArray([]);
+        this.buildLeftPanel();
         this.getDashBoardData();
         this.dashboard = ko.observable(new DashBoardModel());
         this.currentProject = ko.observable(new ProjectDetailsModel());
         this.currentTask = ko.observable(new TaskDetailsModel());
         this.currentTaskRequest = ko.observable(new TaskRequestModel());
-        this.ProjectStatus = "Karl";
         this.displayMode = ko.observable(ProjectDisplayMode.DASHBOARD);
         this.isShowProjectDetails = ko.computed(function () {
             return this.displayMode() == ProjectDisplayMode.PROJECT_DETAILS;
@@ -43,10 +44,81 @@ export default class DashboardManagement {
         this.isShowDashboard = ko.computed(function () {
             return this.displayMode() == ProjectDisplayMode.DASHBOARD;
         }, this);
+        this.joinTaskRequestBtnClick = this.joinTaskRequestHandler.bind(this);
     }
+
+    buildLeftPanel() {
+        var self = this;
+        this._service.getTaskRequestProjects()
+            .then(response => {
+                if (response.status === 200) {
+                    let projectModels = response.data.map(prj => {
+                        return new TaskRequestProjectModel(prj);
+                    });
+                    self.taskRequestProjects(projectModels);
+                    self.bindEventProjectTaskPanel();
+                }
+            })
+            .catch(error => {
+                if (error.response) {
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                } else if (error.request) {
+                    console.log(error.request);
+                } else {
+                    console.log('Error', error.message);
+                }
+                console.log(error.config);
+            });
+    }
+
+    joinTaskRequestHandler() {
+        var self = this;
+        let taskRequestId = self.currentTaskRequest().Id;
+        self._service.requestJoinTaskRequest(taskRequestId)
+        .then(response => {
+            if (response.status === 200) {
+                // reload task request details
+                self._service.getTaskRequestDetails(taskRequestId)
+                    .then(response => {
+                        console.log(response);
+                        if (response.status === 200) {
+                            self.updateTaskRequestDetailsUI(response.data.TaskRequestDetails, response.data.IsJoin);
+                            $(".left-panel .tree-node-btn").removeClass("selected");
+                            $(e.target).addClass("selected");
+                        }
+                    }).catch(error => {
+                        if (error.response) {
+                            console.log(error.response.data);
+                            console.log(error.response.status);
+                            console.log(error.response.headers);
+                        } else if (error.request) {
+                            console.log(error.request);
+                        } else {
+                            console.log('Error', error.message);
+                        }
+                        console.log(error.config);
+                    });
+                // update status of task request on left panel
+            }
+        }).catch(error => {
+            if (error.response) {
+                console.log(error.response.data);
+                console.log(error.response.status);
+                console.log(error.response.headers);
+            } else if (error.request) {
+                console.log(error.request);
+            } else {
+                console.log('Error', error.message);
+            }
+            console.log(error.config);
+        });
+    }
+
     bindEventProjectTaskPanel() {
         var self = this;
-        $(".project-task-panel .btn-project-item").bind("click", (e) => {
+        $(".left-panel .btn-project-item").bind("click", (e) => {
             var projectId = $(e.target).data("id");
             self._service.getProjectDetails(projectId).then(response => {
                 console.log(response);
@@ -57,6 +129,9 @@ export default class DashboardManagement {
                     data.EndDate = moment(new Date(data.EndDate)).format("DD/MM/YYYY hh:mm:ss");
                     var projectDetails = new ProjectDetailsModel(data);
                     self.currentProject(new ProjectDetailsModel(projectDetails));
+
+                    $(".left-panel .tree-node-btn").removeClass("selected");
+                    $(e.target).addClass("selected");
                 }
             });
         });
@@ -72,23 +147,35 @@ export default class DashboardManagement {
                     data.EndDate = moment(new Date(data.EndDate)).format("DD/MM/YYYY hh:mm:ss");
                     var taskDetails = new TaskDetailsModel(data);
                     self.currentTask(new TaskDetailsModel(taskDetails));
+
+                    $(".left-panel .tree-node-btn").removeClass("selected");
+                    $(e.target).addClass("selected");
                 }
             });
         });
 
         $(".project-request-panel .btn-task-request-item").bind("click", (e) => {
             var taskRequestId = $(e.target).data("id");
-            self._service.getTaskRequestDetails(taskRequestId).then(response => {
+            self._service.getTaskRequestDetails(taskRequestId)
+                .then(response => {
                 console.log(response);
                 if (response.status === 200) {
-                    self.displayMode(ProjectDisplayMode.TASK_REQUEST);
-                    var data = response.data;
-                    data.Task.StartDate = self.convertDateTime(data.Task.StartDate, "DD/MM/YYYY hh:mm:ss");
-                    data.Task.EndDate = self.convertDateTime(data.Task.EndDate, "DD/MM/YYYY hh:mm:ss");
-                    var taskRequestDetails = new TaskRequestModel(data);
-                    self.currentTaskRequest(new TaskRequestModel(taskRequestDetails));
-                }
-            });
+                    self.updateTaskRequestDetailsUI(response.data.TaskRequestDetails, response.data.IsJoin);
+                    $(".left-panel .tree-node-btn").removeClass("selected");
+                    $(e.target).addClass("selected");
+                    }
+                }).catch(error => {
+                    if (error.response) {
+                        console.log(error.response.data);
+                        console.log(error.response.status);
+                        console.log(error.response.headers);
+                    } else if (error.request) {
+                        console.log(error.request);
+                    } else {
+                        console.log('Error', error.message);
+                    }
+                    console.log(error.config);
+                });
         });
 
     }
@@ -121,6 +208,14 @@ export default class DashboardManagement {
 
     convertDateTime(dateString, format) {
         return moment(new Date(dateString)).format(format);
+    }
+
+    updateTaskRequestDetailsUI(taskRequestData, isJoin) {
+        var self = this;
+        self.displayMode(ProjectDisplayMode.TASK_REQUEST);
+        taskRequestData.Task.StartDate = self.convertDateTime(taskRequestData.Task.StartDate, "DD/MM/YYYY hh:mm:ss");
+        taskRequestData.Task.EndDate = self.convertDateTime(taskRequestData.Task.EndDate, "DD/MM/YYYY hh:mm:ss");
+        self.currentTaskRequest(new TaskRequestModel(taskRequestData, isJoin));
     }
 }
 
@@ -162,7 +257,25 @@ export class Service {
 
     getTaskRequestDetails(taskRequestId) {
         return axios.get(
-            `${this._apiBaseUrl}task/requests/${taskRequestId}`,
+            `${this._apiBaseUrl}task/requests/${taskRequestId}/byuser`,
+            {
+                withCredentials: true
+            }
+        );
+    }
+
+    requestJoinTaskRequest(taskRequestId) {
+        return axios.post(
+            `${this._apiBaseUrl}taskrequest/${taskRequestId}/requestjoin`,
+            {
+                withCredentials: true
+            }
+        );
+    }
+
+    getTaskRequestProjects() {
+        return axios.get(
+            `${this._apiBaseUrl}dashboard/projects/withtaskrequest`,
             {
                 withCredentials: true
             }

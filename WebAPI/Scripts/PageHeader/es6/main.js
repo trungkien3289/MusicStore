@@ -29,7 +29,8 @@ export default class PageHeader {
             //    });
 
             self.deleteAllCookies();
-            window.location.replace(`${self.applicationPath}/`);
+            let returnUrl = Utils.isStringNullOrEmpty(self.applicationPath) ? "/" : `${self.applicationPath}/`;
+            window.location.replace(returnUrl);
         });
     }
 

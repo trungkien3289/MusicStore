@@ -2,6 +2,7 @@
 import TaskDetailsModel from './task-details-taskrequest';
 import AddEditTaskRequestViewModel from './addedit-taskrequest-viewmodel';
 import TaskRequestModel from './task-request-model';
+import ProjectModel from './project-model';
 import * as moment from 'moment';
 import Utils from '../../Common/es6/utils';
 
@@ -15,9 +16,11 @@ export default class TaskRequestManagement {
         this.applicationPath = applicationPath;
         this._service = new Service(applicationPath);
         this._dialog = null;
-        this.bindEventProjectTaskPanel();
+        this.buildLeftPanel();
         this.initComponents();
         // viewmodel properties
+        // project tree
+        this.projects = ko.observableArray([]);
         // task details
         this.currentTask = ko.observable(new TaskDetailsModel());
         this.currentTaskRequest = ko.observable(new TaskRequestModel());
@@ -31,7 +34,9 @@ export default class TaskRequestManagement {
         this.availableDevelopers = ko.observableArray([]);
         this.isShowAddEditTaskRequestDialog = ko.observable(false);
         this.addTaskRequestBtnClick = this.addTaskRequestHandler.bind(this);
+        this.editTaskRequestBtnClick = this.editTaskRequestHandler.bind(this);
         this.pickUpDeveloperBtnClick = this.pickUpDeveloperHandler.bind(this);
+        this.unassignDeveloperBtnClick = this.unassignUpDeveloperHandler.bind(this);
         this.okBtnDialogClick = this.okBtnDialogClickHandler.bind(this);
         this.errorMessage = ko.observable("");
     }
@@ -45,6 +50,33 @@ export default class TaskRequestManagement {
         });
         this._dialog = M.Modal.getInstance($("#addTaskRequestDialog"));
     }
+
+    buildLeftPanel() {
+        var self = this;
+        this._service.getProjectList()
+            .then(response => {
+                if (response.status === 200) {
+                    let projectModels = response.data.map(prj => {
+                        return new ProjectModel(prj);
+                    });
+                    self.projects(projectModels);
+                    self.bindEventProjectTaskPanel();
+                }
+            })
+            .catch(error => {
+                if (error.response) {
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                } else if (error.request) {
+                    console.log(error.request);
+                } else {
+                    console.log('Error', error.message);
+                }
+                console.log(error.config);
+            });
+    }
+
     // event handler of view model
     addTaskRequestHandler() {
         var self = this;
@@ -56,15 +88,33 @@ export default class TaskRequestManagement {
         });
     }
 
-    okBtnDialogClickHandler() {
+    editTaskRequestHandler() {
         var self = this;
-        // validate model
+        this.getAvailableDevelopers(function () {
+            var taskId = self.getCurrentTaskId();
+            var projectId = self.getCurrentProjectId();
+            var taskRequest = ko.toJS(self.currentTaskRequest());
+            taskRequest.Developers = taskRequest.Developers.map(dev => dev.UserId);
+            self.addEditTaskRequestModel(new AddEditTaskRequestViewModel(projectId, taskId, taskRequest));
+            self.showDialog(true);
+        });
+    }
 
+    okBtnDialogClickHandler() {
+        if (this.addEditTaskRequestModel().IsEdit) {
+            this.updateTaskRequest();
+        } else {
+            this.createTaskRequest();
+        }
+    }
+
+    createTaskRequest() {
+        var self = this;
         // call api
         var newRequestModel = ko.toJS(this.addEditTaskRequestModel());
-        newRequestModel.Developers = newRequestModel.Developers.map(dev => dev.Id);
+        //newRequestModel.Developers = newRequestModel.Developers.map(dev => dev.UserId);
         this._service.createTaskRequest(newRequestModel)
-        .then(function(response) {
+            .then(function (response) {
                 if (response.status === 200) {
                     self.showDialog(false);
                     //reload page
@@ -86,7 +136,38 @@ export default class TaskRequestManagement {
                     console.log('Error', error.message);
                 }
                 console.log(error.config);
-        });
+            });
+    }
+
+    updateTaskRequest() {
+        var self = this;
+        // call api
+        var updatedRequestModel = ko.toJS(this.addEditTaskRequestModel());
+        //updatedRequestModel.Developers = updatedRequestModel.Developers.map(dev => dev.UserId);
+        this._service.updateTaskRequest(updatedRequestModel)
+            .then(function (response) {
+                if (response.status === 200) {
+                    self.showDialog(false);
+                    //reload page
+                    let taskId = self.getCurrentTaskId();
+                    if (taskId) {
+                        self.getTaskDetails(taskId);
+                    } else {
+                        throw new Error("There is no selected task");
+                    }
+                }
+            }).catch(function (error) {
+                if (error.response) {
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                } else if (error.request) {
+                    console.log(error.request);
+                } else {
+                    console.log('Error', error.message);
+                }
+                console.log(error.config);
+            });
     }
 
     pickUpDeveloperHandler(taskRequestId, userId) {
@@ -96,6 +177,34 @@ export default class TaskRequestManagement {
             if (response.status === 200) {
                 // notify assign developer successful.
                 alert("Assign developer successful.");
+                let taskId = self.getCurrentTaskId();
+                if (taskId) {
+                    self.getTaskDetails(taskId);
+                } else {
+                    throw new Error("There is no selected task");
+                }
+            }
+        }).catch(function (error) {
+            if (error.response) {
+                console.log(error.response.data);
+                console.log(error.response.status);
+                console.log(error.response.headers);
+            } else if (error.request) {
+                console.log(error.request);
+            } else {
+                console.log('Error', error.message);
+            }
+            console.log(error.config);
+        });
+    }
+
+    unassignUpDeveloperHandler(taskRequestId, userId) {
+        var self = this;
+        this._service.unassigneDeveloperForTaskRequest(taskRequestId, userId)
+            .then(function (response) {
+            if (response.status === 200) {
+                // notify assign developer successful.
+                alert("Unassign developer successful.");
                 let taskId = self.getCurrentTaskId();
                 if (taskId) {
                     self.getTaskDetails(taskId);
@@ -192,6 +301,15 @@ export class Service {
         }
     }
 
+    getProjectList() {
+        return axios.get(
+            `${this._apiBaseUrl}projects/withtaskrequest`,
+            {
+                withCredentials: true
+            }
+        );
+    }
+
     getTaskDetails(taskId) {
         return axios.get(
             `${this._apiBaseUrl}tasks/${taskId}`,
@@ -229,6 +347,16 @@ export class Service {
         );
     }
 
+    updateTaskRequest(updatedTaskRequest) {
+        return axios.put(
+            `${this._apiBaseUrl}taskrequest/update`,
+            updatedTaskRequest,
+            {
+                withCredentials: true
+            }
+        );
+    }
+
     getTaskRequestOfTask(taskId) {
         return axios.get(
             `${this._apiBaseUrl}tasks/${taskId}/taskrequest`,
@@ -241,6 +369,15 @@ export class Service {
     assigneDeveloperForTaskRequest(taskRequestId, userId) {
         return axios.post(
             `${this._apiBaseUrl}taskrequest/${taskRequestId}/pickdeveloper/${userId}`,
+            {
+                withCredentials: true
+            }
+        );
+    }
+
+    unassigneDeveloperForTaskRequest(taskRequestId, userId) {
+        return axios.post(
+            `${this._apiBaseUrl}taskrequest/${taskRequestId}/unassigndeveloper`,
             {
                 withCredentials: true
             }
