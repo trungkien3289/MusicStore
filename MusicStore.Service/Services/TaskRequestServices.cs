@@ -319,6 +319,25 @@ namespace MusicStore.Service.Services
             taskRequest.Task.AssigneeId = null;
             _unitOfWork.Save();
         }
+
+        public TaskRequestEntity GetTaskRequestByTaskId(int taskId)
+        {
+            var task = _unitOfWork.TaskRepository.GetFirst(t => t.Id == taskId);
+            if (task.TaskRequest == null)
+            {
+                throw new Exception("Task Request not existed.");
+            }
+
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<fl_TaskRequest, TaskRequestEntity>()
+            .ForMember(tr => tr.Assignee, opt => opt.Ignore())
+            .ForMember(tr => tr.Project, opt => opt.Ignore())
+            .ForMember(tr => tr.Task, opt => opt.Ignore())
+            );
+            var mapper = config.CreateMapper();
+            var model = mapper.Map<fl_TaskRequest, TaskRequestEntity>(task.TaskRequest);
+
+            return model;
+        }
         #endregion
     }
 }

@@ -16,10 +16,12 @@ namespace WebAPI.APIControllers
     public class TaskRequestController : ApiController
     {
         private readonly ITaskRequestServices _taskRequestServices;
+        private readonly ITaskServices _taskServices;
 
-        public TaskRequestController(ITaskRequestServices taskRequestServices)
+        public TaskRequestController(ITaskRequestServices taskRequestServices, ITaskServices taskServices)
         {
             _taskRequestServices = taskRequestServices;
+            _taskServices = taskServices;
         }
 
         public HttpResponseMessage Get(int projectId, int userId, int? status, int page = 1)
@@ -101,9 +103,36 @@ namespace WebAPI.APIControllers
             }
         }
 
+        /// <summary>
+        /// Delete task request by task request Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public HttpResponseMessage Delete(int id)
         {
             var isSuccess = _taskRequestServices.Delete(id);
+            if (isSuccess)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            else
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Error on delete task request");
+            }
+        }
+
+        /// <summary>
+        /// Delete task request by task id
+        /// </summary>
+        /// <param name="taskId"></param>
+        /// <returns></returns>
+        [HttpDelete]
+        [Route("api/task/{taskId}/taskrequest")]
+        [AuthorizationRequiredAttribute]
+        public HttpResponseMessage DeleteTaskRequestOfTask([FromUri]int taskId)
+        {
+            var taskRequest = _taskRequestServices.GetTaskRequestByTaskId(taskId);
+            var isSuccess = _taskRequestServices.Delete(taskRequest.Id);
             if (isSuccess)
             {
                 return Request.CreateResponse(HttpStatusCode.OK);

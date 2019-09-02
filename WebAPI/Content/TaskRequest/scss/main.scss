@@ -1,15 +1,11 @@
-﻿.app-main{
-    margin: 0 10px;
-}
-
-.task-request-management-wrapper {
+﻿.task-request-management-wrapper {
     display: flex;
     position: absolute;
-    top: 70px;
+    top: 60px;
     left: 0;
     right: 0;
-    margin: 0;
-    min-height: 90vh;
+    margin: 0 !important;
+    min-height: 100vh;
 
     .font-weight-bold {
         color: #495057;
@@ -25,12 +21,16 @@
         box-sizing: border-box;
         border-right: 10px solid #fafbfc;
 
-        .project-task-panel {
-            .btn-task-item {
-                &.selected {
-                    background-color: #2196F3;
-                    color: #fff;
-                }
+        .tree-node-btn {
+            &.selected {
+                background-color: #2196F3;
+                color: #fff;
+            }
+
+            &:hover {
+                /*background: #e0f3ff;*/
+                text-decoration: none;
+                cursor: pointer;
             }
         }
 
@@ -44,12 +44,6 @@
             white-space: nowrap;
             transition: all .2s;
             margin: .1rem 0;
-
-            &:hover {
-                background: #e0f3ff;
-                text-decoration: none;
-                cursor: pointer;
-            }
         }
 
         .btn-toogle-panel {
@@ -88,6 +82,12 @@
         }
     }
 
+    .right-panel {
+        .flex-auto-fill {
+            flex: 1 1 auto;
+        }
+    }
+
     .task-request-details-container {
         .card-header {
             .title {
@@ -116,6 +116,24 @@
                 i {
                     font-size: 0.8rem;
                 }
+            }
+
+            .btn-delete-task-request {
+                flex: 0 0 80px;
+                color: #fff;
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                margin-left:5px;
+                i {
+                    font-size: 0.8rem;
+                }
+            }
+        }
+
+        .task-request-developers-container {
+            .btn-unassign-developer {
+                width: 150px;
             }
         }
     }

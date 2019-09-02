@@ -6476,6 +6476,7 @@ input[type=range]::-ms-thumb {
     text-align: center;
     margin-top: 1.2rem; } }
 
+/*Common Controls*/
 .modal.datepicker-modal {
   height: 406px;
   width: 617px; }
@@ -6495,3 +6496,19 @@ input[type=range]::-ms-thumb {
 
 #loading-image {
   z-index: 100; }
+
+/*Dashboard layout*/
+.ddl-setting-topmenu {
+  background-color: transparent;
+  box-shadow: none; }
+
+.ddl-setting-topmenu:hover {
+  background-color: transparent; }
+
+.validationMessage {
+  color: #f00; }
+
+.select-control.input-field > label {
+  position: absolute;
+  top: -26px;
+  font-size: 0.8rem; }

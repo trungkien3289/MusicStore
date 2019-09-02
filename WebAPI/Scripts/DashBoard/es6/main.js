@@ -7,10 +7,11 @@ import DashBoardModel from './dashboard-model';
 import TaskRequestProjectModel from './taskrequest-project-model';
 import * as moment from 'moment';
 import Utils from '../../Common/es6/utils';
+import * as Toastr from 'toastr';
 
 $(document).ready(function () {
     var dashboardManagement = new DashboardManagement(applicationPath);
-    ko.applyBindings(dashboardManagement);
+    ko.applyBindings(dashboardManagement, document.body);
 });
 
 const ProjectDisplayMode = {
@@ -23,6 +24,10 @@ const ProjectDisplayMode = {
 export default class DashboardManagement {
     constructor(applicationPath) {
         this.applicationPath = applicationPath;
+        // configure toastr
+        Toastr.options.closeButton = true;
+        Toastr.options.closeMethod = 'fadeOut';
+        Toastr.options.closeDuration = 300;
         this._service = new Service(applicationPath);
         this.taskRequestProjects = ko.observableArray([]);
         this.buildLeftPanel();
@@ -49,27 +54,14 @@ export default class DashboardManagement {
 
     buildLeftPanel() {
         var self = this;
+        Utils.showLoading();
         this._service.getTaskRequestProjects()
             .then(response => {
-                if (response.status === 200) {
-                    let projectModels = response.data.map(prj => {
-                        return new TaskRequestProjectModel(prj);
-                    });
-                    self.taskRequestProjects(projectModels);
-                    self.bindEventProjectTaskPanel();
-                }
-            })
-            .catch(error => {
-                if (error.response) {
-                    console.log(error.response.data);
-                    console.log(error.response.status);
-                    console.log(error.response.headers);
-                } else if (error.request) {
-                    console.log(error.request);
-                } else {
-                    console.log('Error', error.message);
-                }
-                console.log(error.config);
+                let projectModels = response.data.map(prj => {
+                    return new TaskRequestProjectModel(prj);
+                });
+                self.taskRequestProjects(projectModels);
+                self.bindEventProjectTaskPanel();
             });
     }
 
@@ -77,70 +69,41 @@ export default class DashboardManagement {
         var self = this;
         let taskRequestId = self.currentTaskRequest().Id;
         self._service.requestJoinTaskRequest(taskRequestId)
-        .then(response => {
-            if (response.status === 200) {
+            .then(response => {
+                Toastr.success("Join task request successfully.");
                 // reload task request details
                 self._service.getTaskRequestDetails(taskRequestId)
                     .then(response => {
-                        console.log(response);
-                        if (response.status === 200) {
-                            self.updateTaskRequestDetailsUI(response.data.TaskRequestDetails, response.data.IsJoin);
-                            $(".left-panel .tree-node-btn").removeClass("selected");
-                            $(e.target).addClass("selected");
-                        }
-                    }).catch(error => {
-                        if (error.response) {
-                            console.log(error.response.data);
-                            console.log(error.response.status);
-                            console.log(error.response.headers);
-                        } else if (error.request) {
-                            console.log(error.request);
-                        } else {
-                            console.log('Error', error.message);
-                        }
-                        console.log(error.config);
+                        self.updateTaskRequestDetailsUI(response.data.TaskRequestDetails, response.data.IsJoin);
+                        $(".left-panel .tree-node-btn").removeClass("selected");
+                        $(e.target).addClass("selected");
                     });
                 // update status of task request on left panel
-            }
-        }).catch(error => {
-            if (error.response) {
-                console.log(error.response.data);
-                console.log(error.response.status);
-                console.log(error.response.headers);
-            } else if (error.request) {
-                console.log(error.request);
-            } else {
-                console.log('Error', error.message);
-            }
-            console.log(error.config);
-        });
+            });
     }
 
     bindEventProjectTaskPanel() {
         var self = this;
-        $(".left-panel .btn-project-item").bind("click", (e) => {
-            var projectId = $(e.target).data("id");
-            self._service.getProjectDetails(projectId).then(response => {
-                console.log(response);
-                if (response.status === 200) {
-                    self.displayMode(ProjectDisplayMode.PROJECT_DETAILS);
-                    var data = response.data;
-                    data.StartDate = moment(new Date(data.StartDate)).format("DD/MM/YYYY hh:mm:ss");
-                    data.EndDate = moment(new Date(data.EndDate)).format("DD/MM/YYYY hh:mm:ss");
-                    var projectDetails = new ProjectDetailsModel(data);
-                    self.currentProject(new ProjectDetailsModel(projectDetails));
+        $(".left-panel .btn-project-item").bind("click", function(e) {
+            var projectId = $(this).data("id");
+            self._service.getProjectDetails(projectId)
+            .then(response => {
+                self.displayMode(ProjectDisplayMode.PROJECT_DETAILS);
+                var data = response.data;
+                data.StartDate = moment(new Date(data.StartDate)).format("DD/MM/YYYY hh:mm:ss");
+                data.EndDate = moment(new Date(data.EndDate)).format("DD/MM/YYYY hh:mm:ss");
+                var projectDetails = new ProjectDetailsModel(data);
+                self.currentProject(new ProjectDetailsModel(projectDetails));
 
-                    $(".left-panel .tree-node-btn").removeClass("selected");
-                    $(e.target).addClass("selected");
-                }
+                $(".left-panel .tree-node-btn").removeClass("selected");
+                $(this).addClass("selected");
             });
         });
 
-        $(".project-task-panel .btn-task-item").bind("click", (e) => {
-            var taskId = $(e.target).data("id");
-            self._service.getTaskDetails(taskId).then(response => {
-                console.log(response);
-                if (response.status === 200) {
+        $(".project-task-panel .btn-task-item").bind("click", function(e) {
+            var taskId = $(this).data("id");
+            self._service.getTaskDetails(taskId)
+                .then(response => {
                     self.displayMode(ProjectDisplayMode.TASK_DETAILS);
                     var data = response.data;
                     data.StartDate = moment(new Date(data.StartDate)).format("DD/MM/YYYY hh:mm:ss");
@@ -149,32 +112,17 @@ export default class DashboardManagement {
                     self.currentTask(new TaskDetailsModel(taskDetails));
 
                     $(".left-panel .tree-node-btn").removeClass("selected");
-                    $(e.target).addClass("selected");
-                }
-            });
+                    $(this).addClass("selected");
+                });
         });
 
-        $(".project-request-panel .btn-task-request-item").bind("click", (e) => {
-            var taskRequestId = $(e.target).data("id");
+        $(".project-request-panel .btn-task-request-item").bind("click", function(e){
+            var taskRequestId = $(this).data("id");
             self._service.getTaskRequestDetails(taskRequestId)
                 .then(response => {
-                console.log(response);
-                if (response.status === 200) {
                     self.updateTaskRequestDetailsUI(response.data.TaskRequestDetails, response.data.IsJoin);
                     $(".left-panel .tree-node-btn").removeClass("selected");
-                    $(e.target).addClass("selected");
-                    }
-                }).catch(error => {
-                    if (error.response) {
-                        console.log(error.response.data);
-                        console.log(error.response.status);
-                        console.log(error.response.headers);
-                    } else if (error.request) {
-                        console.log(error.request);
-                    } else {
-                        console.log('Error', error.message);
-                    }
-                    console.log(error.config);
+                    $(this).addClass("selected");
                 });
         });
 
@@ -197,12 +145,9 @@ export default class DashboardManagement {
 
     getDashBoardData() {
         var self = this;
-        this._service.getDashBoardData(this.getCookie("Token")).then(response => {
-            console.log(response);
-            if (response.status === 200) {
-                self.displayMode(ProjectDisplayMode.DASHBOARD);
-                self.dashboard(new DashBoardModel(response.data));
-            }
+        this._service.getDashBoardData().then(response => {
+            self.displayMode(ProjectDisplayMode.DASHBOARD);
+            self.dashboard(new DashBoardModel(response.data));
         });
     }
 
@@ -221,14 +166,55 @@ export default class DashboardManagement {
 
 export class Service {
     constructor(applicationPath) {
+        var self = this;
+        this.applicationPath = applicationPath;
         if (Utils.isStringNullOrEmpty(applicationPath)) {
             this._apiBaseUrl = `api/`;
         } else {
             this._apiBaseUrl = `${applicationPath}api/`;
         }
+
+        // Add a request interceptor
+        axios.interceptors.request.use((config) => {
+            // Do something before request is sent
+            Utils.showLoading();
+            return config;
+        }, (error) => {
+            Utils.hideLoading();
+            // Do something with request error
+            return Promise.reject(error);
+        });
+
+        // Add a response interceptor
+        axios.interceptors.response.use((response) => {
+            Utils.hideLoading();
+            // Do something with response data
+            return response;
+        }, (error) => {
+            if (error.response) {
+                if (error.response.status == 401) {
+                    let returnUrl = Utils.isStringNullOrEmpty(self.applicationPath) ? "/" : `${self.applicationPath}`;
+                    window.location.replace(returnUrl);
+                }
+                Toastr.error(error.response.data.Message, "Error");
+                console.log(error.response.data);
+                console.log(error.response.status);
+                console.log(error.response.headers);
+            } else if (error.request) {
+                Toastr.error(error.request, "Error");
+                console.log(error.request);
+            } else {
+                Toastr.error(`Error ${error.message}`, "Error");
+                console.log('Error', error.message);
+            }
+            console.log(error.config);
+            Utils.hideLoading();
+            // Do something with response error
+            return Promise.reject(error);
+        });
     }
 
-    getDashBoardData(token) {
+    getDashBoardData() {
         return axios.get(
             `${this._apiBaseUrl}dashboard/data`,
             {

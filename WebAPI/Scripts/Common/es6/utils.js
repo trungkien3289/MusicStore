@@ -17,4 +17,12 @@
     static isStringNullOrEmpty(string) {
         return (string == null || string.trim() == "");
     }
+
+    static showLoading() {
+        $("#loading").show();
+    }
+
+    static hideLoading() {
+        $("#loading").hide();
+    }
 }

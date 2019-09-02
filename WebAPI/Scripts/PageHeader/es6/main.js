@@ -29,7 +29,7 @@ export default class PageHeader {
             //    });
 
             self.deleteAllCookies();
-            let returnUrl = Utils.isStringNullOrEmpty(self.applicationPath) ? "/" : `${self.applicationPath}/`;
+            let returnUrl = Utils.isStringNullOrEmpty(self.applicationPath) ? "/" : `${self.applicationPath}`;
             window.location.replace(returnUrl);
         });
     }

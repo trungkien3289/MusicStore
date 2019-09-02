@@ -36,7 +36,10 @@ namespace WebAPI
 
             bundles.Add(new ScriptBundle("~/bundles/dashboard_js").Include(
                       "~/Scripts/DashBoard/dashboard-main.js",
-                      "~/Scripts/Libraries/knockout-3.5.0.js"));
+                      //"~/node_modules/knockout.validation/dist/knockout.validation.js",
+                      //"~/node_modules/knockout.validation/localization/el-GR.js",
+                      "~/Scripts/Libraries/knockout-3.5.0.js"
+                      ));
         }
     }
 }

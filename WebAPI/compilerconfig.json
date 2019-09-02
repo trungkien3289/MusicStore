@@ -10,5 +10,9 @@
   {
     "outputFile": "Content/TaskRequest/scss/main.css",
     "inputFile": "Content/TaskRequest/scss/main.scss"
+  },
+  {
+    "outputFile": "Content/Common/scss/utility.css",
+    "inputFile": "Content/Common/scss/utility.scss"
   }
 ]

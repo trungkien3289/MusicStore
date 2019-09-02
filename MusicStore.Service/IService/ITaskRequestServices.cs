@@ -21,6 +21,7 @@ namespace MusicStore.Service.IService
         int Count(int userId);
         CreateUpdateTaskRequestResponse GetTaskRequestOfTask(int taskId);
         GetUserTaskRequestDetailsResponse GetUserTaskRequestDetails(int taskRequestId, int userId);
+        TaskRequestEntity GetTaskRequestByTaskId(int taskId);
     }
 }
 
