@@ -34,6 +34,21 @@ export default class ProjectModelView {
                 self._projectEditorDialog.open();
             });
         };
+        this.updatePoject = (Name, Description, StartDate, EndDate, Status, Leaders, Developers) => {
+            var self = this;
+
+            self.Name(Name);
+            self.Description(Description);
+            self.EndDate(EndDate);
+            self.StartDate(StartDate);
+            self.Status(Status);
+            self.Leaders(Leaders);
+            self.Developers(Developers);
+
+            this.getAvailableDevelopers(function () {
+                self._projectEditorDialog.open();
+            });
+        };
         this.cancelSaveProject = () => {
             this.Id("");
             this.Name("");

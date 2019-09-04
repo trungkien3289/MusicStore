@@ -26,18 +26,6 @@ namespace WebAPI.Controllers
             return View(viewModel);
 		}
 
-		public ActionResult Create()
-		{
-			return View();
-		}
-
-		[HttpPost]
-		public ActionResult Create(ProjectEntity project)
-		{
-			_projectServices.Create(project);
-			return RedirectToAction("Index");
-		}
-
 		public ActionResult Delete(int id)
 		{
 			var foundProject = _projectServices.GetById(id);

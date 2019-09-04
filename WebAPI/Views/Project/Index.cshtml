@@ -14,7 +14,7 @@
         <div class="card-header">
             <div class="btn-actions-pane-right">
                 <!-- Modal Trigger -->
-                <a class="waves-effect waves-light btn" data-bind="click: newProject">New</a>
+                <a class="waves-effect waves-light btn" style="color: #fff" data-bind="click: newProject">New</a>
 
                 <!-- Modal Structure -->
                 <div id="projectEditor" class="modal modal-fixed-footer">
@@ -106,9 +106,10 @@
                                 <button type="button" class="btn btn-primary btn-sm">
                                     @Html.ActionLink("Detail", "Detail", new { id = project.Id }, new { @Style = "color: #fff; text-decoration: none !important;" })
                                 </button>
-                                <button type="button" class="btn btn-success btn-sm">
-                                    @Html.ActionLink("Update", "Update", new { id = project.Id }, new { @Style = "color: #fff; text-decoration: none !important;" })
-                                </button>
+                                <a class="waves-effect waves-light btn" style="color: #fff" data-bind="click: updatePoject.bind($data, '@project.Name', '@project.Description', '@project.StartDate', '@project.EndDate', '@project.Status', '@project.Leaders','@project.Developers')">Update</a>
+                                @*<button type="button" class="btn btn-success btn-sm">
+                                        @Html.ActionLink("Update", "Update", new { id = project.Id }, new { @Style = "color: #fff; text-decoration: none !important;" })
+                                    </button>*@
                                 <button type="button" class="btn btn-danger btn-sm">
                                     @Html.ActionLink("Delete", "Delete", new { id = project.Id }, new { @Style = "color: #fff; text-decoration: none !important;" })
                                 </button>

@@ -348,6 +348,7 @@
     <Content Include="Content\Images\33.png" />
     <Content Include="Content\Images\background.png" />
     <Content Include="Content\Images\background4.png" />
+    <Content Include="Content\Images\loading.gif" />
     <Content Include="Content\Images\playing.png" />
     <Content Include="Content\Images\spr3.png" />
     <Content Include="Content\Images\spr.png" />
@@ -603,7 +604,6 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Views\Project\Index.cshtml" />
-    <Content Include="Views\Project\Create.cshtml" />
     <Content Include="Views\Project\Update.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_DashBoard_Layout.cshtml" />
