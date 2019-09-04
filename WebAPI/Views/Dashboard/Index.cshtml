@@ -13,7 +13,7 @@
 <div class="app-main__outer">
     <div class="app-main__inner">
         <div class="row dashboard-content-panel">
-            <div class="col-md-4 col-xl-4 card left-panel">
+            <div class="col-md-3 col-xl-3 card left-panel">
                 <div class="card-header card-header-tab-animation">
                     <ul class="nav nav-justified">
                         <li class="nav-item"><a data-toggle="tab" href="#tab-eg8-0" class="active nav-link">Projects</a></li>
@@ -30,17 +30,20 @@
                                         <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                         <i class="metismenu-state-icon pe-7s-angle-up caret-left"></i>
                                     </a>
-                                    <i class="metismenu-icon pe-7s-note2"></i>
-                                    <a class="btn-project-item" data-id="@project.Id">@project.Name</a>
+                                    <a class="btn-project-item tree-node-btn" data-id="@project.Id">
+                                        <i class="metismenu-icon fa fa-suitcase"></i>
+                                        <span>@project.Name</span>
+                                    </a>
                                 </div>
                                 <div class="collapse" id="project@(project.Id)">
                                     <ul class="vertical-nav-menu project-tree">
                                         @foreach (var task in project.Tasks)
                                         {
                                             <li>
-                                                <a data-id="@task.Id" class="btn-task-item">
-                                                    <i class="metismenu-icon">
-                                                    </i>@task.Name
+                                                <a data-id="@task.Id" class="btn-task-item tree-node-btn">
+                                                    <i class="fa fa-tasks">
+                                                    </i>
+                                                    <span>@task.Name</span>
                                                 </a>
                                             </li>
                                         }
@@ -48,47 +51,44 @@
                                 </div>
                             }
                         </div>
-                        <div class="tab-pane project-request-panel" id="tab-eg8-1" role="tabpanel">
-                            @foreach (var project in Model.projectWithRequestTasks)
-                            {
-                                <div class="d-flex flex-row align-items-center" height="30px">
-                                    <a class="btn-toogle-panel collapsed" data-toggle="collapse" href="#project@(project.Id)" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
-                                        <i class="metismenu-state-icon pe-7s-angle-up caret-left"></i>
-                                    </a>
-                                    <i class="metismenu-icon pe-7s-note2"></i>
-                                    <a class="btn-project-item" data-id="@project.Id">@project.Name</a>
-                                </div>
-                                <div class="collapse" id="project@(project.Id)">
-                                    <ul class="vertical-nav-menu project-tree">
-                                        @foreach (var taskRequest in project.TaskRequests)
-                                        {
-                                            <li>
-                                                <a data-id="@taskRequest.Id" class="btn-task-request-item">
-                                                    <i class="metismenu-icon">
-                                                    </i>@taskRequest.Description
-                                                </a>
-                                            </li>
-                                        }
-                                    </ul>
-                                </div>
-                            }
+                        <div class="tab-pane project-request-panel" id="tab-eg8-1" role="tabpanel" data-bind="foreach: taskRequestProjects">
+                            <div class="d-flex flex-row align-items-center" height="30px">
+                                <a class="btn-toogle-panel collapsed" data-toggle="collapse" data-bind="attr : {href : ProjectButtonHRef}" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                    <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                    <i class="metismenu-state-icon pe-7s-angle-up caret-left"></i>
+                                </a>
+                                <a class="btn-project-item tree-node-btn" data-bind="attr:{'data-id' : Id}">
+                                    <i class="metismenu-icon fa fa-suitcase"></i>
+                                    <span data-bind="text: Name"></span>
+                                </a>
+                            </div>
+                            <div class="collapse" data-bind="attr: {id: ProjectExpandPanelId}">
+                                <ul class="vertical-nav-menu project-tree" data-bind="foreach: TaskRequests">
+                                        <li>
+                                            <a  data-bind="attr:{'data-id': Id}" class="btn-task-request-item tree-node-btn">
+                                                <i class="fa fa-tasks">
+                                                </i>
+                                                <span data-bind="text: Task.Description"></span>
+                                            </a>
+                                        </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-8 col-xl-8 right-panel">
-                <div id="DashboardPanel" data-bind="if: isShowDashboard">
-                    <div data-bind="template: {name:'dashboardTemplate', data: dashboard}"></div>
+            <div class="col-md-9 col-xl-9 right-panel">
+                <div id="DashboardPanel" data-bind="visible: isShowDashboard" class="sub-dashboard-content">
+                    <div data-bind="template: {name:'dashboardTemplate', data: dashboard}" class="d-flex flex-auto-fill"></div>
                 </div>
-                <div id="ProjectPanel" data-bind="if: isShowProjectDetails">
-                    <div data-bind="template: {name:'projectDetailsTemplate', data: currentProject}"></div>
+                <div id="ProjectPanel" data-bind="visible: isShowProjectDetails" class="sub-dashboard-content">
+                    <div data-bind="template: {name:'projectDetailsTemplate', data: currentProject}" class="d-flex flex-auto-fill"></div>
                 </div>
-                <div id="TaskPanel" data-bind="if: isShowTaskDetails">
-                    <div data-bind="template: {name:'taskDetailsTemplate', data: currentTask}"></div>
+                <div id="TaskPanel" data-bind="visible: isShowTaskDetails" class="sub-dashboard-content">
+                    <div data-bind="template: {name:'taskDetailsTemplate', data: currentTask}" class="d-flex flex-auto-fill"></div>
                 </div>
-                <div id="TaskRequestPanel" data-bind="if: isShowTaskRequest">
-                    <div data-bind="template: {name:'taskRequestTemplate', data: currentTaskRequest}"></div>
+                <div id="TaskRequestPanel" data-bind="visible: isShowTaskRequest" class="sub-dashboard-content">
+                    <div data-bind="template: {name:'taskRequestTemplate', data: currentTaskRequest}" class="d-flex flex-auto-fill"></div>
                 </div>
             </div>
         </div>
@@ -105,42 +105,44 @@
 </script>
 
 <script type="text/x-jquery-tmpl" id="dashboardTemplate">
-    <div class="row">
-        <div class="col-md-6 col-xl-4">
-            <div class="card mb-3 widget-content bg-midnight-bloom">
-                <div class="widget-content-wrapper text-white">
-                    <div class="widget-content-left">
-                        <div class="widget-heading">Projects</div>
-                        <div class="widget-subheading">Total Projects</div>
-                    </div>
-                    <div class="widget-content-right">
-                        <div class="widget-numbers text-white"><span data-bind="text:TotalProjects"></span></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 col-xl-4">
-            <div class="card mb-3 widget-content bg-arielle-smile">
-                <div class="widget-content-wrapper text-white">
-                    <div class="widget-content-left">
-                        <div class="widget-heading">Total Tasks</div>
-                        <div class="widget-subheading">Total Task</div>
-                    </div>
-                    <div class="widget-content-right">
-                        <div class="widget-numbers text-white"><span data-bind="text:TotalTasks"></span></div>
+    <div class="main-card card flex-auto-fill">
+        <div class="d-flex">
+            <div class="col-md-6 col-xl-4">
+                <div class="card mb-3 widget-content bg-midnight-bloom">
+                    <div class="widget-content-wrapper text-white">
+                        <div class="widget-content-left">
+                            <div class="widget-heading">Projects</div>
+                            <div class="widget-subheading">Total Projects</div>
+                        </div>
+                        <div class="widget-content-right">
+                            <div class="widget-numbers text-white"><span data-bind="text:TotalProjects"></span></div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-6 col-xl-4">
-            <div class="card mb-3 widget-content bg-grow-early">
-                <div class="widget-content-wrapper text-white">
-                    <div class="widget-content-left">
-                        <div class="widget-heading">Task Requests</div>
-                        <div class="widget-subheading">Total Task Request</div>
+            <div class="col-md-6 col-xl-4">
+                <div class="card mb-3 widget-content bg-arielle-smile">
+                    <div class="widget-content-wrapper text-white">
+                        <div class="widget-content-left">
+                            <div class="widget-heading">Total Tasks</div>
+                            <div class="widget-subheading">Total Task</div>
+                        </div>
+                        <div class="widget-content-right">
+                            <div class="widget-numbers text-white"><span data-bind="text:TotalTasks"></span></div>
+                        </div>
                     </div>
-                    <div class="widget-content-right">
-                        <div class="widget-numbers text-white"><span data-bind="text:TotalTaskRequests"></span></div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xl-4">
+                <div class="card mb-3 widget-content bg-grow-early">
+                    <div class="widget-content-wrapper text-white">
+                        <div class="widget-content-left">
+                            <div class="widget-heading">Task Requests</div>
+                            <div class="widget-subheading">Total Task Request</div>
+                        </div>
+                        <div class="widget-content-right">
+                            <div class="widget-numbers text-white"><span data-bind="text:TotalTaskRequests"></span></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -149,7 +151,7 @@
 </script>
 
 <script type="text/x-jquery-tmpl" id="projectDetailsTemplate">
-    <div class="main-card card">
+    <div class="main-card card flex-auto-fill">
         <div class="card-header">Project Details</div>
         <div class="card-body d-flex flex-column">
             <div class="row-data align-items-center project-title-panel">
@@ -202,12 +204,12 @@
 </script>
 
 <script type="text/x-jquery-tmpl" id="taskDetailsTemplate">
-    <div class="main-card card">
+    <div class="main-card card flex-auto-fill">
         <div class="card-header">Task Details</div>
         <div class="card-body d-flex flex-column">
             <div class="row-data align-items-center project-title-panel">
                 <span class="icon-space-wrapper">
-                    <i class="nav-link-icon fa fa-suitcase"> </i>
+                    <i class="nav-link-icon fa fa-tasks"> </i>
                 </span>
                 <div class="project-title" data-bind="text: Name"></div>
             </div>
@@ -253,8 +255,14 @@
 </script>
 
 <script type="text/x-jquery-tmpl" id="taskRequestTemplate">
-    <div class="main-card card" >
-        <div class="card-header">Task Request Details</div>
+    <div class="main-card card flex-auto-fill">
+        <div class="card-header">
+            <span class="title">Task Request Details</span>
+            <button class="waves-effect waves-light btn-small btn-join-task-request blue"
+                    data-bind="visible: CanJoin ,click:$root.joinTaskRequestBtnClick, clickBubble: false">
+                <i class="material-icons right">send</i>Join Request
+            </button>
+        </div>
         <div class="card-body d-flex flex-column">
             <div class="task-container d-flex flex-column" data-bind="with:Task">
                 <div class="row-data align-items-center project-title-panel">

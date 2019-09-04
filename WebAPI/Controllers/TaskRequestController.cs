@@ -31,14 +31,14 @@ namespace WebAPI.Controllers
         // GET: TaskRequest
         public ActionResult Index()
         {
-            // get current user
-            var user = System.Threading.Thread.CurrentPrincipal.Identity as BasicAuthenticationIdentity;
-            // get projects
-            TaskRequestViewModel viewModel = new TaskRequestViewModel()
-            {
-                projectWithTasks = _projectServices.GetByUserId(user.UserId),
-            };
-            return View(viewModel);
+            //// get current user
+            //var user = System.Threading.Thread.CurrentPrincipal.Identity as BasicAuthenticationIdentity;
+            //// get projects
+            //TaskRequestViewModel viewModel = new TaskRequestViewModel()
+            //{
+            //    projectWithTasks = _projectServices.GetForLeader(user.UserId),
+            //};
+            return View();
         }
     }
 }

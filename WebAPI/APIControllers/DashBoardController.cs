@@ -1,4 +1,6 @@
-﻿using MusicStore.Service.IService;
+﻿using AutoMapper;
+using MusicStore.BussinessEntity;
+using MusicStore.Service.IService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,6 +53,22 @@ namespace WebAPI.APIControllers
             {
                 return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex.Message);
             }
+        }
+
+        [AuthorizationRequiredAttribute]
+        [Route("api/dashboard/projects/withtaskrequest")]
+        [HttpGet]
+        public HttpResponseMessage GetProjectWithTaskRequest()
+        {
+            // get current user
+            var user = System.Threading.Thread.CurrentPrincipal.Identity as BasicAuthenticationIdentity;
+            // get projects
+            var projectWithTasks = _projectServices.GetWithTaskRequestByUserId(user.UserId);
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<ProjectEntity, GetProjectWithTaskRequestResponse>());
+            var mapper = config.CreateMapper();
+            var results = mapper.Map<IEnumerable<ProjectEntity>, IEnumerable<GetProjectWithTaskRequestResponse>>(projectWithTasks);
+
+            return Request.CreateResponse(HttpStatusCode.OK, results);
         }
     }
 }

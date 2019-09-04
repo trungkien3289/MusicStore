@@ -178,3 +178,6 @@ Kopie von*
 
 package-lock.json
 .vs/
+
+# es6 build files
+Scripts/build/*.js

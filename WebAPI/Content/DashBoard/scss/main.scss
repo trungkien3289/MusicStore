@@ -10,19 +10,35 @@ html {
 .dashboard-content-panel {
     display: flex;
     position: absolute;
-    top: 70px;
+    top: 60px;
     left: 0;
     right: 0;
-    bottom: 0;
-    margin: 0;
+    margin: 0!important;
+    min-height: 100vh;
 
     .card-header {
-        font-size: 1.2rem
+        font-size: 1.2rem;
+
+        .title {
+            flex: 1 1 auto;
+        }
+
+        .btn-join-task-request {
+            flex: 0 0 11rem;
+        }
     }
 
     .left-panel {
         font-size: 15px;
         display: flex;
+        padding: 0;
+
+        .tree-node-btn {
+            &.selected {
+                background-color: #2196F3;
+                color: #fff;
+            }
+        }
 
         .btn-project-item {
             line-height: 2.4rem;
@@ -75,6 +91,19 @@ html {
                     cursor: pointer;
                 }
             }
+        }
+    }
+
+    .right-panel {
+        padding: 0;
+
+        .flex-auto-fill {
+            flex: 1 1 auto;
+        }
+
+        .sub-dashboard-content {
+            min-height: 100%;
+            display: flex;
         }
     }
 

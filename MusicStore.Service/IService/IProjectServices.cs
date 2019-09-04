@@ -8,6 +8,7 @@ namespace MusicStore.Service.IService
         ProjectEntity GetById(int id);
         ProjectEntity GetProjectDetailsById(int id);
         IEnumerable<ProjectEntity> GetByUserId(int id);
+        IEnumerable<ProjectEntity> GetForLeader(int id);
         IEnumerable<ProjectEntity> GetWithTaskRequestByUserId(int id);
         IEnumerable<TaskEntity> GetTasks(int id);
         IEnumerable<ProjectEntity> GetAll();

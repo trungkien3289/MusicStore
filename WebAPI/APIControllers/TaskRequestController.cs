@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using WebAPI.ActionFilters;
+using WebAPI.Filters;
 using WebAPI.Models.MessageModel;
 
 namespace WebAPI.APIControllers
@@ -15,10 +16,12 @@ namespace WebAPI.APIControllers
     public class TaskRequestController : ApiController
     {
         private readonly ITaskRequestServices _taskRequestServices;
+        private readonly ITaskServices _taskServices;
 
-        public TaskRequestController(ITaskRequestServices taskRequestServices)
+        public TaskRequestController(ITaskRequestServices taskRequestServices, ITaskServices taskServices)
         {
             _taskRequestServices = taskRequestServices;
+            _taskServices = taskServices;
         }
 
         public HttpResponseMessage Get(int projectId, int userId, int? status, int page = 1)
@@ -49,6 +52,25 @@ namespace WebAPI.APIControllers
             return Request.CreateErrorResponse(HttpStatusCode.NotFound, "There is no task request found.");
         }
 
+        /// <summary>
+        /// get user task request details by task id and user id
+        /// </summary>
+        /// <param name="taskRequestId"></param>
+        /// <returns></returns>
+        [AuthorizationRequiredAttribute]
+        [Route("api/task/requests/{taskRequestId}/byuser")]
+        [HttpGet]
+        public HttpResponseMessage DetailsByUser([FromUri]int taskRequestId)
+        {
+            var user = System.Threading.Thread.CurrentPrincipal.Identity as BasicAuthenticationIdentity;
+            var taskRequest = _taskRequestServices.GetUserTaskRequestDetails(taskRequestId, user.UserId);
+            if (taskRequest != null)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, taskRequest);
+            }
+            return Request.CreateErrorResponse(HttpStatusCode.NotFound, "There is no task request found.");
+        }
+
         [AuthorizationRequiredAttribute]
         [HttpPost]
         [Route("api/taskrequest/create")]
@@ -65,7 +87,10 @@ namespace WebAPI.APIControllers
             }
         }
 
-        public HttpResponseMessage Update(TaskRequestEntity taskRequest)
+        [AuthorizationRequiredAttribute]
+        [HttpPut]
+        [Route("api/taskrequest/update")]
+        public HttpResponseMessage Update(UpdateTaskRequestRequest taskRequest)
         {
             var createdRequestTask = _taskRequestServices.Update(taskRequest.Id, taskRequest);
             if (createdRequestTask != null)
@@ -78,9 +103,36 @@ namespace WebAPI.APIControllers
             }
         }
 
+        /// <summary>
+        /// Delete task request by task request Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public HttpResponseMessage Delete(int id)
         {
             var isSuccess = _taskRequestServices.Delete(id);
+            if (isSuccess)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            else
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Error on delete task request");
+            }
+        }
+
+        /// <summary>
+        /// Delete task request by task id
+        /// </summary>
+        /// <param name="taskId"></param>
+        /// <returns></returns>
+        [HttpDelete]
+        [Route("api/task/{taskId}/taskrequest")]
+        [AuthorizationRequiredAttribute]
+        public HttpResponseMessage DeleteTaskRequestOfTask([FromUri]int taskId)
+        {
+            var taskRequest = _taskRequestServices.GetTaskRequestByTaskId(taskId);
+            var isSuccess = _taskRequestServices.Delete(taskRequest.Id);
             if (isSuccess)
             {
                 return Request.CreateResponse(HttpStatusCode.OK);
@@ -106,11 +158,30 @@ namespace WebAPI.APIControllers
             }
         }
 
-        public HttpResponseMessage JoinTaskRequest(int userId, int taskRequestId)
+        [Route("api/taskrequest/{taskRequestId}/unassigndeveloper")]
+        [HttpPost]
+        public HttpResponseMessage UnassignTaskRequest(int taskRequestId)
         {
             try
             {
-                _taskRequestServices.JoinTaskRequest(userId, taskRequestId);
+                _taskRequestServices.UnassignTaskRequest(taskRequestId);
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex.Message);
+            }
+        }
+
+        [AuthorizationRequiredAttribute]
+        [HttpPost]
+        [Route("api/taskrequest/{taskRequestId}/requestjoin")]
+        public HttpResponseMessage JoinTaskRequest([FromUri]int taskRequestId)
+        {
+            try
+            {
+                var user = System.Threading.Thread.CurrentPrincipal.Identity as BasicAuthenticationIdentity;
+                _taskRequestServices.JoinTaskRequest(taskRequestId, user.UserId);
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
             catch(Exception ex)

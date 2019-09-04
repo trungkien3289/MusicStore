@@ -15,8 +15,10 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/dashboard_js")
     @RenderSection("scripts", required: false)
-    <link href="~/Content/ProjectManagement/scss/main.css" rel="stylesheet" />
+    <link href="~/Content/Common/scss/utility.css" rel="stylesheet" />
     <link href="~/Content/Common/materialize-css-icon.css" rel="stylesheet" />
+    <script src="~/node_modules/knockout.validation/dist/knockout.validation.js"></script>
+    <script src="~/node_modules/knockout.validation/localization/el-GR.js"></script>
     <script src="~/Scripts/build/layout.js"></script>
     <script src="~/Scripts/build/pageHeader.js"></script>
     <link href="~/node_modules/toastr/build/toastr.css" rel="stylesheet" />
@@ -70,12 +72,15 @@
                                 Task Request Management
                             </a>
                         </li>
-                        <li class="dropdown nav-item">
-                            <a href="~/user" class="nav-link">
-                                <i class="nav-link-icon fa fa-cog"></i>
-                                Users
-                            </a>
-                        </li>
+                        @if (identity != null && identity.IsAuthenticated && identity.RoleId == (int)UserRoleEnum.ADMIN)
+                        {
+                            <li class="dropdown nav-item">
+                                <a href="~/user" class="nav-link">
+                                    <i class="nav-link-icon fa fa-cog"></i>
+                                    Users
+                                </a>
+                            </li>
+                        }
                     </ul>
                 </div>
                 <div class="app-header-right">
@@ -102,7 +107,7 @@
                                     </div>
                                     <div class="widget-content-right header-user-info ml-3">
                                         <div class="btn-group">
-                                            <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
+                                            <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn ddl-setting-topmenu">
                                                 <i class="fa fa-angle-down ml-2 mr-2 opacity-8"></i>
                                             </a>
                                             <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
@@ -111,11 +116,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    @*<div class="widget-content-right header-user-info ml-3">
-                                            <button type="button" class="btn-shadow p-1 btn btn-primary btn-sm show-toastr-example">
-                                                <i class="fa text-white fa-calendar pr-1 pl-1"></i>
-                                            </button>
-                                        </div>*@
                                 </div>
                             </div>
                         }

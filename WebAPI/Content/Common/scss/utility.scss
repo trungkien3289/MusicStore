@@ -1,0 +1,46 @@
+﻿@import '../../../node_modules/materialize-css/sass/materialize.scss';
+
+/*Common Controls*/
+.modal.datepicker-modal {
+    height: 406px;
+    width: 617px;
+}
+
+#loading {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0.5;
+    background-color: #fff;
+    z-index: 99;
+}
+
+#loading-image {
+    z-index: 100
+}
+
+/*Dashboard layout*/
+
+.ddl-setting-topmenu{
+    background-color: transparent;
+    box-shadow:none;
+}
+
+.ddl-setting-topmenu:hover {
+    background-color: transparent;
+}
+
+.validationMessage {
+    color: #f00;
+}
+
+.select-control.input-field>label {
+    position: absolute;
+    top: -26px;
+    font-size: 0.8rem;
+}

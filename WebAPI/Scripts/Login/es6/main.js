@@ -22,7 +22,52 @@ export default class LoginPage {
         } else {
             this._apiBaseUrl = `${applicationPath}api/`;
         }
+        this.applicationPath = applicationPath;
+
+        this.initAxios();
     }
+    initAxios() {
+        var self = this;
+        // Add a request interceptor
+        axios.interceptors.request.use((config) => {
+            // Do something before request is sent
+            Utils.showLoading();
+            return config;
+        }, (error) => {
+            Utils.hideLoading();
+            // Do something with request error
+            return Promise.reject(error);
+        });
+
+        // Add a response interceptor
+        axios.interceptors.response.use((response) => {
+            Utils.hideLoading();
+            // Do something with response data
+            return response;
+        }, (error) => {
+            if (error.response) {
+                if (error.response.status == 401) {
+                    let returnUrl = Utils.isStringNullOrEmpty(self.applicationPath) ? "/" : `${self.applicationPath}`;
+                    window.location.replace(returnUrl);
+                }
+                Toastr.error(error.response.data.Message, "Error");
+                console.log(error.response.data);
+                console.log(error.response.status);
+                console.log(error.response.headers);
+            } else if (error.request) {
+                Toastr.error(error.request, "Error");
+                console.log(error.request);
+            } else {
+                Toastr.error(`Error ${error.message}`, "Error");
+                console.log('Error', error.message);
+            }
+            console.log(error.config);
+            Utils.hideLoading();
+            // Do something with response error
+            return Promise.reject(error);
+        });
+    }
+
     bindEvents() {
         var self = this;
 
@@ -70,6 +115,7 @@ export default class LoginPage {
     }
 
     requestLogin() {
+        let authentication = this.authorizationHeader();
         return axios.post(
             `${this._apiBaseUrl}get/token`,
             {
@@ -77,10 +123,10 @@ export default class LoginPage {
                 password: this.password()
             },
             {
-                headers: {
-                    Authorization: this.authorizationHeader()
-                }
-            }
+                headers: { 'Authorization': authentication }
+            },
+            
+                //withCredentials: true
         );
     }
 }

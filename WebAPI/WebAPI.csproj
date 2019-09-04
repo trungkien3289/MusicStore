@@ -333,6 +333,12 @@
     <Content Include="Content\Common\jplayer.blue.monday.min.css" />
     <Content Include="Content\Common\materialize-css-icon.css" />
     <Content Include="Content\Common\popuo-box.css" />
+    <Content Include="Content\Common\scss\utility.css">
+      <DependentUpon>utility.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\Common\scss\utility.min.css">
+      <DependentUpon>utility.css</DependentUpon>
+    </Content>
     <Content Include="Content\Common\slidebar.css" />
     <Content Include="Content\Common\style.css" />
     <Content Include="Content\DashBoard\custom.css" />
@@ -428,6 +434,38 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\Pe-icon-7-stroke.svg" />
     <Content Include="Global.asax" />
+    <Content Include="node_modules\knockout.validation\dist\knockout.validation.js" />
+    <Content Include="node_modules\knockout.validation\dist\knockout.validation.min.js" />
+    <Content Include="node_modules\knockout.validation\localization\ar-JO.js" />
+    <Content Include="node_modules\knockout.validation\localization\bg-BG.js" />
+    <Content Include="node_modules\knockout.validation\localization\ca-ES.js" />
+    <Content Include="node_modules\knockout.validation\localization\cs-CZ.js" />
+    <Content Include="node_modules\knockout.validation\localization\da-DK.js" />
+    <Content Include="node_modules\knockout.validation\localization\de-DE.js" />
+    <Content Include="node_modules\knockout.validation\localization\el-GR.js" />
+    <Content Include="node_modules\knockout.validation\localization\en-US.js" />
+    <Content Include="node_modules\knockout.validation\localization\es-ES.js" />
+    <Content Include="node_modules\knockout.validation\localization\fa-IR.js" />
+    <Content Include="node_modules\knockout.validation\localization\fr-FR.js" />
+    <Content Include="node_modules\knockout.validation\localization\he-IL.js" />
+    <Content Include="node_modules\knockout.validation\localization\hr-HR.js" />
+    <Content Include="node_modules\knockout.validation\localization\hu-HU.js" />
+    <Content Include="node_modules\knockout.validation\localization\it-IT.js" />
+    <Content Include="node_modules\knockout.validation\localization\ja-JP.js" />
+    <Content Include="node_modules\knockout.validation\localization\ko-KR.js" />
+    <Content Include="node_modules\knockout.validation\localization\lv-LV.js" />
+    <Content Include="node_modules\knockout.validation\localization\nb-NO.js" />
+    <Content Include="node_modules\knockout.validation\localization\nl-BE.js" />
+    <Content Include="node_modules\knockout.validation\localization\nl-NL.js" />
+    <Content Include="node_modules\knockout.validation\localization\pl-PL.js" />
+    <Content Include="node_modules\knockout.validation\localization\pt-BR.js" />
+    <Content Include="node_modules\knockout.validation\localization\pt-PT.js" />
+    <Content Include="node_modules\knockout.validation\localization\ro-RO.js" />
+    <Content Include="node_modules\knockout.validation\localization\ru-RU.js" />
+    <Content Include="node_modules\knockout.validation\localization\sv-SE.js" />
+    <Content Include="node_modules\knockout.validation\localization\tr-TR.js" />
+    <Content Include="node_modules\knockout.validation\localization\zh-CN.js" />
+    <Content Include="node_modules\knockout.validation\localization\zh-TW.js" />
     <Content Include="node_modules\materialize-css\dist\css\materialize.css" />
     <Content Include="node_modules\materialize-css\dist\css\materialize.min.css" />
     <Content Include="node_modules\materialize-css\dist\js\materialize.js" />
@@ -566,11 +604,18 @@
     <Content Include="fonts\Pe-icon-7-stroke.eot" />
     <Content Include="fonts\Pe-icon-7-stroke.ttf" />
     <Content Include="fonts\Pe-icon-7-stroke.woff" />
+    <Content Include="Content\Common\scss\utility.scss" />
+    <Content Include="node_modules\knockout.validation\CHANGELOG.md" />
+    <Content Include="node_modules\knockout.validation\CONTRIBUTING.md" />
+    <Content Include="node_modules\knockout.validation\dist\knockout.validation.min.js.map" />
+    <Content Include="node_modules\knockout.validation\package.json" />
+    <Content Include="node_modules\knockout.validation\README.md" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\DashBoard\es6\task-details-model.js" />
     <Content Include="Scripts\DashBoard\es6\project-details-model.js" />
     <Content Include="Scripts\DashBoard\es6\task-request-model.js" />
+    <Content Include="Scripts\DashBoard\es6\taskrequest-project-model.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\Layout\es6\main.js" />
@@ -585,6 +630,7 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\TaskRequest\es6\addedit-taskrequest-viewmodel.js" />
     <Content Include="Scripts\TaskRequest\es6\main.js" />
+    <Content Include="Scripts\TaskRequest\es6\project-model.js" />
     <Content Include="Scripts\TaskRequest\es6\task-details-taskrequest.js" />
     <Content Include="Scripts\TaskRequest\es6\task-request-model.js" />
     <Content Include="webpack.common.js" />

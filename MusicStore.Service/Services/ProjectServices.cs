@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Transactions;
+using MusicStore.Model.MessageModels;
 
 namespace MusicStore.Service.Services
 {
@@ -88,12 +89,26 @@ namespace MusicStore.Service.Services
 			return results;
 		}
 
-		public IEnumerable<ProjectEntity> GetWithTaskRequestByUserId(int id)
+        /// <summary>
+		/// Get projects of user(user is admin or leader or developer)
+		/// </summary>
+		/// <param name="id">User id</param>
+		/// <returns></returns>
+		public IEnumerable<ProjectEntity> GetForLeader(int id)
+        {
+            var projects = _unitOfWork.ProjectRepository.GetProjectForLeader(id);
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<fl_Project, ProjectEntity>());
+            var mapper = config.CreateMapper();
+            var results = mapper.Map<IEnumerable<fl_Project>, IEnumerable<ProjectEntity>>(projects);
+            return results;
+        }
+
+        public IEnumerable<ProjectEntity> GetWithTaskRequestByUserId(int id)
 		{
 			var projects = _unitOfWork.ProjectRepository.GetProjectWithTaskRequestByUserId(id);
-			var config = new MapperConfiguration(cfg => cfg.CreateMap<fl_Project, ProjectEntity>());
+			var config = new MapperConfiguration(cfg => cfg.CreateMap<Model.MessageModels.GetProjectWithTaskRequestResponse, ProjectEntity>());
 			var mapper = config.CreateMapper();
-			var results = mapper.Map<IEnumerable<fl_Project>, IEnumerable<ProjectEntity>>(projects);
+			var results = mapper.Map<IEnumerable<Model.MessageModels.GetProjectWithTaskRequestResponse>, IEnumerable<ProjectEntity>>(projects);
 			return results;
 		}
 
