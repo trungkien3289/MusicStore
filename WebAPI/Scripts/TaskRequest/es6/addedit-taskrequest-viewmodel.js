@@ -1,4 +1,5 @@
 ﻿import { TaskRequestStatusEnum } from '../../Common/es6/enum';
+
 export default class AddEditTaskRequestViewModel {
     constructor(projectId, taskId, taskRequest) {
         this.ProjectId = projectId;

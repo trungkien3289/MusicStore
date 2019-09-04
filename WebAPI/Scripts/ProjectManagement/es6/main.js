@@ -1,30 +1,24 @@
 ﻿import axios from 'axios';
 import Utils from '../../Common/es6/utils';
 import * as Toastr from 'toastr';
+import * as moment from 'moment';
+import AddEditProjectViewModel from './addedit-project-viewmodel';
 
 $(document).ready(function () {
-    $('.modal').modal();
-    $('.datepicker').datepicker();
+    $('.modal').modal();  
 
-    this.project = new ProjectModelView(applicationPath);
-    ko.applyBindings(this.project);
+    this.project = new ProjectManagement(applicationPath);
+    ko.applyBindings(this.project, document.body);
 });
 
-export default class ProjectModelView {
+export default class ProjectManagement {
     constructor(applicationPath) {
         this._service = new Service(applicationPath);
         this._projectEditorDialog = null;
 
         this.initComponents();
 
-        this.Id = ko.observable("");
-        this.Name = ko.observable("");
-        this.Description = ko.observable("");
-        this.StartDate = ko.observable();
-        this.EndDate = ko.observable();
-        this.Status = ko.observable();
-        this.Leaders = ko.observable([]);
-        this.Developers = ko.observable([]);
+        this.addEditProjecttModel = ko.observable(new AddEditProjectViewModel());
         this.availableDevelopers = ko.observableArray([]);
 
         this.newProject = () => {
@@ -34,51 +28,25 @@ export default class ProjectModelView {
                 self._projectEditorDialog.open();
             });
         };
-        this.updatePoject = (Name, Description, StartDate, EndDate, Status, Leaders, Developers) => {
+        this.updatePoject = (Id) => {
             var self = this;
 
-            self.Name(Name);
-            self.Description(Description);
-            self.EndDate(EndDate);
-            self.StartDate(StartDate);
-            self.Status(Status);
-            self.Leaders(Leaders);
-            self.Developers(Developers);
+            console.log(Id);
 
             this.getAvailableDevelopers(function () {
                 self._projectEditorDialog.open();
             });
         };
         this.cancelSaveProject = () => {
-            this.Id("");
-            this.Name("");
-            this.Description("");
-            this.StartDate("");
-            this.EndDate("");
-
+            this.addEditProjecttModel(new AddEditProjectViewModel());
             this._projectEditorDialog.close();
         };
         this.saveProject = () => {
             var self = this;
 
-            console.log({
-                Name: self.Name(),
-                Description: self.Description(),
-                EndDate: self.EndDate(),
-                StartDate: self.StartDate(),
-                Status: self.Status(),
-                Leaders: self.Leaders(),
-                Developers: self.Developers()
-            });
-            self._service.addProject({
-                Name: self.Name(),
-                Description: self.Description(),
-                EndDate: self.EndDate(),
-                StartDate: self.StartDate(),
-                Status: self.Status(),
-                //Leaders: self.Leaders(),
-                //Developers: self.Developers()
-            }).then(response => {
+            var newRequestModel = ko.toJS(this.addEditProjecttModel());
+            console.log(newRequestModel);
+            self._service.addProject(newRequestModel).then(response => {
                 console.log(response);
                 if (response.status === 200) {
                     location.reload();
@@ -86,13 +54,8 @@ export default class ProjectModelView {
                 }
             });
 
-            this.Id("");
-            this.Name("");
-            this.Description("");
-            this.StartDate("");
-            this.EndDate("");
-
-            this._projectEditorDialog.open();
+            this.addEditProjecttModel(new AddEditProjectViewModel());
+            this._projectEditorDialog.close();
         };
 
         this.errorMessage = ko.observable("");
@@ -103,6 +66,7 @@ export default class ProjectModelView {
             dismissible: false,
             onOpenStart: function () {
                 $('#projectEditor select').formSelect();
+                $('.datepicker').datepicker();
             }
         });
         this._projectEditorDialog = M.Modal.getInstance($("#projectEditor"));
