@@ -5,7 +5,7 @@ import * as moment from 'moment';
 import AddEditProjectViewModel from './addedit-project-viewmodel';
 
 $(document).ready(function () {
-    $('.modal').modal();  
+    $('.modal').modal();
 
     this.project = new ProjectManagement(applicationPath);
     ko.applyBindings(this.project, document.body);
@@ -16,10 +16,12 @@ export default class ProjectManagement {
         this._service = new Service(applicationPath);
         this._projectEditorDialog = null;
 
-        this.initComponents();
-
+        this.projects = ko.observableArray([]);
         this.addEditProjecttModel = ko.observable(new AddEditProjectViewModel());
         this.availableDevelopers = ko.observableArray([]);
+
+        this.loadProjects();
+        this.initComponents();
 
         this.newProject = () => {
             var self = this;
@@ -65,11 +67,26 @@ export default class ProjectManagement {
         $('#projectEditor').modal({
             dismissible: false,
             onOpenStart: function () {
+                //Init Dropdown
                 $('#projectEditor select').formSelect();
                 $('.datepicker').datepicker();
             }
         });
         this._projectEditorDialog = M.Modal.getInstance($("#projectEditor"));
+    }
+
+    loadProjects() {
+        var self = this;
+
+        console.log(self);
+        self._service.getProjectList()
+            .then(response => {
+                console.log(response.data);
+                let projectModels = response.data.map(prj => {
+                    return new AddEditProjectViewModel(prj);
+                });
+                self.projects(projectModels);
+            });
     }
 
     getAvailableDevelopers(callback) {
@@ -94,6 +111,15 @@ export class Service {
         } else {
             this._apiBaseUrl = `${applicationPath}api/`;
         }
+    }
+
+    getProjectList() {
+        return axios.get(
+            `${this._apiBaseUrl}projects`,
+            {
+                withCredentials: true
+            }
+        );
     }
 
     addProject(projectModelView) {

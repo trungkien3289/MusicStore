@@ -624,6 +624,7 @@
     <Content Include="Scripts\Login\es6\main.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\PageHeader\es6\main.js" />
+    <Content Include="Scripts\ProjectManagement\es6\addedit-project-viewmodel.js" />
     <Content Include="Scripts\ProjectManagement\es6\main.js" />
     <Content Include="Scripts\Register\es6\main.js" />
     <Content Include="Scripts\respond.js" />

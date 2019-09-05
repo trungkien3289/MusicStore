@@ -51,16 +51,33 @@ namespace WebAPI.APIControllers
         }
 
         [Route("api/projects/{page}")]
-        public HttpResponseMessage GetWithPaging([FromUri]int page = 1) {
+        public HttpResponseMessage GetWithPaging([FromUri]int page = 1)
+        {
 
             var projects = _projectServices.Get(page);
             if (projects != null)
             {
                 return Request.CreateResponse(HttpStatusCode.OK, projects);
             }
-            return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Albums not found");
+            return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Projects not found");
         }
 
+        [AuthorizationRequiredAttribute]
+        [HttpGet]
+        [Route("api/projects")]
+        public HttpResponseMessage GetAll()
+        {
+            var projects = _projectServices.GetAll();
+            if (projects != null)
+            {
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<ProjectEntity, GetProjectWithTaskResponse>());
+                var mapper = config.CreateMapper();
+                var results = mapper.Map<IEnumerable<ProjectEntity>, IEnumerable<GetProjectWithTaskResponse>>(projects);
+
+                return Request.CreateResponse(HttpStatusCode.OK, results);
+            }
+            return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Project not found");
+        }
 
         [Route("api/projects/{projectId}")]
         public HttpResponseMessage GetById([FromUri]int projectId)
@@ -73,12 +90,12 @@ namespace WebAPI.APIControllers
             return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Project not found");
         }
 
-		[HttpPost]
-		[Route("api/addProject")]
-		public HttpResponseMessage Add(ProjectEntity project)
+        [HttpPost]
+        [Route("api/addProject")]
+        public HttpResponseMessage Add(ProjectEntity project)
         {
             var createdProject = _projectServices.Create(project);
-            if(createdProject != null)
+            if (createdProject != null)
             {
                 return Request.CreateResponse(HttpStatusCode.OK, createdProject);
             }
