@@ -50,7 +50,7 @@ namespace WebAPI.Controllers
             if (ModelState.IsValid)
             {
                 // Add product
-                _projectServices.Create(project);
+                //_projectServices.Create(project);
                 return RedirectToAction("Index");
             }
             return View(project);

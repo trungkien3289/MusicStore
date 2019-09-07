@@ -346,7 +346,7 @@ export class Service {
 
     getProjectDetails(projectId) {
         return axios.get(
-            `${this._apiBaseUrl}projects/${projectId}`,
+            `${this._apiBaseUrl}project/${projectId}`,
             {
                 withCredentials: true
             }

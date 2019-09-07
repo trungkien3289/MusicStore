@@ -79,10 +79,10 @@ namespace WebAPI.APIControllers
             return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Project not found");
         }
 
-        [Route("api/projects/{projectId}")]
-        public HttpResponseMessage GetById([FromUri]int projectId)
+        [Route("api/project/{id}")]
+        public HttpResponseMessage GetById([FromUri]int id)
         {
-            var project = _projectServices.GetProjectDetailsById(projectId);
+            var project = _projectServices.GetProjectDetailsById(id);
             if (project != null)
             {
                 return Request.CreateResponse(HttpStatusCode.OK, project);
@@ -91,8 +91,8 @@ namespace WebAPI.APIControllers
         }
 
         [HttpPost]
-        [Route("api/addProject")]
-        public HttpResponseMessage Add(ProjectEntity project)
+        [Route("api/project")]
+        public HttpResponseMessage Add(ProjectRequest project)
         {
             var createdProject = _projectServices.Create(project);
             if (createdProject != null)
@@ -105,7 +105,9 @@ namespace WebAPI.APIControllers
             }
         }
 
-        public HttpResponseMessage Update(ProjectEntity project)
+		[HttpPut]
+		[Route("api/project")]
+		public HttpResponseMessage Update(ProjectEntity project)
         {
             var createdProject = _projectServices.Update(project.Id, project);
             if (createdProject != null)
@@ -118,7 +120,9 @@ namespace WebAPI.APIControllers
             }
         }
 
-        public HttpResponseMessage Delete(int id)
+		[HttpDelete]
+		[Route("api/project/{id}")]
+		public HttpResponseMessage Delete(int id)
         {
             var isSuccess = _projectServices.Delete(id);
             if (isSuccess)

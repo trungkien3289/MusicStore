@@ -14,20 +14,7 @@
         <div class="card-header">
             <div class="btn-actions-pane-right">
                 <!-- Modal Trigger -->
-                <a class="waves-effect waves-light btn" style="color: #fff" data-bind="click: newProject">New</a>
-                <!-- Modal Structure -->
-                <div id="projectEditor" class="modal modal-fixed-footer">
-                    <div class="modal-content">
-                        <div data-bind="template: {name:'projectAddUpdateTemplate', data: addEditProjecttModel}" class="hihi"></div>
-                    </div>
-                    <div class="modal-footer">
-                        <a class="waves-effect waves-light btn-small" data-bind="click: cancelSaveProject">Cancel</a>
-                        <a class="waves-effect waves-light btn-small ml-2" data-bind="click: saveProject">Save</a>
-                    </div>
-                </div>
-                @*<div role="group" class="btn-group-sm btn-group">
-                        <button class="btn btn-primary">@Html.ActionLink("New", "Create", "Project", new { @Style = "color: #fff; text-decoration: none !important;" })</button>
-                    </div>*@
+                <a class="waves-effect waves-light btn" style="color: #fff" data-bind="click: onAddProject">New</a>
             </div>
         </div>
         <div class="table-responsive">
@@ -64,9 +51,9 @@
                             <div class="badge badge-pill badge-info">New</div>
                         </td>
                         <td class="text-center">
-                            <a class="waves-effect waves-light btn" style="color: #fff" data-bind="click: $root.updatePoject.bind($data, Id)">Detail</a>
-                            <a class="waves-effect waves-light btn" style="color: #fff" data-bind="click: $root.updatePoject.bind($data, Id)">Update</a>
-                            <a class="waves-effect waves-light btn" style="color: #fff" data-bind="click: $root.updatePoject.bind($data, Id)">Delete</a>
+                            <a class="waves-effect waves-light btn" style="color: #fff" data-bind="click: $root.onUpdateProject.bind($data, Id)">Detail</a>
+                            <a class="waves-effect waves-light btn" style="color: #fff" data-bind="click: $root.onUpdateProject.bind($data, Id)">Update</a>
+                            <a class="waves-effect waves-light btn" style="color: #fff" data-bind="click: $root.onDeleteProject.bind($data, Id)">Delete</a>
                         </td>
                     </tr>
                 </tbody>
@@ -75,42 +62,54 @@
     </div>
 </div>
 
-<script type="text/x-jquery-tmpl" id="projectAddUpdateTemplate">
-    <h6>New Project</h6>
-    <form class="col s12" id="projectForm">
-        <div class="row">
-            <div class="input-field col s12">
-                <input type="text" class="validate" data-bind="value: Name" required />
-                <label>Name</label>
-            </div>
+<!-- Modal Structure -->
+<div id="projectEditor" class="modal modal-fixed-footer">
+    <div class="modal-header" data-bind="with: addEditProjectModel">
+        <span data-bind="visible:IsEdit">Edit Project</span>
+        <span data-bind="hidden:IsEdit">Add Project</span>
+    </div>
+    <div class="modal-content">
+        <div data-bind="template: {name:'addUpdateProjectTemplate', data: addEditProjectModel}"></div>
+    </div>
+    <div class="modal-footer">
+        <a class="waves-effect waves-light btn-small" data-bind="click: onCancelSaveProject">Cancel</a>
+        <a class="waves-effect waves-light btn-small ml-2" data-bind="click: onSaveProject">Save</a>
+    </div>
+</div>
+
+<script type="text/x-jquery-tmpl" id="addUpdateProjectTemplate">
+    <div class="row">
+        <div class="input-field col s12">
+            <input type="text" class="validate" data-bind="value: Name" required />
+            <label class="active">Name</label>
         </div>
-        <div class="row">
-            <div class="input-field col s12">
-                <textarea class="materialize-textarea" data-bind="value: Description"></textarea>
-                <label>Description</label>
-            </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s12">
+            <textarea class="materialize-textarea" data-bind="value: Description"></textarea>
+            <label class="active">Description</label>
         </div>
-        <div class="row">
-            <div class="input-field col s6">
-                <input type="text" class="datepicker" required data-bind="value: StartDate" />
-                <label>Start Date</label>
-            </div>
-            <div class="input-field col s6">
-                <input type="text" class="datepicker" required data-bind="value: EndDate" />
-                <label>End Date</label>
-            </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s6">
+            <input type="text" id="dpStartDate" class="datepicker" required data-bind="value: StartDate" />
+            <label class="active">Start Date</label>
         </div>
-        <div class="row">
-            <div class="input-field col s12">
-                <select data-bind="options: $root.availableDevelopers, selectedOptions: Leaders, optionsText: 'UserName', optionsValue: 'UserId'" size="5" multiple="true"></select>
-                <label>Leaders</label>
-            </div>
+        <div class="input-field col s6">
+            <input type="text" id="dpEndDate" class="datepicker" required data-bind="value: EndDate" />
+            <label class="active">End Date</label>
         </div>
-        <div class="row">
-            <div class="input-field col s12">
-                <select data-bind="options: $root.availableDevelopers, selectedOptions: Developers, optionsText: 'UserName', optionsValue: 'UserId'" size="5" multiple="true"></select>
-                <label>Developer</label>
-            </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s12">
+            <select data-bind="options: $root.availableDevelopers, selectedOptions: Leaders, optionsText: 'UserName', optionsValue: 'UserId'" size="5" multiple="true"></select>
+            <label class="active">Leaders</label>
         </div>
-    </form>
+    </div>
+    <div class="row">
+        <div class="input-field col s12">
+            <select data-bind="options: $root.availableDevelopers, selectedOptions: Developers, optionsText: 'UserName', optionsValue: 'UserId'" size="5" multiple="true"></select>
+            <label class="active">Developer</label>
+        </div>
+    </div>
 </script>

@@ -89,21 +89,21 @@ namespace MusicStore.Service.Services
 			return results;
 		}
 
-        /// <summary>
+		/// <summary>
 		/// Get projects of user(user is admin or leader or developer)
 		/// </summary>
 		/// <param name="id">User id</param>
 		/// <returns></returns>
 		public IEnumerable<ProjectEntity> GetForLeader(int id)
-        {
-            var projects = _unitOfWork.ProjectRepository.GetProjectForLeader(id);
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<fl_Project, ProjectEntity>());
-            var mapper = config.CreateMapper();
-            var results = mapper.Map<IEnumerable<fl_Project>, IEnumerable<ProjectEntity>>(projects);
-            return results;
-        }
+		{
+			var projects = _unitOfWork.ProjectRepository.GetProjectForLeader(id);
+			var config = new MapperConfiguration(cfg => cfg.CreateMap<fl_Project, ProjectEntity>());
+			var mapper = config.CreateMapper();
+			var results = mapper.Map<IEnumerable<fl_Project>, IEnumerable<ProjectEntity>>(projects);
+			return results;
+		}
 
-        public IEnumerable<ProjectEntity> GetWithTaskRequestByUserId(int id)
+		public IEnumerable<ProjectEntity> GetWithTaskRequestByUserId(int id)
 		{
 			var projects = _unitOfWork.ProjectRepository.GetProjectWithTaskRequestByUserId(id);
 			var config = new MapperConfiguration(cfg => cfg.CreateMap<Model.MessageModels.GetProjectWithTaskRequestResponse, ProjectEntity>());
@@ -138,13 +138,10 @@ namespace MusicStore.Service.Services
 			return null;
 		}
 
-		public ProjectEntity Create(ProjectEntity model)
+		public ProjectEntity Create(ProjectRequest model)
 		{
 			using (var scope = new TransactionScope())
-			{
-				var config = new MapperConfiguration(cfg => cfg.CreateMap<ProjectEntity, fl_Project>());
-				var mapper = config.CreateMapper();
-				var entity = mapper.Map<ProjectEntity, fl_Project>(model);
+			{				
 				var leadersEntity = new List<system_User>();
 				var developersEntity = new List<system_User>();
 
@@ -177,6 +174,8 @@ namespace MusicStore.Service.Services
 					Description = model.Description,
 					StartDate = model.StartDate,
 					EndDate = model.EndDate,
+					// TODO:
+					//Status = Enum.New;
 					Developers = developersEntity,
 					Leaders = leadersEntity
 				};
@@ -184,8 +183,12 @@ namespace MusicStore.Service.Services
 				_unitOfWork.ProjectRepository.Insert(newProject);
 				_unitOfWork.Save();
 				scope.Complete();
-				model.Id = entity.Id;
-				return model;
+
+				var config = new MapperConfiguration(cfg => cfg.CreateMap<fl_Project, ProjectEntity>());
+				var mapper = config.CreateMapper();
+				var returnModel = mapper.Map<fl_Project, ProjectEntity>(newProject);
+
+				return returnModel;
 			}
 		}
 

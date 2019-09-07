@@ -14,7 +14,7 @@ namespace MusicStore.Service.IService
         IEnumerable<ProjectEntity> GetAll();
         IEnumerable<ProjectEntity> SearchByName(string query, int page = 1, int numberItemsPerPage = 10);
         IEnumerable<ProjectEntity> Get(int page = 1, int numberItemsPerPage = 10);
-        ProjectEntity Create(ProjectEntity model);
+        ProjectEntity Create(ProjectRequest model);
         ProjectEntity Update(int id, ProjectEntity model);
         bool Delete(int id);
         int Count(int userId);
