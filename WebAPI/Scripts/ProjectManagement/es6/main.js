@@ -1,28 +1,72 @@
 ﻿import axios from 'axios';
+import TaskDetailsModel from '../../TaskRequest/es6/task-details-taskrequest';
+import AddEditTaskRequestViewModel from '../../TaskRequest/es6/addedit-taskrequest-viewmodel';
+import TaskRequestModel from '../../TaskRequest/es6/task-request-model';
+import ProjectModel from '../../TaskRequest/es6/project-model';
+import ProjectDetailsModel from '../../DashBoard/es6/project-details-model';
+import * as moment from 'moment';
 import Utils from '../../Common/es6/utils';
 import * as Toastr from 'toastr';
-import * as moment from 'moment';
 import AddEditProjectViewModel from './addedit-project-viewmodel';
 
 $(document).ready(function () {
-    this.project = new ProjectManagement(applicationPath);
-    ko.applyBindings(this.project, document.body);
+    ko.validation.init({
+        registerExtenders: true,
+        messagesOnModified: true,
+        insertMessages: true,
+        parseInputAttributes: true,
+        messageTemplate: null
+    }, true);
+    var taskRequestManagement = new ProjectManagement(applicationPath);
+    ko.applyBindings(taskRequestManagement, document.body);
 });
+
+const ProjectManagementDisplayMode = {
+    EMPTY: 0,
+    PROJECT_DETAIL: 1,
+    TASK_REQUEST: 2
+};
 
 export default class ProjectManagement {
     constructor(applicationPath) {
+        this.applicationPath = applicationPath;
+        // configure toastr
+        Toastr.options.closeButton = true;
+        Toastr.options.closeMethod = 'fadeOut';
+        Toastr.options.closeDuration = 300;
         this._service = new Service(applicationPath);
         this._projectEditorDialog = null;
-        this._ptStartDate = null;
-        this._ptEndDate = null;
-
-        this.projects = ko.observableArray([]);
-        this.addEditProjectModel = ko.observable(new AddEditProjectViewModel());
-        this.availableDevelopers = ko.observableArray([]);
-
-        this.loadProjects();
+        this._dialog = null;
+        this.buildLeftPanel();
         this.initComponents();
+        // viewmodel properties
+        this.displayMode = ko.observable(ProjectManagementDisplayMode.EMPTY);
+        this.isShowProjectDetail = ko.computed(function () {
+            return this.displayMode() == ProjectManagementDisplayMode.PROJECT_DETAIL;
+        }, this);
+        this.isShowTaskRequest = ko.computed(function () {
+            return this.displayMode() == ProjectManagementDisplayMode.TASK_REQUEST;
+        }, this);
+        this.isShowEmpty = ko.computed(function () {
+            return this.displayMode() == ProjectManagementDisplayMode.EMPTY;
+        }, this);
+        // project tree
+        this.projects = ko.observableArray([]);
+        // task details
+        this.currentTask = ko.observable(new TaskDetailsModel());
+        this.currentProject = ko.observable(new ProjectDetailsModel());
+        //this.isShowContentPanel = ko.observable(false);
+        this.isTaskAssignee = ko.computed(function () {
+            return this.currentTask().Assignee != null;
+        }, this);
+        //Project add/edit
+        this.addEditProjectModel = ko.observable(new AddEditProjectViewModel());
+        // task request add/edit viewmodel
+        this.addEditTaskRequestModel = ko.observable(new AddEditTaskRequestViewModel());
+        this.availableDevelopers = ko.observableArray([]);
+        this.isShowAddEditTaskRequestDialog = ko.observable(false);
 
+        //Project Event
         this.onAddProject = () => {
             var self = this;
 
@@ -31,22 +75,54 @@ export default class ProjectManagement {
                 self._projectEditorDialog.open();
             });
         };
-        this.onDeleteProject = (id) => {
-            self = this;
-
-            this._service.deleteProject(id).then(
-                response => {
-                    if (response.status === 200) {
-                        self.loadProjects();
-                        Toastr.success('Delete the project successfuly.');
-                    }
-                }
-            );
+        this.onCancelSaveProject = () => {
+            this._projectEditorDialog.close();
         };
-        this.onUpdateProject = (id) => {
+        this.onSaveProject = () => {
             var self = this;
 
-            this._service.getProjectById(id).then(
+            if (self.addEditProjectModel().errors().length > 0) return;
+            if (self.addEditProjectModel().IsEdit()) {
+                self.updateProject();
+            } else {
+                self.addProject();
+            }
+        };
+        this.addProject = () => {
+            var self = this;
+            var newRequestModel = ko.toJS(self.addEditProjectModel());
+
+            self._service.addProject(newRequestModel).then(response => {
+                if (response.status === 200) {
+                    self._projectEditorDialog.close();
+                    self.buildLeftPanel();
+                    setTimeout(function () {
+                        self.selectProject(response.data.Id);
+                    }, 400);
+                    Toastr.success('Add the project successfuly.');
+                }
+            });
+        };
+        this.updateProject = () => {
+            var self = this;
+            var newRequestModel = ko.toJS(self.addEditProjectModel());
+
+            self._service.updateProject(newRequestModel).then(response => {
+                if (response.status === 200) {
+                    self._projectEditorDialog.close();
+                    self.buildLeftPanel();
+                    setTimeout(function () {
+                        self.selectProject(response.data.Id);
+                    }, 400);
+                    Toastr.success('Update the project successfuly.');
+                }
+            });
+        };
+        this.onUpdateProject = () => {
+            var self = this;
+            var projectId = self.getCurrentProjectIdByProject();
+
+            self._service.getProject(projectId).then(
                 response => {
                     var data = response.data;
 
@@ -63,44 +139,108 @@ export default class ProjectManagement {
                 }
             );
         };
-        this.onCancelSaveProject = () => {
-            this._projectEditorDialog.close();
-        };
-        this.addProject = () => {
+        this.onDeleteProject = () => {
             var self = this;
-            var newRequestModel = ko.toJS(self.addEditProjectModel());
+            var projectId = self.getCurrentProjectIdByProject();
 
-            console.log(newRequestModel);
-            self._service.addProject(newRequestModel).then(response => {
-                if (response.status === 200) {
-                    self._projectEditorDialog.close();
-                    self.loadProjects();
-                    Toastr.success('Add the project successfuly.');
+            self._service.deleteProject(projectId).then(
+                response => {
+                    if (response.status === 200) {
+                        self.buildLeftPanel();
+                        self.displayMode(ProjectManagementDisplayMode.EMPTY);
+                        Toastr.success('Delete the project successfuly.');
+                    }
                 }
-            });
+            );
         };
-        this.updateProject = () => {
+
+        //Task Event
+        this.onAddTask = () => {
             var self = this;
-            var newRequestModel = ko.toJS(self.addEditProjectModel());
 
-            console.log(newRequestModel);
-            self._service.updateProject(newRequestModel).then(response => {
-                if (response.status === 200) {
-                    self._projectEditorDialog.close();
-                    self.loadProjects();
-                    Toastr.success('Update the project successfuly.');
-                }
-            });
+            self.addEditProjectModel(new AddEditProjectViewModel());
+            self._taskEditorDialog.open();
         };
-        this.onSaveProject = () => {
+        this.onCancelSaveTask = () => {
+            this._taskEditorDialog.close();
+        };
+        this.onSaveTask = () => {
             var self = this;
 
             if (self.addEditProjectModel().errors().length > 0) return;
             if (self.addEditProjectModel().IsEdit()) {
-                self.updateProject();
+                self.updateTask();
             } else {
-                self.addProject();
+                self.addNewTask();
             }
+        };
+        this.addNewTask = () => {
+            var self = this;
+            var newRequestModel = ko.toJS(self.addEditProjectModel());
+
+            newRequestModel.ProjectId = this.getCurrentProjectIdByProject();
+            self._service.addTask(newRequestModel).then(response => {
+                console.log(response);
+                if (response.status === 200) {
+                    self._taskEditorDialog.close();
+                    self.buildLeftPanel();
+                    setTimeout(function () {
+                        self.selectProject(newRequestModel.ProjectId);
+                    }, 400);
+                    Toastr.success('Add the task successfuly.');
+                }
+            });
+        };
+        this.updateTask = () => {
+            var self = this;
+            var newRequestModel = ko.toJS(self.addEditProjectModel());
+
+            self._service.updateTask(newRequestModel).then(response => {
+                if (response.status === 200) {
+                    self._taskEditorDialog.close();
+
+                    let taskId = self.getCurrentTaskId();
+                    if (taskId) {
+                        self.getTask(taskId);
+                    } else {
+                        Toastr.error("There is no selected task");
+                    }
+
+                    Toastr.success('Update the task successfuly.');
+                }
+            });
+        };
+        this.onUpdateTask = () => {
+            var self = this;
+            var taskId = self.getCurrentTaskId();
+
+            self._service.getTask(taskId).then(
+                response => {
+                    var data = response.data;
+
+                    data.StartDate = new Date(data.StartDate);
+                    data.EndDate = new Date(data.EndDate);
+
+                    this.addEditProjectModel(new AddEditProjectViewModel(data));
+                    self._taskEditorDialog.open();
+                }
+            );
+        };
+        this.onDeleteTask = () => {
+            var self = this;
+            var taskId = self.getCurrentTaskId();
+
+            self._service.deleteTask(taskId).then(
+                response => {
+                    if (response.status === 200) {
+                        self.buildLeftPanel();
+                        setTimeout(function () {
+                            self.selectProject(self.getCurrentProjectId());
+                        }, 400);
+                        Toastr.success('Delete the task successfuly.');
+                    }
+                }
+            );
         };
 
         this.errorMessage = ko.observable("");
@@ -127,56 +267,170 @@ export default class ProjectManagement {
                 });
             }
         });
-
         this._projectEditorDialog = M.Modal.getInstance($("#projectEditor"));
+
+        $('#taskEditor').modal({
+            dismissible: false,
+            onOpenStart: function () {
+                //Init select
+                $('#taskEditor select').formSelect();
+                //Init datepicker
+                $('#dpStartDate').datepicker({
+                    //format: "dd/mm/yyyy",
+                    setDefaultDate: true,
+                    defaultDate: self.addEditProjectModel().StartDate() ? new Date(self.addEditProjectModel().StartDate()) : new Date()
+                });
+                $('#dpEndDate').datepicker({
+                    //format: "dd/mm/yyyy",
+                    setDefaultDate: true,
+                    defaultDate: self.addEditProjectModel().EndDate() ? new Date(self.addEditProjectModel().EndDate()) : new Date()
+                });
+            }
+        });
+        this._taskEditorDialog = M.Modal.getInstance($("#taskEditor"));
     }
 
-    loadProjects() {
+    buildLeftPanel() {
         var self = this;
-
         this._service.getProjects()
             .then(response => {
                 let projectModels = response.data.map(prj => {
-                    return new AddEditProjectViewModel(prj);
+                    return new ProjectModel(prj);
                 });
                 self.projects(projectModels);
+                self.bindEventProjectTaskPanel();
             });
+    }
+
+    getCurrentTaskId() {
+        return this.currentTask() != null ? this.currentTask().Id : null;
+    }
+
+    getCurrentProjectId() {
+        return this.currentTask() != null ? this.currentTask().ProjectId : null;
+    }
+
+    getCurrentProjectIdByProject() {
+        return this.currentProject() != null ? this.currentProject().Id : null;
+    }
+
+    bindEventProjectTaskPanel() {
+        var self = this;
+        $(".project-task-panel .btn-task-item").bind("click", function (e) {
+            var taskId = $(this).data("taskid");
+            self.getTask(taskId);
+            $(".left-panel .tree-node-btn").removeClass("selected");
+            $(this).addClass("selected");
+        });
+
+        $(".left-panel .btn-project-item").bind("click", function (e) {
+            var projectId = $(this).data("projectid");
+            self.selectProject(projectId);
+        });
+    }
+
+    selectProject(projectId) {
+        var self = this;
+        self._service.getProject(projectId)
+            .then(response => {
+                self.displayMode(ProjectManagementDisplayMode.PROJECT_DETAIL);
+                var data = response.data;
+                data.StartDate = moment(new Date(data.StartDate)).format("DD/MM/YYYY hh:mm:ss");
+                data.EndDate = moment(new Date(data.EndDate)).format("DD/MM/YYYY hh:mm:ss");
+                var projectDetails = new ProjectDetailsModel(data);
+                self.currentProject(new ProjectDetailsModel(projectDetails));
+
+                $(".left-panel .tree-node-btn").removeClass("selected");
+                $(`[data-projectid=${projectId}]`).addClass("selected");
+            });
+    }
+
+    getTask(taskId) {
+        var self = this;
+        axios.all([self._service.getTask(taskId), self._service.getTaskRequestOfTask(taskId)])
+            .then(axios.spread(function (taskRes, taskRequestRes) {
+                // Update Task Details panel
+                self.displayMode(ProjectManagementDisplayMode.TASK_REQUEST);
+                let data = taskRes.data;
+                data.StartDate = moment(new Date(data.StartDate)).format("DD/MM/YYYY hh:mm:ss");
+                data.EndDate = moment(new Date(data.EndDate)).format("DD/MM/YYYY hh:mm:ss");
+                self.currentTask(new TaskDetailsModel(data));
+            }));
+    }
+
+    convertDateTime(dateString, format) {
+        return moment(new Date(dateString)).format(format);
     }
 
     getAvailableDevelopers(callback) {
         var self = this;
-
-        return this._service.getAvailableDevelopers()
+        return self._service.getAvailableDevelopers()
             .then(response => {
-                if (response.status === 200) {
-                    self.availableDevelopers(response.data);
-                    callback();
-                }
-            }).catch(response => {
-                self.errorMessage(response.response.data);
+                self.availableDevelopers(response.data);
+                callback();
             });
     }
 }
 
 export class Service {
     constructor(applicationPath) {
+        var self = this;
+        this.applicationPath = applicationPath;
         if (Utils.isStringNullOrEmpty(applicationPath)) {
             this._apiBaseUrl = `api/`;
         } else {
             this._apiBaseUrl = `${applicationPath}api/`;
         }
+
+        // Add a request interceptor
+        axios.interceptors.request.use((config) => {
+            // Do something before request is sent
+            Utils.showLoading();
+            return config;
+        }, (error) => {
+            Utils.hideLoading();
+            // Do something with request error
+            return Promise.reject(error);
+        });
+
+        // Add a response interceptor
+        axios.interceptors.response.use((response) => {
+            Utils.hideLoading();
+            // Do something with response data
+            return response;
+        }, (error) => {
+            if (error.response) {
+                if (error.response.status == 401) {
+                    let returnUrl = Utils.isStringNullOrEmpty(self.applicationPath) ? "/" : `${self.applicationPath}`;
+                    window.location.replace(returnUrl);
+                }
+                Toastr.error(error.response.data.Message, "Error");
+                console.log(error.response.data);
+                console.log(error.response.status);
+                console.log(error.response.headers);
+            } else if (error.request) {
+                Toastr.error(error.request, "Error");
+                console.log(error.request);
+            } else {
+                Toastr.error(`Error ${error.message}`, "Error");
+                console.log('Error', error.message);
+            }
+            console.log(error.config);
+            Utils.hideLoading();
+            // Do something with response error
+            return Promise.reject(error);
+        });
     }
 
     getProjects() {
         return axios.get(
-            `${this._apiBaseUrl}projects`,
+            `${this._apiBaseUrl}projects/withtaskrequest`,
             {
                 withCredentials: true
             }
         );
     }
-
-    getProjectById(id) {
+    getProject(id) {
         return axios.get(
             `${this._apiBaseUrl}project/${id}`,
             {
@@ -184,7 +438,6 @@ export class Service {
             }
         );
     }
-
     addProject(projectModelView) {
         return axios.post(
             `${this._apiBaseUrl}project`,
@@ -194,7 +447,6 @@ export class Service {
             }
         );
     }
-
     updateProject(projectModelView) {
         return axios.put(
             `${this._apiBaseUrl}project`,
@@ -204,7 +456,6 @@ export class Service {
             }
         );
     }
-
     deleteProject(id) {
         return axios.delete(
             `${this._apiBaseUrl}project/${id}`,
@@ -214,9 +465,109 @@ export class Service {
         );
     }
 
+    getTask(taskId) {
+        return axios.get(
+            `${this._apiBaseUrl}tasks/${taskId}`,
+            {
+                withCredentials: true
+            }
+        );
+    }
+    addTask(taskModelView) {
+        return axios.post(
+            `${this._apiBaseUrl}task`,
+            taskModelView,
+            {
+                withCredentials: true
+            }
+        );
+    }
+    updateTask(taskModelView) {
+        return axios.put(
+            `${this._apiBaseUrl}task`,
+            taskModelView,
+            {
+                withCredentials: true
+            }
+        );
+    }
+    deleteTask(id) {
+        return axios.delete(
+            `${this._apiBaseUrl}task/${id}`,
+            {
+                withCredentials: true
+            }
+        );
+    }
+
+    getTaskRequestDetails(taskRequestId) {
+        return axios.get(
+            `${this._apiBaseUrl}task/requests/${taskRequestId}`,
+            {
+                withCredentials: true
+            }
+        );
+    }
+
     getAvailableDevelopers() {
         return axios.get(
             `${this._apiBaseUrl}developers/available`,
+            {
+                withCredentials: true
+            }
+        );
+    }
+
+    createTaskRequest(newTaskRequest) {
+        return axios.post(
+            `${this._apiBaseUrl}taskrequest/create`,
+            newTaskRequest,
+            {
+                withCredentials: true
+            }
+        );
+    }
+
+    updateTaskRequest(updatedTaskRequest) {
+        return axios.put(
+            `${this._apiBaseUrl}taskrequest/update`,
+            updatedTaskRequest,
+            {
+                withCredentials: true
+            }
+        );
+    }
+
+    getTaskRequestOfTask(taskId) {
+        return axios.get(
+            `${this._apiBaseUrl}tasks/${taskId}/taskrequest`,
+            {
+                withCredentials: true
+            }
+        );
+    }
+
+    assigneDeveloperForTaskRequest(taskRequestId, userId) {
+        return axios.post(
+            `${this._apiBaseUrl}taskrequest/${taskRequestId}/pickdeveloper/${userId}`,
+            {
+                withCredentials: true
+            }
+        );
+    }
+
+    unassigneDeveloperForTaskRequest(taskRequestId, userId) {
+        return axios.post(
+            `${this._apiBaseUrl}taskrequest/${taskRequestId}/unassigndeveloper`,
+            {
+                withCredentials: true
+            }
+        );
+    }
+
+    deleteTaskRequest(taskId) {
+        return axios.delete(
+            `${this._apiBaseUrl}task/${taskId}/taskrequest`,
             {
                 withCredentials: true
             }

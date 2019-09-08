@@ -50,6 +50,8 @@ namespace WebAPI.APIControllers
             return Request.CreateErrorResponse(HttpStatusCode.NotFound, "There is no task found.");
         }
 
+        [HttpPost]
+        [Route("api/task")]
         public HttpResponseMessage Add(TaskEntity task)
         {
             var createdTask = _taskServices.Create(task);
@@ -63,6 +65,8 @@ namespace WebAPI.APIControllers
             }
         }
 
+        [HttpPut]
+        [Route("api/task")]
         public HttpResponseMessage Update(TaskEntity task)
         {
             var createdTask = _taskServices.Update(task.Id, task);
@@ -76,6 +80,8 @@ namespace WebAPI.APIControllers
             }
         }
 
+        [HttpDelete]
+        [Route("api/task/{id}")]
         public HttpResponseMessage Delete(int id)
         {
             var isSuccess = _taskServices.Delete(id);
