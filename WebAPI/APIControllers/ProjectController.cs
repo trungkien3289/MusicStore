@@ -107,12 +107,12 @@ namespace WebAPI.APIControllers
 
 		[HttpPut]
 		[Route("api/project")]
-		public HttpResponseMessage Update(ProjectEntity project)
+		public HttpResponseMessage Update(ProjectRequest project)
         {
-            var createdProject = _projectServices.Update(project.Id, project);
-            if (createdProject != null)
+            var updateProject = _projectServices.Update(project.Id, project);
+            if (updateProject != null)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, createdProject);
+                return Request.CreateResponse(HttpStatusCode.OK, updateProject);
             }
             else
             {
