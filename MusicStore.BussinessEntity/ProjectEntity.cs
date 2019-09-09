@@ -85,4 +85,10 @@ namespace MusicStore.BussinessEntity
         public Nullable<int> AssigneeId { get; set; }
         public virtual TaskEntity Task { get; set; }
     }
+
+    public class ProjectFilterItem
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
 }

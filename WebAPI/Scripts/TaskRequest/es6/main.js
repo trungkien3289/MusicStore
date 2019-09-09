@@ -4,7 +4,7 @@ import AddEditTaskRequestViewModel from './addedit-taskrequest-viewmodel';
 import TaskRequestModel from './task-request-model';
 import ProjectModel from './project-model';
 import ProjectDetailsModel from '../../DashBoard/es6/project-details-model';
-import * as moment from 'moment';
+import { format } from 'date-fns';
 import Utils from '../../Common/es6/utils';
 import * as Toastr from 'toastr';
 
@@ -29,10 +29,7 @@ const TaskRequestManagementDisplayMode = {
 export default class TaskRequestManagement {
     constructor(applicationPath) {
         this.applicationPath = applicationPath;
-        // configure toastr
-        Toastr.options.closeButton = true;
-        Toastr.options.closeMethod = 'fadeOut';
-        Toastr.options.closeDuration = 300;
+        this.setConfigurationToastr();
         this._service = new Service(applicationPath);
         this._dialog = null;
         this.buildLeftPanel();
@@ -80,6 +77,12 @@ export default class TaskRequestManagement {
             }
         });
         this._dialog = M.Modal.getInstance($("#addTaskRequestDialog"));
+    }
+
+    setConfigurationToastr() {
+        Toastr.options.closeButton = true;
+        Toastr.options.closeMethod = 'fadeOut';
+        Toastr.options.closeDuration = 300;
     }
 
     buildLeftPanel() {
@@ -224,8 +227,8 @@ export default class TaskRequestManagement {
                 .then(response => {
                     self.displayMode(TaskRequestManagementDisplayMode.PROJECT_DETAIL);
                     var data = response.data;
-                    data.StartDate = moment(new Date(data.StartDate)).format("DD/MM/YYYY hh:mm:ss");
-                    data.EndDate = moment(new Date(data.EndDate)).format("DD/MM/YYYY hh:mm:ss");
+                    data.StartDate = format(new Date(data.StartDate), "dd/MM/yyyy hh:mm:ss");
+                    data.EndDate = format(new Date(data.EndDate), "dd/MM/yyyy hh:mm:ss");
                     var projectDetails = new ProjectDetailsModel(data);
                     self.currentProject(new ProjectDetailsModel(projectDetails));
 
@@ -242,17 +245,13 @@ export default class TaskRequestManagement {
                 // Update Task Details panel
                 self.displayMode(TaskRequestManagementDisplayMode.TASK_REQUEST);
                 let data = taskRes.data;
-                data.StartDate = moment(new Date(data.StartDate)).format("DD/MM/YYYY hh:mm:ss");
-                data.EndDate = moment(new Date(data.EndDate)).format("DD/MM/YYYY hh:mm:ss");
+                data.StartDate = format(new Date(data.StartDate), "dd/MM/yyyy hh:mm:ss");
+                data.EndDate = format(new Date(data.EndDate), "dd/MM/yyyy hh:mm:ss");
                 self.currentTask(new TaskDetailsModel(data));
                 // Update Task Request Details panel
                 self.hasTaskRequest(taskRequestRes.data != null);
                 self.currentTaskRequest(new TaskRequestModel(taskRequestRes.data));
             }));
-    }
-
-    convertDateTime(dateString, format) {
-        return moment(new Date(dateString)).format(format);
     }
 
     getAvailableDevelopers(callback){

@@ -3,18 +3,120 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_DashBoard_Layout.cshtml";
 }
-
-<div class="col-md-12">
+@section scripts{
+    <script src="~/Scripts/build/taskManagement.js"></script>
+}
+@section css{
+    <link href="~/Content/Task/scss/task-management.css" rel="stylesheet" />
+}
+<div class="col-md-12 task-management-container">
     <div class="main-card mb-3 card">
         <div class="card-header">
-            Tasks
-            <div class="btn-actions-pane-right">
-                <div role="group" class="btn-group-sm btn-group">
-                    <button class="btn btn-primary">@Html.ActionLink("New", "CreateTask", "Task", new { @Style = "color: #fff; text-decoration: none !important;" })</button>
+            <div class="main-filter-panel">
+                <span class="title">My Tasks</span>
+                <div class="search-wrapper focused" data-bind="with: filter">
+                    <input id="txt_Search" placeholder="Search" data-bind="value:SearchString">
+                    <a id="Btn_Search" data-bind="click: $root.onBtnSearchClick" class="waves-effect waves-light btn-flat">
+                        <i class="material-icons">search</i>
+                    </a>
+                </div>
+                <a class="waves-effect waves-light btn-small btn-filter-setting grey btn-flat" data-bind="click: $root.subFilterBtnClick">
+                    <span>Filter</span>
+                    <i class="fas fa-chevron-down" data-bind="hidden: isShowSubFilter"></i>
+                    <i class="fas fa-chevron-up" data-bind="visible: isShowSubFilter"></i>
+                </a>
+                <a class="waves-effect waves-light btn-small light-blue btn-new-task" data-bind="click:$root.addTaskBtnClick"><i class="material-icons left">add</i>New Task</a>
+            </div>
+            <div class="sub-filter-panel" data-bind="visible: isShowSubFilter, with: filter">
+                <div class="filter-menu-panel">
+                    <div class="filter-item-status-container">
+                        <div class="filter-item-status" data-bind="with: Status">
+                            <label>
+                                <input type="checkbox" data-bind="checked: IsEnable" />
+                                <span>Status</span>
+                            </label>
+                        </div>
+                        <div class="filter-item-status" data-bind="with: Assignee">
+                            <label>
+                                <input type="checkbox" data-bind="checked: IsEnable" />
+                                <span>Assignee</span>
+                            </label>
+                        </div>
+                        <div class="filter-item-status" data-bind="with: Project">
+                            <label>
+                                <input type="checkbox" data-bind="checked: IsEnable" />
+                                <span>Project</span>
+                            </label>
+                        </div>
+                        <div class="filter-item-status" data-bind="with: StartDate">
+                            <label>
+                                <input type="checkbox" data-bind="checked: IsEnable" />
+                                <span>Start Date</span>
+                            </label>
+                        </div>
+                        <div class="filter-item-status" data-bind="with: EndDate">
+                            <label>
+                                <input type="checkbox" data-bind="checked: IsEnable" />
+                                <span>End Date</span>
+                            </label>
+                        </div>
+                    </div>
+                    <a data-bind="click: $root.onBtnSearchClick" 
+                       class="waves-effect waves-light btn-flat light-blue btn-small btn-submit-filters" 
+                       style="display:flex; align-items:center">
+                        <span style="margin-right:5px;">Filter</span><i class="fas fa-angle-right"></i>
+                    </a>
+                </div>
+                <div class="list-filter-item row">
+                    <!-- ko with: Status -->
+                    <div class="col s6 m4 input-field" data-bind=" visible: IsEnable">
+                        <select data-bind="options: Options, selectedOptions: Values, optionsText: 'Name', optionsValue: 'Value'" size="5" multiple="true"></select>
+                        <label>Status</label>
+                    </div>
+                    <!-- /ko -->
+                    <!-- ko with: Assignee -->
+                    <div class="col s6 m4 input-field" data-bind="visible: IsEnable">
+                        <select data-bind="options: $root.availableDevelopers, selectedOptions: Values, optionsText: 'UserName', optionsValue: 'UserId'" size="5" multiple="true"></select>
+                        <label>Assignee</label>
+                    </div>
+                    <!-- /ko -->
+                    <!-- ko with: Project -->
+                    <div class="col s4 m4 input-field" data-bind="visible: IsEnable">
+                        <select data-bind="options: $root.projects, value: Value, optionsText: 'Name', optionsValue: 'Id'" size="5"></select>
+                        <label>Project</label>
+                    </div>
+                    <!-- /ko -->
+                    <!-- ko with: StartDate -->
+                    <div class="col s4 m4" data-bind="visible: IsEnable">
+                        <label>Start Date</label>
+                        <div>
+                            <div class="col s4">
+                                <select data-bind="options: $root.dateOperatorOptions, value: Operator, optionsText: 'Name', optionsValue: 'Value'" size="5"></select>
+                            </div>
+                            <div class="col s8">
+                                <input placeholder="Start Date" data-bind="value: Value" class="datepicker">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /ko -->
+                    <!-- ko with: EndDate -->
+                    <div class="col s4 m4" data-bind="visible: IsEnable">
+                        <label>End Date</label>
+                        <div>
+                            <div class="col s4">
+                                <select data-bind="options: $root.dateOperatorOptions, value: Operator, optionsText: 'Name', optionsValue: 'Value'" size="5"></select>
+                            </div>
+                            <div class="col s8">
+                                <input placeholder="End Date" data-bind="value: Value" class="datepicker">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /ko -->
+
                 </div>
             </div>
         </div>
-        <div class="table-responsive">
+        <div class="card-body table-responsive">
             <table class="align-middle mb-0 table table-borderless table-striped table-hover">
                 <thead>
                     <tr>
@@ -25,45 +127,158 @@
                         <th class="text-center">Actions</th>
                     </tr>
                 </thead>
-                <tbody>
-                    @foreach (var task in Model)
-                    {
-                        <tr>
-                            <td>
-                                <div class="widget-content p-0">
-                                    <div class="widget-content-wrapper">
-                                        <div class="widget-content-left mr-3">
-                                            <div class="widget-content-left">
-                                                <img width="40" class="rounded-circle" src="assets/images/avatars/4.jpg" alt="">
-                                            </div>
-                                        </div>
-                                        <div class="widget-content-left flex2">
-                                            <div class="widget-heading">@task.Name</div>
-                                            <div class="widget-subheading opacity-7">@task.Description</div>
+                <tbody data-bind="foreach: tasks, as : 'task'">
+                    <tr>
+                        <td>
+                            <div class="widget-content p-0">
+                                <div class="widget-content-wrapper">
+                                    <div class="widget-content-left mr-3">
+                                        <div class="widget-content-left">
+                                            <img width="40" class="rounded-circle" src="assets/images/avatars/4.jpg" alt="">
                                         </div>
                                     </div>
+                                    <div class="widget-content-left flex2">
+                                        <div class="widget-heading" data-bind="text: Name"></div>
+                                        <div class="widget-subheading opacity-7" data-bind="text: Description"></div>
+                                    </div>
                                 </div>
-                            </td>
-                            <td class="text-center">@task.StartDate</td>
-                            <td class="text-center">@task.EndDate</td>
+                            </div>
+                        </td>
+                        <td class="text-center" data-bind="text: StartDate"></td>
+                        <td class="text-center" data-bind="text: EndDate"></td>
+                        <td class="text-center">
+                            <!-- ko if: Status == 0 -->
+                            <div class="badge badge-pill badge-light">New</div>
+                            <!-- /ko -->
+                            <!-- ko if: Status == 1 -->
+                            <div class="badge badge-pill badge-info">Inprogress</div>
+                            <!-- /ko -->
+                            <!-- ko if: Status == 2 -->
+                            <div class="badge badge-pill badge-success">Completed</div>
+                            <!-- /ko -->
+                            <!-- ko if: Status == 3 -->
+                            <div class="badge badge-pill badge-dark">Close</div>
+                            <!-- /ko -->
+                            <!-- ko if: Status == 4 -->
+                            <div class="badge badge-pill badge-warning">Feedback</div>
+                            <!-- /ko -->
+                        </td>
+                        <td class="text-center">
+                            @*<a data-bind="click: function(data,event) {$root.editTaskBtnClick($data.Id)}" class="waves-effect waves-light btn-flat grey btn-small">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a data-bind="click: function(data,event) {$root.deleteTaskBtnClick($data.Id)}" class="waves-effect waves-light btn-flat red btn-small">
+                                <i class="fas fa-trash"></i>
+                            </a>*@
 
-                            <td class="text-center">
-                                <div class="badge badge-pill badge-info">New</div>
-                            </td>
-                            <td class="text-center">
-                                <button type="button" id="PopoverCustomT-1" class="btn btn-primary btn-sm">
-                                    @Html.ActionLink("Delete", "DeleteTask", new { id = task.Id }, new { @Style = "color: #fff; text-decoration: none !important;" })
-                                </button>
-                            </td>
-                        </tr>
-                    }
+                            <div class="dropdown d-inline-block">
+                                <button type="button" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown" class="mb-2 mr-2 btn btn-flat btn-setting">...</button>
+                                <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu">
+                                    <button type="button" tabindex="0" class="dropdown-item"><i class="pe-7s-info"> </i><span>View</span></button>
+                                    <button data-bind="click: function(data,event) {$root.editTaskBtnClick($data.Id)}" type="button" tabindex="0" class="dropdown-item"><i class="pe-7s-pen"></i><span>Edit</span></button>
+                                    <button data-bind="click: function(data,event) {$root.deleteTaskBtnClick($data.Id)}" type="button" tabindex="0" class="dropdown-item"><i class="pe-7s-trash"></i><span>Delete</span></button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
-        @*<div class="d-block text-center card-footer">
-                <button class="mr-2 btn-icon btn-icon-only btn btn-outline-danger"><i class="pe-7s-trash btn-icon-wrapper"> </i></button>
-                <button class="btn-wide btn btn-success">Save</button>
-            </div>*@
+        <div class="card-footer">
+            <div class="numberperpage-panel">
+                <span>Show </span>
+                <select class="browser-default" data-bind="value: numberItemsPerPage, event: { change: onNumberPerPageChange }">
+                    <option value="0">All</option>
+                    <option value="5">5</option>
+                    <option selected value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                </select>
+                <span>items</span>
+            </div>
+            <ul class="pagination" data-bind="with: pagingControl">
+                <li data-bind="css: {disabled: isPreviousEnable() != true}, class : 'waves-effect'">
+                    <a data-bind="enable: isPreviousEnable, click: function(data,event) {$root.previousPageClick()}">
+                        <i class="material-icons">chevron_left</i>
+                    </a>
+                </li>
+                <!-- ko foreach: listPages -->
+                <li data-bind="css: {active: $data == $root.currentPage()}, class : 'waves-effect'">
+                    <a data-bind="text: $data, click: function(data,event) {$root.changePageClick($data)}"></a>
+                </li>
+                <!-- /ko -->
+                <li data-bind="css: {disabled: isNextEnable() != true}, class : 'waves-effect'">
+                    <a data-bind="enable: isNextEnable, click: function(data,event) {$root.nextPageClick()}">
+                        <i class="material-icons">chevron_right</i>
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
 
+<!-- Add Task Request Dialog -->
+<div id="addTaskDialog" class="modal modal-fixed-footer" data-bind="with: addEditViewModel">
+    <div class="modal-header">
+        <span data-bind="text:DialogTitle"></span>
+    </div>
+    <div class="modal-content" data-bind="template: {name: 'addEditTaskDialogTemplate', data: Model}">
+
+    </div>
+    <div class="modal-footer">
+        <a id="btnOK" class="waves-effect waves-orange btn-flat btn" data-bind="click: $root.okBtnDialogClick">OK</a>
+        <a id="btnCancel" class="modal-close waves-effect btn-flat">Cancel</a>
+    </div>
+</div>
+
+<script type="text/x-jquery-tmpl" id="addEditTaskDialogTemplate">
+    <div class="form-group">
+        <div class="input-field col s12">
+            <input type="text" data-bind="value: Name" />
+            <label class="active">Name</label>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="input-field col s12">
+            <textarea id="description_addTaskRequest" class="materialize-textarea" data-bind="value: Description"></textarea>
+            <label class="active" for="description_addTaskRequest">Description</label>
+        </div>
+    </div>
+    <div class="form-group" data-bind="visible: !$root.addEditViewModel().IsEdit()">
+        <div class="input-field col s12">
+            <select data-bind="options: $root.projects, value: ProjectId, optionsText: 'Name', optionsValue: 'Id'" size="5"></select>
+            <label class="active">Project</label>
+        </div>
+    </div>
+    <div class="form-group" data-bind="visible: $root.addEditViewModel().IsEdit()">
+        <div class="input-field col s12 select-control">
+            <select data-bind="options: $root.taskStatusOptions, value: Status, optionsText: 'Name', optionsValue: 'Value'" size="5"></select>
+            <label>Status</label>
+        </div>
+    </div>
+    <div class="form-group" data-bind="visible: $root.addEditViewModel().IsEdit()">
+        <div class="input-field col s12 select-control">
+            <select data-bind="options: $root.availableDevelopers, value: AssigneeId, optionsText: 'UserName', optionsValue: 'UserId'" size="5"></select>
+            <label>Assignee</label>
+        </div>
+    </div>
+
+    <div class="form-group row" style="width:100%;">
+        <div class="input-field col s6 select-control">
+            <input id="pk_StartDate" placeholder="Start Date" data-bind="value: StartDate" class="datepicker">
+            <label>Start Date</label>
+        </div>
+
+        <div class="input-field col s6 select-control">
+            <input id="pk_EndDate" placeholder="End Date" data-bind="value: EndDate" class="datepicker">
+            <label>End Date</label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="input-field col s12">
+            <input type="number" data-bind="value: EstimatedTime" />
+            <label class="active">Estimate Time(Hours)</label>
+        </div>
+    </div>
+</script>

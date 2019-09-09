@@ -14,5 +14,13 @@
   {
     "outputFile": "Content/Common/scss/utility.css",
     "inputFile": "Content/Common/scss/utility.scss"
+  },
+  {
+    "outputFile": "Content/Task/es6/task-management.css",
+    "inputFile": "Content/Task/es6/task-management.scss"
+  },
+  {
+    "outputFile": "Content/Task/scss/task-management.css",
+    "inputFile": "Content/Task/scss/task-management.scss"
   }
 ]

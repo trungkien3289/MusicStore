@@ -3265,9 +3265,9 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
     }
 }
 
-.fade:not(.show) {
+/*.fade:not(.show) {
     opacity: 0
-}
+}*/
 
 .collapse:not(.show) {
     display: none
@@ -22445,10 +22445,10 @@ button.toast-close-button {
     }
 }
 
-.popover, .tooltip {
+/*.popover, .tooltip {
     opacity: 0;
     transition: opacity .2s ease
-}
+}*/
 
     .popover.show, .tooltip.show {
         opacity: 1

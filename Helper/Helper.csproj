@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
+    <Compile Include="FilterOperatorEnum.cs" />
     <Compile Include="LinkFactory\Interface1.cs" />
     <Compile Include="TaskStatusEnum .cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -40,6 +40,7 @@ namespace WebAPI.APIControllers
         /// </summary>
         /// <param name="taskRequestId"></param>
         /// <returns></returns>
+        [AuthorizationRequiredAttribute]
         [Route("api/task/requests/{taskRequestId}")]
         [HttpGet]
         public HttpResponseMessage Details([FromUri]int taskRequestId)

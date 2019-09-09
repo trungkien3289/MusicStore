@@ -118,6 +118,7 @@
     <Compile Include="GenericRepository\TaskRepository.cs" />
     <Compile Include="GenericRepository\TaskRequestRepository.cs" />
     <Compile Include="MessageModels\ProjectMessageModel.cs" />
+    <Compile Include="MessageModels\TaskMessageModel.cs" />
     <Compile Include="Migrations\201908271553485_init database.cs" />
     <Compile Include="Migrations\201908271553485_init database.Designer.cs">
       <DependentUpon>201908271553485_init database.cs</DependentUpon>

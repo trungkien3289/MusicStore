@@ -91,6 +91,16 @@ namespace MusicStore.Model.GenericRepository
 
             return results;
         }
+
+        public bool HasPermissionToGetTaskInProject(int projectId, int userId, int roleId)
+        {
+            if (roleId == (int)UserRoleEnum.ADMIN) return true;
+            var project = this.DbSet.Where(p => p.Id == projectId).FirstOrDefault();
+            if (project == null) throw new Exception("Project not existed.");
+
+            var result = project.Leaders.Any(l => l.UserId == userId) && project.Developers.Any(d => d.UserId == userId);
+            return result;
+        }
     }
 }
 

@@ -1,0 +1,164 @@
+﻿.task-management-container {
+    padding: 0;
+
+    .card-header {
+        margin: 20px;
+        display: flex;
+        flex-direction: column;
+        height: auto;
+
+        .main-filter-panel {
+            display: flex;
+            flex: 0 0 50px;
+            width: 100%;
+            align-items: center;
+
+            .title {
+                flex: 0 0 200px;
+                font: 26px/26px "OpenSans-Light",Helvetica,Arial,sans-serif;
+                font-weight: 700;
+            }
+
+            .search-wrapper {
+                flex: 1 1 200px;
+                display: flex;
+                align-items: center;
+            }
+
+            .btn-filter-setting {
+                flex: 0 0 100px;
+                margin-right: 5px;
+                color: #fff;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                align-content: space-between;
+
+                i .fa-filter {
+                    margin-right: 3px;
+                }
+            }
+
+            .btn-new-task {
+                flex: 0 0 100px;
+                color: #fff;
+            }
+
+            .btn-small {
+                i {
+                    font-size: 1rem;
+                }
+            }
+        }
+
+        .sub-filter-panel {
+            flex: 0 0 auto;
+            display: flex;
+            width: 100%;
+            transition: height .35s ease;
+            /*background-color: rgba(218, 213, 200, 0.45);*/
+            border-top: 1px solid #ccc;
+            flex-direction: column;
+
+            .filter-menu-panel {
+                flex: 0 0 auto;
+                padding: 10px;
+                /*border-right: 3px solid rgba(25, 19, 19, 0.15);*/
+                display: flex;
+
+                .filter-item-status-container {
+                    flex: 1 1 auto;
+                    display: flex;
+
+                    .filter-item-status {
+                        margin-right: 10px;
+                    }
+                }
+
+                .btn-submit-filters {
+                    color: #fff;
+                }
+            }
+
+            .list-filter-item {
+                flex: 1 1 auto;
+                display: block;
+                padding: 10px;
+                height: 200px;
+                width: 100%;
+            }
+
+            label {
+                text-transform: none;
+            }
+        }
+    }
+
+    .card-body {
+        a.btn-small {
+            color: #fff !important;
+        }
+
+        button.btn-setting {
+            background: transparent;
+            font-size: 25px;
+        }
+
+        .dropdown-menu {
+            min-width: 8rem;
+
+            .dropdown-item {
+                display: flex;
+                align-items: center;
+                align-content: space-between;
+
+                i {
+                    margin-right: 5px;
+                }
+            }
+        }
+    }
+
+    .card-footer {
+        display: flex;
+        align-items: center;
+
+        .pagination {
+            flex: 1 1 auto;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            margin: 0;
+
+            li a {
+                border: none;
+            }
+        }
+
+        .numberperpage-panel {
+            flex: 0 0 150px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            span {
+                margin: 0 5px;
+            }
+
+            select {
+                height: auto;
+            }
+        }
+    }
+}
+
+#addTaskDialog.modal {
+    width: 85%;
+    height: 85%;
+    max-height: 90%;
+
+    .modal-content {
+        border-radius: 0;
+        border:none;
+    }
+}

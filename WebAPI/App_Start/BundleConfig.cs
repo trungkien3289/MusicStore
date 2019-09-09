@@ -17,6 +17,7 @@ namespace WebAPI
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
+                      "~/Scripts/Common/popper.min.js",
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
@@ -35,6 +36,7 @@ namespace WebAPI
                         ));
 
             bundles.Add(new ScriptBundle("~/bundles/dashboard_js").Include(
+
                       "~/Scripts/DashBoard/dashboard-main.js",
                       //"~/node_modules/knockout.validation/dist/knockout.validation.js",
                       //"~/node_modules/knockout.validation/localization/el-GR.js",

@@ -1,11 +1,10 @@
-﻿import Person from './person';
-import axios from 'axios';
+﻿import axios from 'axios';
 import ProjectDetailsModel from './project-details-model';
 import TaskDetailsModel from './task-details-model';
 import TaskRequestModel from './task-request-model';
 import DashBoardModel from './dashboard-model';
 import TaskRequestProjectModel from './taskrequest-project-model';
-import * as moment from 'moment';
+import { format } from 'date-fns';
 import Utils from '../../Common/es6/utils';
 import * as Toastr from 'toastr';
 
@@ -90,8 +89,8 @@ export default class DashboardManagement {
             .then(response => {
                 self.displayMode(ProjectDisplayMode.PROJECT_DETAILS);
                 var data = response.data;
-                data.StartDate = moment(new Date(data.StartDate)).format("DD/MM/YYYY hh:mm:ss");
-                data.EndDate = moment(new Date(data.EndDate)).format("DD/MM/YYYY hh:mm:ss");
+                data.StartDate = format(new Date(data.StartDate), "dd/MM/yyyy hh:mm:ss");
+                data.EndDate = format(new Date(data.EndDate), "dd/MM/yyyy hh:mm:ss");
                 var projectDetails = new ProjectDetailsModel(data);
                 self.currentProject(new ProjectDetailsModel(projectDetails));
 
@@ -106,8 +105,8 @@ export default class DashboardManagement {
                 .then(response => {
                     self.displayMode(ProjectDisplayMode.TASK_DETAILS);
                     var data = response.data;
-                    data.StartDate = moment(new Date(data.StartDate)).format("DD/MM/YYYY hh:mm:ss");
-                    data.EndDate = moment(new Date(data.EndDate)).format("DD/MM/YYYY hh:mm:ss");
+                    data.StartDate = format(new Date(data.StartDate), "dd/MM/yyyy hh:mm:ss");
+                    data.EndDate = format(new Date(data.EndDate), "dd/MM/yyyy hh:mm:ss");
                     var taskDetails = new TaskDetailsModel(data);
                     self.currentTask(new TaskDetailsModel(taskDetails));
 
@@ -152,14 +151,14 @@ export default class DashboardManagement {
     }
 
     convertDateTime(dateString, format) {
-        return moment(new Date(dateString)).format(format);
+        return format(new Date(dateString), format);
     }
 
     updateTaskRequestDetailsUI(taskRequestData, isJoin) {
         var self = this;
         self.displayMode(ProjectDisplayMode.TASK_REQUEST);
-        taskRequestData.Task.StartDate = self.convertDateTime(taskRequestData.Task.StartDate, "DD/MM/YYYY hh:mm:ss");
-        taskRequestData.Task.EndDate = self.convertDateTime(taskRequestData.Task.EndDate, "DD/MM/YYYY hh:mm:ss");
+        taskRequestData.Task.StartDate = self.convertDateTime(taskRequestData.Task.StartDate, "dd/MM/yyyy hh:mm:ss");
+        taskRequestData.Task.EndDate = self.convertDateTime(taskRequestData.Task.EndDate, "dd/MM/yyyy hh:mm:ss");
         self.currentTaskRequest(new TaskRequestModel(taskRequestData, isJoin));
     }
 }

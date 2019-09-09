@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using Helper;
 using MusicStore.BussinessEntity;
 using MusicStore.Model.DataModels;
+using MusicStore.Model.MessageModels;
 using MusicStore.Model.UnitOfWork;
 using MusicStore.Service.IService;
 using System;
@@ -33,9 +35,17 @@ namespace MusicStore.Service.Services
         {
             using (var scope = new TransactionScope())
             {
-                var config = new MapperConfiguration(cfg => cfg.CreateMap<TaskEntity, fl_Task>());
-                var mapper = config.CreateMapper();
-                var entity = mapper.Map<TaskEntity, fl_Task>(model);
+                fl_Task entity = new fl_Task()
+                {
+                    Name = model.Name,
+                    Description = model.Description,
+                    Status = (int)TaskStatusEnum.New,
+                    StartDate = model.StartDate,
+                    EndDate = model.EndDate,
+                    EstimatedTime = model.EstimatedTime,
+                    ProjectId = model.ProjectId,
+                };
+
                 _unitOfWork.TaskRepository.Insert(entity);
                 _unitOfWork.Save();
                 scope.Complete();
@@ -121,6 +131,20 @@ namespace MusicStore.Service.Services
         public int Count(int userId)
         {
             return _unitOfWork.TaskRepository.Count(t => t.AssigneeId == userId);
+        }
+
+        public GetTasksResponseModel GetTasks(GetTasksRequestModel request, int userId)
+        {
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<GetTasksRequestModel, GetTasksWithFiltersRequest>());
+            var mapper = config.CreateMapper();
+            var requestModel = mapper.Map<GetTasksRequestModel, GetTasksWithFiltersRequest>(request);
+            var result = _unitOfWork.TaskRepository.GetWithFilters(requestModel, userId);
+
+            var configResponse = new MapperConfiguration(cfg => cfg.CreateMap<GetTasksWithFiltersResponse, GetTasksResponseModel>());
+            var mapperResponse = config.CreateMapper();
+            var response = mapper.Map<GetTasksWithFiltersResponse, GetTasksResponseModel>(result);
+
+            return response;
         }
         #endregion
     }

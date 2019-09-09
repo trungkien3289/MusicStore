@@ -290,6 +290,7 @@
     <Compile Include="Controllers\WebCollectionController.cs" />
     <Compile Include="Controllers\WebGenreController.cs" />
     <Compile Include="Controllers\WebSongController.cs" />
+    <Compile Include="Convertors\MyDateTimeConvertor.cs" />
     <Compile Include="Filters\ApiAuthenticationFilter.cs" />
     <Compile Include="Filters\BasicAuthenticationIdentity.cs" />
     <Compile Include="Filters\GenericAuthenticationFilter.cs" />
@@ -411,6 +412,12 @@
     <Content Include="Content\TaskRequest\scss\main.min.css">
       <DependentUpon>main.css</DependentUpon>
     </Content>
+    <Content Include="Content\Task\scss\task-management.css">
+      <DependentUpon>task-management.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\Task\scss\task-management.min.css">
+      <DependentUpon>task-management.css</DependentUpon>
+    </Content>
     <Content Include="Content\Video\Ellie-Goulding.mp4" />
     <Content Include="Content\Video\Ellie-Goulding.webm" />
     <Content Include="Content\Video\Mark-Ronson-Uptown.mp4" />
@@ -510,6 +517,7 @@
     <Content Include="Scripts\build\pageHeader.js" />
     <Content Include="Scripts\build\projectManagement.js" />
     <Content Include="Scripts\build\register.js" />
+    <Content Include="Scripts\build\taskManagement.js" />
     <Content Include="Scripts\build\taskRequest.js" />
     <Content Include="Scripts\Common\bootstrap.js" />
     <Content Include="Scripts\Common\classie.js" />
@@ -525,6 +533,7 @@
     <Content Include="Scripts\Common\jquery.magnific-popup.js" />
     <Content Include="Scripts\Common\jquery.nicescroll.js" />
     <Content Include="Scripts\Common\mediaelement-and-player.min.js" />
+    <Content Include="Scripts\Common\popper.min.js" />
     <Content Include="Scripts\Common\responsiveslides.min.js" />
     <Content Include="Scripts\Common\scripts.js" />
     <Content Include="Scripts\Common\songplaylist.js" />
@@ -609,6 +618,7 @@
     <Content Include="node_modules\knockout.validation\dist\knockout.validation.min.js.map" />
     <Content Include="node_modules\knockout.validation\package.json" />
     <Content Include="node_modules\knockout.validation\README.md" />
+    <Content Include="Content\Task\scss\task-management.scss" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\DashBoard\es6\task-details-model.js" />
@@ -627,6 +637,11 @@
     <Content Include="Scripts\Register\es6\main.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\TaskManagement\es6\addedit-task-viewmodel.js" />
+    <Content Include="Scripts\TaskManagement\es6\addedit-viewmodel.js" />
+    <Content Include="Scripts\TaskManagement\es6\filter-items.js" />
+    <Content Include="Scripts\TaskManagement\es6\task-filter.js" />
+    <Content Include="Scripts\TaskManagement\es6\task-management-main.js" />
     <Content Include="Scripts\TaskRequest\es6\addedit-taskrequest-viewmodel.js" />
     <Content Include="Scripts\TaskRequest\es6\main.js" />
     <Content Include="Scripts\TaskRequest\es6\project-model.js" />
@@ -687,6 +702,7 @@
     <Content Include="Views\Task\Index.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\TaskRequest\Index.cshtml" />
+    <Content Include="Views\Task\Index - Copy.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

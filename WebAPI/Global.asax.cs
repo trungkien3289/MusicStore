@@ -1,11 +1,15 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Net.Http.Formatting;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using WebAPI.Convertors;
 
 namespace WebAPI
 {
@@ -19,6 +23,25 @@ namespace WebAPI
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            //var settings = GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings;
+            //JsonSerializerSettings jSettings = new Newtonsoft.Json.JsonSerializerSettings()
+            //{
+            //    Formatting = Formatting.Indented,
+            //    DateTimeZoneHandling = DateTimeZoneHandling.Utc,
+            //};
+            //jSettings.Converters.Add(new MyDateTimeConvertor());
+            //settings = jSettings;
+
+            JsonMediaTypeFormatter jsonFormatter = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
+            JsonSerializerSettings jSettings = new Newtonsoft.Json.JsonSerializerSettings()
+            {
+                Formatting = Formatting.Indented,
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc,
+                Culture = CultureInfo.GetCultureInfo("fr-FR")
+            };
+            //jSettings.Converters.Add(new MyDateTimeConvertor());
+            jsonFormatter.SerializerSettings = jSettings;
         }
         protected void Application_BeginRequest()
         {

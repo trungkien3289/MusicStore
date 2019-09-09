@@ -18,5 +18,7 @@ namespace MusicStore.Service.IService
         ProjectEntity Update(int id, ProjectEntity model);
         bool Delete(int id);
         int Count(int userId);
+        bool CheckUserCanGetTasksOfProject(int projectId, int userId, int roleId);
+        IEnumerable<ProjectFilterItem> GetProjectFilterItemsForUser(int id);
     }
 }

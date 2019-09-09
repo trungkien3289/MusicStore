@@ -61,7 +61,6 @@ namespace WebAPI.APIControllers
             return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Albums not found");
         }
 
-
         [Route("api/projects/{projectId}")]
         public HttpResponseMessage GetById([FromUri]int projectId)
         {
@@ -111,6 +110,25 @@ namespace WebAPI.APIControllers
             else
             {
                 return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Error on delete project");
+            }
+        }
+
+        [AuthorizationRequiredAttribute]
+        [HttpGet]
+        [Route("api/projects/available")]
+        public HttpResponseMessage GetProjectForUser()
+        {
+            // get current user
+            var user = System.Threading.Thread.CurrentPrincipal.Identity as BasicAuthenticationIdentity;
+
+            try
+            {
+                var projects = _projectServices.GetProjectFilterItemsForUser(user.UserId);
+                return Request.CreateResponse(HttpStatusCode.OK, projects);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex.Message);
             }
         }
     }

@@ -264,6 +264,19 @@ namespace MusicStore.Service.Services
 			return totalProjects;
 		}
 
-		#endregion
-	}
+        public bool CheckUserCanGetTasksOfProject(int projectId, int userId, int roleId)
+        {
+            return _unitOfWork.ProjectRepository.HasPermissionToGetTaskInProject(projectId, userId, roleId);
+        }
+
+        public IEnumerable<ProjectFilterItem> GetProjectFilterItemsForUser(int id)
+        {
+            var projects = _unitOfWork.ProjectRepository.GetProjectByUserId(id);
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<fl_Project, ProjectFilterItem>());
+            var mapper = config.CreateMapper();
+            var results = mapper.Map<IEnumerable<fl_Project>, IEnumerable<ProjectFilterItem>>(projects);
+            return results;
+        }
+        #endregion
+    }
 }

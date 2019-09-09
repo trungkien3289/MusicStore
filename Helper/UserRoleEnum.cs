@@ -8,7 +8,7 @@ namespace Helper
 {
     public enum UserRoleEnum
     {
-        ADMIN = 0,
-        USER = 1,
+        ADMIN = 1,
+        USER = 2,
     }
 }

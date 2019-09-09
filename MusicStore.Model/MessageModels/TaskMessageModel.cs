@@ -1,43 +1,26 @@
-﻿using System;
+﻿using MusicStore.Model.DataModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MusicStore.BussinessEntity
+namespace MusicStore.Model.MessageModels
 {
-    public class TaskEntity
-    {
-        public int Id { get; set; }
-        public int ProjectId { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        /// <summary>
-        /// Task Status New| Inprogress|Completed|Close|FeedBack
-        /// </summary>
-        public int Status { get; set; }
-        public Nullable<int> AssigneeId { get; set; }
-        public DateTime EndDate { get; set; }
-        public DateTime StartDate { get; set; }
-        public float EstimatedTime { get; set; }
-
-        public UserEntity Assignee { get; set; }
-    }
-
-    public class GetTasksRequestModel
+    public class GetTasksWithFiltersRequest
     {
         public GetTasksFilterModel Filter { get; set; }
         public int CurrentPage { get; set; }
         public int NumberItemsPerPage { get; set; }
     }
 
-    public class GetTasksResponseModel
+    public class GetTasksWithFiltersResponse
     {
         public int CurrentPage { get; set; }
         public int NumberItemsPerPage { get; set; }
         public int TotalPages { get; set; }
         public int TotalItems { get; set; }
-        public ICollection<TaskEntity> Tasks {get;set;}
+        public ICollection<fl_Task> Tasks { get; set; }
     }
 
     public class GetTasksFilterModel
@@ -74,4 +57,5 @@ namespace MusicStore.BussinessEntity
         public bool IsEnable { get; set; }
         public int Value { get; set; }
     }
+
 }

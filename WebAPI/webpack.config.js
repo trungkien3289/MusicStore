@@ -1,5 +1,4 @@
 ﻿const path = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
     entry: {
@@ -9,7 +8,8 @@ module.exports = {
         register: './Scripts/Register/es6/main.js',
         dashboard: './Scripts/DashBoard/es6/main.js',
         projectManagement: './Scripts/ProjectManagement/es6/main.js',
-        taskRequest: './Scripts/TaskRequest/es6/main.js'
+        taskRequest: './Scripts/TaskRequest/es6/main.js',
+        taskManagement: './Scripts/TaskManagement/es6/task-management-main.js'
     },
     output: {
         filename: '[name].js',
@@ -23,25 +23,25 @@ module.exports = {
             test: /\.js$/,
             exclude: /node_modules/
         },
-        {
-            // Apply rule for .sass, .scss or .css files
-            test: /\.(sa|sc|c)ss$/,
+        //{
+        //    // Apply rule for .sass, .scss or .css files
+        //    test: /\.(sa|sc|c)ss$/,
 
-            // Set loaders to transform files.
-            // Loaders are applying from right to left(!)
-            // The first loader will be applied after others
-            use: [
-                {
-                    loader: "style-loader" // creates style nodes from JS strings
-                },
-                {
-                    loader: "css-loader" // translates CSS into CommonJS
-                },
-                {
-                    loader: "sass-loader" // compiles Sass to CSS
-                }
-            ]
-        }
+        //    // Set loaders to transform files.
+        //    // Loaders are applying from right to left(!)
+        //    // The first loader will be applied after others
+        //    use: [
+        //        {
+        //            loader: "style-loader" // creates style nodes from JS strings
+        //        },
+        //        {
+        //            loader: "css-loader" // translates CSS into CommonJS
+        //        },
+        //        {
+        //            loader: "sass-loader" // compiles Sass to CSS
+        //        }
+        //    ]
+        //}
         ]
     },
     plugins: [
