@@ -150,8 +150,8 @@ export default class DashboardManagement {
         });
     }
 
-    convertDateTime(dateString, format) {
-        return format(new Date(dateString), format);
+    convertDateTime(dateString, formatString) {
+        return format(new Date(dateString), formatString);
     }
 
     updateTaskRequestDetailsUI(taskRequestData, isJoin) {

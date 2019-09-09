@@ -12,6 +12,7 @@ export default class PageHeader {
         } else {
             this._apiBaseUrl = `${applicationPath}api/`;
         }
+        this.applicationPath = applicationPath;
         this.bindEvents();
     }
     bindEvents() {
@@ -35,14 +36,20 @@ export default class PageHeader {
     }
 
     deleteAllCookies() {
-        var cookies = document.cookie.split(";");
+        //var cookies = document.cookie.split(";");
 
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = cookies[i];
-            var eqPos = cookie.indexOf("=");
-            var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-        }
+        //for (var i = 0; i < cookies.length; i++) {
+        //    var cookie = cookies[i];
+        //    var eqPos = cookie.indexOf("=");
+        //    var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+        //    document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        //}
+
+        document.cookie.split(";").forEach(function (c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
+
+        //var cookies = document.cookie.split(";");
+        //for (var i = 0; i < cookies.length; i++)
+        //    eraseCookie(cookies[i].split("=")[0]);
     }
 
     requestSignOut() {

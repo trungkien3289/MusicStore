@@ -14,87 +14,87 @@ using MusicStore.Model.MessageModels;
 
 namespace MusicStore.Service.Services
 {
-	public class ProjectServices : IProjectServices
-	{
-		#region variables
-		private readonly UnitOfWork _unitOfWork;
+    public class ProjectServices : IProjectServices
+    {
+        #region variables
+        private readonly UnitOfWork _unitOfWork;
 
-		#endregion
+        #endregion
 
-		#region constructors
-		public ProjectServices(UnitOfWork unitOfWork)
-		{
-			this._unitOfWork = unitOfWork;
-		}
+        #region constructors
+        public ProjectServices(UnitOfWork unitOfWork)
+        {
+            this._unitOfWork = unitOfWork;
+        }
 
-		#endregion
+        #endregion
 
-		#region public functions
-
-		/// <summary>
-		/// Get project details
-		/// </summary>
-		/// <param name="id"></param>
-		/// <returns></returns>
-		public ProjectEntity GetById(int id)
-		{
-			var entity = _unitOfWork.ProjectRepository.GetByID(id);
-			if (entity != null)
-			{
-				var config = new MapperConfiguration(cfg => cfg.CreateMap<fl_Project, ProjectEntity>()
-					 .ForMember(p => p.Leaders, opt => opt.Ignore())
-					 .ForMember(p => p.Developers, opt => opt.Ignore())
-					 .ForMember(p => p.TaskRequests, opt => opt.Ignore())
-					 .ForMember(p => p.Tasks, opt => opt.Ignore())
-					 );
-				var mapper = config.CreateMapper();
-				var model = mapper.Map<fl_Project, ProjectEntity>(entity);
-				return model;
-			}
-			return null;
-		}
-
-		/// <summary>
-		/// Get project details with developers and leaders
-		/// </summary>
-		/// <param name="id"></param>
-		/// <returns></returns>
-		public ProjectEntity GetProjectDetailsById(int id)
-		{
-			var entity = _unitOfWork.ProjectRepository.GetByID(id);
-			if (entity != null)
-			{
-				var config = new MapperConfiguration(cfg => cfg.CreateMap<fl_Project, ProjectEntity>()
-					 .ForMember(p => p.TaskRequests, opt => opt.Ignore())
-					 .ForMember(p => p.Tasks, opt => opt.Ignore())
-					 );
-				var mapper = config.CreateMapper();
-				var model = mapper.Map<fl_Project, ProjectEntity>(entity);
-				return model;
-			}
-			return null;
-		}
-
-		/// <summary>
-		/// Get projects of user(user is admin or leader or developer)
-		/// </summary>
-		/// <param name="id">User id</param>
-		/// <returns></returns>
-		public IEnumerable<ProjectEntity> GetByUserId(int id)
-		{
-			var projects = _unitOfWork.ProjectRepository.GetProjectByUserId(id);
-			var config = new MapperConfiguration(cfg => cfg.CreateMap<fl_Project, ProjectEntity>());
-			var mapper = config.CreateMapper();
-			var results = mapper.Map<IEnumerable<fl_Project>, IEnumerable<ProjectEntity>>(projects);
-			return results;
-		}
+        #region public functions
 
         /// <summary>
-		/// Get projects of user(user is admin or leader or developer)
-		/// </summary>
-		/// <param name="id">User id</param>
-		/// <returns></returns>
-		public IEnumerable<ProjectEntity> GetForLeader(int id)
+        /// Get project details
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ProjectEntity GetById(int id)
+        {
+            var entity = _unitOfWork.ProjectRepository.GetByID(id);
+            if (entity != null)
+            {
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<fl_Project, ProjectEntity>()
+                     .ForMember(p => p.Leaders, opt => opt.Ignore())
+                     .ForMember(p => p.Developers, opt => opt.Ignore())
+                     .ForMember(p => p.TaskRequests, opt => opt.Ignore())
+                     .ForMember(p => p.Tasks, opt => opt.Ignore())
+                     );
+                var mapper = config.CreateMapper();
+                var model = mapper.Map<fl_Project, ProjectEntity>(entity);
+                return model;
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Get project details with developers and leaders
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ProjectEntity GetProjectDetailsById(int id)
+        {
+            var entity = _unitOfWork.ProjectRepository.GetByID(id);
+            if (entity != null)
+            {
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<fl_Project, ProjectEntity>()
+                     .ForMember(p => p.TaskRequests, opt => opt.Ignore())
+                     .ForMember(p => p.Tasks, opt => opt.Ignore())
+                     );
+                var mapper = config.CreateMapper();
+                var model = mapper.Map<fl_Project, ProjectEntity>(entity);
+                return model;
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Get projects of user(user is admin or leader or developer)
+        /// </summary>
+        /// <param name="id">User id</param>
+        /// <returns></returns>
+        public IEnumerable<ProjectEntity> GetByUserId(int id)
+        {
+            var projects = _unitOfWork.ProjectRepository.GetProjectByUserId(id);
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<fl_Project, ProjectEntity>());
+            var mapper = config.CreateMapper();
+            var results = mapper.Map<IEnumerable<fl_Project>, IEnumerable<ProjectEntity>>(projects);
+            return results;
+        }
+
+        /// <summary>
+        /// Get projects of user(user is admin or leader or developer)
+        /// </summary>
+        /// <param name="id">User id</param>
+        /// <returns></returns>
+        public IEnumerable<ProjectEntity> GetForLeader(int id)
         {
             var projects = _unitOfWork.ProjectRepository.GetProjectForLeader(id);
             var config = new MapperConfiguration(cfg => cfg.CreateMap<fl_Project, ProjectEntity>());
@@ -138,73 +138,99 @@ namespace MusicStore.Service.Services
 			return null;
 		}
 
-		public ProjectEntity Create(ProjectEntity model)
-		{
-			using (var scope = new TransactionScope())
-			{
-				var config = new MapperConfiguration(cfg => cfg.CreateMap<ProjectEntity, fl_Project>());
-				var mapper = config.CreateMapper();
-				var entity = mapper.Map<ProjectEntity, fl_Project>(model);
-				var leadersEntity = new List<system_User>();
-				var developersEntity = new List<system_User>();
+        public ProjectEntity Create(ProjectRequest model)
+        {
+            using (var scope = new TransactionScope())
+            {
+                var leadersEntity = new List<system_User>();
+                var developersEntity = new List<system_User>();
 
-				if (model.Leaders != null && model.Leaders.Count() > 0)
-				{
-					foreach (var id in model.Leaders)
-					{
-						var user = _unitOfWork.UserRepository.GetByID(id);
-						if (user != null)
-						{
-							leadersEntity.Add(user);
-						}
-					}
-				}
-				if (model.Developers != null && model.Developers.Count() > 0)
-				{
-					foreach (var id in model.Developers)
-					{
-						var user = _unitOfWork.UserRepository.GetByID(id);
-						if (user != null)
-						{
-							developersEntity.Add(user);
-						}
-					}
-				}
+                foreach (var id in model.Leaders)
+                {
+                    var user = _unitOfWork.UserRepository.GetByID(id);
+                    if (user != null)
+                    {
+                        leadersEntity.Add(user);
+                    }
+                }
+                foreach (var id in model.Developers)
+                {
+                    var user = _unitOfWork.UserRepository.GetByID(id);
+                    if (user != null)
+                    {
+                        developersEntity.Add(user);
+                    }
+                }
 
-				fl_Project newProject = new fl_Project()
-				{
-					Name = model.Name,
-					Description = model.Description,
-					StartDate = model.StartDate,
-					EndDate = model.EndDate,
-					Developers = developersEntity,
-					Leaders = leadersEntity
-				};
+                fl_Project newProject = new fl_Project()
+                {
+                    Name = model.Name,
+                    Description = model.Description,
+                    StartDate = model.StartDate,
+                    EndDate = model.EndDate,
+                    // TODO:
+                    //Status = Enum.New;
+                    Developers = developersEntity,
+                    Leaders = leadersEntity
+                };
 
-				_unitOfWork.ProjectRepository.Insert(newProject);
-				_unitOfWork.Save();
-				scope.Complete();
-				model.Id = entity.Id;
-				return model;
-			}
-		}
+                _unitOfWork.ProjectRepository.Insert(newProject);
+                _unitOfWork.Save();
+                scope.Complete();
 
-		public ProjectEntity Update(int id, ProjectEntity model)
-		{
-			using (var scope = new TransactionScope())
-			{
-				var project = _unitOfWork.ProjectRepository.GetByID(id);
-				project.Name = model.Name;
-				project.Description = model.Description;
-				project.Status = model.Status;
-				_unitOfWork.Save();
-				scope.Complete();
-			}
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<fl_Project, ProjectEntity>());
+                var mapper = config.CreateMapper();
+                var returnModel = mapper.Map<fl_Project, ProjectEntity>(newProject);
 
-			return model;
-		}
+                return returnModel;
+            }
+        }
 
-		public bool Delete(int id)
+        public ProjectEntity Update(int id, ProjectRequest model)
+        {
+            using (var scope = new TransactionScope())
+            {
+                var updateProject = _unitOfWork.ProjectRepository.GetByID(id);
+
+                updateProject.Name = model.Name;
+                updateProject.Description = model.Description;
+                updateProject.Status = model.Status;
+                updateProject.Leaders.Clear();
+                updateProject.Developers.Clear();
+
+                foreach (var userId in model.Leaders)
+                {
+                    var user = _unitOfWork.UserRepository.GetByID(userId);
+                    if (user != null)
+                    {
+                        updateProject.Leaders.Add(user);
+                    }
+                }
+
+                foreach (var userId in model.Developers)
+                {
+                    var user = _unitOfWork.UserRepository.GetByID(userId);
+                    if (user != null)
+                    {
+                        updateProject.Developers.Add(user);
+                    }
+                }
+
+                _unitOfWork.Save();
+                scope.Complete();
+
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<fl_Project, ProjectEntity>()
+                            .ForMember(tr => tr.Tasks, opt => opt.Ignore())
+                            .ForMember(tr => tr.TaskRequests, opt => opt.Ignore()));
+                var mapper = config.CreateMapper();
+                var returnModel = mapper.Map<fl_Project, ProjectEntity>(updateProject);
+
+                return returnModel;
+            }
+
+        }
+
+        public bool Delete(int id)
 		{
 			var success = false;
 			if (id > 0)
@@ -277,6 +303,7 @@ namespace MusicStore.Service.Services
             var results = mapper.Map<IEnumerable<fl_Project>, IEnumerable<ProjectFilterItem>>(projects);
             return results;
         }
+        
         #endregion
     }
 }

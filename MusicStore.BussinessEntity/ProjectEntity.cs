@@ -24,7 +24,27 @@ namespace MusicStore.BussinessEntity
         public ICollection<UserEntity> Developers { get; set; }
     }
 
-    public class GetProjectWithTaskResponse
+	public class ProjectRequest
+	{
+		public ProjectRequest()
+		{
+			Leaders = new List<int>();
+			Developers = new List<int>();
+		}
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Description { get; set; }
+		public DateTime EndDate { get; set; }
+		public DateTime StartDate { get; set; }
+		/// <summary>
+		/// Task Status New| Active|Close
+		/// </summary>
+		public int Status { get; set; }
+		public IList<int> Leaders { get; set; }
+		public IList<int> Developers { get; set; }
+	}
+
+	public class GetProjectWithTaskResponse
     {
         public int Id { get; set; }
         public string Name { get; set; }

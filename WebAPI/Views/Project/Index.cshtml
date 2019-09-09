@@ -7,116 +7,296 @@
     <script src="~/Scripts/build/projectManagement.js"></script>
 }
 @section css{
-
+    <link href="~/Content/TaskRequest/scss/main.css" rel="stylesheet" />
 }
-<div class="col-md-12">
-    <div class="main-card mb-3 card">
-        <div class="card-header">
-            <div class="btn-actions-pane-right">
-                <!-- Modal Trigger -->
-                <a class="waves-effect waves-light btn" data-bind="click: newProject">New</a>
 
-                <!-- Modal Structure -->
-                <div id="projectEditor" class="modal modal-fixed-footer">
-                    <div class="modal-content">
-                        <h6>New Project</h6>
-                        <form class="col s12" id="projectForm">
-                            <div class="row">
-                                <div class="input-field col s12">
-                                    <input type="text" class="validate" data-bind="value: Name" required />
-                                    <label>Name</label>
-                                </div>
+<div class="app-main__outer">
+    <div class="app-main__inner">
+        <div class="task-request-management-wrapper">
+            <div class="col-md-3 col-xl-3 card left-panel">
+                <div class="card-header task-request-details-container">
+                    <span class="title"
+                          style="flex: 1 1 auto">Projects</span>
+                    <button class="waves-effect waves-light btn-small btn-add-task-request blue"
+                            style="display: flex"
+                            data-bind="click:$root.onAddProject, clickBubble: false">
+                        <i class="material-icons">add</i>
+                        <span>New Project</span>
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="tab-content">
+                        <div class=" project-task-panel" data-bind="foreach: projects">
+                            <div class="d-flex flex-row align-items-center" height="30px">
+                                <a class="btn-toogle-panel collapsed" data-toggle="collapse" data-bind="attr : {href : ProjectButtonHRef}" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                    <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                    <i class="metismenu-state-icon pe-7s-angle-up caret-left"></i>
+                                </a>
+                                <a class="btn-project-item tree-node-btn" data-bind="attr:{'data-projectid' : Id}">
+                                    <i class="metismenu-icon fa fa-suitcase"></i>
+                                    <span data-bind="text: Name"></span>
+                                </a>
                             </div>
-                            <div class="row">
-                                <div class="input-field col s12">
-                                    <textarea class="materialize-textarea" data-bind="value: Description"></textarea>
-                                    <label>Description</label>
-                                </div>
+                            <div class="collapse" data-bind="attr: {id: ProjectExpandPanelId}">
+                                <ul class="vertical-nav-menu project-tree" data-bind="foreach: Tasks">
+                                    <li>
+                                        <a data-bind="attr:{'data-taskid': Id}" class="btn-task-item tree-node-btn">
+                                            <i class="fa fa-tasks"></i>
+                                            <span data-bind="text: Name"></span>
+                                        </a>
+                                    </li>
+                                </ul>
                             </div>
-                            <div class="row">
-                                <div class="input-field col s6">
-                                    <input type="text" class="datepicker" required data-bind="value: StartDate" />
-                                    <label>Start Date</label>
-                                </div>
-                                <div class="input-field col s6">
-                                    <input type="text" class="datepicker" required data-bind="value: EndDate" />
-                                    <label>End Date</label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="input-field col s12">
-                                    <select data-bind="options: $root.availableDevelopers, selectedOptions: Leaders, optionsText: 'Name'" size="5" multiple="true"></select>
-                                    <label>Leaders</label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="input-field col s12">
-                                    <select data-bind="options: $root.availableDevelopers, selectedOptions: Developers, optionsText: 'Name'" size="5" multiple="true"></select>
-                                    <label>Developer</label>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <a class="waves-effect waves-light btn-small" data-bind="click: cancelSaveProject">Cancel</a>
-                        <a class="waves-effect waves-light btn-small ml-2" data-bind="click: saveProject">Save</a>
+                        </div>
                     </div>
                 </div>
-                @*<div role="group" class="btn-group-sm btn-group">
-                        <button class="btn btn-primary">@Html.ActionLink("New", "Create", "Project", new { @Style = "color: #fff; text-decoration: none !important;" })</button>
-                    </div>*@
             </div>
-        </div>
-        <div class="table-responsive">
-            <table class="align-middle mb-0 table table-borderless table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th class="text-center">Name</th>
-                        <th class="text-center">Start Date</th>
-                        <th class="text-center">End Date</th>
-                        <th class="text-center">Status</th>
-                        <th class="text-center">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var project in Model)
-                    {
-                        <tr>
-                            <td>
-                                <div class="widget-content p-0">
-                                    <div class="widget-content-wrapper">
-                                        <div class="widget-content-left mr-3">
-                                            <div class="widget-content-left">
-                                                <img width="40" class="rounded-circle" src="assets/images/avatars/4.jpg" alt="">
-                                            </div>
-                                        </div>
-                                        <div class="widget-content-left flex2">
-                                            <div class="widget-heading">@project.Name</div>
-                                            <div class="widget-subheading opacity-7">@project.Description</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="text-center">@project.StartDate</td>
-                            <td class="text-center">@project.EndDate</td>
-                            <td class="text-center">
-                                <div class="badge badge-pill badge-info">New</div>
-                            </td>
-                            <td class="text-center">
-                                <button type="button" class="btn btn-primary btn-sm">
-                                    @Html.ActionLink("Detail", "Detail", new { id = project.Id }, new { @Style = "color: #fff; text-decoration: none !important;" })
-                                </button>
-                                <button type="button" class="btn btn-success btn-sm">
-                                    @Html.ActionLink("Update", "Update", new { id = project.Id }, new { @Style = "color: #fff; text-decoration: none !important;" })
-                                </button>
-                                <button type="button" class="btn btn-danger btn-sm">
-                                    @Html.ActionLink("Delete", "Delete", new { id = project.Id }, new { @Style = "color: #fff; text-decoration: none !important;" })
-                                </button>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+            <div class="col-md-9 col-xl-9 right-panel main-card card">
+                <div data-bind="if: isShowTaskRequest" class="task-request-details-container">
+                    <div class="card-header">
+                        <span class="title">Task Details</span>
+                        <button class="waves-effect waves-light btn-small btn-edit-task-request blue ml-2"
+                                data-bind="click:$root.onUpdateTask, clickBubble: false">
+                            <i class="material-icons">edit</i>Edit
+                        </button>
+                        <button class="waves-effect waves-light btn-small btn-delete-task-request red"
+                                data-bind="click:$root.onDeleteTask, clickBubble: false">
+                            <i class="material-icons">delete</i>Delete
+                        </button>
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <div class="task-details-panel" data-bind="template: {name:'taskDetailsTemplate', data: currentTask}"></div>
+                    </div>
+                </div>
+
+                <div id="ProjectPanel" data-bind="visible: isShowProjectDetail" class="task-request-details-container">
+                    <div class="card-header">
+                        <span class="title">Project Details</span>
+                        <button class="waves-effect waves-light btn-small btn-add-task-request blue"
+                                style="flex-basis: 120px;"
+                                data-bind="click:$root.onAddTask, clickBubble: false">
+                            <i class="material-icons">add</i>
+                            <span>New Task</span>
+                        </button>
+                        <button class="waves-effect waves-light btn-small btn-edit-task-request"
+                                style="margin-left: 5px"
+                                data-bind="click:$root.onUpdateProject, clickBubble: false">
+                            <i class="material-icons">edit</i>Update
+                        </button>
+                        <button class="waves-effect waves-light btn-small btn-delete-task-request red"
+                                data-bind=click:$root.onDeleteProject, clickBubble: false">
+                            <i class="material-icons">delete</i>Delete
+                        </button>
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <div data-bind="template: {name:'projectDetailsTemplate', data: currentProject}" class="d-flex flex-column flex-auto-fill"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+<!--Project detail-->
+<script type="text/x-jquery-tmpl" id="projectDetailsTemplate">
+    <div class="row-data align-items-center project-title-panel">
+        <span class="icon-space-wrapper">
+            <i class="nav-link-icon fa fa-suitcase"> </i>
+        </span>
+        <div class="project-title" data-bind="text: Name"></div>
+    </div>
+    <div class="row-data bd-highligh">
+        <i><p data-bind="text: Description"></p></i>
+    </div>
+    <div class="row-data project-time-panel">
+        <div class="d-flex flex-column time-group-controls">
+            <div class="d-flex flex-row align-items-center">
+                <span class="icon-space-wrapper">
+                    <i class="fa fa-calendar-alt"></i>
+                </span>
+                <span class="time-group-subject">Start Date</span>
+            </div>
+            <span data-bind="text: StartDate"></span>
+        </div>
+        <div class="d-flex flex-column time-group-controls">
+            <div class="d-flex flex-row align-items-center">
+                <span class="icon-space-wrapper"><i class="fa fa-calendar-alt"></i></span>
+                <span class="time-group-subject">End Date</span>
+            </div>
+            <span data-bind="text: EndDate"></span>
+        </div>
+    </div>
+    <div class="row-data user-group-controls">
+        <label>Leaders</label>
+        <div data-bind="foreach: Leaders" class="d-flex flex-row align-items-center">
+            <div class="project-member-wrapper">
+                <span><i class="fas fa-user-tie"></i></span>
+                <div data-bind="text: Name"></div>
+            </div>
+        </div>
+    </div>
+    <div class="row-data user-group-controls">
+        <label>Developers</label>
+        <div data-bind="foreach: Developers" class="d-flex flex-row align-items-center">
+            <div class="project-member-wrapper">
+                <span><i class="fas fa-user"></i></span>
+                <div data-bind="text: Name"></div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<!--Task detail-->
+<script type="text/x-jquery-tmpl" id="taskDetailsTemplate">
+    <div class="row-data align-items-center project-title-panel">
+        <span class="icon-space-wrapper">
+            <i class="nav-link-icon fa fa-suitcase"> </i>
+        </span>
+        <div class="project-title" data-bind="text: Name"></div>
+    </div>
+    <div class="row-data bd-highligh">
+        <p class=""><i data-bind="text: Description"></i></p>
+    </div>
+    <div class="row-data project-time-panel">
+        <div class="d-flex flex-column time-group-controls">
+            <div class="d-flex flex-row align-items-center">
+                <span class="icon-space-wrapper">
+                    <i class="fa fa-calendar-alt"></i>
+                </span>
+                <span class="time-group-subject">Start Date</span>
+            </div>
+            <span data-bind="text: StartDate"></span>
+        </div>
+        <div class="d-flex flex-column time-group-controls">
+            <div class="d-flex flex-row align-items-center">
+                <span class="icon-space-wrapper"><i class="fa fa-calendar-alt"></i></span>
+                <span class="time-group-subject">End Date</span>
+            </div>
+            <span data-bind="text: EndDate"></span>
+        </div>
+        <div class="d-flex flex-column align-items-center time-group-controls">
+            <div class="d-flex flex-row align-items-center">
+                <span class="icon-space-wrapper"><i class="fa fa-calendar-alt"></i></span>
+                <span class="time-group-subject">Estimate Time(hours)</span>
+            </div>
+            <span data-bind="text: EstimatedTime"></span>
+        </div>
+    </div>
+    <div class="form-group row" data-bind="if: Assignee != null">
+        <label class="font-weight-bold col-sm-2 col-form-label">Task Request Assignee</label>
+        <div class="col-sm-10 d-flex flex-row align-items-center" data-bind="with: Assignee">
+            <div class="project-member-wrapper">
+                <span><i class="fas fa-user-tie"></i></span>
+                <div data-bind="text: Name"></div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<!-- Add/Edit Project -->
+<div id="projectEditor" class="modal modal-fixed-footer">
+    <div class="modal-header" data-bind="with: addEditProjectModel">
+        <span data-bind="visible:IsEdit">Update Project</span>
+        <span data-bind="hidden:IsEdit">Add New Project</span>
+    </div>
+    <div class="modal-content">
+        <div data-bind="template: {name:'addUpdateProjectTemplate', data: addEditProjectModel}"></div>
+    </div>
+    <div class="modal-footer">
+        <button class="waves-effect waves-light btn-small btn-edit-task-request d-flex"
+                style="margin-left: 5px"
+                data-bind="click: onCancelSaveProject">
+            <i class="material-icons">cancel</i>
+            <span class="ml-1">Cancel</span>
+        </button>
+        <button class="waves-effect waves-light btn-small btn-delete-task-request blue d-flex ml-2"
+                data-bind="click: onSaveProject">
+            <i class="material-icons">save</i>
+            <span class="ml-1">Save</span>
+        </button>
+    </div>
+</div>
+<script type="text/x-jquery-tmpl" id="addUpdateProjectTemplate">
+    <div class="row">
+        <div class="input-field col s12">
+            <input type="text" class="validate" data-bind="value: Name" required />
+            <label class="active">Name</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s12">
+            <textarea class="materialize-textarea" data-bind="value: Description"></textarea>
+            <label class="active">Description</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s6">
+            <input type="text" id="dpStartDate" class="datepicker" required data-bind="value: StartDate" />
+            <label class="active">Start Date</label>
+        </div>
+        <div class="input-field col s6">
+            <input type="text" id="dpEndDate" class="datepicker" required data-bind="value: EndDate" />
+            <label class="active">End Date</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s12">
+            <select data-bind="options: $root.availableDevelopers, selectedOptions: Leaders, optionsText: 'UserName', optionsValue: 'UserId'" size="5" multiple="true"></select>
+            <label class="active">Leaders</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s12">
+            <select data-bind="options: $root.availableDevelopers, selectedOptions: Developers, optionsText: 'UserName', optionsValue: 'UserId'" size="5" multiple="true"></select>
+            <label class="active">Developer</label>
+        </div>
+    </div>
+</script>
+
+<!-- Add/Update Task -->
+<div id="taskEditor" class="modal modal-fixed-footer">
+    <div class="modal-header" data-bind="with: addEditProjectModel">
+        <span data-bind="visible:IsEdit">Update Task</span>
+        <span data-bind="hidden:IsEdit">Add New Task</span>
+    </div>
+    <div class="modal-content">
+        <div data-bind="template: {name:'addUpdateTaskTemplate', data: addEditProjectModel}"></div>
+    </div>
+    <div class="modal-footer">
+        <button class="waves-effect waves-light btn-small btn-edit-task-request d-flex"
+                style="margin-left: 5px"
+                data-bind="click: onCancelSaveTask">
+            <i class="material-icons">cancel</i>
+            <span class="ml-1">Cancel</span>
+        </button>
+        <button class="waves-effect waves-light btn-small btn-delete-task-request blue d-flex ml-2"
+                data-bind="click: onSaveTask">
+            <i class="material-icons">save</i>
+            <span class="ml-1">Save</span>
+        </button>
+    </div>
+</div>
+<script type="text/x-jquery-tmpl" id="addUpdateTaskTemplate">
+    <div class="row">
+        <div class="input-field col s12">
+            <input type="text" class="validate" data-bind="value: Name" required />
+            <label class="active">Name</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s12">
+            <textarea class="materialize-textarea" data-bind="value: Description"></textarea>
+            <label class="active">Description</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s6">
+            <input type="text" id="dpStartDate" class="datepicker" required data-bind="value: StartDate" />
+            <label class="active">Start Date</label>
+        </div>
+        <div class="input-field col s6">
+            <input type="text" id="dpEndDate" class="datepicker" required data-bind="value: EndDate" />
+            <label class="active">End Date</label>
+        </div>
+    </div>
+</script>
