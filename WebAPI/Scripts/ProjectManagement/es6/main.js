@@ -10,15 +10,9 @@ import AddEditProjectViewModel from './addedit-project-viewmodel';
 import { format } from 'date-fns';
 
 $(document).ready(function () {
-    ko.validation.init({
-        registerExtenders: true,
-        messagesOnModified: true,
-        insertMessages: true,
-        parseInputAttributes: true,
-        messageTemplate: null
-    }, true);
-    var taskRequestManagement = new ProjectManagement(applicationPath);
-    ko.applyBindings(taskRequestManagement, document.body);
+    Utils.initKoValidation();
+    var projectManagement = new ProjectManagement(applicationPath);
+    ko.applyBindings(projectManagement, $(".app-main")[0]);
 });
 
 const ProjectManagementDisplayMode = {

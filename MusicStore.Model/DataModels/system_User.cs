@@ -17,6 +17,7 @@ namespace MusicStore.Model.DataModels
         public string Email { get; set; }
         public int RoleId { get; set; }
         public bool IsActive { get; set; }
+        public string Photo { get; set; }
 
         public virtual system_UserRole Role { get; set; }
         public virtual ICollection<fl_Task> Tasks { get; set; }

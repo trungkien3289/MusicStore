@@ -21,5 +21,7 @@ namespace MusicStore.Service.IService
         bool IsUserExisted(string userName);
         int GetTotalUser();
         UserEntity RequestRegisterUser(string userName, string password, string email);
+        UserEntity UpdateProfile(UserEntity profile);
+        string UpdateUserPhoto(int userId, string photo);
     }
 }

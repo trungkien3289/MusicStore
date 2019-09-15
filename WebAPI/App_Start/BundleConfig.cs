@@ -32,7 +32,8 @@ namespace WebAPI
                       //"~/Content/bootstrap.css",
                       //"~/Content/Common/icons.css",
                       //  "~/Content/Common/font-awesome.css",
-                        "~/Content/Dashboard/layout.css"
+                        "~/Content/Dashboard/layout.css",
+                        "~/node_modules/croppie/croppie.css"
                         ));
 
             bundles.Add(new ScriptBundle("~/bundles/dashboard_js").Include(
@@ -40,7 +41,8 @@ namespace WebAPI
                       "~/Scripts/DashBoard/dashboard-main.js",
                       //"~/node_modules/knockout.validation/dist/knockout.validation.js",
                       //"~/node_modules/knockout.validation/localization/el-GR.js",
-                      "~/Scripts/Libraries/knockout-3.5.0.js"
+                      "~/Scripts/Libraries/knockout-3.5.0.js",
+                      "~/node_modules/croppie/croppie.min.js"
                       ));
         }
     }

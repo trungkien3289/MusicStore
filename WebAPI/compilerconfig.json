@@ -22,5 +22,9 @@
   {
     "outputFile": "Content/Task/scss/task-management.css",
     "inputFile": "Content/Task/scss/task-management.scss"
+  },
+  {
+    "outputFile": "Content/Common/scss/layout.css",
+    "inputFile": "Content/Common/scss/layout.scss"
   }
 ]

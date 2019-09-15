@@ -250,19 +250,16 @@
             <label class="active">Project</label>
         </div>
     </div>
-    <div class="form-group" data-bind="visible: $root.addEditViewModel().IsEdit()">
-        <div class="input-field col s12 select-control">
+    <div class="form-group row" style="width:100%" data-bind="visible: $root.addEditViewModel().IsEdit()">
+        <div class="input-field col l6 m6 s6 select-control">
             <select data-bind="options: $root.taskStatusOptions, value: Status, optionsText: 'Name', optionsValue: 'Value'" size="5"></select>
             <label>Status</label>
         </div>
-    </div>
-    <div class="form-group" data-bind="visible: $root.addEditViewModel().IsEdit()">
-        <div class="input-field col s12 select-control">
+        <div class="input-field col l6 m6 s6 select-control">
             <select data-bind="options: $root.availableDevelopers, value: AssigneeId, optionsText: 'UserName', optionsValue: 'UserId'" size="5"></select>
             <label>Assignee</label>
         </div>
     </div>
-
     <div class="form-group row" style="width:100%;">
         <div class="input-field col s6 select-control">
             <input id="pk_StartDate" placeholder="Start Date" data-bind="value: StartDate" class="datepicker">
@@ -276,7 +273,7 @@
     </div>
 
     <div class="form-group">
-        <div class="input-field col s12">
+        <div class="input-field col l6 m6 s12">
             <input type="number" data-bind="value: EstimatedTime" />
             <label class="active">Estimate Time(Hours)</label>
         </div>

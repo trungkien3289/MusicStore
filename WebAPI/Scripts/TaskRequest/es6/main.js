@@ -9,15 +9,9 @@ import Utils from '../../Common/es6/utils';
 import * as Toastr from 'toastr';
 
 $(document).ready(function () {
-    ko.validation.init({
-        registerExtenders: true,
-        messagesOnModified: true,
-        insertMessages: true,
-        parseInputAttributes: true,
-        messageTemplate: null
-    }, true);
+    Utils.initKoValidation();
     var taskRequestManagement = new TaskRequestManagement(applicationPath);
-    ko.applyBindings(taskRequestManagement, document.body);
+    ko.applyBindings(taskRequestManagement, $(".app-main")[0]);
 });
 
 const TaskRequestManagementDisplayMode = {

@@ -6512,3 +6512,12 @@ input[type=range]::-ms-thumb {
   position: absolute;
   top: -26px;
   font-size: 0.8rem; }
+
+.modal.right-sheet {
+  top: 0 !important;
+  right: 0;
+  left: auto;
+  max-height: 100%;
+  width: 75%;
+  border-radius: 0;
+  will-change: bottom, opacity; }

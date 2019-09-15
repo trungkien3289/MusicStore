@@ -10,7 +10,7 @@ import * as Toastr from 'toastr';
 
 $(document).ready(function () {
     var dashboardManagement = new DashboardManagement(applicationPath);
-    ko.applyBindings(dashboardManagement, document.body);
+    ko.applyBindings(dashboardManagement, $(".app-main")[0]);
 });
 
 const ProjectDisplayMode = {

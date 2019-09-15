@@ -334,6 +334,12 @@
     <Content Include="Content\Common\jplayer.blue.monday.min.css" />
     <Content Include="Content\Common\materialize-css-icon.css" />
     <Content Include="Content\Common\popuo-box.css" />
+    <Content Include="Content\Common\scss\layout.css">
+      <DependentUpon>layout.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\Common\scss\layout.min.css">
+      <DependentUpon>layout.css</DependentUpon>
+    </Content>
     <Content Include="Content\Common\scss\utility.css">
       <DependentUpon>utility.scss</DependentUpon>
     </Content>
@@ -441,6 +447,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\Pe-icon-7-stroke.svg" />
     <Content Include="Global.asax" />
+    <Content Include="node_modules\croppie\croppie.css" />
+    <Content Include="node_modules\croppie\croppie.js" />
+    <Content Include="node_modules\croppie\croppie.min.js" />
     <Content Include="node_modules\knockout.validation\dist\knockout.validation.js" />
     <Content Include="node_modules\knockout.validation\dist\knockout.validation.min.js" />
     <Content Include="node_modules\knockout.validation\localization\ar-JO.js" />
@@ -620,6 +629,10 @@
     <Content Include="node_modules\knockout.validation\package.json" />
     <Content Include="node_modules\knockout.validation\README.md" />
     <Content Include="Content\Task\scss\task-management.scss" />
+    <Content Include="node_modules\croppie\LICENSE" />
+    <Content Include="node_modules\croppie\package.json" />
+    <Content Include="node_modules\croppie\README.md" />
+    <Content Include="Content\Common\scss\layout.scss" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\DashBoard\es6\task-details-model.js" />
@@ -629,6 +642,8 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\Layout\es6\main.js" />
+    <Content Include="Scripts\PageHeader\es6\change-password-model.js" />
+    <Content Include="Scripts\PageHeader\es6\user-profile.js" />
     <Content Include="Scripts\Libraries\knockout-3.5.0.js" />
     <Content Include="Scripts\Libraries\playlist.js" />
     <Content Include="Scripts\Login\es6\main.js" />

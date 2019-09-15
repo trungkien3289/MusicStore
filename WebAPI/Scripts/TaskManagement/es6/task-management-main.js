@@ -9,15 +9,9 @@ import AddEditTaskViewModel from './addedit-task-viewmodel';
 import { format } from 'date-fns';
 
 $(document).ready(function () {
-    ko.validation.init({
-        registerExtenders: true,
-        messagesOnModified: true,
-        insertMessages: true,
-        parseInputAttributes: true,
-        messageTemplate: null
-    }, true);
+    Utils.initKoValidation();
     var taskManagement = new TaskManagement(applicationPath);
-    ko.applyBindings(taskManagement, document.body);
+    ko.applyBindings(taskManagement, $(".app-main")[0]);
 });
 
 export default class TaskManagement {

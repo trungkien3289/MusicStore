@@ -23,9 +23,14 @@
     <script src="~/Scripts/build/layout.js"></script>
     <script src="~/Scripts/build/pageHeader.js"></script>
     <link href="~/node_modules/toastr/build/toastr.css" rel="stylesheet" />
+    <link href="~/Content/Common/scss/layout.min.css" rel="stylesheet" />
     <script>
         var host = "@Request.Url.Host";
         var applicationPath = "@HttpContext.Current.Request.ApplicationPath";
+        @if (identity != null && identity.IsAuthenticated)
+        {
+            var userId = identity != null && identity.IsAuthenticated ? identity.UserId : -1;
+        }
     </script>
     <script language="javascript" type="text/javascript">
         $(window).load(function () {
@@ -126,6 +131,109 @@
         </div>
         <div class="app-main">
             @RenderBody()
+        </div>
+
+        <!-- My Profile -->
+        <div id="profileDialog" class="modal right-sheet">
+            <span id="btn_CloseProfileDialog" class="side-panel-close" title="Close">
+                <span class="side-panel-close-inner"><i class="fas fa-times"></i></span>
+            </span>
+            <div class="modal-header">
+                <h4>My Account</h4>
+            </div>
+            <div class="modal-content profile-container">
+                <div class="pf-left">
+                    <div class="pf-user-avatar card">
+                        <div class="pf-user-type">
+                            <div class="pf-user-type-item">
+                                @if (identity != null && identity.IsAuthenticated && identity.RoleId == (int)UserRoleEnum.ADMIN)
+                                {
+                                    <span>Admin</span>
+                                }
+                                else
+                                {
+                                    <span>User</span>
+                                }
+                            </div>
+                        </div>
+                        <div class="pf-avatar" data-bind="hidden: IsEditingAvartar, style: {background: UserProfile().UserPhotoStyle}">
+                            <div id="pf_RemoveUserPhoto" class="btn-remove-avatar"></div>
+                            <div id="btnUploadAvartar" class="btn-upload-avatar">
+                                <i class="fas fa-upload"></i>Upload Photo
+                            </div>
+                            <input type="file" style="display:none;" id="pf_UploadImageFile" value="Choose a file" accept="image/*" />
+                        </div>
+                        <div id="uploadAvartarControl" data-bind="visible: IsEditingAvartar">
+
+                        </div>
+                    </div>
+                    <div class="card-footer" data-bind="visible: $root.IsEditingAvartar">
+                        <a id="pf_SaveChangeAvartar" class="waves-effect waves-green light-blue btn-flat">Save</a>
+                        <a id="pf_CancelChangeAvartar" class=" waves-effect waves-green transparent btn-flat">Cancel</a>
+                    </div>
+                </div>
+                <div class="pf-right">
+                    <div class="pf-contact-informatio-panel card">
+                        <div class="card-title">
+                            <span class="float-left">Contact Information</span>
+                            <a id="pf_BtnEditProfile" class="btn-edit-profile float-right"><i class="fas fa-edit"></i><span>Edit</span></a>
+                        </div>
+                        <div class="card-body" data-bind="with: UserProfile">
+                            <div class="form-group row">
+                                <label class="no-padding col-sm-12 col-form-label">User name</label>
+                                <p class="no-padding col-sm-12" data-bind="text: UserName"></p>
+                            </div>
+                            <div class="form-group row">
+                                <label class="no-padding col-sm-12 col-form-label">Name</label>
+                                <p class="no-padding col-sm-12" data-bind="text: Name, hidden: $root.IsEditingProfile"></p>
+                                <input type="text" data-bind="value: Name, visible:$root.IsEditingProfile" />
+                            </div>
+                            <div class="form-group row">
+                                <label class="no-padding col-sm-12 col-form-label">Contact email</label>
+                                <p class="no-padding col-sm-12" data-bind="text: Email, hidden: $root.IsEditingProfile"></p>
+                                <input type="text" data-bind="value: Email, visible:$root.IsEditingProfile" />
+                            </div>
+                        </div>
+                        <div class="card-footer" data-bind="visible: $root.IsEditingProfile">
+                            <a id="pf_SaveChangeProfile" class="waves-effect waves-green light-blue btn-flat">Save</a>
+                            <a id="pf_CancelChangeProfile" class=" waves-effect waves-green transparent btn-flat">Cancel</a>
+                        </div>
+                    </div>
+                    <div class="pf-change-password-panel card">
+                        <div class="accordion" id="accordionExample">
+                            <div class="card-title" id="headingOne">
+                                <span data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                    <i class="fas fa-chevron-down"></i>
+                                    <i class="fas fa-chevron-up"></i>
+                                    Change password
+                                </span>
+                            </div>
+
+                                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                    <div class="card-body" data-bind="with: ChangePasswordModel">
+                                        <div class="form-group row">
+                                            <label class="no-padding col-sm-12 col-form-label">Old password</label>
+                                            <input type="password" data-bind="value: OldPassword" />
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="no-padding col-sm-12 col-form-label">New password</label>
+                                            <input type="password" data-bind="value: NewPassword" />
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="no-padding col-sm-12 col-form-label">Confirm new password</label>
+                                            <input type="password" data-bind="value: ConfirmNewPassword" />
+                                        </div>
+                                    </div>
+
+                                    <div class="card-footer">
+                                        <a id="pf_BtnChangePassword" class="waves-effect waves-green light-blue btn-flat">Change</a>
+                                        <a id="pf_BtnResetChangePassword" class=" waves-effect waves-green transparent btn-flat">Reset</a>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 </body>
 </html>

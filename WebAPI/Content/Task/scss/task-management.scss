@@ -1,6 +1,12 @@
 ﻿.task-management-container {
     padding: 0;
 
+    .card {
+        min-height: 800px;
+        margin-bottom: 0;
+        box-shadow: none;
+    }
+
     .card-header {
         margin: 20px;
         display: flex;

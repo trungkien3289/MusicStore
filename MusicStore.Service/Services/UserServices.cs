@@ -154,10 +154,38 @@ namespace MusicStore.Service.Services
 			}
 		}
 
-		#endregion
+        public UserEntity UpdateProfile(UserEntity profile)
+        {
+            if (!IsExisted(profile.UserId)) throw new Exception("User is not existed.");
+            using (var scope = new TransactionScope())
+            {
+                var user = _unitOfWork.UserRepository.GetByID(profile.UserId);
+                user.Name = profile.Name;
+                user.Email = profile.Email;
+                _unitOfWork.Save();
+                scope.Complete();
 
-		#region private functions
-		private bool VerifyPassword(int userId, string password)
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<system_User, UserEntity>());
+                var mapper = config.CreateMapper();
+                var entity = mapper.Map<system_User, UserEntity>(user);
+                return entity;
+            }
+        }
+
+        public string UpdateUserPhoto(int userId, string photo)
+        {
+            if (!IsExisted(userId)) throw new Exception("User is not existed.");
+            var user = _unitOfWork.UserRepository.GetByID(userId);
+            user.Photo = photo;
+            _unitOfWork.Save();
+
+            return photo;
+        }
+
+        #endregion
+
+        #region private functions
+        private bool VerifyPassword(int userId, string password)
 		{
 			var user = _unitOfWork.UserRepository.GetByID(userId);
 			return user.Password == password;
@@ -227,6 +255,8 @@ namespace MusicStore.Service.Services
 			}
 		}
 
-		#endregion
-	}
+        
+
+        #endregion
+    }
 }
