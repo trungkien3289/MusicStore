@@ -1,5 +1,6 @@
 namespace MusicStore.Model.Migrations
 {
+    using Helper;
     using MusicStore.Model.DataModels;
     using System;
     using System.Collections.Generic;
@@ -34,7 +35,8 @@ namespace MusicStore.Model.Migrations
                 Name = "Admin",
                 Email = "admin@company.com",
                 RoleId = 1,
-                IsActive = true
+                IsActive = true,
+                Photo = Constants.DEFAULT_USER_PHOTO
             };
             var user2 = new DataModels.system_User()
             {
@@ -44,7 +46,8 @@ namespace MusicStore.Model.Migrations
                 Name = "Smith",
                 Email = "smith@company.com",
                 RoleId = 2,
-                IsActive = true
+                IsActive = true,
+                Photo = Constants.DEFAULT_USER_PHOTO
             };
             var user3 = new DataModels.system_User()
             {
@@ -54,7 +57,8 @@ namespace MusicStore.Model.Migrations
                 Name = "David",
                 Email = "david@company.com",
                 RoleId = 2,
-                IsActive = true
+                IsActive = true,
+                Photo = Constants.DEFAULT_USER_PHOTO
             };
             var user4 = new DataModels.system_User()
             {
@@ -64,7 +68,8 @@ namespace MusicStore.Model.Migrations
                 Name = "Jimmy",
                 Email = "jimmy@company.com",
                 RoleId = 2,
-                IsActive = true
+                IsActive = true,
+                Photo = Constants.DEFAULT_USER_PHOTO
             };
             var user5 = new DataModels.system_User()
             {
@@ -74,7 +79,8 @@ namespace MusicStore.Model.Migrations
                 Name = "Hand",
                 Email = "hand@company.com",
                 RoleId = 2,
-                IsActive = true
+                IsActive = true,
+                Photo = Constants.DEFAULT_USER_PHOTO
             };
 
             context.User.AddOrUpdate(x => x.UserId, 

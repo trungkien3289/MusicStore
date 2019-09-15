@@ -4,6 +4,7 @@
     Layout = "~/Views/Shared/_UserAccount_Layout.cshtml";
 }
 @section css{
+<link href="~/Content/Account/scss/login.min.css" rel="stylesheet" />
 }
 
 @section scripts{
@@ -14,7 +15,7 @@
     </script>
     <script src="~/Scripts/build/login.js"></script>
 }
-<div class="h-100 bg-plum-plate bg-animation">
+<div class="h-100 login-background bg-animation">
     <div class="d-flex h-100 justify-content-center align-items-center">
         <div class="mx-auto app-login-box col-md-8">
             <div class="app-logo-inverse mx-auto mb-3"></div>
@@ -23,17 +24,16 @@
                     <div class="modal-body">
                         <div class="h5 modal-title text-center">
                             <h4 class="mt-2">
-                                <div>Welcome back,</div>
-                                <span>Please sign in to your account below.</span>
+                                <div>Login</div>
                             </h4>
                         </div>
                         <form class="">
                             <div class="form-row">
                                 <div class="col-md-12">
-                                    <div class="position-relative form-group"><input name="userName" id="UserName" data-bind="value: userName" placeholder="UserName here..." type="text" class="form-control"></div>
+                                    <div class="position-relative form-group"><input name="userName" id="UserName" data-bind="value: userName" placeholder="UserName" type="text" class="form-control"></div>
                                 </div>
                                 <div class="col-md-12">
-                                    <div class="position-relative form-group"><input name="password" id="Password" data-bind="value: password" placeholder="Password here..." type="password" class="form-control"></div>
+                                    <div class="position-relative form-group"><input name="password" id="Password" data-bind="value: password" placeholder="Password" type="password" class="form-control"></div>
                                 </div>
                             </div>
                             <!--<div class="position-relative form-check"><input name="check" id="exampleCheck" type="checkbox" class="form-check-input"><label for="exampleCheck" class="form-check-label">Keep me logged in</label></div>-->
@@ -47,7 +47,7 @@
                     <div class="modal-footer clearfix">
                         <div class="float-left"><a href="javascript:void(0);" class="btn-lg btn btn-link">Recover Password</a></div>
                         <div class="float-right">
-                            <button class="btn btn-primary btn-lg" id="btnLogin">Login to Dashboard</button>
+                            <button class="btn btn-primary btn-lg" id="btnLogin">Login</button>
                         </div>
                     </div>
                 </div>

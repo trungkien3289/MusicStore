@@ -89,8 +89,8 @@ export default class DashboardManagement {
             .then(response => {
                 self.displayMode(ProjectDisplayMode.PROJECT_DETAILS);
                 var data = response.data;
-                data.StartDate = format(new Date(data.StartDate), "dd/MM/yyyy hh:mm:ss");
-                data.EndDate = format(new Date(data.EndDate), "dd/MM/yyyy hh:mm:ss");
+                data.StartDate = format(new Date(data.StartDate), "dd/MM/yyyy");
+                data.EndDate = format(new Date(data.EndDate), "dd/MM/yyyy");
                 var projectDetails = new ProjectDetailsModel(data);
                 self.currentProject(new ProjectDetailsModel(projectDetails));
 

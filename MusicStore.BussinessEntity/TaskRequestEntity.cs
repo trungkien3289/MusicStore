@@ -75,6 +75,7 @@ namespace MusicStore.BussinessEntity
         public int TaskRequestId { get; set; }
         public int UserId { get; set; }
         public string UserName { get; set; }
+        public string Photo { get; set; }
         public bool IsJoin { get; set; }
         public bool IsAssigned { get; set; }
     }

@@ -318,6 +318,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
+    <Content Include="Content\Account\scss\login.css">
+      <DependentUpon>login.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\Account\scss\login.min.css">
+      <DependentUpon>login.css</DependentUpon>
+    </Content>
     <Content Include="Content\album-detail.css" />
     <Content Include="Content\albums-list.css" />
     <Content Include="Content\alphabet-menubar.css" />
@@ -362,10 +368,19 @@
     <Content Include="Content\Images\background.png" />
     <Content Include="Content\Images\background4.png" />
     <Content Include="Content\Images\loading.gif" />
+    <Content Include="Content\Images\login-background.jpg" />
+    <Content Include="Content\Images\login-background.png" />
+    <Content Include="Content\Images\no-project-icon.svg" />
+    <Content Include="Content\Images\no-task-icon.svg" />
+    <Content Include="Content\Images\no-taskrequest-icon.svg" />
+    <Content Include="Content\Images\pick-user.svg" />
     <Content Include="Content\Images\playing.png" />
+    <Content Include="Content\Images\project-icon.svg" />
+    <Content Include="Content\Images\remove-user.svg" />
     <Content Include="Content\Images\spr3.png" />
     <Content Include="Content\Images\spr.png" />
     <Content Include="Content\DashBoard\layout.css" />
+    <Content Include="Content\Images\task-icon.svg" />
     <Content Include="Content\ProjectManagement\scss\main.css">
       <DependentUpon>main.scss</DependentUpon>
     </Content>
@@ -633,6 +648,7 @@
     <Content Include="node_modules\croppie\package.json" />
     <Content Include="node_modules\croppie\README.md" />
     <Content Include="Content\Common\scss\layout.scss" />
+    <Content Include="Content\Account\scss\login.scss" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\DashBoard\es6\task-details-model.js" />
@@ -718,7 +734,6 @@
     <Content Include="Views\Task\Index.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\TaskRequest\Index.cshtml" />
-    <Content Include="Views\Task\Index - Copy.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -33,7 +33,7 @@
                                     <i class="metismenu-state-icon pe-7s-angle-up caret-left"></i>
                                 </a>
                                 <a class="btn-project-item tree-node-btn" data-bind="attr:{'data-projectid' : Id}">
-                                    <i class="metismenu-icon fa fa-suitcase"></i>
+                                    <i class="metismenu-icon fas fa-calendar-alt"></i>
                                     <span data-bind="text: Name"></span>
                                 </a>
                             </div>
@@ -41,7 +41,7 @@
                                 <ul class="vertical-nav-menu project-tree" data-bind="foreach: Tasks">
                                     <li>
                                         <a data-bind="attr:{'data-taskid': Id}" class="btn-task-item tree-node-btn">
-                                            <i class="fa fa-tasks"></i>
+                                            <i class="fas fa-check-square"></i>
                                             <span data-bind="text: Name"></span>
                                         </a>
                                     </li>
@@ -92,6 +92,13 @@
                         <div data-bind="template: {name:'projectDetailsTemplate', data: currentProject}" class="d-flex flex-column flex-auto-fill"></div>
                     </div>
                 </div>
+
+                <div id="EmptyPanel" data-bind="visible: isShowEmpty" class="sub-dashboard-content">
+                    <div class="empty-panel">
+                        <div class="no-project-icon"></div>
+                        <p>Select project to see project details or select task to see task request details.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -101,7 +108,7 @@
 <script type="text/x-jquery-tmpl" id="projectDetailsTemplate">
     <div class="row-data align-items-center project-title-panel">
         <span class="icon-space-wrapper">
-            <i class="nav-link-icon fa fa-suitcase"> </i>
+            <i class="nav-link-icon fa fa-calendar-alt"> </i>
         </span>
         <div class="project-title" data-bind="text: Name"></div>
     </div>
@@ -129,18 +136,18 @@
     <div class="row-data user-group-controls">
         <label>Leaders</label>
         <div data-bind="foreach: Leaders" class="d-flex flex-row align-items-center">
-            <div class="project-member-wrapper">
-                <span><i class="fas fa-user-tie"></i></span>
-                <div data-bind="text: Name"></div>
+            <div class="chip">
+                <img data-bind="attr: { src: Photo, alt: Name, title: Name }">
+                <!--ko text: Name--><!--/ko-->
             </div>
         </div>
     </div>
     <div class="row-data user-group-controls">
         <label>Developers</label>
         <div data-bind="foreach: Developers" class="d-flex flex-row align-items-center">
-            <div class="project-member-wrapper">
-                <span><i class="fas fa-user"></i></span>
-                <div data-bind="text: Name"></div>
+            <div class="chip">
+                <img data-bind="attr: { src: Photo, alt: Name, title: Name }">
+                <!--ko text: Name--><!--/ko-->
             </div>
         </div>
     </div>
@@ -150,7 +157,7 @@
 <script type="text/x-jquery-tmpl" id="taskDetailsTemplate">
     <div class="row-data align-items-center project-title-panel">
         <span class="icon-space-wrapper">
-            <i class="nav-link-icon fa fa-suitcase"> </i>
+            <i class="nav-link-icon fas fa-check-square"> </i>
         </span>
         <div class="project-title" data-bind="text: Name"></div>
     </div>
@@ -185,9 +192,9 @@
     <div class="form-group row" data-bind="if: Assignee != null">
         <label class="font-weight-bold col-sm-2 col-form-label">Task Request Assignee</label>
         <div class="col-sm-10 d-flex flex-row align-items-center" data-bind="with: Assignee">
-            <div class="project-member-wrapper">
-                <span><i class="fas fa-user-tie"></i></span>
-                <div data-bind="text: Name"></div>
+            <div class="chip">
+                <img data-bind="attr: { src: Photo, alt: Name, title: Name }">
+                <!--ko text: Name--><!--/ko-->
             </div>
         </div>
     </div>

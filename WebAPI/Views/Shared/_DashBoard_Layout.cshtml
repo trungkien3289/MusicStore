@@ -56,33 +56,33 @@
                     <ul class="header-menu nav">
                         <li class="nav-item">
                             <a href="~/dashboard" class="nav-link active">
-                                <i class="nav-link-icon fa fa-database"> </i>
+                                <i class="nav-link-icon fas fa-tachometer-alt"> </i>
                                 Dashboard
                             </a>
                         </li>
                         <li class="btn-group nav-item">
                             <a href="~/project" class="nav-link">
-                                <i class="nav-link-icon fa fa-edit"></i>
+                                <i class="nav-link-icon fas fa-calendar-alt"></i>
                                 Projects
                             </a>
                         </li>
                         <li class="dropdown nav-item">
                             <a href="~/task" class="nav-link">
-                                <i class="nav-link-icon fa fa-cog"></i>
+                                <i class="nav-link-icon fas fa-check-square"></i>
                                 Tasks
                             </a>
                         </li>
                         <li class="dropdown nav-item">
                             <a href="~/taskrequest" class="nav-link">
-                                <i class="nav-link-icon fa fa-cog"></i>
-                                Task Request Management
+                                <i class="nav-link-icon fas fa-user-clock"></i>
+                                Task Request
                             </a>
                         </li>
                         @if (identity != null && identity.IsAuthenticated && identity.RoleId == (int)UserRoleEnum.ADMIN)
                         {
                             <li class="dropdown nav-item">
                                 <a href="~/user" class="nav-link">
-                                    <i class="nav-link-icon fa fa-cog"></i>
+                                    <i class="nav-link-icon fas fa-users"></i>
                                     Users
                                 </a>
                             </li>

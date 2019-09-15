@@ -3,6 +3,8 @@ import Utils from '../../Common/es6/utils';
 
 $(document).ready(function () {
     ko.applyBindings(new LoginPage(returnUrl, host, applicationPath));
+
+    $("#UserName").focus();
 });
 
 export default class LoginPage {
@@ -103,6 +105,14 @@ export default class LoginPage {
                 }
             });
         });
+
+        $("#Password")
+            .on("keyup", function (event) {
+                event.preventDefault();
+                if (event.keyCode === 13) {
+                    $("#btnLogin").click();
+                }
+            });
     }
 
     validate() {

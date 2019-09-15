@@ -1,0 +1,15 @@
+﻿.login-background {
+  background: url(../../Images/login-background.png);
+  background-size: contain; }
+
+.app-login-box .modal-content {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #000;
+  border: none; }
+  .app-login-box .modal-content .modal-footer {
+    background-color: transparent; }
+  .app-login-box .modal-content .modal-title h4 {
+    padding-bottom: 20px;
+    font-size: 30px;
+    font-weight: 500;
+    color: #3f69d8; }

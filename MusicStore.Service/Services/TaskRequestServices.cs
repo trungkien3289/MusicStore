@@ -245,6 +245,7 @@ namespace MusicStore.Service.Services
                     {
                         UserId = dev.UserId,
                         UserName = dev.User.UserName,
+                        Photo = dev.User.Photo,
                         TaskRequestId = task.TaskRequest.Id,
                         IsJoin = dev.IsJoin,
                         IsAssigned = dev.UserId == task.AssigneeId? true: false

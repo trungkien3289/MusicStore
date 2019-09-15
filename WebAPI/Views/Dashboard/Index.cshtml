@@ -31,7 +31,7 @@
                                         <i class="metismenu-state-icon pe-7s-angle-up caret-left"></i>
                                     </a>
                                     <a class="btn-project-item tree-node-btn" data-id="@project.Id">
-                                        <i class="metismenu-icon fa fa-suitcase"></i>
+                                        <i class="metismenu-icon fas fa-calendar-alt"></i>
                                         <span>@project.Name</span>
                                     </a>
                                 </div>
@@ -41,7 +41,7 @@
                                         {
                                             <li>
                                                 <a data-id="@task.Id" class="btn-task-item tree-node-btn">
-                                                    <i class="fa fa-tasks">
+                                                    <i class="fas fa-check-square">
                                                     </i>
                                                     <span>@task.Name</span>
                                                 </a>
@@ -58,7 +58,7 @@
                                     <i class="metismenu-state-icon pe-7s-angle-up caret-left"></i>
                                 </a>
                                 <a class="btn-project-item tree-node-btn" data-bind="attr:{'data-id' : Id}">
-                                    <i class="metismenu-icon fa fa-suitcase"></i>
+                                    <i class="metismenu-icon fas fa-calendar-alt"></i>
                                     <span data-bind="text: Name"></span>
                                 </a>
                             </div>
@@ -66,7 +66,7 @@
                                 <ul class="vertical-nav-menu project-tree" data-bind="foreach: TaskRequests">
                                         <li>
                                             <a  data-bind="attr:{'data-id': Id}" class="btn-task-request-item tree-node-btn">
-                                                <i class="fa fa-tasks">
+                                                <i class="fas fa-user-clock">
                                                 </i>
                                                 <span data-bind="text: Task.Description"></span>
                                             </a>
@@ -156,7 +156,7 @@
         <div class="card-body d-flex flex-column">
             <div class="row-data align-items-center project-title-panel">
                 <span class="icon-space-wrapper">
-                    <i class="nav-link-icon fa fa-suitcase"> </i>
+                    <i class="nav-link-icon fas fa-calendar-alt"> </i>
                 </span>
                 <div class="project-title" data-bind="text: Name"></div>
             </div>
@@ -184,18 +184,18 @@
             <div class="row-data user-group-controls">
                 <label>Leaders</label>
                 <div data-bind="foreach: Leaders" class="d-flex flex-row align-items-center">
-                    <div class="project-member-wrapper">
-                        <span><i class="fas fa-user-tie"></i></span>
-                        <div data-bind="text: Name"></div>
+                    <div class="chip">
+                        <img data-bind="attr: { src: Photo, alt: Name, title: Name }">
+                        <!--ko text: Name--><!--/ko-->
                     </div>
                 </div>
             </div>
             <div class="row-data user-group-controls">
                 <label>Developers</label>
                 <div data-bind="foreach: Developers" class="d-flex flex-row align-items-center">
-                    <div class="project-member-wrapper">
-                        <span><i class="fas fa-user"></i></span>
-                        <div data-bind="text: Name"></div>
+                    <div class="chip">
+                        <img data-bind="attr: { src: Photo, alt: Name, title: Name }">
+                        <!--ko text: Name--><!--/ko-->
                     </div>
                 </div>
             </div>
@@ -209,7 +209,7 @@
         <div class="card-body d-flex flex-column">
             <div class="row-data align-items-center project-title-panel">
                 <span class="icon-space-wrapper">
-                    <i class="nav-link-icon fa fa-tasks"> </i>
+                    <i class="nav-link-icon fas fa-check-square"> </i>
                 </span>
                 <div class="project-title" data-bind="text: Name"></div>
             </div>
@@ -244,9 +244,9 @@
             <div class="row-data user-group-controls">
                 <label>Assignee</label>
                 <div data-bind="visible: Assignee != null, with: Assignee" class="d-flex flex-row align-items-center">
-                    <div class="project-member-wrapper">
-                        <span><i class="fas fa-user-tie"></i></span>
-                        <div data-bind="text: Name"></div>
+                    <div class="chip">
+                        <img data-bind="attr: { src: Photo, alt: Name, title: Name }">
+                        <!--ko text: Name--><!--/ko-->
                     </div>
                 </div>
             </div>
@@ -267,7 +267,7 @@
             <div class="task-container d-flex flex-column" data-bind="with:Task">
                 <div class="row-data align-items-center project-title-panel">
                     <span class="icon-space-wrapper">
-                        <i class="nav-link-icon fa fa-suitcase"> </i>
+                        <i class="nav-link-icon fas fa-user-clock"> </i>
                     </span>
                     <div class="project-title" data-bind="text: Name"></div>
                 </div>

@@ -221,10 +221,9 @@ export default class TaskRequestManagement {
                 .then(response => {
                     self.displayMode(TaskRequestManagementDisplayMode.PROJECT_DETAIL);
                     var data = response.data;
-                    data.StartDate = format(new Date(data.StartDate), "dd/MM/yyyy hh:mm:ss");
-                    data.EndDate = format(new Date(data.EndDate), "dd/MM/yyyy hh:mm:ss");
-                    var projectDetails = new ProjectDetailsModel(data);
-                    self.currentProject(new ProjectDetailsModel(projectDetails));
+                    data.StartDate = format(new Date(data.StartDate), "dd/MM/yyyy");
+                    data.EndDate = format(new Date(data.EndDate), "dd/MM/yyyy");
+                    self.currentProject(new ProjectDetailsModel(data));
 
                     $(".left-panel .tree-node-btn").removeClass("selected");
                     $(this).addClass("selected");
@@ -339,7 +338,7 @@ export class Service {
 
     getProjectDetails(projectId) {
         return axios.get(
-            `${this._apiBaseUrl}project/${projectId}`,
+            `${this._apiBaseUrl}projects/${projectId}`,
             {
                 withCredentials: true
             }

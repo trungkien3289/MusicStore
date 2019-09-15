@@ -49,6 +49,45 @@
       cursor: pointer; }
   .task-request-management-wrapper .right-panel .flex-auto-fill {
     flex: 1 1 auto; }
+  .task-request-management-wrapper .right-panel .empty-panel {
+    flex: 0 0 500;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; }
+    .task-request-management-wrapper .right-panel .empty-panel .no-project-icon {
+      background-image: url(../../Images/no-task-icon.svg);
+      background-size: contain;
+      width: 250px;
+      height: 250px; }
+    .task-request-management-wrapper .right-panel .empty-panel p {
+      font-size: 16px;
+      font-weight: 700;
+      width: 500px;
+      text-align: center; }
+  .task-request-management-wrapper .right-panel #EmptyPanel {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center; }
+  .task-request-management-wrapper .right-panel .task-request-developers-container .user-photo-img {
+    width: 50px;
+    height: 50px;
+    background: #ccc;
+    border-radius: 100%; }
+  .task-request-management-wrapper .right-panel .task-request-developers-container .pick-user-icon {
+    background-image: url(../../Images/pick-user.svg);
+    background-size: contain; }
+  .task-request-management-wrapper .right-panel .task-request-developers-container .remove-user-icon {
+    background-image: url(../../Images/remove-user.svg);
+    background-size: contain; }
+  .task-request-management-wrapper .right-panel .task-request-developers-container .btn-action {
+    border: 1px solid #ccc;
+    text-transform: none; }
+    .task-request-management-wrapper .right-panel .task-request-developers-container .btn-action i {
+      font-size: 13px;
+      margin-right: 5px; }
   .task-request-management-wrapper .task-request-details-container .card-header .title {
     flex: 1 1 auto; }
   .task-request-management-wrapper .task-request-details-container .card-header .btn-add-task-request {

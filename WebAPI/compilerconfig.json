@@ -26,5 +26,9 @@
   {
     "outputFile": "Content/Common/scss/layout.css",
     "inputFile": "Content/Common/scss/layout.scss"
+  },
+  {
+    "outputFile": "Content/Account/scss/login.css",
+    "inputFile": "Content/Account/scss/login.scss"
   }
 ]

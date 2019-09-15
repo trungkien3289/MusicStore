@@ -49,7 +49,12 @@ namespace MusicStore.Service.Services
 				var config = new MapperConfiguration(cfg => cfg.CreateMap<system_User, UserEntity>());
 				var mapper = config.CreateMapper();
 				var model = mapper.Map<system_User, UserEntity>(entity);
-				return model;
+                if (String.IsNullOrEmpty(model.Photo))
+                {
+                    model.Photo = Constants.DEFAULT_USER_PHOTO;
+                }
+
+                return model;
 			}
 			return null;
 		}
@@ -61,6 +66,10 @@ namespace MusicStore.Service.Services
 				var config = new MapperConfiguration(cfg => cfg.CreateMap<UserEntity, system_User>());
 				var mapper = config.CreateMapper();
 				var entity = mapper.Map<UserEntity, system_User>(model);
+                if (String.IsNullOrEmpty(entity.Photo))
+                {
+                    entity.Photo = Constants.DEFAULT_USER_PHOTO;
+                }
 				_unitOfWork.UserRepository.Insert(entity);
 				_unitOfWork.Save();
 				scope.Complete();
@@ -176,7 +185,7 @@ namespace MusicStore.Service.Services
         {
             if (!IsExisted(userId)) throw new Exception("User is not existed.");
             var user = _unitOfWork.UserRepository.GetByID(userId);
-            user.Photo = photo;
+            user.Photo = String.IsNullOrEmpty(photo)? Constants.DEFAULT_USER_PHOTO: photo;
             _unitOfWork.Save();
 
             return photo;
